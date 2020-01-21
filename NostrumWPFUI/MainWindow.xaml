@@ -1,0 +1,225 @@
+﻿<Window x:Class="NostrumWPFUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NostrumWPFUI"
+        mc:Ignorable="d"
+        Title="MainWindow" Name="NostrumMainWindow" Height="750" Width="850" >
+    <Grid>
+        <Menu Name="FileMenu" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" MinWidth="750" Width="{Binding ElementName=NostrumMainWindow,Path=Width}">
+            <MenuItem Name="File" Header="File">
+                <MenuItem Header="Open"/>
+                <MenuItem Header="Save"/>
+                <MenuItem Header="Exit"/>
+            </MenuItem>
+            <MenuItem Name="Data" Header="Data"/>
+            <MenuItem Name="Import" Header="Import">
+                <MenuItem Header="Single Excel"/>
+                <MenuItem Header="Batch Excel"/>
+            </MenuItem>
+            <MenuItem Name="Help" Header="Help">
+                <MenuItem Header="About"/>
+            </MenuItem>
+        </Menu>
+        <TabControl TabStripPlacement="Top" HorizontalAlignment="Left" Height="{Binding ElementName=NostrumMainWindow,Path=Height}" VerticalAlignment="Top" Width="{Binding ElementName=NostrumMainWindow,Path=Width}" Margin="0,25,0,0">
+            <TabItem Header="Billing">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition x:Name="header" Height="55"/>
+                        <RowDefinition Height="55"/>
+                        <RowDefinition Height="55"/>
+                        <RowDefinition Height="55"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="15"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition x:Name="footer" Height="55"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition x:Name="LeftMargin" Width="140"/>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="90"/>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition x:Name="RightMargin" Width="80"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Client Name" VerticalAlignment="Top" Height="23" Width="121" FontSize="16" FontFamily="Century Gothic" FontWeight="Bold" Margin="0.2,0,0,0"/>
+                    <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="From" VerticalAlignment="Top" Height="23" Width="100" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" Margin="0.2,0,0,0"/>
+                    <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="To" VerticalAlignment="Top" Height="23" Width="130" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" ClipToBounds="True" SnapsToDevicePixels="True" Margin="0.2,55,0,0" Grid.RowSpan="2"/>
+                    <ComboBox Grid.Row="1" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="169"  Height="23" />
+                    <DatePicker Grid.Row="2" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Top" Width="143" Height="23" />
+                    <DatePicker Grid.Row="3" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Top" Width="143" Height="23" />
+                    <Grid Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="140"/>
+                            <ColumnDefinition Width="35"/>
+                            <ColumnDefinition Width="140"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Content="Invoice Details" Grid.Column="0"/>
+                        <Button Content="Outstanding" Grid.Column="2"/>
+
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Payment">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition x:Name="Paymentheader" Height="55"/>
+                        <RowDefinition Height="55"/>
+                        <RowDefinition Height="55"/>
+                        <RowDefinition Height="55"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="15"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition x:Name="Paymentfooter" Height="55"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition x:Name="PaymentLeftMargin" Width="140"/>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="90"/>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition x:Name="PaymentRightMargin" Width="80"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Client Name" VerticalAlignment="Top" Height="23" Width="121" FontSize="16" FontFamily="Century Gothic" FontWeight="Bold" Margin="0.2,0,0,0"/>
+                    <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="From" VerticalAlignment="Top" Height="23" Width="100" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" Margin="0.2,0,0,0"/>
+                    <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="To" VerticalAlignment="Top" Height="23" Width="130" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" ClipToBounds="True" SnapsToDevicePixels="True" Margin="0.2,55,0,0" Grid.RowSpan="2"/>
+                    <ComboBox Grid.Row="1" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="169"  Height="23" />
+                    <DatePicker Grid.Row="2" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Top" Width="143" Height="23" />
+                    <DatePicker Grid.Row="3" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Top" Width="143" Height="23" />
+                    <Grid Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="140"/>
+                            <ColumnDefinition Width="35"/>
+                            <ColumnDefinition Width="140"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Content="Invoice Details" Grid.Column="0"/>
+                        <Button Content="Outstanding" Grid.Column="2"/>
+
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Products">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition x:Name="header1" Height="10"/>
+                        <RowDefinition Height="55"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="15"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition x:Name="footer1" Height="10"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition x:Name="LeftMargin1" Width="140"/>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="95*"/>
+                        <ColumnDefinition x:Name="RightMargin1" Width="140"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right" TextWrapping="Wrap" Text="Product" VerticalAlignment="Center" Height="23" Width="121" FontSize="16" FontFamily="Century Gothic" FontWeight="Bold"  />
+                    <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right"  TextAlignment="Right" TextWrapping="Wrap" Text="Drug Type" VerticalAlignment="Center" Height="23" Width="121" FontSize="16" FontFamily="Century Gothic" FontWeight="Bold"  />
+                    <TextBlock Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right"  TextAlignment="Right" TextWrapping="Wrap" Text="Batch No" VerticalAlignment="Center" Height="23" Width="100" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold"  />
+                    <TextBlock Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right" TextWrapping="Wrap" Text="Manufacture Date" VerticalAlignment="Center" Height="23" Width="130" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" ClipToBounds="True" SnapsToDevicePixels="True" />
+                    <TextBlock Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right" TextWrapping="Wrap" Text="Expiry Date" VerticalAlignment="Center" Height="23" Width="135" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" />
+                    <TextBlock Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right" TextWrapping="Wrap" Text="Quantity" VerticalAlignment="Center" Height="23" Width="135" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" />
+                    <TextBlock Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right"  TextWrapping="Wrap" Text="CGST" VerticalAlignment="Center" Height="23" Width="121" FontSize="16" FontFamily="Century Gothic" FontWeight="Bold"  />
+                    <TextBlock Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right"  TextWrapping="Wrap" Text="SGST" VerticalAlignment="Center" Height="23" Width="100" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" />
+                    <TextBlock Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right"  TextWrapping="Wrap" Text="MRP" VerticalAlignment="Center" Height="23" Width="130" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" ClipToBounds="True" SnapsToDevicePixels="True" />
+                    <TextBlock Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right" TextWrapping="Wrap" Text="Manufacturer" VerticalAlignment="Center" Height="23" Width="135" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" />
+                    <TextBlock Grid.Row="11" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right" TextWrapping="Wrap" Text="Date of Purchase" VerticalAlignment="Center" Height="23" Width="135" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" />
+                    <TextBlock Grid.Row="12" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right" TextWrapping="Wrap" Text="Invoice Number" VerticalAlignment="Center" Height="23" Width="135" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold"/>
+
+                    <ListBox Grid.Row="1" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="169"   Grid.ColumnSpan="2" Height="53" />
+                    <RadioButton  Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="3" Content="Tablet" GroupName="DrugType" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                    <RadioButton  Grid.Row="2" Grid.Column="5"  Content="Syrup" Grid.ColumnSpan="2" GroupName="DrugType" HorizontalAlignment="Left" VerticalAlignment="Center"  />
+                    <TextBox Grid.Row="3" Grid.Column="4" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Text="Batch No" VerticalAlignment="Center" Width="113" Grid.ColumnSpan="2"/>
+                    <DatePicker Background="AliceBlue" Grid.Row="4" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="143" Height="23" Grid.ColumnSpan="2" />
+                    <DatePicker Grid.Row="5" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="143" Height="23" Grid.ColumnSpan="2" />
+                    <TextBox Grid.Row="6" Grid.Column="4" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Text="Quantity" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2"  />
+                    <TextBox Grid.Row="7" Grid.Column="4" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Text="CGST" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2"  />
+                    <TextBox Grid.Row="8" Grid.Column="4" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Text="SGST" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2"  />
+                    <TextBox  BorderThickness="2" Grid.Row="9" Grid.Column="4" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Text="MRP" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2"  />
+                    <TextBox Grid.Row="10" Grid.Column="4" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Text="Manufacturer" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2" />
+                    <DatePicker Grid.Row="11" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="143" Height="23" Grid.ColumnSpan="2"  />
+                    <TextBox  BorderThickness="2" Grid.Row="12" Grid.Column="4" HorizontalAlignment="Left" Height="41"  TextWrapping="Wrap" Text="Invoice Number" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2"  Grid.RowSpan="2" />
+
+
+                    <Grid Grid.Row="14" Grid.Column="2" Grid.ColumnSpan="5" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="140"/>
+                            <ColumnDefinition Width="35"/>
+                            <ColumnDefinition Width="140"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Content="Submit" Grid.Column="0" Click="Product_Submit_Click"/>
+                        <Button Content="Clear" Grid.Column="2" Click="Product_Clear_Click_"/>
+
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Clients">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition x:Name="header2" Height="34.515"/>
+                        <RowDefinition Height="21.485"/>
+                        <RowDefinition Height="45"/>
+                        <RowDefinition Height="45"/>
+                        <RowDefinition Height="90"/>
+                        <RowDefinition Height="45"/>
+                        <RowDefinition Height="45"/>
+                        <RowDefinition Height="15"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition x:Name="footer2" Height="26.793"/>
+                        <RowDefinition Height="29.207"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition x:Name="LeftMargin2" Width="110.946"/>
+                        <ColumnDefinition Width="29.854"/>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="90"/>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition x:Name="RightMargin2" Width="36.146"/>
+                        <ColumnDefinition Width="44.654"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Client Name" VerticalAlignment="Top" Height="23" Width="121" FontSize="16" FontFamily="Century Gothic" FontWeight="Bold"  />
+                    <TextBlock Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Display Name" VerticalAlignment="Top" Height="23" Width="100" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" />
+                    <TextBlock Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Address" VerticalAlignment="Top" Height="23" Width="130" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" ClipToBounds="True" SnapsToDevicePixels="True" />
+                    <TextBlock Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="3" HorizontalAlignment="Left" TextWrapping="Wrap" Text="D/L No" VerticalAlignment="Top" Height="23" Width="135" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold"  />
+                    <TextBlock Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="3" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TIN No" VerticalAlignment="Top" Height="23" Width="135" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold"  />
+                    <ComboBox Grid.Row="2" Grid.Column="5"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="169"  Height="23" Margin="0.6,0.4,0,0" />
+                    <RichTextBox Grid.Row="4" Grid.Column="5" HorizontalAlignment="Left" Height="75"   VerticalAlignment="Top" Width="165" />
+                    <DatePicker Grid.Row="3" Grid.Column="5" HorizontalAlignment="Left" VerticalAlignment="Top" Width="143" Height="23" />
+
+                    <TextBox Grid.Row="5" Grid.Column="5" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Text="D/L No" VerticalAlignment="Top" Width="169"  />
+                    <TextBox Grid.Row="6" Grid.Column="5" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Text="TIN No" VerticalAlignment="Top" Width="169"  />
+                    <Grid Grid.Row="8" Grid.Column="3" Grid.ColumnSpan="5" Margin="0.8,0.6,0.2,26.393" Grid.RowSpan="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="140"/>
+                            <ColumnDefinition Width="35"/>
+                            <ColumnDefinition Width="140"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Content="Billing" Grid.Column="0"/>
+                        <Button Content="Clear" Grid.Column="2"/>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Stocks">
+                
+            </TabItem>
+        </TabControl>
+
+
+    </Grid>
+</Window>
