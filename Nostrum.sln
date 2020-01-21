@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NostrumDB", "NostrumDB\DBOperations\NostrumDB.csproj", "{13FD08AF-A4CA-4B5D-9BEE-8E5497053721}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDBOperations", "NostrumDB\TestDBOperations\TestDBOperations.csproj", "{4785A32B-81C5-4B66-9AC0-529E76ACC586}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NostrumUI", "NostrumUI\NostrumUI.csproj", "{180C25C6-E748-4F04-B5EB-0F6232780610}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{13FD08AF-A4CA-4B5D-9BEE-8E5497053721}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13FD08AF-A4CA-4B5D-9BEE-8E5497053721}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13FD08AF-A4CA-4B5D-9BEE-8E5497053721}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13FD08AF-A4CA-4B5D-9BEE-8E5497053721}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4785A32B-81C5-4B66-9AC0-529E76ACC586}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4785A32B-81C5-4B66-9AC0-529E76ACC586}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4785A32B-81C5-4B66-9AC0-529E76ACC586}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4785A32B-81C5-4B66-9AC0-529E76ACC586}.Release|Any CPU.Build.0 = Release|Any CPU
+		{180C25C6-E748-4F04-B5EB-0F6232780610}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{180C25C6-E748-4F04-B5EB-0F6232780610}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{180C25C6-E748-4F04-B5EB-0F6232780610}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{180C25C6-E748-4F04-B5EB-0F6232780610}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
