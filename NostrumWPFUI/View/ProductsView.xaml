@@ -1,0 +1,78 @@
+﻿<UserControl x:Class="NostrumWPFUI.View.ProductsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NostrumWPFUI.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid Background="WhiteSmoke">
+            <Grid.RowDefinitions>
+                <RowDefinition x:Name="header1" Height="45"/>
+                <RowDefinition Height="55"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition x:Name="footer1" Height="10"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="LeftMargin1" Width="140"/>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="95*"/>
+                <ColumnDefinition x:Name="RightMargin1" Width="140"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right" TextWrapping="Wrap" Text="Product" VerticalAlignment="Center" Height="23" Width="121" FontSize="16" FontFamily="Century Gothic" FontWeight="Bold"  />
+            <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right"  TextAlignment="Right" TextWrapping="Wrap" Text="Drug Type" VerticalAlignment="Center" Height="23" Width="121" FontSize="16" FontFamily="Century Gothic" FontWeight="Bold"  />
+            <TextBlock Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right"  TextAlignment="Right" TextWrapping="Wrap" Text="Batch No" VerticalAlignment="Center" Height="23" Width="100" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold"  />
+            <TextBlock Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right" TextWrapping="Wrap" Text="Manufacture Date" VerticalAlignment="Center" Height="23" Width="130" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" ClipToBounds="True" SnapsToDevicePixels="True" />
+            <TextBlock Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right" TextWrapping="Wrap" Text="Expiry Date" VerticalAlignment="Center" Height="23" Width="135" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" />
+            <TextBlock Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right" TextWrapping="Wrap" Text="Quantity" VerticalAlignment="Center" Height="23" Width="135" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" />
+            <TextBlock Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right"  TextWrapping="Wrap" Text="CGST" VerticalAlignment="Center" Height="23" Width="121" FontSize="16" FontFamily="Century Gothic" FontWeight="Bold"  />
+            <TextBlock Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right"  TextWrapping="Wrap" Text="SGST" VerticalAlignment="Center" Height="23" Width="100" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" />
+            <TextBlock Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right"  TextWrapping="Wrap" Text="MRP" VerticalAlignment="Center" Height="23" Width="130" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" ClipToBounds="True" SnapsToDevicePixels="True" />
+            <TextBlock Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right" TextWrapping="Wrap" Text="Manufacturer" VerticalAlignment="Center" Height="23" Width="135" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" />
+            <TextBlock Grid.Row="11" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right" TextWrapping="Wrap" Text="Date of Purchase" VerticalAlignment="Center" Height="23" Width="135" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" />
+            <TextBlock Grid.Row="12" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right" TextWrapping="Wrap" Text="Invoice Number" VerticalAlignment="Center" Height="23" Width="135" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold"/>
+
+            <ListBox Grid.Row="1" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="169"   Grid.ColumnSpan="2" Height="53" />
+            <RadioButton  Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="3" Content="Tablet" GroupName="DrugType" VerticalAlignment="Center" HorizontalAlignment="Left" />
+            <RadioButton  Grid.Row="2" Grid.Column="5"  Content="Syrup" Grid.ColumnSpan="2" GroupName="DrugType" HorizontalAlignment="Left" VerticalAlignment="Center"  />
+            <TextBox Grid.Row="3" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" Text="Batch No" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2"/>
+            <DatePicker Background="AliceBlue" Grid.Row="4" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30" Grid.ColumnSpan="2" />
+            <DatePicker Grid.Row="5" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30" Grid.ColumnSpan="2" />
+            <TextBox Grid.Row="6" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" Text="Quantity" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2"  />
+            <TextBox Grid.Row="7" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" Text="CGST" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2"  />
+            <TextBox Grid.Row="8" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" Text="SGST" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2"  />
+            <TextBox  BorderThickness="2" Grid.Row="9" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" Text="MRP" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2"  />
+            <TextBox Grid.Row="10" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" Text="Manufacturer" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2" />
+            <DatePicker Grid.Row="11" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30" Grid.ColumnSpan="2"  />
+            <TextBox  BorderThickness="2" Grid.Row="12" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" Text="Invoice Number" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2"   />
+
+
+            <Grid Grid.Row="14" Grid.Column="2" Grid.ColumnSpan="5" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="140"/>
+                    <ColumnDefinition Width="35"/>
+                    <ColumnDefinition Width="140"/>
+                </Grid.ColumnDefinitions>
+                <Button Content="Submit" Grid.Column="0" Command="{Binding SubmitCommand}" />
+                <Button Content="Clear" Grid.Column="2" Command="{Binding ClearCommand}" />
+
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

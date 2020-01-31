@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="NostrumWPFUI.View.ClientsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NostrumWPFUI.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid Background="WhiteSmoke">
+            <Grid.RowDefinitions>
+                <RowDefinition x:Name="header2" Height="34.515"/>
+                <RowDefinition Height="21.485"/>
+                <RowDefinition Height="45"/>
+                <RowDefinition Height="45"/>
+                <RowDefinition Height="90"/>
+                <RowDefinition Height="45"/>
+                <RowDefinition Height="45"/>
+                <RowDefinition Height="15"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition x:Name="footer2" Height="26.793"/>
+                <RowDefinition Height="29.207"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="LeftMargin2" Width="140"/>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="0"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition x:Name="RightMargin2" Width="36.146"/>
+                <ColumnDefinition Width="44.654"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="2" Grid.Column="2"  HorizontalAlignment="Right" VerticalAlignment="Center"  TextWrapping="Wrap" Text="Client Name"  Height="23" Width="Auto" FontSize="16" FontFamily="Century Gothic" FontWeight="Bold"  />
+            <TextBlock Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap" Text="Display Name"  Height="23" Width="Auto" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" />
+            <TextBlock Grid.Row="4" Grid.Column="2"  HorizontalAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap" Text="Address"  Height="23" Width="Auto" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" ClipToBounds="True" SnapsToDevicePixels="True" />
+            <TextBlock Grid.Row="5" Grid.Column="2"  HorizontalAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap" Text="D/L No"  Height="23" Width="Auto" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold"  />
+            <TextBlock Grid.Row="6" Grid.Column="2"  HorizontalAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap" Text="TIN No"  Height="23" Width="Auto" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold"  />
+            <ComboBox Grid.Row="2" Grid.Column="5"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="169"  Height="30"  />
+            <RichTextBox Grid.Row="4" Grid.Column="5" HorizontalAlignment="Left" Height="75"   VerticalAlignment="Center" Width="169" />
+            <DatePicker Grid.Row="3" Grid.Column="5" HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30" />
+
+            <TextBox Grid.Row="5" Grid.Column="5" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" Text="D/L No" VerticalAlignment="Center" Width="169"  />
+            <TextBox Grid.Row="6" Grid.Column="5" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" Text="TIN No" VerticalAlignment="Center" Width="169"  />
+            <Grid Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="5"  >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="140"/>
+                    <ColumnDefinition Width="35"/>
+                    <ColumnDefinition Width="140"/>
+                </Grid.ColumnDefinitions>
+                <Button Content="Add Client" Grid.Column="0" Command="{Binding AddClientCommand}" />
+                <Button Content="Clear" Grid.Column="2" Command="{Binding ClearCommand}" />
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

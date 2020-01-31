@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:NostrumWPFUI"
+        xmlns:Views="clr-namespace:NostrumWPFUI.View"
         mc:Ignorable="d"
         Title="MainWindow" Name="NostrumMainWindow" Height="750" Width="850" >
     <Grid>
@@ -25,262 +26,19 @@
         </Menu>
         <TabControl TabStripPlacement="Top" HorizontalAlignment="Left" Height="{Binding ElementName=NostrumMainWindow,Path=Height}" VerticalAlignment="Top" Width="{Binding ElementName=NostrumMainWindow,Path=Width}" Margin="0,25,0,0">
             <TabItem Header="Billing">
-
-                <Grid Background="WhiteSmoke">
-                        <Grid.RowDefinitions>
-                            <RowDefinition x:Name="header" Height="55"/>
-                            <RowDefinition Height="55"/>
-                            <RowDefinition Height="55"/>
-                            <RowDefinition Height="55"/>
-                            <RowDefinition Height="55"/>
-                            <RowDefinition Height="25"/>
-                            <RowDefinition Height="35"/>
-                            <RowDefinition Height="15"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition x:Name="footer" Height="55"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition x:Name="LeftMargin" Width="140"/>
-                            <ColumnDefinition Width="30"/>
-                            <ColumnDefinition Width="150"/>
-                            <ColumnDefinition Width="10"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition x:Name="RightMargin" Width="80"/>
-                        </Grid.ColumnDefinitions>
-
-                        <TextBlock Grid.Row="1" Grid.Column="2"  HorizontalAlignment="Right"  TextWrapping="Wrap" Text="Client Name" VerticalAlignment="Center" Height="23"  FontSize="16" FontFamily="Century Gothic" FontWeight="Bold" />
-                        <TextBlock Grid.Row="2" Grid.Column="2"  HorizontalAlignment="Right"  TextWrapping="Wrap" Text="Date" VerticalAlignment="Center" Height="23" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" />
-                        <TextBlock Grid.Row="3" Grid.Column="2"  HorizontalAlignment="Right"  TextWrapping="Wrap" Text="Invoice Number" VerticalAlignment="Center" Height="23"  FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" ClipToBounds="True" SnapsToDevicePixels="True" />
-                        <TextBlock Text="Payment Terms" Grid.Row="4" Grid.Column="2"  HorizontalAlignment="Right"  TextWrapping="Wrap"  VerticalAlignment="Center" Height="23" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" ClipToBounds="True" SnapsToDevicePixels="True" />
-                        <ComboBox Grid.Row="1" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="169"  Height="30" />
-                        <DatePicker Grid.Row="2" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="143" Height="30" />
-                        <TextBox Grid.Row="3" Grid.Column="4" TextAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="160" Width="Auto" Height="36"  />
-                        <TextBox Grid.Row="4" Grid.Column="4" TextAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="45" Width="61" Height="36"  />
-                        <TextBlock Text="Days" Grid.Row="4" Grid.Column="4" TextAlignment="Center"  HorizontalAlignment="Left" VerticalAlignment="Center"  Width="50" Height="35" FontWeight="Bold" RenderTransformOrigin="-2.289,0.622" Margin="66.2,16,0,5"/>
-                        <Grid Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="5">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="140"/>
-                                <ColumnDefinition Width="35"/>
-                                <ColumnDefinition Width="140"/>
-                            </Grid.ColumnDefinitions>
-                            <Button Content="Invoice Details" Grid.Column="0"/>
-                            <Button Content="Outstanding" Grid.Column="2"/>
-                        </Grid>
-
-                    </Grid>
-               
+                <Views:BillingView/>
             </TabItem>
             <TabItem Header="Payment">
-                <Grid Background="WhiteSmoke">
-                    <Grid.RowDefinitions>
-                        <RowDefinition x:Name="Paymentheader" Height="55"/>
-                        <RowDefinition Height="55"/>
-                        <RowDefinition Height="55"/>
-                        <RowDefinition Height="55"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="35"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition x:Name="Paymentfooter" Height="55"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition x:Name="PaymentLeftMargin" Width="140"/>
-                        <ColumnDefinition Width="30"/>
-                        <ColumnDefinition Width="150"/>
-                        <ColumnDefinition Width="10"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition x:Name="PaymentRightMargin" Width="80"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Row="1"  Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center"  TextWrapping="Wrap" Text="Client Name"  Height="23" FontSize="16" FontFamily="Century Gothic" FontWeight="Bold" />
-                    <TextBlock Grid.Row="2" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center"   TextWrapping="Wrap" Text="From"  Height="23"  FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" />
-                    <TextBlock Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center"   TextWrapping="Wrap" Text="To"  Height="23"  FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" ClipToBounds="True" SnapsToDevicePixels="True" />
-                    <ComboBox Grid.Row="1" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="169"  Height="30" />
-                    <DatePicker Grid.Row="2" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="143" Height="30" />
-                    <DatePicker Grid.Row="3" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="143" Height="30" />
-                    <Grid Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="140"/>
-                            <ColumnDefinition Width="35"/>
-                            <ColumnDefinition Width="140"/>
-                        </Grid.ColumnDefinitions>
-                        <Button Content="Invoice Details" Grid.Column="0"/>
-                        <Button Content="Outstanding" Grid.Column="2"/>
-
-                    </Grid>
-                </Grid>
+                <Views:PaymentView/>
             </TabItem>
             <TabItem Header="Products">
-                <Grid Background="WhiteSmoke">
-                    <Grid.RowDefinitions>
-                        <RowDefinition x:Name="header1" Height="45"/>
-                        <RowDefinition Height="55"/>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="25"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition x:Name="footer1" Height="10"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition x:Name="LeftMargin1" Width="140"/>
-                        <ColumnDefinition Width="30"/>
-                        <ColumnDefinition Width="150"/>
-                        <ColumnDefinition Width="10"/>
-                        <ColumnDefinition Width="80"/>
-                        <ColumnDefinition Width="95*"/>
-                        <ColumnDefinition x:Name="RightMargin1" Width="140"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right" TextWrapping="Wrap" Text="Product" VerticalAlignment="Center" Height="23" Width="121" FontSize="16" FontFamily="Century Gothic" FontWeight="Bold"  />
-                    <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right"  TextAlignment="Right" TextWrapping="Wrap" Text="Drug Type" VerticalAlignment="Center" Height="23" Width="121" FontSize="16" FontFamily="Century Gothic" FontWeight="Bold"  />
-                    <TextBlock Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right"  TextAlignment="Right" TextWrapping="Wrap" Text="Batch No" VerticalAlignment="Center" Height="23" Width="100" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold"  />
-                    <TextBlock Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right" TextWrapping="Wrap" Text="Manufacture Date" VerticalAlignment="Center" Height="23" Width="130" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" ClipToBounds="True" SnapsToDevicePixels="True" />
-                    <TextBlock Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right" TextWrapping="Wrap" Text="Expiry Date" VerticalAlignment="Center" Height="23" Width="135" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" />
-                    <TextBlock Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right" TextWrapping="Wrap" Text="Quantity" VerticalAlignment="Center" Height="23" Width="135" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" />
-                    <TextBlock Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right"  TextWrapping="Wrap" Text="CGST" VerticalAlignment="Center" Height="23" Width="121" FontSize="16" FontFamily="Century Gothic" FontWeight="Bold"  />
-                    <TextBlock Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right"  TextWrapping="Wrap" Text="SGST" VerticalAlignment="Center" Height="23" Width="100" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" />
-                    <TextBlock Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right"  TextWrapping="Wrap" Text="MRP" VerticalAlignment="Center" Height="23" Width="130" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" ClipToBounds="True" SnapsToDevicePixels="True" />
-                    <TextBlock Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right" TextWrapping="Wrap" Text="Manufacturer" VerticalAlignment="Center" Height="23" Width="135" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" />
-                    <TextBlock Grid.Row="11" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right" TextWrapping="Wrap" Text="Date of Purchase" VerticalAlignment="Center" Height="23" Width="135" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" />
-                    <TextBlock Grid.Row="12" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right" TextWrapping="Wrap" Text="Invoice Number" VerticalAlignment="Center" Height="23" Width="135" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold"/>
-
-                    <ListBox Grid.Row="1" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="169"   Grid.ColumnSpan="2" Height="53" />
-                    <RadioButton  Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="3" Content="Tablet" GroupName="DrugType" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                    <RadioButton  Grid.Row="2" Grid.Column="5"  Content="Syrup" Grid.ColumnSpan="2" GroupName="DrugType" HorizontalAlignment="Left" VerticalAlignment="Center"  />
-                    <TextBox Grid.Row="3" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" Text="Batch No" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2"/>
-                    <DatePicker Background="AliceBlue" Grid.Row="4" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30" Grid.ColumnSpan="2" />
-                    <DatePicker Grid.Row="5" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30" Grid.ColumnSpan="2" />
-                    <TextBox Grid.Row="6" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" Text="Quantity" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2"  />
-                    <TextBox Grid.Row="7" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" Text="CGST" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2"  />
-                    <TextBox Grid.Row="8" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" Text="SGST" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2"  />
-                    <TextBox  BorderThickness="2" Grid.Row="9" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" Text="MRP" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2"  />
-                    <TextBox Grid.Row="10" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" Text="Manufacturer" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2" />
-                    <DatePicker Grid.Row="11" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30" Grid.ColumnSpan="2"  />
-                    <TextBox  BorderThickness="2" Grid.Row="12" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" Text="Invoice Number" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2"   />
-
-
-                    <Grid Grid.Row="14" Grid.Column="2" Grid.ColumnSpan="5" >
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="140"/>
-                            <ColumnDefinition Width="35"/>
-                            <ColumnDefinition Width="140"/>
-                        </Grid.ColumnDefinitions>
-                        <Button Content="Submit" Grid.Column="0" Click="Product_Submit_Click"/>
-                        <Button Content="Clear" Grid.Column="2" Click="Product_Clear_Click_"/>
-
-                    </Grid>
-                </Grid>
+                <Views:ProductsView/>
             </TabItem>
             <TabItem Header="Clients">
-                <Grid Background="WhiteSmoke">
-                    <Grid.RowDefinitions>
-                        <RowDefinition x:Name="header2" Height="34.515"/>
-                        <RowDefinition Height="21.485"/>
-                        <RowDefinition Height="45"/>
-                        <RowDefinition Height="45"/>
-                        <RowDefinition Height="90"/>
-                        <RowDefinition Height="45"/>
-                        <RowDefinition Height="45"/>
-                        <RowDefinition Height="15"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition x:Name="footer2" Height="26.793"/>
-                        <RowDefinition Height="29.207"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition x:Name="LeftMargin2" Width="140"/>
-                        <ColumnDefinition Width="30"/>
-                        <ColumnDefinition Width="150"/>
-                        <ColumnDefinition Width="10"/>
-                        <ColumnDefinition Width="0"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition x:Name="RightMargin2" Width="36.146"/>
-                        <ColumnDefinition Width="44.654"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Row="2" Grid.Column="2"  HorizontalAlignment="Right" VerticalAlignment="Center"  TextWrapping="Wrap" Text="Client Name"  Height="23" Width="Auto" FontSize="16" FontFamily="Century Gothic" FontWeight="Bold"  />
-                    <TextBlock Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap" Text="Display Name"  Height="23" Width="Auto" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" />
-                    <TextBlock Grid.Row="4" Grid.Column="2"  HorizontalAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap" Text="Address"  Height="23" Width="Auto" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" ClipToBounds="True" SnapsToDevicePixels="True" />
-                    <TextBlock Grid.Row="5" Grid.Column="2"  HorizontalAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap" Text="D/L No"  Height="23" Width="Auto" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold"  />
-                    <TextBlock Grid.Row="6" Grid.Column="2"  HorizontalAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap" Text="TIN No"  Height="23" Width="Auto" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold"  />
-                    <ComboBox Grid.Row="2" Grid.Column="5"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="169"  Height="30"  />
-                    <RichTextBox Grid.Row="4" Grid.Column="5" HorizontalAlignment="Left" Height="75"   VerticalAlignment="Center" Width="169" />
-                    <DatePicker Grid.Row="3" Grid.Column="5" HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30" />
-
-                    <TextBox Grid.Row="5" Grid.Column="5" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" Text="D/L No" VerticalAlignment="Center" Width="169"  />
-                    <TextBox Grid.Row="6" Grid.Column="5" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" Text="TIN No" VerticalAlignment="Center" Width="169"  />
-                    <Grid Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="5"  >
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="140"/>
-                            <ColumnDefinition Width="35"/>
-                            <ColumnDefinition Width="140"/>
-                        </Grid.ColumnDefinitions>
-                        <Button Content="Billing" Grid.Column="0"/>
-                        <Button Content="Clear" Grid.Column="2"/>
-                    </Grid>
-                </Grid>
+                <Views:ClientsView/>
             </TabItem>
             <TabItem Header="Stocks">
-                <Grid Background="WhiteSmoke">
-                    <Grid.RowDefinitions>
-                        <RowDefinition x:Name="Stocksheader" Height="55"/>
-                        <RowDefinition Height="55"/>
-                        <RowDefinition Height="55"/>
-                        <RowDefinition Height="55"/>
-                        <RowDefinition Height="20"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition x:Name="Stocksfooter" Height="55"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition x:Name="PStocksLeftMargin" Width="140"/>
-                        <ColumnDefinition Width="40"/>
-                        <ColumnDefinition Width="110"/>
-                        <ColumnDefinition Width="40"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition x:Name="StocksRightMargin" Width="80"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Row="1" Grid.Column="2"  HorizontalAlignment="Right" VerticalAlignment="Center"  TextWrapping="Wrap" Text="Product" Height="23" Width="Auto" FontSize="16" FontFamily="Century Gothic" FontWeight="Bold" />
-                    <TextBlock Grid.Row="2" Grid.Column="2"  HorizontalAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap" Text="From"  Height="23" Width="Auto" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" />
-                    <TextBlock Grid.Row="3" Grid.Column="2"  HorizontalAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap" Text="To"  Height="23" Width="Auto" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" ClipToBounds="True" SnapsToDevicePixels="True"  />
-                    <ComboBox Grid.Row="1" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="169"  Height="30" />
-                    <DatePicker Grid.Row="2" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30" />
-                    <!--<DatePicker  Grid.Row="3" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30" />-->
-                    <DatePicker Grid.Row="3" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30">
-                        <DatePicker.CommandBindings>
-                            <CommandBinding Command="local:MyCommands.SelectToday" CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed"/>
-                        </DatePicker.CommandBindings>
-                        <DatePicker.CalendarStyle>
-                            <Style TargetType="{x:Type Calendar}">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="{x:Type Calendar}">
-                                            <StackPanel HorizontalAlignment="Center" Name="PART_Root">
-                                                <Label Name="datelabel" Content="{Binding Source={x:Static sys:DateTime.Today}}" Visibility="Hidden"/>
-                                                <CalendarItem Background="{TemplateBinding Control.Background}" BorderBrush="{TemplateBinding Control.BorderBrush}" BorderThickness="{TemplateBinding Control.BorderThickness}" Name="PART_CalendarItem" Style="{TemplateBinding Calendar.CalendarItemStyle}" />
-                                                <Button Content="{Binding ElementName=datelabel,Path=Content, StringFormat='Today{0}'}" Command="local:MyCommands.SelectToday" CommandParameter="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
-                                            </StackPanel>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </DatePicker.CalendarStyle>
-                    </DatePicker>
-                    <Grid Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="140"/>
-                            <ColumnDefinition Width="35"/>
-                            <ColumnDefinition Width="140"/>
-                        </Grid.ColumnDefinitions>
-                        <Button Content="Show" Grid.Column="0"/>
-                        <Button Content="Clear" Grid.Column="2"/>
-
-                    </Grid>
-                </Grid>
+                <Views:StocksView/>
             </TabItem>
         </TabControl>
 

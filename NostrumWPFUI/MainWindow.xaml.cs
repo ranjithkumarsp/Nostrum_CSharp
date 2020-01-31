@@ -24,27 +24,5 @@ namespace NostrumWPFUI
         {
             InitializeComponent();
         }
-        private void CommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = true;
-        }
-
-        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            (e.Parameter as Calendar).SelectedDate = DateTime.Now.Date;
-        }
-        private void Product_Submit_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Product_Clear_Click_(object sender, RoutedEventArgs e)
-        {
-
-        }
-    }
-    public class MyCommands
-    {
-        public static RoutedCommand SelectToday = new RoutedCommand("Today", typeof(MyCommands));
     }
 }

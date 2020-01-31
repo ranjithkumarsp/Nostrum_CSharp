@@ -1,0 +1,53 @@
+﻿<UserControl x:Class="NostrumWPFUI.View.BillingView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NostrumWPFUI.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid Background="WhiteSmoke">
+            <Grid.RowDefinitions>
+                <RowDefinition x:Name="header" Height="55"/>
+                <RowDefinition Height="55"/>
+                <RowDefinition Height="55"/>
+                <RowDefinition Height="55"/>
+                <RowDefinition Height="55"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="15"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition x:Name="footer" Height="55"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="LeftMargin" Width="140"/>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition x:Name="RightMargin" Width="80"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="1" Grid.Column="2"  HorizontalAlignment="Right"  TextWrapping="Wrap" Text="Client Name" VerticalAlignment="Center" Height="23"  FontSize="16" FontFamily="Century Gothic" FontWeight="Bold" />
+            <TextBlock Grid.Row="2" Grid.Column="2"  HorizontalAlignment="Right"  TextWrapping="Wrap" Text="Date" VerticalAlignment="Center" Height="23" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" />
+            <TextBlock Grid.Row="3" Grid.Column="2"  HorizontalAlignment="Right"  TextWrapping="Wrap" Text="Invoice Number" VerticalAlignment="Center" Height="23"  FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" ClipToBounds="True" SnapsToDevicePixels="True" />
+            <TextBlock Text="Payment Terms" Grid.Row="4" Grid.Column="2"  HorizontalAlignment="Right"  TextWrapping="Wrap"  VerticalAlignment="Center" Height="23" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" ClipToBounds="True" SnapsToDevicePixels="True" />
+            <ComboBox Grid.Row="1" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="169"  Height="30" />
+            <DatePicker Grid.Row="2" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30" />
+            <TextBox Grid.Row="3" Grid.Column="4" TextAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="169" Width="Auto" Height="36"  />
+            <TextBox Grid.Row="4" Grid.Column="4" TextAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="45" Width="61" Height="36"  />
+            <TextBlock Text="Days" Grid.Row="4" Grid.Column="4" TextAlignment="Center"  HorizontalAlignment="Left" VerticalAlignment="Center"  Width="50" Height="35" FontWeight="Bold" RenderTransformOrigin="-2.289,0.622" Margin="66.2,16,0,5"/>
+            <Grid Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="140"/>
+                    <ColumnDefinition Width="35"/>
+                    <ColumnDefinition Width="140"/>
+                </Grid.ColumnDefinitions>
+                <Button Content="Billing" Grid.Column="0" Command="{Binding BillingCommand}" />
+                <Button Content="Clear" Grid.Column="2" Command="{Binding ClearCommand}"/>
+            </Grid>
+
+        </Grid>
+    </Grid>
+</UserControl>
