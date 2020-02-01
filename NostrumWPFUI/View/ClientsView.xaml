@@ -47,9 +47,12 @@
                     <ColumnDefinition Width="140"/>
                     <ColumnDefinition Width="35"/>
                     <ColumnDefinition Width="140"/>
+                    <ColumnDefinition Width="35"/>
+                    <ColumnDefinition Width="140"/>
                 </Grid.ColumnDefinitions>
                 <Button Content="Add Client" Grid.Column="0" Command="{Binding AddClientCommand}" />
                 <Button Content="Clear" Grid.Column="2" Command="{Binding ClearCommand}" />
+                <Button Content="Edit User" Grid.Column="4" Command="{Binding EditUserCommand}" />
             </Grid>
         </Grid>
     </Grid>

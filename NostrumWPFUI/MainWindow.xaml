@@ -24,7 +24,8 @@
                 <MenuItem Header="About"/>
             </MenuItem>
         </Menu>
-        <TabControl  TabStripPlacement="Top" HorizontalAlignment="Left" Height="{Binding ElementName=NostrumMainWindow,Path=Height}" VerticalAlignment="Top" Width="{Binding ElementName=NostrumMainWindow,Path=Width}" Margin="0,25,0,0">
+        <TabControl  TabStripPlacement="Top" HorizontalAlignment="Left" Height="{Binding ElementName=NostrumMainWindow,Path=Height}" VerticalAlignment="Top" Width="{Binding ElementName=NostrumMainWindow,Path=Width}" 
+                     Margin="0,25,0,0" SelectedIndex="3">
             <TabItem Header="Billing">
                 <Views:BillingView/>
             </TabItem>

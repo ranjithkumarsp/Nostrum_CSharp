@@ -1,0 +1,16 @@
+﻿<Window x:Class="NostrumWPFUI.View.EditClientView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NostrumWPFUI.View"
+             mc:Ignorable="d" 
+            >
+    <Grid>
+        <TextBlock Text="EDIT CLIENT"  FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <TextBlock Text="Select Client To Edit:" Height="35"  Width="Auto" FontSize="25" Margin="69,112,463.6,358.6"/>
+        <ComboBox Name="LoadClientCombo" ItemsSource="{Binding ClientsList}" SelectedItem="{Binding SelectedClient,UpdateSourceTrigger=PropertyChanged}" Margin="332,112,183.6,359.6"/>
+        <Button Content="OK" Height="35" Command="{Binding OKCommand}" Width="150" FontWeight="Bold" />
+        <Button Content="CANCEL" Height="35" Width="150" FontWeight="Bold" Margin="490,235,121.6,235.6"  />
+    </Grid>
+</Window>

@@ -9,6 +9,7 @@ using System.Windows.Input;
 
 using Entity;
 using System.Windows;
+using NostrumWPFUI.View;
 
 namespace NostrumWPFUI.ViewModel
 {
@@ -65,21 +66,32 @@ namespace NostrumWPFUI.ViewModel
             this.RaisePropertyChange();
             }
         }
+        private Client _currClient;
+
+        public Client CurrentClient
+        {
+            get { return _currClient; }
+            set { _currClient = value;this.RaisePropertyChange(); }
+        }
+
 
         List<string> ClientsFromDB = new List<string>();
         public ClientsViewModel()
         {
             Initialize();
-            GetClientDetails();
+            
         }
 
         public ICommand AddClientCommand { get; set; }
         public ICommand ClearCommand { get; set; }
+        public ICommand EditUserCommand { get; set; }
+        
 
         public void Initialize()
         {
             AddClientCommand = new DelegateCommand(AddClientMethod);
             ClearCommand = new DelegateCommand(ClearMethod);
+            EditUserCommand = new DelegateCommand(EditClientMethod);
         }
         private Entity.Client CreateClient()
         {
@@ -126,7 +138,18 @@ namespace NostrumWPFUI.ViewModel
             DLNo = String.Empty;
             TinNo = String.Empty;
         }
-        public void GetClientDetails()
+        public void EditClientMethod(object param)
+        {
+            Client c1 = new Client();
+            EditClientView editClient = new EditClientView();
+            EditClientViewModel editclientVM = new EditClientViewModel(editClient);
+            editClient.DataContext = editclientVM;
+            editClient.ShowDialog();
+            var selectedClient = editclientVM.SelectedClient;
+            CurrentClient = GetClientDetails(selectedClient);
+            LoadClient(CurrentClient);
+        }
+        public Client GetClientDetails(string clientname)
         {
             Entity.Client p = new Entity.Client();
             ClientDAO dao = new ClientDAO(new MySQLDBInterface());
@@ -136,7 +159,16 @@ namespace NostrumWPFUI.ViewModel
             //p.Amount = 1000;
             //p.Pay_Date = new DateTime(2020, 01, 01);
             //dao.addPayment(p);
-            ClientsFromDB = dao.getClients();
+            return dao.getClient(clientname);
+        }
+
+        private void LoadClient(Client client)
+        {
+            ClientName = client.Name;
+            DisplayName = client.Display_Name;
+            Address = client.Addr;
+            DLNo = client.DL_No;
+            TinNo = client.TIN_No;
         }
     }
 }

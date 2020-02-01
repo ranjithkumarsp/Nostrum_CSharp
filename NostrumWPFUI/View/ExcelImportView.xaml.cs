@@ -35,7 +35,7 @@ namespace NostrumWPFUI.View
         public ExcelImportView()
         {
             InitializeComponent();
-            xlApp = new Application();
+           // xlApp = new Application();
         }
 
 
