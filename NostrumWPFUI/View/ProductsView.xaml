@@ -37,8 +37,8 @@
             <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right" TextWrapping="Wrap" Text="Product" VerticalAlignment="Center" Height="23" Width="121" FontSize="16" FontFamily="Century Gothic" FontWeight="Bold"  />
             <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right"  TextAlignment="Right" TextWrapping="Wrap" Text="Drug Type" VerticalAlignment="Center" Height="23" Width="121" FontSize="16" FontFamily="Century Gothic" FontWeight="Bold"  />
             <TextBlock Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right"  TextAlignment="Right" TextWrapping="Wrap" Text="Batch No" VerticalAlignment="Center" Height="23" Width="100" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold"  />
-            <TextBlock Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right" TextWrapping="Wrap" Text="Manufacture Date" VerticalAlignment="Center" Height="23" Width="130" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" ClipToBounds="True" SnapsToDevicePixels="True" />
-            <TextBlock Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right" TextWrapping="Wrap" Text="Expiry Date" VerticalAlignment="Center" Height="23" Width="135" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" />
+            <TextBlock Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right" TextWrapping="Wrap" Text="Mfg Date" VerticalAlignment="Center" Height="23" Width="130" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" ClipToBounds="True" SnapsToDevicePixels="True" />
+            <TextBlock Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right" TextWrapping="Wrap" Text="Exp Date" VerticalAlignment="Center" Height="23" Width="135" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" />
             <TextBlock Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right" TextWrapping="Wrap" Text="Quantity" VerticalAlignment="Center" Height="23" Width="135" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" />
             <TextBlock Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right"  TextWrapping="Wrap" Text="CGST" VerticalAlignment="Center" Height="23" Width="121" FontSize="16" FontFamily="Century Gothic" FontWeight="Bold"  />
             <TextBlock Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right"  TextWrapping="Wrap" Text="SGST" VerticalAlignment="Center" Height="23" Width="100" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" />
@@ -47,19 +47,19 @@
             <TextBlock Grid.Row="11" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right" TextWrapping="Wrap" Text="Date of Purchase" VerticalAlignment="Center" Height="23" Width="135" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" />
             <TextBlock Grid.Row="12" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right" TextWrapping="Wrap" Text="Invoice Number" VerticalAlignment="Center" Height="23" Width="135" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold"/>
 
-            <TextBox Grid.Row="1" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="169"   Grid.ColumnSpan="2" Height="30" />
-            <RadioButton  Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="3" Content="Tablet" GroupName="DrugType" VerticalAlignment="Center" HorizontalAlignment="Left" />
-            <RadioButton  Grid.Row="2" Grid.Column="5"  Content="Syrup" Grid.ColumnSpan="2" GroupName="DrugType" HorizontalAlignment="Left" VerticalAlignment="Center"  />
-            <TextBox Grid.Row="3" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" Text="Batch No" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2"/>
-            <DatePicker Background="AliceBlue" Grid.Row="4" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30" Grid.ColumnSpan="2" />
-            <DatePicker Grid.Row="5" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30" Grid.ColumnSpan="2" />
-            <TextBox Grid.Row="6" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" Text="Quantity" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2"  />
-            <TextBox Grid.Row="7" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" Text="CGST" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2"  />
-            <TextBox Grid.Row="8" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" Text="SGST" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2"  />
-            <TextBox  BorderThickness="2" Grid.Row="9" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" Text="MRP" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2"  />
-            <TextBox Grid.Row="10" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" Text="Manufacturer" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2" />
-            <DatePicker Grid.Row="11" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30" Grid.ColumnSpan="2"  />
-            <TextBox  BorderThickness="2" Grid.Row="12" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" Text="Invoice Number" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2"   />
+            <TextBox Text ="{Binding ProductName}"  Grid.Row="1" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="169"   Grid.ColumnSpan="2" Height="30" />
+            <RadioButton  IsChecked="{Binding Tablet}" Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="3" Content="Tablet" GroupName="DrugType" VerticalAlignment="Center" HorizontalAlignment="Left" />
+            <RadioButton  IsChecked="{Binding Syrup}" Grid.Row="2" Grid.Column="5"  Content="Syrup" Grid.ColumnSpan="2" GroupName="DrugType" HorizontalAlignment="Left" VerticalAlignment="Center"  />
+            <TextBox Text ="{Binding BatchNo}" Grid.Row="3" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2"/>
+            <DatePicker Text ="{Binding MfgDate}" Background="AliceBlue" Grid.Row="4" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30" Grid.ColumnSpan="2" />
+            <DatePicker Text ="{Binding ExpDate}" Grid.Row="5" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30" Grid.ColumnSpan="2" />
+            <TextBox Text ="{Binding Quantity}" Grid.Row="6" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2"  />
+            <TextBox Text ="{Binding CGST}" Grid.Row="7" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2"  />
+            <TextBox Text ="{Binding SGST}" Grid.Row="8" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2"  />
+            <TextBox Text ="{Binding MRP}" BorderThickness="2" Grid.Row="9" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2"  />
+            <TextBox Text ="{Binding Manufacturer}" Grid.Row="10" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2" />
+            <DatePicker Text ="{Binding PurchaseDate}" Grid.Row="11" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30" Grid.ColumnSpan="2"  />
+            <TextBox Text ="{Binding PurchaseInvoiceNo}" BorderThickness="2" Grid.Row="12" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2"   />
 
 
             <Grid Grid.Row="14" Grid.Column="2" Grid.ColumnSpan="5" >
