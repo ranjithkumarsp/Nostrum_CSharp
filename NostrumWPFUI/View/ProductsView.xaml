@@ -48,7 +48,7 @@
             <TextBlock Grid.Row="11" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right" TextWrapping="Wrap" Text="Date of Purchase" VerticalAlignment="Center" Height="23" Width="135" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" />
             <TextBlock Grid.Row="12" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right" TextWrapping="Wrap" Text="Invoice Number" VerticalAlignment="Center" Height="23" Width="135" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold"/>
 
-            <ListBox Grid.Row="1" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="169"   Grid.ColumnSpan="2" Height="53" />
+            <TextBox Grid.Row="1" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="169"   Grid.ColumnSpan="2" Height="30" />
             <RadioButton  Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="3" Content="Tablet" GroupName="DrugType" VerticalAlignment="Center" HorizontalAlignment="Left" />
             <RadioButton  Grid.Row="2" Grid.Column="5"  Content="Syrup" Grid.ColumnSpan="2" GroupName="DrugType" HorizontalAlignment="Left" VerticalAlignment="Center"  />
             <TextBox Grid.Row="3" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" Text="Batch No" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2"/>

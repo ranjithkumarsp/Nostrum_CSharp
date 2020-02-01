@@ -28,6 +28,9 @@ namespace Entity
                 _name = value;
             }
         }
+
+        
+
         public string Phone
         {
             get
@@ -111,11 +114,6 @@ namespace Entity
             {
                 _dlNo = value;
             }
-        }
-
-        public override string ToString()
-        {
-            return "Name = " + Name + "Phone = " + Phone;
         }
     }
 }

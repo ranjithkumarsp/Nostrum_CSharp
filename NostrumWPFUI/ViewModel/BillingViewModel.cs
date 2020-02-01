@@ -32,5 +32,14 @@ namespace NostrumWPFUI.ViewModel
         {
 
         }
+
+        private string myVar;
+
+        public string MyProperty
+        {
+            get { return myVar; }
+            set { myVar = value; }
+        }
+
     }
 }

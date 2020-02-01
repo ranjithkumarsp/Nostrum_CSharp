@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NostrumWPFUI.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,13 @@ namespace NostrumWPFUI
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = new MainWindowViewModel();
+
+        }
+
+        private void NostrumMainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            
         }
     }
 }

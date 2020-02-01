@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:NostrumWPFUI"
         xmlns:Views="clr-namespace:NostrumWPFUI.View"
         mc:Ignorable="d"
-        Title="MainWindow" Name="NostrumMainWindow" Height="750" Width="850" >
+        Title="MainWindow" Name="NostrumMainWindow" Height="750" Width="850" Closing="NostrumMainWindow_Closing" >
     <Grid>
         <Menu Name="FileMenu" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" MinWidth="750" Width="{Binding ElementName=NostrumMainWindow,Path=Width}">
             <MenuItem Name="File" Header="File">
@@ -17,14 +17,14 @@
             </MenuItem>
             <MenuItem Name="Data" Header="Data"/>
             <MenuItem Name="Import" Header="Import">
-                <MenuItem Header="Single Excel"/>
+                <MenuItem Header="Single Excel" Command="{Binding SingleExcelImportCommand}"/>
                 <MenuItem Header="Batch Excel"/>
             </MenuItem>
             <MenuItem Name="Help" Header="Help">
                 <MenuItem Header="About"/>
             </MenuItem>
         </Menu>
-        <TabControl TabStripPlacement="Top" HorizontalAlignment="Left" Height="{Binding ElementName=NostrumMainWindow,Path=Height}" VerticalAlignment="Top" Width="{Binding ElementName=NostrumMainWindow,Path=Width}" Margin="0,25,0,0">
+        <TabControl  TabStripPlacement="Top" HorizontalAlignment="Left" Height="{Binding ElementName=NostrumMainWindow,Path=Height}" VerticalAlignment="Top" Width="{Binding ElementName=NostrumMainWindow,Path=Width}" Margin="0,25,0,0">
             <TabItem Header="Billing">
                 <Views:BillingView/>
             </TabItem>
@@ -39,6 +39,9 @@
             </TabItem>
             <TabItem Header="Stocks">
                 <Views:StocksView/>
+            </TabItem>
+            <TabItem Header="Import Excel">
+                <Views:ExcelImportView/>
             </TabItem>
         </TabControl>
 

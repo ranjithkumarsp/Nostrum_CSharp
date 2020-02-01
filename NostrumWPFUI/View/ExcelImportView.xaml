@@ -1,0 +1,74 @@
+﻿<UserControl x:Class="NostrumWPFUI.View.ExcelImportView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NostrumWPFUI.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="370"/>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Background="GhostWhite" Margin="0,0,0,25" BorderBrush="Gray" BorderThickness="4" Grid.Row="0" Grid.ColumnSpan="4">
+                <TextBlock Text="NOSTRUM EXCEL READER" FontSize="25" TextAlignment="Center">
+                    <TextBlock.Effect>
+                        <DropShadowEffect
+      ShadowDepth="4"
+      Direction="330"
+      Color="Black"
+      Opacity="0.5"
+     BlurRadius="4"/>
+                    </TextBlock.Effect>
+                </TextBlock>
+            </Border>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Select File to import:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Name="FilePath" Height="35" Width="360" HorizontalAlignment="Left"/>
+            <Button Grid.Row="1" Grid.Column="2" Name="FileSelector" Content="Select File" Height="35" Width="120" Click="FileSelector_Click" HorizontalAlignment="Left"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Select Folder to import:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+            <TextBox Grid.Row="2" Grid.Column="1" Name="FolderPath" Height="35" Width="360" HorizontalAlignment="Left"/>
+            <Button Grid.Row="2" Grid.Column="2" Name="FolderSelector" Content="Select Folder" Height="35" Width="120" Click="FolderSelector_Click" HorizontalAlignment="Left"/>
+            <ComboBox Grid.Row="3" Grid.Column="2" Name="BatchDisplayCombo" SelectionChanged="BatchDisplayCombo_SelectionChanged" HorizontalAlignment="Left" SelectedIndex="0" DisplayMemberPath="FileName" 
+                  VerticalAlignment="Center" Height="30" Width="130"/>
+            <DataGrid Grid.Row="4" Grid.ColumnSpan="4" Name="DisplayExcelValues" Background="LightGray" RowBackground="LightYellow" AlternatingRowBackground="Ivory" 
+                  GridLinesVisibility="Vertical" HeadersVisibility="All" BorderBrush="Gray" BorderThickness="2"
+                  IsReadOnly="True" AreRowDetailsFrozen="True" FrozenColumnCount="2"
+                  HorizontalAlignment="Left" Height="Auto"  
+                  VerticalAlignment="Top" Width="auto"/>
+            <DataGrid Name="DisplayInvoiceData" Grid.Row="5" Grid.ColumnSpan="4"
+                  HorizontalAlignment="Left" Height="Auto"  
+                  VerticalAlignment="Top" Width="auto"/>
+
+            <!--<Button Content="Open Another Excel" Grid.Row="6" HorizontalAlignment="Left" VerticalAlignment="Top" Width="136" Click="OpenAnotherExcel_Click"/>-->
+
+            <!--<DockPanel>
+            <DataGrid Name="DisplayExcelValues" DockPanel.Dock="Top"
+                  HorizontalAlignment="Left" Height="Auto"  
+                  VerticalAlignment="Top" Width="auto"/>
+            <DataGrid Name="DisplayInvoiceData" DockPanel.Dock="Right"
+                  HorizontalAlignment="Right" Height="Auto"  
+                  VerticalAlignment="Top" Width="auto"/>
+            <StackPanel DockPanel.Dock="Bottom">
+                <Button Content="Open Another Excel" HorizontalAlignment="Left" VerticalAlignment="Top" Width="136" Click="OpenAnotherExcel_Click"/>
+            </StackPanel>
+        </DockPanel>-->
+        </Grid>
+    </Grid>
+</UserControl>

@@ -75,6 +75,31 @@ namespace NostrumDB
             return clientNames;
         }
 
+        public List<Client> GetClientInfo()
+        {
+            List<Client> ClientInfoList = new List<Client>();
+            Client client = new Client();
+            string query = "Select * from clients;";
+
+            DataTable dataTable = _dbInterface.ExecuteQuery(query);
+
+            foreach (DataRow dr in dataTable.Rows)
+            {
+                client.Name = dr["Name"].ToString();
+                client.Display_Name = dr["Display_Name"].ToString();
+                client.Addr1 = dr["Addr1"].ToString();
+                client.Addr2 = dr["Addr2"].ToString();
+                client.Addr3 = dr["Addr3"].ToString();                
+                client.DL_No = dr["DL_No"].ToString();
+                client.Phone = dr["Phone"].ToString();
+                client.TIN_No = dr["TIN_No"].ToString();
+                //clientNames.Add(dr["Display_Name"].ToString());
+                ClientInfoList.Add(client);
+            }
+
+            return ClientInfoList;
+        }
+
         public bool updateClient(Client client)
         {
             int nRowsAffected = 0;
