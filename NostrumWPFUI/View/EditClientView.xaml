@@ -6,6 +6,15 @@
              xmlns:local="clr-namespace:NostrumWPFUI.View"
              mc:Ignorable="d" 
             >
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Styles/NostrumUIStyles.xaml"/>
+
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+   
     <Grid>
         <TextBlock Text="EDIT CLIENT"  FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         <TextBlock Text="Select Client To Edit:" Height="35"  Width="Auto" FontSize="25" Margin="69,112,463.6,358.6"/>

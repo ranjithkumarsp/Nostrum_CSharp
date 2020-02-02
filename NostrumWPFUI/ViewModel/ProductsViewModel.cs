@@ -9,11 +9,15 @@ using System.Windows.Input;
 using NostrumDB;
 using Entity;
 using System.Windows;
+using NostrumWPFUI.View;
+using System.Collections.ObjectModel;
 
 namespace NostrumWPFUI.ViewModel
 {
     public class ProductsViewModel:BaseViewModel
     {
+        #region Properties
+
         private string _productName;
 
         public string ProductName
@@ -97,8 +101,16 @@ namespace NostrumWPFUI.ViewModel
 
         public string Manufacturer
         {
-            get { return _mfr; }
-            set { _mfr = value; this.RaisePropertyChange(); }
+            get
+            {
+                return _mfr;
+            }
+            set
+            {
+                _mfr = NostrumHelpers.UppercaseFirst(value); 
+                
+                this.RaisePropertyChange();
+            }
         }
 
         private DateTime _purchaseDate;
@@ -117,20 +129,47 @@ namespace NostrumWPFUI.ViewModel
             set { _invNo = value; this.RaisePropertyChange(); }
         }
 
+        private ObservableCollection<string> _manfAutoCompleteCollection = new ObservableCollection<string>();
+
+        public ObservableCollection<string> ManfAutoCompleteCollection
+        {
+            get { return _manfAutoCompleteCollection; }
+            set { _manfAutoCompleteCollection = value;this.RaisePropertyChange(); }
+        }
+
+        #endregion
+
         public ProductsViewModel()
         {
             Initialize();
         }
         public ICommand SubmitCommand { get; set; }
         public ICommand ClearCommand { get; set; }
+        public ICommand EditProductCommand { get; set; }
+        
 
         public void Initialize()
         {
             SubmitCommand = new DelegateCommand(SubmitMethod);
             ClearCommand = new DelegateCommand(ClearMethod);
+            EditProductCommand = new DelegateCommand(EditProductMethod);
             MfgDate = DateTime.Today;
             ExpDate = DateTime.Today;
             PurchaseDate = DateTime.Today;
+            ProductDAO productDao = new ProductDAO(new MySQLDBInterface());
+            List<string> manfactures = productDao.getManufacturers();
+            manfactures.ForEach(item => { ManfAutoCompleteCollection.Add(item); });
+           // ManfAutoCompleteCollection.Add(); 
+        }
+
+        private void EditProductMethod(object obj)
+        {
+            EditProductPopUpView editproductPopup = new EditProductPopUpView();
+            EditProductPopUpViewModel _editProductPopUpViewModel = new EditProductPopUpViewModel();
+            editproductPopup.DataContext = _editProductPopUpViewModel;
+            editproductPopup.Topmost = true;
+            editproductPopup.ShowDialog();
+            
         }
 
         private Entity.Product CreateProduct()
