@@ -150,9 +150,9 @@ namespace NostrumWPFUI.ViewModel
 
         public void Initialize()
         {
-            SubmitCommand = new DelegateCommand(SubmitMethod);
-            ClearCommand = new DelegateCommand(ClearMethod);
-            EditProductCommand = new DelegateCommand(EditProductMethod);
+            SubmitCommand = new CustomDelegateCommand(SubmitMethod);
+            ClearCommand = new CustomDelegateCommand(ClearMethod);
+            EditProductCommand = new CustomDelegateCommand(EditProductMethod);
             MfgDate = DateTime.Today;
             ExpDate = DateTime.Today;
             PurchaseDate = DateTime.Today;
@@ -167,7 +167,7 @@ namespace NostrumWPFUI.ViewModel
             EditProductPopUpView editproductPopup = new EditProductPopUpView();
             EditProductPopUpViewModel _editProductPopUpViewModel = new EditProductPopUpViewModel();
             editproductPopup.DataContext = _editProductPopUpViewModel;
-            editproductPopup.Topmost = true;
+            editproductPopup.Owner = MainWindow;
             editproductPopup.ShowDialog();
             
         }

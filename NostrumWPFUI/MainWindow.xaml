@@ -7,7 +7,10 @@
         xmlns:local="clr-namespace:NostrumWPFUI"
         xmlns:Views="clr-namespace:NostrumWPFUI.View"
         mc:Ignorable="d"
-        Title="MainWindow" Name="NostrumMainWindow" Height="750" Width="850" Closing="NostrumMainWindow_Closing" >
+        Title="MainWindow" Name="NostrumMainWindow" 
+        Height="750" Width="850" Closing="NostrumMainWindow_Closing"
+        WindowStartupLocation="CenterScreen"  ResizeMode="CanMinimize"
+        >
     <Grid>
         <Menu Name="FileMenu" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" MinWidth="750" Width="{Binding ElementName=NostrumMainWindow,Path=Width}">
             <MenuItem Name="File" Header="File">

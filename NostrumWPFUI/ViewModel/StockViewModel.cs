@@ -21,8 +21,8 @@ namespace NostrumWPFUI.ViewModel
 
         public void Initialize()
         {
-            ShowCommand = new DelegateCommand(ShowMethod);
-            ClearCommand = new DelegateCommand(ClearMethod);
+            ShowCommand = new CustomDelegateCommand(ShowMethod);
+            ClearCommand = new CustomDelegateCommand(ClearMethod);
         }
 
         public void ShowMethod(object param)

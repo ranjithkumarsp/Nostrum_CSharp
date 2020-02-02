@@ -10,13 +10,12 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Styles/NostrumUIStyles.xaml"/>
-
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
    
     <Grid>
-        <TextBlock Text="EDIT CLIENT"  FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <!--<TextBlock Text="EDIT CLIENT"  FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Top"/>-->
         <TextBlock Text="Select Client To Edit:" Height="35"  Width="Auto" FontSize="25" Margin="69,112,463.6,358.6"/>
         <ComboBox Name="LoadClientCombo" ItemsSource="{Binding ClientsList}" SelectedItem="{Binding SelectedClient,UpdateSourceTrigger=PropertyChanged}" Margin="332,112,183.6,359.6"/>
         <Button Content="OK" Height="35" Command="{Binding OKCommand}" Width="150" FontWeight="Bold" />

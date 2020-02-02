@@ -24,8 +24,8 @@ namespace NostrumWPFUI.ViewModel
         public void Initialize()
         {
             ExcelReader = new ExcelReaderClass();
-            SingleExcelImportCommand = new DelegateCommand(SingleExcelImportMethod);
-            ClearCommand = new DelegateCommand(ClearMethod);
+            SingleExcelImportCommand = new CustomDelegateCommand(SingleExcelImportMethod);
+            ClearCommand = new CustomDelegateCommand(ClearMethod);
         }
 
         public void SingleExcelImportMethod(object param)

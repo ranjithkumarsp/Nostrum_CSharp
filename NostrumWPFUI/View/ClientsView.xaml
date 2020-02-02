@@ -3,10 +3,23 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:local="clr-namespace:NostrumWPFUI.View"
+             xmlns:conv="clr-namespace:NostrumWPFUI.Helpers"
              mc:Ignorable="d">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding OnLoadedCmd}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <UserControl.Resources>
-        <ResourceDictionary Source="../Styles/NostrumUIStyles.xaml"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Styles/NostrumUIStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <conv:DebugConverter x:Key="DebugConverter"/>
+        </ResourceDictionary>
+        
     </UserControl.Resources>
     <Grid>
         <Grid Background="WhiteSmoke">
@@ -31,7 +44,7 @@
                 <ColumnDefinition Width="0"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition x:Name="RightMargin2" Width="36.146"/>
-                <ColumnDefinition Width="44.654"/>
+                <ColumnDefinition Width="90"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Row="2" Grid.Column="2"  HorizontalAlignment="Right" VerticalAlignment="Center"  TextWrapping="Wrap" Text="Client Name"  Height="23" Width="Auto" FontSize="16" FontFamily="Century Gothic" FontWeight="Bold"  />
             <TextBlock Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap" Text="Display Name"  Height="23" Width="Auto" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" />
@@ -39,22 +52,22 @@
             <TextBlock Grid.Row="5" Grid.Column="2"  HorizontalAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap" Text="D/L No"  Height="23" Width="Auto" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold"  />
             <TextBlock Grid.Row="6" Grid.Column="2"  HorizontalAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap" Text="TIN No"  Height="23" Width="Auto" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold"  />
 
-            <TextBox Grid.Row="2" Grid.Column="5"  HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding ClientName, UpdateSourceTrigger=LostFocus}" Width="169"  Height="30"  />
-            <TextBox Grid.Row="3" Grid.Column="5" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding DisplayName, UpdateSourceTrigger=LostFocus}" Width="169" Height="30" />
-            <TextBox Grid.Row="4" Grid.Column="5" HorizontalAlignment="Left" Height="75"   VerticalAlignment="Center" Text="{Binding Address, UpdateSourceTrigger=LostFocus}" Width="169" AcceptsReturn="True" />
-            <TextBox Grid.Row="5" Grid.Column="5" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" Text="{Binding DLNo, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Width="169"  />
-            <TextBox Grid.Row="6" Grid.Column="5" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" Text="{Binding TinNo, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" Width="169"  />
+            <TextBox Grid.Row="2" Grid.Column="5"  HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding ClientName, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}"  Width="169"  Height="30" Style="{StaticResource TextErrorStyle}"  />
+            <TextBox Grid.Row="3" Grid.Column="5" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding DisplayName, UpdateSourceTrigger=LostFocus,ValidatesOnDataErrors=True}" Width="169" Height="30" Style="{StaticResource TextErrorStyle}"/>
+            <TextBox Grid.Row="4" Grid.Column="5" HorizontalAlignment="Left" Height="75"   VerticalAlignment="Center" Text="{Binding Address, UpdateSourceTrigger=LostFocus,ValidatesOnDataErrors=True}" Width="169" AcceptsReturn="True" Style="{StaticResource TextErrorStyle}"/>
+            <TextBox Grid.Row="5" Grid.Column="5" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" Text="{Binding DLNo, UpdateSourceTrigger=LostFocus,ValidatesOnDataErrors=True}" VerticalAlignment="Center" Width="169"  Style="{StaticResource TextErrorStyle}"/>
+            <TextBox Grid.Row="6" Grid.Column="5" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" Text="{Binding TinNo, UpdateSourceTrigger=LostFocus,ValidatesOnDataErrors=True}" VerticalAlignment="Center" Width="169"  Style="{StaticResource TextErrorStyle}"/>
+            <Button Content="Edit Client" Style="{StaticResource BoldLinkButton}" Grid.Row="1" Grid.Column="7" Grid.ColumnSpan="2" Command="{Binding EditUserCommand}" />
             <Grid Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="5"  >
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="210"/>
+                    <ColumnDefinition Width="0"/>
                     <ColumnDefinition Width="140"/>
-                    <ColumnDefinition Width="35"/>
-                    <ColumnDefinition Width="140"/>
-                    <ColumnDefinition Width="35"/>
-                    <ColumnDefinition Width="140"/>
+                    
                 </Grid.ColumnDefinitions>
-                <Button Content="Add Client" Grid.Column="0" Command="{Binding AddClientCommand}" />
-                <Button Content="Clear" Grid.Column="2" Command="{Binding ClearCommand}" />
-                <Button Content="Edit User" Style="{StaticResource LinkButton}" Grid.Column="4" Command="{Binding EditUserCommand}" />
+                <Button Content="{Binding ClientNameBtn,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Height="30" Width="100" Grid.Column="0" Command="{Binding AddClientCommand}" HorizontalAlignment="Right"  VerticalAlignment="Center"/>
+                <Button Content="Clear" Height="30" Width="100" Grid.Column="2" Command="{Binding ClearCommand}" HorizontalAlignment="Center"  VerticalAlignment="Center"/>
+                
             </Grid>
         </Grid>
     </Grid>

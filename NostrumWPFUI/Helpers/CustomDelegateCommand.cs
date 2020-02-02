@@ -7,17 +7,17 @@ using System.Windows.Input;
 
 namespace NostrumWPFUI.Helpers
 {
-    class DelegateCommand : ICommand
+    public class CustomDelegateCommand : ICommand
     {
         private Action<object> execute;
         private Func<object, bool> canExecute;
 
-        public DelegateCommand(Action<object> execute)
+        public CustomDelegateCommand(Action<object> execute)
         {
             this.execute = execute;
             this.canExecute = (x) => { return true; };
         }
-        public DelegateCommand(Action<object> execute, Func<object, bool> canExecute)
+        public CustomDelegateCommand(Action<object> execute, Func<object, bool> canExecute)
         {
             this.execute = execute;
             this.canExecute = canExecute;

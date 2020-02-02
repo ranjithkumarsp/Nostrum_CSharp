@@ -21,8 +21,8 @@ namespace NostrumWPFUI.ViewModel
 
         public void OnPopupLoad()
         {
-            OKCommand = new DelegateCommand(OkMethod);
-            CancelCommand = new DelegateCommand(CancelMethod);
+            OKCommand = new CustomDelegateCommand(OkMethod);
+            CancelCommand = new CustomDelegateCommand(CancelMethod);
             ProductDAO dao = new ProductDAO(new MySQLDBInterface());
             ProductNameList = dao.getProductNames();
             SelectedProduct = ProductNameList.FirstOrDefault();

@@ -20,8 +20,8 @@ namespace NostrumWPFUI.ViewModel
 
         public void Initialize()
         {
-            BillingCommand = new DelegateCommand(BillingMethod);
-            ClearCommand = new DelegateCommand(ClearMethod);
+            BillingCommand = new CustomDelegateCommand(BillingMethod);
+            ClearCommand = new CustomDelegateCommand(ClearMethod);
         }
 
         public void BillingMethod(object param)

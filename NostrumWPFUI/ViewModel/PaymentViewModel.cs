@@ -19,8 +19,8 @@ namespace NostrumWPFUI.ViewModel
 
         public void Initialize()
         {
-            InvoiceDetailsCommand = new DelegateCommand(InvoiceDetailsMethod);
-            OutStandingDetailsCommand = new DelegateCommand(OutStandingDetailsMethod);
+            InvoiceDetailsCommand = new CustomDelegateCommand(InvoiceDetailsMethod);
+            OutStandingDetailsCommand = new CustomDelegateCommand(OutStandingDetailsMethod);
         }
 
         public void InvoiceDetailsMethod(object param)

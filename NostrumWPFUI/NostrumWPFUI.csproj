@@ -38,6 +38,9 @@
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -47,9 +50,18 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Dll's\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Prism, Version=7.2.0.1422, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Core.7.2.0.1422\lib\net45\Prism.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -69,16 +81,20 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Behaviours\AutoCompleteBehavior.cs" />
-    <Compile Include="Helpers\DelegateCommand.cs" />
+    <Compile Include="Behaviours\WindowClosingBehavior.cs" />
+    <Compile Include="Helpers\CustomDelegateCommand.cs" />
+    <Compile Include="Helpers\DebugConverter.cs" />
     <Compile Include="Helpers\ExcelProduct.cs" />
+    <Compile Include="Helpers\IClosable.cs" />
     <Compile Include="Helpers\InvoiceData.cs" />
     <Compile Include="Helpers\NostrumConstants.cs" />
     <Compile Include="Helpers\BatchSheetData.cs" />
     <Compile Include="Helpers\NostrumHelpers.cs" />
+    <Compile Include="Helpers\RelayCommand.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\BillingViewModel.cs" />
     <Compile Include="ViewModel\ClientsViewModel.cs" />
-    <Compile Include="ViewModel\EditClientViewModel.cs" />
+    <Compile Include="ViewModel\EditClientPopupViewModel.cs" />
     <Compile Include="ViewModel\EditProductPopUpViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\PaymentViewModel.cs" />
@@ -89,6 +105,9 @@
     </Compile>
     <Compile Include="View\ClientsView.xaml.cs">
       <DependentUpon>ClientsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\EditClientPopupView.xaml.cs">
+      <DependentUpon>EditClientPopupView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\EditClientView.xaml.cs">
       <DependentUpon>EditClientView.xaml</DependentUpon>
@@ -129,6 +148,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ClientsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\EditClientPopupView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

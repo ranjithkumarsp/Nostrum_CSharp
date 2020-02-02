@@ -4,14 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NostrumWPFUI.View"
+        xmlns:behaviors="clr-namespace:NostrumWPFUI.Behaviours"
+        behaviors:WindowClosingBehavior.Enabled="True"
         mc:Ignorable="d"
-        Title="EditProductPopUpView" Height="250" Width="450" ShowInTaskbar="False" WindowStartupLocation="CenterOwner"
-        WindowState="Normal" WindowStyle="SingleBorderWindow" ResizeMode="NoResize"
+        Title="EditProductPopUpView" Height="250" Width="450" ShowInTaskbar="False" WindowStartupLocation="CenterScreen"
+        WindowState="Normal" WindowStyle="SingleBorderWindow" ResizeMode="NoResize" 
         >
     <Window.Resources>
         <ResourceDictionary Source="../Styles/NostrumUIStyles.xaml"/>
     </Window.Resources>
-    <Grid>
+    <Grid Background="WhiteSmoke">
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="auto"/>

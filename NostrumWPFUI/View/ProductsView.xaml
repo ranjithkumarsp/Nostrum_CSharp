@@ -14,7 +14,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition x:Name="header1" Height="45"/>
                 <RowDefinition Height="55"/>
-                <RowDefinition Height="50"/>
+                <RowDefinition Height="30"/>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
@@ -35,7 +35,7 @@
                 <ColumnDefinition Width="150"/>
                 <ColumnDefinition Width="10"/>
                 <ColumnDefinition Width="80"/>
-                <ColumnDefinition Width="95*"/>
+                <ColumnDefinition Width="95"/>
                 <ColumnDefinition x:Name="RightMargin1" Width="140"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right" TextWrapping="Wrap" Text="Product" VerticalAlignment="Center" Height="23" Width="121" FontSize="16" FontFamily="Century Gothic" FontWeight="Bold"  />
@@ -67,18 +67,16 @@
                      />
             <DatePicker Text ="{Binding PurchaseDate}" Grid.Row="11" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30" Grid.ColumnSpan="2"  />
             <TextBox Text ="{Binding PurchaseInvoiceNo}" BorderThickness="2" Grid.Row="12" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2"   />
-            <Button Content="EditProduct" Style="{StaticResource LinkButton1}" Grid.Row="0" Grid.Column="6" Command="{Binding EditProductCommand}"
-                    FontSize="15" FontStyle="Normal" FontWeight="UltraBlack" HorizontalAlignment="Center" VerticalAlignment="Center"
-                    />
+            <Button Content="EditProduct" Style="{StaticResource BoldLinkButton}" Grid.Row="1" Grid.Column="6" Command="{Binding EditProductCommand}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
             <Grid Grid.Row="14" Grid.Column="2" Grid.ColumnSpan="5" >
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="140"/>
-                    <ColumnDefinition Width="35"/>
+                    <ColumnDefinition Width="210"/>
+                    <ColumnDefinition Width="20"/>
                     <ColumnDefinition Width="140"/>
                 </Grid.ColumnDefinitions>
-                <Button Content="Submit" Grid.Column="0" Command="{Binding SubmitCommand}" />
-                <Button Content="Clear" Grid.Column="2" Command="{Binding ClearCommand}" />
+                <Button Content="Submit" Grid.Column="0" Command="{Binding SubmitCommand}" Height="30" Width="100" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                <Button Content="Clear" Grid.Column="2" Command="{Binding ClearCommand}" Height="30" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
             </Grid>
         </Grid>

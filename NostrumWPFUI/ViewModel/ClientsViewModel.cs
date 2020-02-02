@@ -10,11 +10,14 @@ using System.Windows.Input;
 using Entity;
 using System.Windows;
 using NostrumWPFUI.View;
+using System.ComponentModel;
 
 namespace NostrumWPFUI.ViewModel
 {
-    public class ClientsViewModel:BaseViewModel
+    public class ClientsViewModel:BaseViewModel, IDataErrorInfo
     {
+        #region Properties
+
         private string _clientName;
 
         public string ClientName
@@ -66,6 +69,16 @@ namespace NostrumWPFUI.ViewModel
             this.RaisePropertyChange();
             }
         }
+
+        private string _clientNameBtn;
+
+        public string ClientNameBtn
+        {
+            get { return _clientNameBtn; }
+            set { _clientNameBtn = value;this.RaisePropertyChange(); }
+        }
+
+
         private Client _currClient;
 
         public Client CurrentClient
@@ -74,8 +87,10 @@ namespace NostrumWPFUI.ViewModel
             set { _currClient = value;this.RaisePropertyChange(); }
         }
 
-
         List<string> ClientsFromDB = new List<string>();
+
+        #endregion
+
         public ClientsViewModel()
         {
             Initialize();
@@ -85,14 +100,75 @@ namespace NostrumWPFUI.ViewModel
         public ICommand AddClientCommand { get; set; }
         public ICommand ClearCommand { get; set; }
         public ICommand EditUserCommand { get; set; }
-        
+        public ICommand OnLoadedCmd { get; set; }
+
+        public string Error
+        {
+            get { return null; }
+        }
+
+        public string this[string propertyName]
+        {
+            get
+            {
+                string result = string.Empty;
+                //if (propertyName == "ClientName")
+                //{
+                //    if (this.ClientName == "")
+                //        result = "Name can not be empty";
+                //}
+                //else if(propertyName == "DisplayName")
+                //{
+                //    if (this.DisplayName == "")
+                //        result = string.Format("{0} Cannot be Empty", propertyName);
+                //}
+                //else if (propertyName == "Address")
+                //{
+                //    if (this.Address == "")
+                //        result = string.Format("{0} Cannot be Empty", propertyName);
+                //}
+                switch (propertyName)
+                {
+                    case "ClientName":
+                        if (this.ClientName == "")
+                            result = string.Format("{0} Cannot be Empty", propertyName);
+                        break;
+                    case "DisplayName":
+                            if (this.DisplayName == "")
+                            result = string.Format("{0} Cannot be Empty", propertyName);
+                        break;
+                    case "Address":
+                        if (this.Address == "")
+                            result = string.Format("{0} Cannot be Empty", propertyName);
+                        break;
+                    case "DLNo":
+                        if (this.DLNo == "")
+                            result = string.Format("{0} Cannot be Empty", propertyName);
+                        break;
+                    case "TinNo":
+                        if (this.TinNo == "")
+                            result = string.Format("{0} Cannot be Empty", propertyName);
+                        break;
+                }
+
+                return result;
+            }
+        }
 
         public void Initialize()
         {
-            AddClientCommand = new DelegateCommand(AddClientMethod);
-            ClearCommand = new DelegateCommand(ClearMethod);
-            EditUserCommand = new DelegateCommand(EditClientMethod);
+            AddClientCommand = new CustomDelegateCommand(AddClientMethod);
+            ClearCommand = new CustomDelegateCommand(ClearMethod);
+            EditUserCommand = new CustomDelegateCommand(EditClientMethod);
+            OnLoadedCmd = new CustomDelegateCommand(this.OnLoadedMthd);
+            ClientNameBtn = "Add Client";
         }
+
+        private void OnLoadedMthd(object obj)
+        {
+            
+        }
+
         private Entity.Client CreateClient()
         {
             Entity.Client cl = new Client();
@@ -137,15 +213,19 @@ namespace NostrumWPFUI.ViewModel
             Address = String.Empty;
             DLNo = String.Empty;
             TinNo = String.Empty;
+            ClientNameBtn = "Add Client";
         }
         public void EditClientMethod(object param)
         {
             Client c1 = new Client();
-            EditClientView editClient = new EditClientView();
-            EditClientViewModel editclientVM = new EditClientViewModel(editClient);
-            editClient.DataContext = editclientVM;
+            EditClientPopupView editClient = new EditClientPopupView();
+            EditClientPopupViewModel editPopupclientVM = new EditClientPopupViewModel();
+            editClient.DataContext = editPopupclientVM;
+            editClient.Owner = MainWindow;
+            //editClient.Topmost = true;
             editClient.ShowDialog();
-            var selectedClient = editclientVM.SelectedClient;
+            var selectedClient = editPopupclientVM.SelectedClient;
+            ClientNameBtn = !string.IsNullOrWhiteSpace(selectedClient) ? ClientNameBtn = "Update Client" : ClientNameBtn = "Add Client";
             CurrentClient = GetClientDetails(selectedClient);
             LoadClient(CurrentClient);
         }
