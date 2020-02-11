@@ -107,7 +107,7 @@ namespace NostrumWPFUI.ViewModel
             }
             set
             {
-                _mfr = NostrumHelpers.UppercaseFirst(value); 
+                _mfr = NostrumHelper.UppercaseFirst(value); 
                 
                 this.RaisePropertyChange();
             }

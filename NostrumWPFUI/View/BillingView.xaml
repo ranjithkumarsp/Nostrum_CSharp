@@ -33,10 +33,23 @@
             <TextBlock Grid.Row="2" Grid.Column="2"  HorizontalAlignment="Right"  TextWrapping="Wrap" Text="Date" VerticalAlignment="Center" Height="23" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" />
             <TextBlock Grid.Row="3" Grid.Column="2"  HorizontalAlignment="Right"  TextWrapping="Wrap" Text="Invoice Number" VerticalAlignment="Center" Height="23"  FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" ClipToBounds="True" SnapsToDevicePixels="True" />
             <TextBlock Text="Payment Terms" Grid.Row="4" Grid.Column="2"  HorizontalAlignment="Right"  TextWrapping="Wrap"  VerticalAlignment="Center" Height="23" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" ClipToBounds="True" SnapsToDevicePixels="True" />
-            <ComboBox Grid.Row="1" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="169"  Height="30" />
+            <ComboBox Grid.Row="1" ItemsSource="{Binding ClientsList}" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="169"  Height="30" IsEditable="True" IsSynchronizedWithCurrentItem="True" IsTabStop="True" StaysOpenOnEdit="True" AllowDrop="True" 
+                      PreviewTextInput="PreviewTextInput_EnhanceComboSearch"
+                      PreviewKeyUp="PreviewKeyUp_EnhanceComboSearch"
+                      DataObject.Pasting="Pasting_EnhanceComboSearch">
+                <ComboBox.Style>
+                    <Style TargetType="ComboBox">
+                        <Style.Triggers>
+                            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                <Setter Property="IsDropDownOpen" Value="true" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ComboBox.Style>
+            </ComboBox>
             <DatePicker Grid.Row="2" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30" />
             <TextBox Grid.Row="3" Grid.Column="4" TextAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="169" Width="Auto" Height="36"  />
-            <TextBox Grid.Row="4" Grid.Column="4" TextAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="45" Width="61" Height="36"  />
+            <TextBox Grid.Row="4" Grid.Column="4" TextAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="45" Width="61" Height="36" Text="30"  />
             <TextBlock Text="Days" Grid.Row="4" Grid.Column="4" TextAlignment="Center"  HorizontalAlignment="Left" VerticalAlignment="Center"  Width="50" Height="35" FontWeight="Bold" RenderTransformOrigin="-2.289,0.622" Margin="66.2,16,0,5"/>
             <Grid Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="5">
                 <Grid.ColumnDefinitions>

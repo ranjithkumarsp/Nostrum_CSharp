@@ -36,6 +36,8 @@ namespace NostrumWPFUI.ViewModel
             set { _mainWindow = value; this.RaisePropertyChange(); }
         }
 
+        public Dictionary<string, string> ErrorCollection = new Dictionary<string, string>();
+
     }
 
 }

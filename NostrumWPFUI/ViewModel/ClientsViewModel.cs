@@ -11,6 +11,8 @@ using Entity;
 using System.Windows;
 using NostrumWPFUI.View;
 using System.ComponentModel;
+using System.Reflection;
+using System.Windows.Controls;
 
 namespace NostrumWPFUI.ViewModel
 {
@@ -97,10 +99,11 @@ namespace NostrumWPFUI.ViewModel
             
         }
 
-        public ICommand AddClientCommand { get; set; }
+        //public ICommand AddClientCommand { get; set; }
         public ICommand ClearCommand { get; set; }
         public ICommand EditUserCommand { get; set; }
         public ICommand OnLoadedCmd { get; set; }
+        public RelayCommand AddClientCommand { get; set; }
 
         public string Error
         {
@@ -151,17 +154,73 @@ namespace NostrumWPFUI.ViewModel
                         break;
                 }
 
+                if(ErrorCollection.ContainsKey(propertyName))
+                {
+                    ErrorCollection[propertyName] = result;
+                }
+                else if (result != null)
+                {
+                    ErrorCollection.Add(propertyName, result);
+                }
+                RaisePropertyChange("ErrorCollection");
                 return result;
             }
         }
 
+        //public string this[string property]
+        //{
+        //    get
+        //    {
+        //        PropertyInfo propertyInfo = this.GetType().GetProperty(property);
+        //        var results = new List<ValidationResult>();
+
+        //        var result = Validator.TryValidateProperty(
+        //                                  propertyInfo.GetValue(this, null),
+        //                                  new ValidationContext(this, null, null)
+        //                                  {
+        //                                      MemberName = property
+        //                                  },
+        //                                  results);
+
+        //        if (!result)
+        //        {
+        //            var validationResult = results.First();
+        //            return validationResult.ErrorMessage;
+        //        }
+
+        //        return string.Empty;
+        //    }
+        //}
+
         public void Initialize()
         {
-            AddClientCommand = new CustomDelegateCommand(AddClientMethod);
+            //AddClientCommand = new CustomDelegateCommand(AddClientMethod,CanAddClient);
             ClearCommand = new CustomDelegateCommand(ClearMethod);
             EditUserCommand = new CustomDelegateCommand(EditClientMethod);
             OnLoadedCmd = new CustomDelegateCommand(this.OnLoadedMthd);
             ClientNameBtn = "Add Client";
+            AddClientCommand = new RelayCommand(AddClientMethod, CanAddClient);
+        }
+
+        private bool canaddclient(object obj)
+        {
+            if (ErrorCollection.Any(x => x.Value != ""))
+                return false;
+            else
+                return true;
+        }
+
+        private void addclient(object obj)
+        {
+            
+        }
+
+        private bool CanAddClient(object arg)
+        {           
+            if (ErrorCollection.Any(x => x.Value != ""))
+                return false;
+            else
+                return true;
         }
 
         private void OnLoadedMthd(object obj)

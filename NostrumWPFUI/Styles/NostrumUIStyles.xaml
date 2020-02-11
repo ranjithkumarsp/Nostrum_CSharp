@@ -58,7 +58,7 @@
         <Setter Property="FontSize" Value="15"/>
         <Setter Property="FontWeight" Value="UltraBlack"/>
         <Setter Property="FontStyle" Value="Normal"/>
-               
+
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="true">
                 <Setter Property="Foreground" Value="Red" />
@@ -100,6 +100,65 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+
+    <ControlTemplate x:Key="validationErrorTemplate">
+        <DockPanel>
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
+                <Grid Width="12" Height="12">
+                    <Ellipse Width="12" Height="12" Fill="Red" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Foreground="White" FontWeight="Heavy"  FontSize="8" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"
+                       ToolTip="{Binding ElementName=ErrorAdorner,Path=AdornedElement.(Validation.Errors)[0].ErrorContent}">X
+                    </TextBlock>
+                </Grid>
+                <TextBlock Foreground="Red" FontWeight="Bold" Margin="2,0,0,0" Text="{Binding ElementName=ErrorAdorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}"/>
+            </StackPanel>
+            <AdornedElementPlaceholder x:Name="ErrorAdorner"/>
+        </DockPanel>
+    </ControlTemplate>
+
+    <Style  TargetType="{x:Type TextBox}">
+        <Setter Property="Validation.ErrorTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <DockPanel>
+                        <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
+                            <Grid Width="12" Height="12">
+                                <Ellipse Width="12" Height="12" Fill="Red" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBlock Foreground="White" FontWeight="Heavy"  FontSize="8" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"
+                                  ToolTip="{Binding ElementName=ErrorAdorner,Path=AdornedElement.(Validation.Errors)[0].ErrorContent}">X
+                                </TextBlock>
+                            </Grid>
+                            <TextBlock Foreground="Red" Margin="3,0,0,0" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding ElementName=ErrorAdorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}"/>
+                        </StackPanel>
+                        <AdornedElementPlaceholder x:Name="ErrorAdorner"/>
+                    </DockPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--<Style TargetType="{x:Type TextBox}">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="0,2,40,2" />
+        <Setter Property="Validation.ErrorTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <DockPanel LastChildFill="true">
+                        <Border Background="Red" DockPanel.Dock="Left" Margin="3,0,0,0" Width="20" Height="20" CornerRadius="10"
+                            ToolTip="{Binding ElementName=customAdorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}">
+                            <TextBlock Text="!" VerticalAlignment="center" HorizontalAlignment="center" FontWeight="Bold" Foreground="white">
+                            </TextBlock>
+                        </Border>
+                        <TextBlock Foreground="Red" Margin="4,0,0,0" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" DockPanel.Dock="right" 
+                                   Text="{Binding ElementName=customAdorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}"/>
+                        <AdornedElementPlaceholder Name="customAdorner" VerticalAlignment="Center" >
+                            <Border BorderBrush="red" BorderThickness="1" />
+                        </AdornedElementPlaceholder>
+                    </DockPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>-->
 
 
 </ResourceDictionary>

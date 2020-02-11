@@ -82,6 +82,7 @@
     </ApplicationDefinition>
     <Compile Include="Behaviours\AutoCompleteBehavior.cs" />
     <Compile Include="Behaviours\WindowClosingBehavior.cs" />
+    <Compile Include="Helpers\BillFormData.cs" />
     <Compile Include="Helpers\CustomDelegateCommand.cs" />
     <Compile Include="Helpers\DebugConverter.cs" />
     <Compile Include="Helpers\ExcelProduct.cs" />
@@ -89,9 +90,10 @@
     <Compile Include="Helpers\InvoiceData.cs" />
     <Compile Include="Helpers\NostrumConstants.cs" />
     <Compile Include="Helpers\BatchSheetData.cs" />
-    <Compile Include="Helpers\NostrumHelpers.cs" />
+    <Compile Include="Helpers\NostrumHelper.cs" />
     <Compile Include="Helpers\RelayCommand.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
+    <Compile Include="ViewModel\BillFormViewModel.cs" />
     <Compile Include="ViewModel\BillingViewModel.cs" />
     <Compile Include="ViewModel\ClientsViewModel.cs" />
     <Compile Include="ViewModel\EditClientPopupViewModel.cs" />
@@ -100,6 +102,9 @@
     <Compile Include="ViewModel\PaymentViewModel.cs" />
     <Compile Include="ViewModel\ProductsViewModel.cs" />
     <Compile Include="ViewModel\StockViewModel.cs" />
+    <Compile Include="View\BillFormView.xaml.cs">
+      <DependentUpon>BillFormView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\BillingView.xaml.cs">
       <DependentUpon>BillingView.xaml</DependentUpon>
     </Compile>
@@ -114,9 +119,6 @@
     </Compile>
     <Compile Include="View\EditProductPopUpView.xaml.cs">
       <DependentUpon>EditProductPopUpView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\ExcelImportView.xaml.cs">
-      <DependentUpon>ExcelImportView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\PaymentView.xaml.cs">
       <DependentUpon>PaymentView.xaml</DependentUpon>
@@ -143,6 +145,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\BillFormView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\BillingView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -160,10 +166,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\EditProductPopUpView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\ExcelImportView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
