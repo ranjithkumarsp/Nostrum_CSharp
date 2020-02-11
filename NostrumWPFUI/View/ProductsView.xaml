@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:NostrumWPFUI.View"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:behaviors="clr-namespace:NostrumWPFUI.Behaviours"
              mc:Ignorable="d" >
     <UserControl.Resources>
@@ -55,8 +56,8 @@
             <RadioButton  IsChecked="{Binding Tablet}" Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="3" Content="Tablet" GroupName="DrugType" VerticalAlignment="Center" HorizontalAlignment="Left" />
             <RadioButton  IsChecked="{Binding Syrup}" Grid.Row="2" Grid.Column="5"  Content="Syrup" Grid.ColumnSpan="2" GroupName="DrugType" HorizontalAlignment="Left" VerticalAlignment="Center"  />
             <TextBox Text ="{Binding BatchNo}" Grid.Row="3" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2"/>
-            <DatePicker Text ="{Binding MfgDate}" Background="AliceBlue" Grid.Row="4" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30" Grid.ColumnSpan="2" />
-            <DatePicker Text ="{Binding ExpDate}" Grid.Row="5" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30" Grid.ColumnSpan="2" />
+            <xctk:DateTimePicker Format="ShortDate" Text ="{Binding MfgDate}" Background="AliceBlue" Grid.Row="4" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30" Grid.ColumnSpan="2" />
+            <xctk:DateTimePicker Format="ShortDate" Text ="{Binding ExpDate}" Grid.Row="5" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30" Grid.ColumnSpan="2" />
             <TextBox Text ="{Binding Quantity}" Grid.Row="6" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2"  />
             <TextBox Text ="{Binding CGST}" Grid.Row="7" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2"  />
             <TextBox Text ="{Binding SGST}" Grid.Row="8" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2"  />
@@ -65,7 +66,7 @@
                     behaviors:AutoCompleteBehavior.AutoCompleteItemsSource="{Binding ManfAutoCompleteCollection}" 
                     behaviors:AutoCompleteBehavior.AutoCompleteStringComparison="InvariantCultureIgnoreCase"                      
                      />
-            <DatePicker Text ="{Binding PurchaseDate}" Grid.Row="11" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30" Grid.ColumnSpan="2"  />
+            <xctk:DateTimePicker Format="ShortDate" Text ="{Binding PurchaseDate}" Grid.Row="11" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30" Grid.ColumnSpan="2"  />
             <TextBox Text ="{Binding PurchaseInvoiceNo}" BorderThickness="2" Grid.Row="12" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2"   />
             <Button Content="EditProduct" Style="{StaticResource BoldLinkButton}" Grid.Row="1" Grid.Column="6" Command="{Binding EditProductCommand}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
