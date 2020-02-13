@@ -15,6 +15,7 @@
                 <RowDefinition Height="55"/>
                 <RowDefinition Height="55"/>
                 <RowDefinition Height="55"/>
+                <RowDefinition Height="55"/>
                 <RowDefinition Height="25"/>
                 <RowDefinition Height="35"/>
                 <RowDefinition Height="15"/>
@@ -32,8 +33,9 @@
 
             <TextBlock Grid.Row="1" Grid.Column="2"  HorizontalAlignment="Right"  TextWrapping="Wrap" Text="Client Name" VerticalAlignment="Center" Height="23"  FontSize="16" FontFamily="Century Gothic" FontWeight="Bold" />
             <TextBlock Grid.Row="2" Grid.Column="2"  HorizontalAlignment="Right"  TextWrapping="Wrap" Text="Date" VerticalAlignment="Center" Height="23" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" />
-            <TextBlock Grid.Row="3" Grid.Column="2"  HorizontalAlignment="Right"  TextWrapping="Wrap" Text="Invoice Number" VerticalAlignment="Center" Height="23"  FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" ClipToBounds="True" SnapsToDevicePixels="True" />
-            <TextBlock Text="Payment Terms" Grid.Row="4" Grid.Column="2"  HorizontalAlignment="Right"  TextWrapping="Wrap"  VerticalAlignment="Center" Height="23" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" ClipToBounds="True" SnapsToDevicePixels="True" />
+            <TextBlock Grid.Row="3" Grid.Column="2"  HorizontalAlignment="Right"  TextWrapping="Wrap" Text="Financial Year" VerticalAlignment="Center" Height="23"  FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" ClipToBounds="True" SnapsToDevicePixels="True" />
+            <TextBlock Grid.Row="4" Grid.Column="2"  HorizontalAlignment="Right"  TextWrapping="Wrap" Text="Invoice Number" VerticalAlignment="Center" Height="23"  FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" ClipToBounds="True" SnapsToDevicePixels="True" />
+            <TextBlock Text="Payment Terms" Grid.Row="5" Grid.Column="2"  HorizontalAlignment="Right"  TextWrapping="Wrap"  VerticalAlignment="Center" Height="23" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" ClipToBounds="True" SnapsToDevicePixels="True" />
             <ComboBox Grid.Row="1" ItemsSource="{Binding ClientsList}" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="169"  Height="30" IsEditable="True" IsSynchronizedWithCurrentItem="True" IsTabStop="True" StaysOpenOnEdit="True" AllowDrop="True" 
                       PreviewTextInput="PreviewTextInput_EnhanceComboSearch"
                       PreviewKeyUp="PreviewKeyUp_EnhanceComboSearch"
@@ -50,9 +52,11 @@
             </ComboBox>
             <xctk:DateTimePicker Format="ShortDate" ShowButtonSpinner="False" ShowDropDownButton="True"  TimePickerShowButtonSpinner="False" Grid.Row="2" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30" />
             <TextBox Grid.Row="3" Grid.Column="4" TextAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="169" Width="Auto" Height="36"  />
-            <TextBox Grid.Row="4" Grid.Column="4" TextAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="45" Width="61" Height="36" Text="30"  />
-            <TextBlock Text="Days" Grid.Row="4" Grid.Column="4" TextAlignment="Center"  HorizontalAlignment="Left" VerticalAlignment="Center"  Width="50" Height="35" FontWeight="Bold" RenderTransformOrigin="-2.289,0.622" Margin="66.2,16,0,5"/>
-            <Grid Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="5">
+            <TextBox Grid.Row="4" Grid.Column="4" TextAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="169" Width="Auto" Height="36"  />
+            
+            <TextBox Grid.Row="5" Grid.Column="4" TextAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="45" Width="61" Height="36" Text="30"  />
+            <TextBlock Text="Days" Grid.Row="5" Grid.Column="4" TextAlignment="Center"  HorizontalAlignment="Left" VerticalAlignment="Center"  Width="50" Height="35" FontWeight="Bold" RenderTransformOrigin="-2.289,0.622" Margin="66.2,16,0,5"/>
+            <Grid Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="140"/>
                     <ColumnDefinition Width="35"/>

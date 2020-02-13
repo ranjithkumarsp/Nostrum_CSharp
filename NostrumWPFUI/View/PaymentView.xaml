@@ -5,8 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:local="clr-namespace:NostrumWPFUI.View"
+             xmlns:converters="clr-namespace:NostrumWPFUI.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <converters:DataToRowBackgroundColorConverter x:Key="RowBackGroundConverter"/>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
     <Grid>
         <Grid Background="WhiteSmoke">
             <Grid.RowDefinitions>
@@ -15,8 +20,9 @@
                 <RowDefinition Height="55"/>
                 <RowDefinition Height="55"/>
                 <RowDefinition Height="30"/>
-                <RowDefinition Height="35"/>
-                <RowDefinition Height="30"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="150"/>
                 <RowDefinition x:Name="Paymentfooter" Height="55"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -24,7 +30,8 @@
                 <ColumnDefinition Width="30"/>
                 <ColumnDefinition Width="150"/>
                 <ColumnDefinition Width="10"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="170"/>
+                <ColumnDefinition Width="150"/>
                 <ColumnDefinition x:Name="PaymentRightMargin" Width="80"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Row="1"  Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center"  TextWrapping="Wrap" Text="Client Name"  Height="23" FontSize="16" FontFamily="Century Gothic" FontWeight="Bold" />
@@ -39,10 +46,50 @@
                     <ColumnDefinition Width="35"/>
                     <ColumnDefinition Width="140"/>
                 </Grid.ColumnDefinitions>
-                <Button Content="Invoice Details" Grid.Column="0"  Height="36"  VerticalAlignment="Top" Command="{Binding InvoiceDetailsCommand}"/>
-                <Button Content="Outstanding" Grid.Column="2" Command="{Binding OutStandingDetailsCommand}" />
+                <Button Content="Invoice Details" Grid.Column="0"  Height="35"  VerticalAlignment="Center" Command="{Binding InvoiceDetailsCommand}"/>
+                <Button Content="Outstanding" Grid.Column="2" Command="{Binding OutStandingDetailsCommand}"  Height="35" VerticalAlignment="Center" />
 
             </Grid>
+            <ScrollViewer Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="5" Visibility="{Binding IsClientInvoiceGridVisible,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource BooleanToVisibilityConverter}}">
+                <DataGrid Name="ClientInvoice" MinWidth="450" MinHeight="100" Height="Auto" Width="Auto"  
+                          ItemsSource="{Binding ClientPaymentCollection}" AutoGenerateColumns="False"
+                          ColumnWidth="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5"
+                          EnableRowVirtualization="false" EnableColumnVirtualization="false" 
+                          FlowDirection="LeftToRight" FontSize="15"
+                          CanUserAddRows="False" CanUserReorderColumns="False" IsHitTestVisible="False"
+                          Visibility="{Binding IsClientInvoiceGridVisible,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource BooleanToVisibilityConverter}}"
+                          >
+                    <DataGrid.RowStyle>
+                        <Style TargetType="DataGridRow">
+                            <Setter Property="Background" >
+                                <Setter.Value>
+                                    <MultiBinding Converter="{StaticResource RowBackGroundConverter}" >
+                                        <Binding Path="Amount" />
+                                        <Binding Path="Balance" />
+                                        <Binding RelativeSource="{RelativeSource Self}" />
+                                    </MultiBinding>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="{x:Null}" />
+                                    <Setter Property="BorderBrush" Value="{x:Null}" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.RowStyle>
+                    
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Invoice Number" Binding="{Binding InvoiceNo}"/>
+                        <DataGridTextColumn Header="Client" Binding="{Binding Client}"/>
+                        <DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
+                        <DataGridTextColumn Header="Amount" Binding="{Binding Amount}"/>
+                        <DataGridTextColumn Header="Balance" Binding="{Binding Balance}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </ScrollViewer>
+            
         </Grid>
     </Grid>
 </UserControl>

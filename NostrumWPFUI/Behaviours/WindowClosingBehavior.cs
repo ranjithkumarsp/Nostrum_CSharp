@@ -63,7 +63,8 @@ namespace NostrumWPFUI.Behaviours
         /// <param name="e"></param>
         static void Window_Closing(object sender, CancelEventArgs e)
         {
-            e.Cancel = !ShowExitDialog(sender as Window);
+            //e.Cancel = !ShowExitDialog(sender as Window); //Add this if need closing confirmation Message popup.!!
+            e.Cancel = false;
         }
 
         static bool ShowExitDialog(Window window)
