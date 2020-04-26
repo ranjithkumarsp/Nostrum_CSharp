@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 
 using NostrumDB;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows;
 
 namespace NostrumWPFUI.ViewModel
 {
@@ -20,7 +23,7 @@ namespace NostrumWPFUI.ViewModel
 
         public ICommand BillingCommand { get; set; }
         public ICommand ClearCommand { get; set; }
-
+        public BillingView billview;
         public void Initialize()
         {
             BillingCommand = new CustomDelegateCommand(BillingMethod);
@@ -61,5 +64,13 @@ namespace NostrumWPFUI.ViewModel
             ClientsList = dao.getClients();
         }
 
+        public void SetFocus(object window,string controlname)
+        {
+            var parent = window as BillingView;
+            if (parent != null)
+            {               
+
+            }
+        }
     }
 }

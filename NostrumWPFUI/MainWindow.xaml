@@ -28,24 +28,24 @@
             </MenuItem>
         </Menu>
         <TabControl  TabStripPlacement="Top" HorizontalAlignment="Left" Height="{Binding ElementName=NostrumMainWindow,Path=Height}" VerticalAlignment="Top" Width="{Binding ElementName=NostrumMainWindow,Path=Width}" 
-                     Margin="0,25,0,0" SelectedIndex="1">
-            <TabItem Header="Billing">
+                     Margin="0,25,0,0" SelectedIndex="1" SelectionChanged="TabControl_SelectionChanged">
+            <TabItem Header="Billing" Name="BillingTab">
                 <Views:BillingView/>
             </TabItem>
-            <TabItem Header="Payment">
+            <TabItem Header="Payment" Name="PaymentTab">
                 <Views:PaymentView/>
             </TabItem>
-            <TabItem Header="Products">
+            <TabItem Header="Products" Name="ProductsTab">
                 <Views:ProductsView/>
             </TabItem>
-            <TabItem Header="Clients">
+            <TabItem Header="Clients" Name="ClientsTab">
                 <Views:ClientsView/>
             </TabItem>
-            <TabItem Header="Stocks">
+            <TabItem Header="Stocks" Name="StocksTab">
                 <Views:StocksView/>
             </TabItem>
-            <TabItem Header="Import Excel">
-                <!--<Views:ExcelImportView/>-->
+            <TabItem Header="Import Excel" Name="ImportExcelTab">
+                <Views:ExcelImportView/>
             </TabItem>
         </TabControl>
 

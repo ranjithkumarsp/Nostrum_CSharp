@@ -1,4 +1,6 @@
-﻿using NostrumWPFUI.ViewModel;
+﻿using NostrumWPFUI.Helpers;
+using NostrumWPFUI.View;
+using NostrumWPFUI.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,12 +26,34 @@ namespace NostrumWPFUI
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = new MainWindowViewModel();
+            this.DataContext = new MainWindowViewModel();           
 
         }
 
         private void NostrumMainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {           
+            
+            var activetview = VisualHelpers.GetChildOfType<UserControl>(this.NostrumMainWindow);
+            var _userControlsInMainWindow = VisualHelpers.GetLogicalChildrenCollection<UserControl>(NostrumMainWindow);
+            ExcelImportView _excelImportView = _userControlsInMainWindow.Where(x => x.Name.Equals("ExcelImportMainView")).FirstOrDefault() as ExcelImportView;
+            if (_excelImportView != null)
+                _excelImportView.CLEAN(true);
+            System.Windows.Forms.Application.ExitThread(); //Closes all underlying threads
+
+        }
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            var tc = sender as TabControl; //The sender is a type of TabControl...
+
+            if (tc != null)
+            {
+                var item = tc.SelectedItem;
+                TabItem selectedtabname = tc.SelectedItem as TabItem;
+                string name = selectedtabname.Name;
+              
+                //Do Stuff ...
+            }
             
         }
     }

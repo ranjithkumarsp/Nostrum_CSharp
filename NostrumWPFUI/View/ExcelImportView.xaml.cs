@@ -580,7 +580,8 @@ namespace NostrumWPFUI.View
         #region CLEANUP
         public void CLEAN(bool _canExcelAppQuit)
         {
-
+            object misValue = System.Reflection.Missing.Value;
+            ClearDataSources();
             LOG.Info(string.Format("{0} Method : BEGIN ", MethodBase.GetCurrentMethod().Name));
             try
             {
@@ -591,7 +592,8 @@ namespace NostrumWPFUI.View
                 {
                     Marshal.ReleaseComObject(xlSheet);
                     //close and release                
-                    xlWorkbook.Close();
+                    //xlWorkbook.Close();
+                    xlWorkbook.Close(false, misValue, misValue); //added (false, misValue, misValue) to disable savedialog while closing excel document
                     Marshal.ReleaseComObject(xlWorkbook);
                     //quit and release
                     if (_canExcelAppQuit)
@@ -607,6 +609,14 @@ namespace NostrumWPFUI.View
             }
             LOG.Info(string.Format("{0} Method : BEGIN ", MethodBase.GetCurrentMethod().Name));
 
+        }
+
+        public void QuitExcel()
+        {
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            if(xlApp != null)
+            xlApp.Quit();
         }
         #endregion
 
@@ -732,6 +742,7 @@ namespace NostrumWPFUI.View
 
         public void BatchExcelProcess()
         {
+            StartExcel();
             //Batch Processing
             string folderName = string.Empty;
             System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
@@ -818,13 +829,22 @@ namespace NostrumWPFUI.View
 
             if (!string.IsNullOrEmpty(Filename) && !result.Equals(MessageBoxResult.No))
             {
+                //if(xlApp == null)
                 //xlApp = new Application();
                 //xlWorkbook = xlApp.Workbooks.Add(System.Reflection.Missing.Value);
+                StartExcel();
                 //// process import
                 ProcessReadExcel(Filename); //, xlWorkbook, xlApp
                                             // Display();
             }
             FilePath.Text = Filename;
+        }
+
+        public void StartExcel()
+        {
+            if (xlApp == null)
+                xlApp = new Application();
+            xlWorkbook = xlApp.Workbooks.Add(System.Reflection.Missing.Value);
         }
 
         #endregion

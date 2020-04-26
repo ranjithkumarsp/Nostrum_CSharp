@@ -144,8 +144,10 @@
     <Compile Include="Helpers\BatchSheetData.cs" />
     <Compile Include="Helpers\NostrumHelper.cs" />
     <Compile Include="Helpers\RelayCommand.cs" />
+    <Compile Include="Helpers\VisualHelpers.cs" />
     <Compile Include="UIEntity\ClientPayment.cs" />
     <Compile Include="UIEntity\OutstandingPayment.cs" />
+    <Compile Include="UIEntity\StockDisplay.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\BillFormViewModel.cs" />
     <Compile Include="ViewModel\BillingViewModel.cs" />
@@ -156,6 +158,7 @@
     <Compile Include="ViewModel\OutStandingPaymentPopupViewModel.cs" />
     <Compile Include="ViewModel\PaymentViewModel.cs" />
     <Compile Include="ViewModel\ProductsViewModel.cs" />
+    <Compile Include="ViewModel\StockDisplayPopupViewModel.cs" />
     <Compile Include="ViewModel\StockViewModel.cs" />
     <Compile Include="View\BillFormView.xaml.cs">
       <DependentUpon>BillFormView.xaml</DependentUpon>
@@ -175,6 +178,9 @@
     <Compile Include="View\EditProductPopUpView.xaml.cs">
       <DependentUpon>EditProductPopUpView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\ExcelImportView.xaml.cs">
+      <DependentUpon>ExcelImportView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\OutStandingPaymentPopupView.xaml.cs">
       <DependentUpon>OutStandingPaymentPopupView.xaml</DependentUpon>
     </Compile>
@@ -183,6 +189,9 @@
     </Compile>
     <Compile Include="View\ProductsView.xaml.cs">
       <DependentUpon>ProductsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\StockDisplayPopupView.xaml.cs">
+      <DependentUpon>StockDisplayPopupView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\StocksView.xaml.cs">
       <DependentUpon>StocksView.xaml</DependentUpon>
@@ -227,6 +236,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\ExcelImportView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\OutStandingPaymentPopupView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -236,6 +249,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ProductsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\StockDisplayPopupView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

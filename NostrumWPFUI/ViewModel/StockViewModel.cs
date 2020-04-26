@@ -1,4 +1,5 @@
 ﻿using NostrumWPFUI.Helpers;
+using NostrumWPFUI.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,8 +27,12 @@ namespace NostrumWPFUI.ViewModel
         }
 
         public void ShowMethod(object param)
-        {
-
+        {            
+            StockDisplayPopupView stockdisplaypopupview = new StockDisplayPopupView();
+            StockDisplayPopupViewModel _outStandingPaymentPopupViewModel = new StockDisplayPopupViewModel();
+            stockdisplaypopupview.DataContext = _outStandingPaymentPopupViewModel;
+            stockdisplaypopupview.Owner = MainWindow;
+            stockdisplaypopupview.ShowDialog();
         }
         public void ClearMethod(object param)
         {

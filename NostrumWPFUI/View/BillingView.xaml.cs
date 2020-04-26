@@ -36,7 +36,7 @@ namespace NostrumWPFUI.View
 
             if (!string.IsNullOrEmpty(cmb.Text))
             {
-                string fullText = cmb.Text.Insert(NostrumHelper.GetChildOfType<TextBox>(cmb).CaretIndex, e.Text);
+                string fullText = cmb.Text.Insert(VisualHelpers.GetChildOfType<TextBox>(cmb).CaretIndex, e.Text);
                 cmb.ItemsSource = clientsList.Where(s => s.IndexOf(fullText, StringComparison.InvariantCultureIgnoreCase) != -1).ToList();
             }
             else if (!string.IsNullOrEmpty(e.Text))
@@ -56,7 +56,7 @@ namespace NostrumWPFUI.View
             cmb.IsDropDownOpen = true;
 
             string pastedText = (string)e.DataObject.GetData(typeof(string));
-            string fullText = cmb.Text.Insert(NostrumHelper.GetChildOfType<TextBox>(cmb).CaretIndex, pastedText);
+            string fullText = cmb.Text.Insert(VisualHelpers.GetChildOfType<TextBox>(cmb).CaretIndex, pastedText);
 
             if (!string.IsNullOrEmpty(fullText))
             {
