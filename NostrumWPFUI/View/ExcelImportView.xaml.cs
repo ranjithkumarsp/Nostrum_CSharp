@@ -43,7 +43,7 @@ namespace NostrumWPFUI.View
         #region GLOBAL VARIABLES
         string Filename = string.Empty;
         private static readonly ILog LOG = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        Application xlApp;
+        public Application xlApp;
         Workbook xlWorkbook;
         _Worksheet xlSheet;
         List<ExcelProduct> _ExcelProduct = new List<ExcelProduct>();
@@ -550,10 +550,13 @@ namespace NostrumWPFUI.View
 
         public void Disp()
         {
-            DisplayExcelValues.ItemsSource = BatchSheetDataList.FirstOrDefault().ProductList.ToList();
-            //DisplayInvoiceData.ItemsSource = BatchSheetDataList.Where(x => x.InvoiceDetails != null).Select(x => x.InvoiceDetails).ToList();
-            _invoiceDataList1 = BatchSheetDataList.Select(x => (InvoiceData)x.InvoiceDetails).ToList();
-            DisplayInvoiceData.ItemsSource = _invoiceDataList1;
+            if (BatchSheetDataList != null && BatchSheetDataList.Count > 0)
+            {
+                DisplayExcelValues.ItemsSource = BatchSheetDataList.FirstOrDefault().ProductList.ToList();
+                //DisplayInvoiceData.ItemsSource = BatchSheetDataList.Where(x => x.InvoiceDetails != null).Select(x => x.InvoiceDetails).ToList();
+                _invoiceDataList1 = BatchSheetDataList.Select(x => (InvoiceData)x.InvoiceDetails).ToList();
+                DisplayInvoiceData.ItemsSource = _invoiceDataList1;
+            }
         }
 
         #region RE-OPEN EXCEL

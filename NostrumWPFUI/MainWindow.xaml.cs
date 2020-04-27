@@ -32,11 +32,10 @@ namespace NostrumWPFUI
 
         private void NostrumMainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {           
-            
             var activetview = VisualHelpers.GetChildOfType<UserControl>(this.NostrumMainWindow);
             var _userControlsInMainWindow = VisualHelpers.GetLogicalChildrenCollection<UserControl>(NostrumMainWindow);
             ExcelImportView _excelImportView = _userControlsInMainWindow.Where(x => x.Name.Equals("ExcelImportMainView")).FirstOrDefault() as ExcelImportView;
-            if (_excelImportView != null)
+            if (_excelImportView != null && _excelImportView.xlApp != null)
                 _excelImportView.CLEAN(true);
             System.Windows.Forms.Application.ExitThread(); //Closes all underlying threads
 
@@ -44,7 +43,7 @@ namespace NostrumWPFUI
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var tc = sender as TabControl; //The sender is a type of TabControl...
+            TabControl tc = sender as TabControl; //The sender is a type of TabControl...
 
             if (tc != null)
             {

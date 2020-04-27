@@ -12,7 +12,7 @@
         WindowStartupLocation="CenterScreen"  ResizeMode="CanMinimize"
         >
     <Grid>
-        <Menu Name="FileMenu" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" MinWidth="750" Width="{Binding ElementName=NostrumMainWindow,Path=Width}">
+        <!--<Menu Name="FileMenu" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" MinWidth="750" Width="{Binding ElementName=NostrumMainWindow,Path=Width}">
             <MenuItem Name="File" Header="File">
                 <MenuItem Header="Open"/>
                 <MenuItem Header="Save"/>
@@ -26,9 +26,9 @@
             <MenuItem Name="Help" Header="Help">
                 <MenuItem Header="About"/>
             </MenuItem>
-        </Menu>
+        </Menu>-->
         <TabControl  TabStripPlacement="Top" HorizontalAlignment="Left" Height="{Binding ElementName=NostrumMainWindow,Path=Height}" VerticalAlignment="Top" Width="{Binding ElementName=NostrumMainWindow,Path=Width}" 
-                     Margin="0,25,0,0" SelectedIndex="1" SelectionChanged="TabControl_SelectionChanged">
+                     Margin="0,0,0,0" SelectedIndex="0" SelectionChanged="TabControl_SelectionChanged">
             <TabItem Header="Billing" Name="BillingTab">
                 <Views:BillingView/>
             </TabItem>

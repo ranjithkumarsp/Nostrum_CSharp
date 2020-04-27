@@ -29,6 +29,7 @@ namespace NostrumWPFUI.Behaviours
         public static void SetEnabled(DependencyObject obj, bool value)
         {
             obj.SetValue(EnabledProperty, value);
+
         }
 
         public static readonly DependencyProperty EnabledProperty =

@@ -132,6 +132,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Behaviours\AutoCompleteBehavior.cs" />
+    <Compile Include="Behaviours\SelectAllFocusBehavior.cs" />
     <Compile Include="Behaviours\WindowClosingBehavior.cs" />
     <Compile Include="Converters\DataToRowBackgroundColorConverter.cs" />
     <Compile Include="Helpers\BillFormData.cs" />
@@ -152,6 +153,7 @@
     <Compile Include="ViewModel\BillFormViewModel.cs" />
     <Compile Include="ViewModel\BillingViewModel.cs" />
     <Compile Include="ViewModel\ClientsViewModel.cs" />
+    <Compile Include="ViewModel\ViewOldPopupViewModel.cs" />
     <Compile Include="ViewModel\EditClientPopupViewModel.cs" />
     <Compile Include="ViewModel\EditProductPopUpViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
@@ -168,6 +170,9 @@
     </Compile>
     <Compile Include="View\ClientsView.xaml.cs">
       <DependentUpon>ClientsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ViewOldPopupView.xaml.cs">
+      <DependentUpon>ViewOldPopupView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\EditClientPopupView.xaml.cs">
       <DependentUpon>EditClientPopupView.xaml</DependentUpon>
@@ -223,6 +228,10 @@
     <Page Include="View\ClientsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ViewOldPopupView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\EditClientPopupView.xaml">
       <SubType>Designer</SubType>

@@ -1,0 +1,85 @@
+﻿using Entity;
+using NostrumDB;
+using NostrumWPFUI.Helpers;
+using NostrumWPFUI.View;
+using Prism.Commands;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
+
+namespace NostrumWPFUI.ViewModel
+{
+    public class ViewOldPopupViewModel : BaseViewModel
+    {
+        ViewOldPopupView _viewOldPopupView;
+
+        #region Constructor
+
+        public ViewOldPopupViewModel()
+        {            
+
+            WindowCloseCommand = new CustomDelegateCommand(WindowClosingMethod);
+            OnLoadedCmd = new CustomDelegateCommand(this.OnLoadedMthd);
+            CancelRelayCommand = new RelayCommand<IClosable>(this.CancelMethod);
+            OpenRelayCommand = new RelayCommand<IClosable>(this.OpenBillForm);
+        }
+
+        #endregion
+
+        #region Properties
+
+        public ICommand WindowCloseCommand { get; set; }
+        public ICommand OnLoadedCmd { get; set; }
+        public DelegateCommand<IClosable> CloseWindowCommand { get; set; }
+        public RelayCommand<IClosable> OpenRelayCommand { get; private set; }
+        public RelayCommand<IClosable> CancelRelayCommand { get; private set; }
+
+        
+
+
+        #endregion
+
+        #region Methods
+
+        private void OnLoadedMthd(object obj)
+        {
+           // _viewOldPopupView = obj as EditClientPopupView;
+        }
+
+        private void OpenBillForm(IClosable _viewOldPopupView)
+        {
+            BillFormView _billFormView = new BillFormView();
+            BillFormViewModel _billFormVM = new BillFormViewModel();
+            _billFormView.DataContext = _billFormVM;
+            _billFormView.Owner = MainWindow;
+            _billFormView.ShowDialog();
+        }
+
+        private void CancelMethod(IClosable _viewOldPopupView)
+        {
+            
+            if (_viewOldPopupView != null)
+            {
+                _viewOldPopupView.HidePopupWindow();
+            }
+        }
+
+        private void WindowClosingMethod(object obj)
+        {
+            
+        }    
+
+        public void GetClientsFromDB()
+        {
+            //ClientDAO dao = new ClientDAO(new MySQLDBInterface());
+            //ClientsList = dao.getClients();
+        }
+
+        #endregion
+
+    }
+}

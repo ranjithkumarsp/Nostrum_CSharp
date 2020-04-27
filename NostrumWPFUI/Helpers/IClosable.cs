@@ -11,6 +11,7 @@ namespace NostrumWPFUI.Helpers
     //Popup windows should implement this I/F for Closecommand.
     public interface IClosable
     {
-        void ClosePopupWindow();      
+        void ClosePopupWindow();
+        void HidePopupWindow();
     }
 }

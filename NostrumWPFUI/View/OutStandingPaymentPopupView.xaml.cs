@@ -31,5 +31,10 @@ namespace NostrumWPFUI.View
         {
             this.Close();
         }
+
+        public void HidePopupWindow()
+        {
+            this.Hide();
+        }
     }
 }

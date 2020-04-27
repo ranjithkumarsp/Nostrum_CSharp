@@ -1,7 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                      xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-                    xmlns:local="clr-namespace:NostrumWPFUI.Styles">
+                    xmlns:local="clr-namespace:NostrumWPFUI.Styles"
+                    xmlns:behaviours="clr-namespace:NostrumWPFUI.Behaviours"
+                    >
 
     <Style
     x:Key="LinkButton"
@@ -118,7 +120,9 @@
     </ControlTemplate>
 
     <Style  TargetType="{x:Type TextBox}">
-        <Setter Property="Validation.ErrorTemplate">
+        <Setter Property="TextBlock.TextAlignment" Value="Right"/>
+        <Setter Property="behaviours:SelectAllFocusBehavior.Enable" Value="True"/>
+        <!--<Setter Property="Validation.ErrorTemplate">
             <Setter.Value>
                 <ControlTemplate>
                     <DockPanel>
@@ -135,7 +139,7 @@
                     </DockPanel>
                 </ControlTemplate>
             </Setter.Value>
-        </Setter>
+        </Setter>-->
     </Style>
 
     <!--<Style TargetType="{x:Type TextBox}">
@@ -182,7 +186,15 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
+    <Style TargetType="{x:Type xctk:DateTimePicker}">
+        <Setter Property="TimePickerVisibility" Value="Hidden"/>
+        <Setter Property="Format" Value="ShortDate"/>
+    </Style>
+    <!--<Style TargetType="{x:Type TextBox}">
+        <Setter Property="TextBlock.TextAlignment" Value="Right"/>
+    </Style>-->
+
 
 
 </ResourceDictionary>
