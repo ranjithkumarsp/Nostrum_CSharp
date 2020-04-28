@@ -105,7 +105,7 @@
                     <DataGrid x:Name="BillingDataGrid" Grid.Row="3"  Grid.Column="1" Grid.ColumnSpan="5" 
                               ColumnWidth="SizeToCells" AutoGenerateColumns="False" SelectionMode="Single" SelectionUnit="Cell"
                               ItemsSource="{Binding BillFormDataSourceCollection}" PreviewMouseWheel="UIElement_OnPreviewMouseWheel"
-                              CanUserAddRows="True">
+                              CanUserAddRows="False">
 
                         <DataGrid.Columns>
                             <!--<DataGridTextColumn Header="S.No" Binding="{Binding SNo,UpdateSourceTrigger=LostFocus}" Width="35"/>-->

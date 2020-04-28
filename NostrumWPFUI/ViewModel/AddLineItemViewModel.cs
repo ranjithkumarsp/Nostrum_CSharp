@@ -7,6 +7,7 @@ using System.Windows.Input;
 using Entity;
 using NostrumDB;
 using NostrumWPFUI.Helpers;
+using NostrumWPFUI.View;
 
 namespace NostrumWPFUI.ViewModel
 {
@@ -125,6 +126,9 @@ namespace NostrumWPFUI.ViewModel
         private void GenBillMethod(object obj)
         {
             FillFormData();
+            BillFormView bfm = new BillFormView(_order, _orderLineItems);
+            bfm.Owner = MainWindow;
+            bfm.ShowDialog();
         }
 
         private void AddNextMethod(object obj)
@@ -166,7 +170,7 @@ namespace NostrumWPFUI.ViewModel
             billFormData.Quantity = Qty;
             billFormData.Rate = Rate;
             billFormData.MRP = product.MRP;
-            billFormData.ExpDate = product.Exp_Date;
+            billFormData.ExpDate = product.Exp_Date.ToString();
             billFormData.Amount = Rate * Qty;
             
             _orderLineItems.Add(billFormData);

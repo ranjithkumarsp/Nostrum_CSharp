@@ -81,9 +81,9 @@ namespace NostrumWPFUI.Helpers
             set { _rate = value; this.RaisePropertyChange(); }
         }
 
-        private string _mrp;
+        private double _mrp;
 
-        public string MRP
+        public double MRP
         {
             get { return _mrp; }
             set { _mrp = value; this.RaisePropertyChange(); }

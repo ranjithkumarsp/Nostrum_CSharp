@@ -59,8 +59,8 @@ namespace NostrumWPFUI.ViewModel
         private void OpenBillForm(IClosable _viewOldPopupView)
         {
             Order order = new Order();
-            BillFormView _billFormView = new BillFormView(order);
-            _billFormView.DataContext = new BillFormViewModel(order);
+            List<BillFormData> billFormDatas = new List<BillFormData>();
+            BillFormView _billFormView = new BillFormView(order, billFormDatas);
             _billFormView.Owner = MainWindow;
             _billFormView.ShowDialog();
         }

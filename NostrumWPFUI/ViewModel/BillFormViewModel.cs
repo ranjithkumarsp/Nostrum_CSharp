@@ -128,14 +128,14 @@ namespace NostrumWPFUI.ViewModel
         #endregion
 
         private Order _order;
-        private LineItem _orderLineItem;
+        private List<BillFormData> _orderLineItems;
 
         private ObservableCollection<BillFormData> _billFormDataSourceCollection;
         public ICommand OnLoadedCmd { get; set; }
-        public BillFormViewModel(Order order)
+        public BillFormViewModel(Order order, List<BillFormData> billFormDatas)
         {
             _order = order;
-            _orderLineItem = new LineItem();
+            _orderLineItems = billFormDatas;
             Initialize();
         }
 
@@ -149,7 +149,7 @@ namespace NostrumWPFUI.ViewModel
             //List<string> manfactures = productDao.getManufacturers();
             //manfactures.ForEach(item => { ManfAutoCompleteCollection.Add(item); });
             OnLoadedCmd = new CustomDelegateCommand(this.OnLoadedMthd);
-            BillFormDataSourceCollection = new ObservableCollection<BillFormData>();
+            BillFormDataSourceCollection = new ObservableCollection<BillFormData>(_orderLineItems);
             //BillFormDataSourceCollection.Add(new BillFormData { SNo = "", Product = "", BatchNo = "", Packing = "", Offer = "", ExpDate = "", Quantity = "", Rate = "", MRP = "", Amount = "" });
             //loadDummyData(_order);
         }

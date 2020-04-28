@@ -154,9 +154,6 @@ namespace NostrumWPFUI.ViewModel
             AddLineItemView addLineItemView = new AddLineItemView(_order);
             addLineItemView.Owner = MainWindow;
             addLineItemView.ShowDialog();
-            //BillFormView bfm = new BillFormView(_order);
-            //bfm.Owner = MainWindow;
-            //bfm.ShowDialog();
         }
         public void ClearMethod(object param)
         {
