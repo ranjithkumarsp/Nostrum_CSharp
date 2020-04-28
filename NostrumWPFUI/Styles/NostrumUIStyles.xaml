@@ -4,6 +4,11 @@
                     xmlns:local="clr-namespace:NostrumWPFUI.Styles"
                     xmlns:behaviours="clr-namespace:NostrumWPFUI.Behaviours"
                     >
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        </ResourceDictionary>        
+    </ResourceDictionary.MergedDictionaries>
 
     <Style
     x:Key="LinkButton"

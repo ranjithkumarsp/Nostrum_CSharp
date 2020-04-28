@@ -44,11 +44,13 @@
         <TextBlock HorizontalAlignment="Left" Margin="99,150,0,0" TextWrapping="Wrap" Text="Quantity" VerticalAlignment="Top" Height="23"/>
         <TextBlock HorizontalAlignment="Left" Margin="99,183,0,0" TextWrapping="Wrap" Text="Rate" VerticalAlignment="Top" Height="23"/>
         <TextBox Text="{Binding Pack1, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Left" Height="16" Margin="228,91,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="45"/>
-        <TextBlock HorizontalAlignment="Left" Margin="283,91,0,0" TextWrapping="Wrap" Text="x" VerticalAlignment="Top" Width="10"/>
-        <TextBox Text="{Binding Pack2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Left" Height="16" Margin="301,91,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="45"/>
+        <TextBlock HorizontalAlignment="Left" Margin="283,91,0,0" TextWrapping="Wrap" Text="{Binding PackingUnitText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  VerticalAlignment="Top" Width="18"/>
+        <TextBox Text="{Binding Pack2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                 Visibility="{Binding IsPackingVisible,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,Converter={StaticResource BooleanToVisibilityConverter}}"
+                 HorizontalAlignment="Left" Height="16" Margin="311,91,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="37"/>
         <TextBox Text="{Binding Off1, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Left" Height="16" Margin="228,121,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="45"/>
-        <TextBlock HorizontalAlignment="Left" Margin="283,121,0,0" TextWrapping="Wrap" Text="+" VerticalAlignment="Top" Width="10"/>
-        <TextBox Text="{Binding Off2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Left" Height="16" Margin="301,121,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="45"/>
+        <TextBlock HorizontalAlignment="Left" Margin="283,121,0,0" TextWrapping="Wrap" Text="+" VerticalAlignment="Top" Width="18"/>
+        <TextBox Text="{Binding Off2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Left" Height="16" Margin="311,121,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="35"/>
         <TextBox Text="{Binding Qty, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Left" Height="23" Margin="228,151,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBox Text="{Binding Rate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Left" Height="23" Margin="228,185,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Button Content="Add Next" Command="{Binding AddNextCommand}" HorizontalAlignment="Left" Margin="123,229,0,0" VerticalAlignment="Top" Width="75" Height="27" />

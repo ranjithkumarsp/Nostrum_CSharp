@@ -102,6 +102,24 @@ namespace NostrumWPFUI.ViewModel
             }
         }
 
+        private string _packingUnitText;
+
+        public string PackingUnitText
+        {
+            get { return _packingUnitText; }
+            set { _packingUnitText = value; this.RaisePropertyChange(); }
+        }
+
+
+        private bool _isPackingVisible;
+
+        public bool IsPackingVisible
+        {
+            get { return _isPackingVisible; }
+            set { _isPackingVisible = value; this.RaisePropertyChange(); }
+        }
+
+
         #endregion
 
         int _sNo;
@@ -197,10 +215,15 @@ namespace NostrumWPFUI.ViewModel
                 if (type == Product.DrugType.Syrup)
                 {
                     //To-do: hide pack2 and change the x label to ml.
+                    IsPackingVisible = false;
+                    PackingUnitText = "ML";
                 }
                 else
                 {
                     //Do the reverse.
+                    IsPackingVisible = true;
+                    PackingUnitText = "X";
+                    
                 }
             }
         }
