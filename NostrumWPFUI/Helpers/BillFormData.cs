@@ -9,9 +9,9 @@ namespace NostrumWPFUI.Helpers
 {
     public class BillFormData : BaseViewModel
     {
-        private string _sno;
+        private int _sno;
 
-        public string SNo
+        public int SNo
         {
             get { return _sno; }
             set
@@ -65,17 +65,17 @@ namespace NostrumWPFUI.Helpers
             set { _expDate = value; this.RaisePropertyChange(); }
         }
 
-        private string _quantity;
+        private int _quantity;
 
-        public string Quantity
+        public int Quantity
         {
             get { return _quantity; }
             set { _quantity = value; this.RaisePropertyChange(); }
         }
 
-        private string _rate;
+        private double _rate;
 
-        public string Rate
+        public double Rate
         {
             get { return _rate; }
             set { _rate = value; this.RaisePropertyChange(); }
@@ -89,9 +89,9 @@ namespace NostrumWPFUI.Helpers
             set { _mrp = value; this.RaisePropertyChange(); }
         }
 
-        private string _amount;
+        private double _amount;
 
-        public string Amount
+        public double Amount
         {
             get { return _amount; }
             set { _amount = value; this.RaisePropertyChange(); }

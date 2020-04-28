@@ -43,7 +43,9 @@
         </Grid.ColumnDefinitions>
         
         <TextBlock Text="Client" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center"  />
-        <ComboBox Name="LoadClientCombo" ItemsSource="{Binding ClientsList}" SelectedItem="{Binding SelectedClient,UpdateSourceTrigger=PropertyChanged}" Width="120" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" />
+        <ComboBox Name="LoadClientCombo" ItemsSource="{Binding ClientsList}" SelectedItem="{Binding SelectedClient,UpdateSourceTrigger=PropertyChanged}"
+                  IsEditable="False" ShouldPreserveUserEnteredPrefix="True"
+                  Width="120" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" />
         <TextBlock Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center"   TextWrapping="Wrap" Text="From"  Height="23"  FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" />
         <xctk:DateTimePicker Grid.Row="3" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" Width="143" Height="30" />
         

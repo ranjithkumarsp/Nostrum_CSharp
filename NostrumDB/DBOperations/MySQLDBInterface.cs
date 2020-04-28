@@ -121,13 +121,17 @@ namespace NostrumDB
             {
                 ConnectionObj.Open();
                 MySqlCommand cmd = new MySqlCommand(query, ConnectionObj);
-                val = Convert.ToDouble(cmd.ExecuteScalar());
+                object obj = cmd.ExecuteScalar();
+                if(obj != null && obj != DBNull.Value)
+                {
+                    val = Convert.ToDouble(obj);
+                }
+                
                 cmd.Dispose();
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                throw;
             }
             finally
             {

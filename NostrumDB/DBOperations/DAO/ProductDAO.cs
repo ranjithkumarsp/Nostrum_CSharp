@@ -13,7 +13,7 @@ namespace NostrumDB
             _dbInterface = dbInterface;
             _dbInterface.InitializeDB();
         }
-        public bool addProduct(Product product)
+        public bool AddProduct(Product product)
         {
             int nRowsAffected = 0;
             string query = "Insert into products values('" + product.Name + "','" + product.Batch+ "','" + product.Drug_Type+ "','" + product.Mfg_Date.ToString("yyyy-MM-dd") + "','" + product.Exp_Date.ToString("yyyy-MM-dd") + "','" + product.Quantity + "','" + product.CGST+ "','" + product.SGST+ "','" + product.MRP + "','" + product.Manufacturer + "','" + product.Purchase_Date.ToString("yyyy-MM-dd") + "','" + product.Purchase_Invoice + "');";
@@ -21,7 +21,7 @@ namespace NostrumDB
             return (nRowsAffected > 0);
         }
 
-        public bool deleteProduct(string name, string batch)
+        public bool DeleteProduct(string name, string batch)
         {
             int nRowsAffected = 0;
             string query = "Delete from products where Name = '" + name + "' and batch = '" + batch + "';";
@@ -29,7 +29,7 @@ namespace NostrumDB
             return (nRowsAffected > 0);
         }
 
-        public List<string> getManufacturers()
+        public List<string> GetManufacturers()
         {
             List<string> mfrs = new List<string>();
             string query = "Select Manufacturer from products;";
@@ -44,7 +44,7 @@ namespace NostrumDB
             return mfrs;
         }
 
-        public Product getProduct(string name, string batch)
+        public Product GetProduct(string name, string batch)
         {
             Product product = new Product();
             string query = "Select * from products where name = '" + name + "' and batch = '" + batch + "';";
@@ -74,7 +74,7 @@ namespace NostrumDB
             return product;
         }
 
-        public List<string> getProductNames()
+        public List<string> GetProductNames()
         {
             List<string> productNames = new List<string>();
             string query = "Select distinct Name from products;";
@@ -89,7 +89,16 @@ namespace NostrumDB
             return productNames;
         }
 
-        public bool updateProduct(Product product)
+        public Product.DrugType GetProductType(string name)
+        {
+            Product.DrugType type = Product.DrugType.Tablet;
+            string query = "Select Drug_Type from products where name = '" + name + "';";
+
+            type = (Product.DrugType)_dbInterface.ExecuteScalar(query);
+            return type;
+        }
+
+        public bool UpdateProduct(Product product)
         {
             int nRowsAffected = 0;
             string query = "Update products set Drug_Type = '" + product.Drug_Type + "', Mfg_Date = '" + product.Mfg_Date.ToString("yyyy-MM-dd") + "', Exp_Date = '" + product.Exp_Date.ToString("yyyy-MM-dd") + "', Quantity = '" + product.Quantity + "', CGST = '" + product.CGST + "', SGST = '" + product.SGST + "', MRP = '" + product.MRP + "', Manufacturer = '" + product.Manufacturer + "', Purchase_Date = '" + product.Purchase_Date.ToString("yyyy-MM-dd") + "', Purchase_Invoice = '" + product.Purchase_Invoice + "' where Name = '" + product.Name + "' and Batch = '" + product.Batch + "';";

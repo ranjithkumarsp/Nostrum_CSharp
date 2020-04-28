@@ -41,7 +41,7 @@ namespace NostrumDB
             if (dataTable.Rows.Count > 0)
             {
                 DataRow reader = dataTable.Rows[0];
-                order.Order_Id = reader["Order_Id"].ToString();
+                order.Order_Id = (int)reader["Order_Id"];
                 order.FY = reader["FY"].ToString();
                 order.Order_Date = (DateTime) reader["Order_Date"];
                 order.Dispatch_Mode = reader["Dispatch_Mode"].ToString();
@@ -88,6 +88,7 @@ namespace NostrumDB
 
         public List<string> getOrderIds()
         {
+            // To-do: Format for invoice number has INV or DNT in it. Need to add it.
             List<string> orderIds = new List<string>();
             string query = "Select Order_Id, FY from orders;";
 

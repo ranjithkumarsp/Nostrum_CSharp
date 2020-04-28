@@ -1,22 +1,17 @@
-﻿using NostrumDB;
+﻿using Entity;
+using NostrumDB;
 using NostrumWPFUI.Helpers;
+using NostrumWPFUI.View;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-
-using Entity;
-using System.Windows;
-using NostrumWPFUI.View;
 using System.ComponentModel;
-using System.Reflection;
-using System.Windows.Controls;
+using System.Linq;
+using System.Windows;
+using System.Windows.Input;
 
 namespace NostrumWPFUI.ViewModel
 {
-    public class ClientsViewModel:BaseViewModel, IDataErrorInfo
+    public class ClientsViewModel : BaseViewModel, IDataErrorInfo
     {
         #region Properties
 
@@ -25,7 +20,8 @@ namespace NostrumWPFUI.ViewModel
         public string ClientName
         {
             get { return _clientName; }
-            set {
+            set
+            {
                 _clientName = value;
                 this.RaisePropertyChange();
             }
@@ -36,7 +32,8 @@ namespace NostrumWPFUI.ViewModel
         public string DisplayName
         {
             get { return _dispName; }
-            set {
+            set
+            {
                 _dispName = value;
                 this.RaisePropertyChange();
             }
@@ -46,7 +43,8 @@ namespace NostrumWPFUI.ViewModel
         public string Address
         {
             get { return _addr; }
-            set {
+            set
+            {
                 _addr = value;
                 this.RaisePropertyChange();
             }
@@ -57,7 +55,8 @@ namespace NostrumWPFUI.ViewModel
         public string DLNo
         {
             get { return _dlNo; }
-            set {
+            set
+            {
                 _dlNo = value;
                 this.RaisePropertyChange();
             }
@@ -67,8 +66,10 @@ namespace NostrumWPFUI.ViewModel
         public string TinNo
         {
             get { return _tinNo; }
-            set { _tinNo = value;
-            this.RaisePropertyChange();
+            set
+            {
+                _tinNo = value;
+                this.RaisePropertyChange();
             }
         }
 
@@ -77,7 +78,7 @@ namespace NostrumWPFUI.ViewModel
         public string ClientNameBtn
         {
             get { return _clientNameBtn; }
-            set { _clientNameBtn = value;this.RaisePropertyChange(); }
+            set { _clientNameBtn = value; this.RaisePropertyChange(); }
         }
 
 
@@ -86,8 +87,17 @@ namespace NostrumWPFUI.ViewModel
         public Client CurrentClient
         {
             get { return _currClient; }
-            set { _currClient = value;this.RaisePropertyChange(); }
+            set { _currClient = value; this.RaisePropertyChange(); }
         }
+
+        private string _MobileNo;
+
+        public string MobileNo
+        {
+            get { return _MobileNo; }
+            set { _MobileNo = value; this.RaisePropertyChange(); }
+        }
+
 
         List<string> ClientsFromDB = new List<string>();
 
@@ -96,7 +106,7 @@ namespace NostrumWPFUI.ViewModel
         public ClientsViewModel()
         {
             Initialize();
-            
+
         }
 
         //public ICommand AddClientCommand { get; set; }
@@ -134,27 +144,50 @@ namespace NostrumWPFUI.ViewModel
                 {
                     case "ClientName":
                         if (this.ClientName == "")
+                        {
                             result = string.Format("{0} Cannot be Empty", propertyName);
+                        }
+
                         break;
                     case "DisplayName":
-                            if (this.DisplayName == "")
+                        if (this.DisplayName == "")
+                        {
                             result = string.Format("{0} Cannot be Empty", propertyName);
+                        }
+
                         break;
                     case "Address":
                         if (this.Address == "")
+                        {
                             result = string.Format("{0} Cannot be Empty", propertyName);
+                        }
+
                         break;
                     case "DLNo":
                         if (this.DLNo == "")
+                        {
                             result = string.Format("{0} Cannot be Empty", propertyName);
+                        }
+
                         break;
                     case "TinNo":
                         if (this.TinNo == "")
+                        {
                             result = string.Format("{0} Cannot be Empty", propertyName);
+                        }
+
                         break;
+                    case "MobileNo":
+                        if (this.MobileNo == "")
+                        {
+                            result = string.Format("{0} Cannot be Empty", propertyName);
+                        }
+
+                        break;
+
                 }
 
-                if(ErrorCollection.ContainsKey(propertyName))
+                if (ErrorCollection.ContainsKey(propertyName))
                 {
                     ErrorCollection[propertyName] = result;
                 }
@@ -205,27 +238,35 @@ namespace NostrumWPFUI.ViewModel
         private bool canaddclient(object obj)
         {
             if (ErrorCollection.Any(x => x.Value != ""))
+            {
                 return false;
+            }
             else
+            {
                 return true;
+            }
         }
 
         private void addclient(object obj)
         {
-            
+
         }
 
         private bool CanAddClient(object arg)
-        {           
+        {
             if (ErrorCollection.Any(x => x.Value != ""))
+            {
                 return false;
+            }
             else
+            {
                 return true;
+            }
         }
 
         private void OnLoadedMthd(object obj)
         {
-            
+
         }
 
         private Entity.Client CreateClient()
@@ -234,36 +275,50 @@ namespace NostrumWPFUI.ViewModel
             cl.Name = ClientName;
             cl.Display_Name = DisplayName;
 
-            string[] addrArr = Address.Split(new char[] { '\r', '\n'},3,StringSplitOptions.RemoveEmptyEntries);
+            string[] addrArr = Address.Split(new char[] { '\r', '\n' }, 3, StringSplitOptions.RemoveEmptyEntries);
             cl.Addr1 = addrArr[0];
-            if(addrArr.Length > 1)
+            if (addrArr.Length > 1)
+            {
                 cl.Addr2 = addrArr[1];
-            if(addrArr.Length > 2)
+            }
+
+            if (addrArr.Length > 2)
+            {
                 cl.Addr3 = addrArr[2];
+            }
+
             cl.DL_No = DLNo;
             cl.TIN_No = TinNo;
+            cl.Phone = MobileNo;
             return cl;
         }
         public void AddClientMethod(object param)
         {
-            Client cl = CreateClient();
-            ClientDAO clientDao = new ClientDAO(new MySQLDBInterface());
-            try
+            if (ClientNameBtn.Equals("Add Client"))
             {
-                if (clientDao.addClient(cl))
+                Client cl = CreateClient();
+                ClientDAO clientDao = new ClientDAO(new MySQLDBInterface());
+                try
                 {
-                    MessageBox.Show("Client successfully Added!");
-                    ClearMethod(null);
+                    if (clientDao.AddClient(cl))
+                    {
+                        MessageBox.Show("Client successfully Added!");
+                       // ClearMethod(null);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Unable to add client!");
+                    }
                 }
-                else
+                catch (Exception e)
                 {
-                    MessageBox.Show("Unable to add client!");
+                    MessageBox.Show(e.Message);
                 }
             }
-            catch(Exception e)
+            else
             {
-                MessageBox.Show(e.Message);
-            }            
+                UpdateClientMethod(CurrentClient);
+            }
         }
         public void ClearMethod(object param)
         {
@@ -272,6 +327,7 @@ namespace NostrumWPFUI.ViewModel
             Address = String.Empty;
             DLNo = String.Empty;
             TinNo = String.Empty;
+            MobileNo = string.Empty;
             ClientNameBtn = "Add Client";
         }
         public void EditClientMethod(object param)
@@ -298,7 +354,7 @@ namespace NostrumWPFUI.ViewModel
             //p.Amount = 1000;
             //p.Pay_Date = new DateTime(2020, 01, 01);
             //dao.addPayment(p);
-            return dao.getClient(clientname);
+            return dao.GetClient(clientname);
         }
 
         private void LoadClient(Client client)
@@ -308,6 +364,28 @@ namespace NostrumWPFUI.ViewModel
             Address = client.Addr;
             DLNo = client.DL_No;
             TinNo = client.TIN_No;
+            MobileNo = client.Phone;
+        }
+        public void UpdateClientMethod(object param)
+        {
+            Client cl = CreateClient();
+            ClientDAO clientDao = new ClientDAO(new MySQLDBInterface());
+            try
+            {
+                if (clientDao.UpdateClient(cl))
+                {
+                    MessageBox.Show("Client successfully Updated!");
+                    //ClearMethod(null);
+                }
+                else
+                {
+                    MessageBox.Show("Unable to update client!");
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
         }
     }
 }

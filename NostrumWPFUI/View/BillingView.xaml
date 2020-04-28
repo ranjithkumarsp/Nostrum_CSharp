@@ -71,7 +71,8 @@
             <ComboBox Grid.Row="4" ItemsSource="{Binding ClientsList}" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="169"  Height="30" IsEditable="True" IsSynchronizedWithCurrentItem="True" IsTabStop="True" StaysOpenOnEdit="True" AllowDrop="True" 
                       PreviewTextInput="PreviewTextInput_EnhanceComboSearch"
                       PreviewKeyUp="PreviewKeyUp_EnhanceComboSearch"
-                      DataObject.Pasting="Pasting_EnhanceComboSearch">
+                      DataObject.Pasting="Pasting_EnhanceComboSearch"
+                      SelectedItem="{Binding ClientName}">
                 <ComboBox.Style>
                     <Style TargetType="ComboBox">
                         <Style.Triggers>
@@ -83,15 +84,15 @@
                 </ComboBox.Style>
             </ComboBox>
             <xctk:DateTimePicker Format="ShortDate" ShowButtonSpinner="False" ShowDropDownButton="True"  TimePickerShowButtonSpinner="False" Grid.Row="5" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30"
-                                 Text="{Binding BillDate,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                 Text="{Binding OrderDate,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}"
                                  />
-            <TextBox x:Name="FinancialYear" Text="{Binding FinancialYear,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Row="6" Grid.Column="4" TextAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="169" Width="Auto" Height="36"  
+            <TextBox x:Name="FinancialYear" Text="{Binding FinancialYear,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}" Grid.Row="6" Grid.Column="4" TextAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="169" Width="Auto" Height="36"  
                      TextBlock.TextAlignment="Right"
                      />
-            <TextBox x:Name="InvoiceNumber" Text="{Binding InvoiceNumber,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Row="7" Grid.Column="4" TextAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="169" Width="Auto" Height="36">
+            <TextBox x:Name="InvoiceNumber" Text="{Binding InvoiceNumber,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}" Grid.Row="7" Grid.Column="4" TextAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="169" Width="Auto" Height="36">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="GotFocus">
-                        <i:InvokeCommandAction Command="{Binding GotFocusCommand}"/>
+                        <i:InvokeCommandAction Command="{Binding EnterInvoiceCommand}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </TextBox>
@@ -102,7 +103,7 @@
                     <ColumnDefinition Width="35"/>
                     <ColumnDefinition Width="140"/>
                 </Grid.ColumnDefinitions>
-                <Button Content="{Binding BillingDonateCommandText,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Column="0" Command="{Binding BillingCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}" IsDefault="True"/>
+                <Button Content="Add Items" Grid.Column="0" Command="{Binding BillingCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}" IsDefault="True"/>
                 <Button Content="Clear" Grid.Column="2" Command="{Binding ClearCommand}"/>                
             </Grid>         
         </Grid>

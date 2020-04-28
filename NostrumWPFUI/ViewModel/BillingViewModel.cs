@@ -6,86 +6,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-
-using NostrumDB;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows;
+
+using NostrumDB;
+using Entity;
+
 
 namespace NostrumWPFUI.ViewModel
 {
     public class BillingViewModel : BaseViewModel
     {
-        public BillingViewModel()
-        {
-            Initialize();
-        }
-
-        public ICommand BillingCommand { get; set; }
-        public ICommand ClearCommand { get; set; }
-        public ICommand GotFocusCommand { get; set; }
-        public ICommand ViewOldCommand { get; set; }
-        public RelayCommand<string> RadioButtonCheckedCommand { get;set;}
-        ViewOldPopupView viewOldPopupView;
-        ViewOldPopupViewModel _viewOldPopupViewModel;
-
-        public void Initialize()
-        {
-            loadDefaults();
-            BillingCommand = new CustomDelegateCommand(BillingMethod);
-            ClearCommand = new CustomDelegateCommand(ClearMethod);
-            GotFocusCommand = new CustomDelegateCommand(GotFocusMethod);
-            ViewOldCommand = new CustomDelegateCommand(OpenViewOldPopUp);
-            RadioButtonCheckedCommand = new RelayCommand<string>(RadioButtonChecked);
-
-            GetClientsFromDB();
-        }
-
-        private void loadDefaults()
-        {
-            IsBillingChecked = true;
-            BillingDonateCommandText = "Billing";
-            PaymentTerms = 30;
-            FinancialYear = "2020";
-            BillDate = DateTime.Now.ToShortDateString();
-        }
-        private void RadioButtonChecked(string _radioBtn)
-        {
-            switch(_radioBtn)
-            {
-                case "BillingRadioBtn":
-                    BillingDonateCommandText = "Billing";
-                    break;
-                case "DonationRadioBtn":
-                    BillingDonateCommandText = "Donate";
-                    break;
-            }
-        }
-
-        private void OpenViewOldPopUp(object obj)
-        {
-            if (viewOldPopupView == null)
-                viewOldPopupView = new ViewOldPopupView();
-            if(_viewOldPopupViewModel== null)
-             _viewOldPopupViewModel = new ViewOldPopupViewModel();
-            viewOldPopupView.DataContext = _viewOldPopupViewModel;
-            viewOldPopupView.Owner = MainWindow;
-            viewOldPopupView.Show();
-        }
-
-        public void BillingMethod(object param)
-        {
-            BillFormView bfm = new BillFormView();
-            bfm.Owner = MainWindow;
-            bfm.ShowDialog();
-        }
-        public void ClearMethod(object param)
-        {
-            BillDate = string.Empty;
-            InvoiceNumber = string.Empty;
-            FinancialYear = string.Empty;
-            PaymentTerms = 0;
-        }
+        #region Properties
 
         private List<string> _clientsList;
 
@@ -93,14 +26,6 @@ namespace NostrumWPFUI.ViewModel
         {
             get { return _clientsList; }
             set { _clientsList = value; this.RaisePropertyChange(); }
-        }
-
-        private string myVar;
-
-        public string MyProperty
-        {
-            get { return myVar; }
-            set { myVar = value; }
         }
 
         private bool _isBillingChecked;
@@ -119,28 +44,52 @@ namespace NostrumWPFUI.ViewModel
             set { _isDonationChecked = value; this.RaisePropertyChange(); }
         }
 
-        private string _billingDonateCommandText;
+        private string _clientName;
 
-        public string BillingDonateCommandText
+        public string ClientName
         {
-            get { return _billingDonateCommandText; }
-            set { _billingDonateCommandText = value; this.RaisePropertyChange(); }
+            get { return _clientName; }
+            set
+            {
+                _clientName = value;
+                this.RaisePropertyChange();
+            }
         }
 
-        private string _financialYear;
+        private int _invNo;
+
+        public int InvoiceNumber
+        {
+            get { return _invNo; }
+            set
+            {
+                _invNo = value;
+                this.RaisePropertyChange();
+            }
+        }
+
+        private string _fy;
 
         public string FinancialYear
         {
-            get { return _financialYear; }
-            set { _financialYear = value; this.RaisePropertyChange(); }
+            get { return _fy; }
+            set
+            {
+                _fy = value;
+                this.RaisePropertyChange();
+            }
         }
 
-        private string _invoiceNumber;
+        private DateTime _orderDate;
 
-        public string InvoiceNumber
+        public DateTime OrderDate
         {
-            get { return _invoiceNumber; }
-            set { _invoiceNumber = value; this.RaisePropertyChange(); }
+            get { return _orderDate; }
+            set
+            {
+                _orderDate = value;
+                this.RaisePropertyChange();
+            }
         }
 
         private int _paymentTerms;
@@ -148,57 +97,110 @@ namespace NostrumWPFUI.ViewModel
         public int PaymentTerms
         {
             get { return _paymentTerms; }
-            set { _paymentTerms = value; this.RaisePropertyChange(); }
+            set
+            {
+                _paymentTerms = value;
+                this.RaisePropertyChange();
+            }
         }
 
-        private string _billDate;
+        #endregion
 
-        public string BillDate
+        private Order _order;
+        public BillingViewModel()
         {
-            get { return _billDate; }
-            set { _billDate = value; this.RaisePropertyChange(); }
+            Initialize();
         }
 
+        public ICommand BillingCommand { get; set; }
+        public ICommand ClearCommand { get; set; }
+        public ICommand ViewOldCommand { get; set; }
+        public ICommand EnterInvoiceCommand { get; set; }
+        public RelayCommand<string> RadioButtonCheckedCommand { get; set; }
 
+        ViewOldPopupView viewOldPopupView;
+        ViewOldPopupViewModel _viewOldPopupViewModel;
+        
+        
+        public BillingView billview;
+        public void Initialize()
+        {
+            BillingCommand = new CustomDelegateCommand(BillingMethod);
+            ClearCommand = new CustomDelegateCommand(ClearMethod);
+            EnterInvoiceCommand = new CustomDelegateCommand(EnterInvoiceMethod);
+            ViewOldCommand = new CustomDelegateCommand(OpenViewOldPopUp);
 
-        public void GetClientsFromDB()
+            _order = new Order();
+            GetClientsFromDB();
+            ClearAll();
+            GenerateInvoiceNumber();
+        }
+
+        private void EnterInvoiceMethod(object obj)
+        {
+            GenerateInvoiceNumber();
+        }
+
+        public void BillingMethod(object param)
+        {
+            _order.Client_Name = ClientName;
+            _order.Order_Id = InvoiceNumber;
+            _order.FY = FinancialYear;
+            _order.Order_Type = IsBillingChecked ? Order.OrderType.SaleOrder : Order.OrderType.DonateOrder;
+            _order.Order_Date = OrderDate;
+            //_order.Dispatch_Mode //To-do: Need to understand the use of Dispatch mode.
+            _order.Payment_Terms = PaymentTerms;
+
+            AddLineItemView addLineItemView = new AddLineItemView(_order);
+            addLineItemView.Owner = MainWindow;
+            addLineItemView.ShowDialog();
+            //BillFormView bfm = new BillFormView(_order);
+            //bfm.Owner = MainWindow;
+            //bfm.ShowDialog();
+        }
+        public void ClearMethod(object param)
+        {
+            ClearAll();
+        }
+        private void OpenViewOldPopUp(object obj)
+        {
+            if (viewOldPopupView == null)
+                viewOldPopupView = new ViewOldPopupView();
+            if (_viewOldPopupViewModel == null)
+                _viewOldPopupViewModel = new ViewOldPopupViewModel();
+            viewOldPopupView.DataContext = _viewOldPopupViewModel;
+            viewOldPopupView.Owner = MainWindow;
+            viewOldPopupView.Show();
+        }
+        public void ClearAll()
+        {
+            OrderDate = DateTime.Now;
+            PaymentTerms = 30;
+            SetFinancialYear(DateTime.Now);
+            InvoiceNumber = 0;
+            ClientName = ClientsList.ElementAt < string >(0);
+            IsBillingChecked = true;
+        }
+        private void GetClientsFromDB()
         {
             ClientDAO dao = new ClientDAO(new MySQLDBInterface());
-            ClientsList = dao.getClients();
+            ClientsList = dao.GetClients();
         }
 
-        public void SetFocus(object window,string controlname)
+        public void SetFinancialYear(DateTime date)
         {
-            var parent = window as BillingView;
-            if (parent != null)
-            {               
-
-            }
-        }
-        private void GotFocusMethod(object obj)
-        {
-           // InvoiceNumber = getInvoiceNumber(FinancialYear);
-        }
-
-        public string getInvoiceNumber(string _fy)
-        {
-            string invoiceNo = string.Empty;
-            int invoice = 0;
-           Entity.Order p = new Entity.Order();
-            OrderDAO _orderDAO = new OrderDAO(new MySQLDBInterface());
-            if(_fy != null)
-            {
-                invoice = _orderDAO.getNextInvNo(_fy);
-            }
+            // Financial year will be of the form FY20(last two digit of the year).
+            // For months before April, year will be considered as previous year.
+            if (date.Month < 4)
+                FinancialYear = "FY" + ((date.Year - 1) % 100); // Modulo dividing by 100 to convert the year to two digit.
             else
-            {
-               invoice =  _orderDAO.getNextInvNo();                
-            }
-            invoiceNo = invoice.ToString();
-            return invoiceNo;
-
-
+                FinancialYear = "FY" + (date.Year % 100); // Modulo dividing by 100 to convert the year to two digit.
         }
 
+        public void GenerateInvoiceNumber()
+        {
+            OrderDAO orderDAO = new OrderDAO(new MySQLDBInterface());
+            InvoiceNumber = orderDAO.getNextInvNo(FinancialYear);
+        }
     }
 }

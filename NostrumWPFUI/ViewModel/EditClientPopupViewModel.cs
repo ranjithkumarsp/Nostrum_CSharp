@@ -15,7 +15,7 @@ namespace NostrumWPFUI.ViewModel
 {
     public class EditClientPopupViewModel : BaseViewModel
     {
-        EditClientPopupView editClientPopup;
+        //EditClientPopupView editClientPopup;
 
         #region Constructor
 
@@ -100,7 +100,7 @@ namespace NostrumWPFUI.ViewModel
         public void GetClientsFromDB()
         {
             ClientDAO dao = new ClientDAO(new MySQLDBInterface());
-            ClientsList = dao.getClients();
+            ClientsList = dao.GetClients();
         }
 
         #endregion

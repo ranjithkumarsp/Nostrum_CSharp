@@ -24,7 +24,7 @@ namespace NostrumWPFUI.ViewModel
             OKCommand = new CustomDelegateCommand(OkMethod);
             CancelCommand = new CustomDelegateCommand(CancelMethod);
             ProductDAO dao = new ProductDAO(new MySQLDBInterface());
-            ProductNameList = dao.getProductNames();
+            ProductNameList = dao.GetProductNames();
             SelectedProduct = ProductNameList.FirstOrDefault();
             //ProductsList = dao.getProduct();
         }

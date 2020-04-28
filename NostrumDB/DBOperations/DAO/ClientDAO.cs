@@ -18,7 +18,7 @@ namespace NostrumDB
             _dbInterface.InitializeDB();
         }
 
-        public bool addClient(Client client)
+        public bool AddClient(Client client)
         {
             int nRowsAffected = 0;
             string query = "Insert into clients values('"+client.Name+"','" + client.Phone + "','" + client.Display_Name + "','" + client.Addr1 + "','" + client.Addr2 + "','" + client.Addr3 + "','" + client.TIN_No + "','" + client.DL_No + "');";
@@ -26,7 +26,7 @@ namespace NostrumDB
             return (nRowsAffected > 0);
         }
 
-        public bool deleteClient(string displayName)
+        public bool DeleteClient(string displayName)
         {
             int nRowsAffected = 0;
             string query = "Delete from clients where Display_Name = '"+displayName+"'";
@@ -34,7 +34,7 @@ namespace NostrumDB
             return (nRowsAffected > 0);
         }
 
-        public Client getClient(string displayName)
+        public Client GetClient(string displayName)
         {
             Client client = new Client();
             string query = "Select * from clients where Display_Name = '" + displayName + "'";
@@ -60,7 +60,7 @@ namespace NostrumDB
             return client;          
         }
 
-        public List<string> getClients()
+        public List<string> GetClients()
         {
             List<string> clientNames = new List<string>();
             string query = "Select Display_Name from clients;";
@@ -100,7 +100,7 @@ namespace NostrumDB
             return ClientInfoList;
         }
 
-        public bool updateClient(Client client)
+        public bool UpdateClient(Client client)
         {
             int nRowsAffected = 0;
             string query = "Update clients set Name = '" + client.Name + "', Phone = '" + client.Phone + "', Addr1 = '" + client.Addr1 + "', Addr2 = '" + client.Addr2 + "', Addr3 = '" + client.Addr3 + "', TIN_No = '" + client.TIN_No + "', DL_No = '" + client.DL_No + "' where Display_Name = '" + client.Display_Name + "';";

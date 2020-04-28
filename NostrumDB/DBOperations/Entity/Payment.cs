@@ -9,7 +9,7 @@ namespace Entity
     public class Payment
     {
         private string _paymentId;
-        private string _orderId;
+        private int _orderId;
         private string _fy;
         private double _amount;
         private DateTime _payDate;
@@ -25,7 +25,7 @@ namespace Entity
                 _paymentId = value;
             }
         }
-        public string Order_ID
+        public int Order_ID
         {
             get
             {

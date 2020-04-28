@@ -17,10 +17,10 @@ namespace NostrumDB
             _dbInterface.InitializeDB();
         }
 
-        public List<string> getBatchNos(string name)
+        public List<string> GetBatchNos(string name)
         {
             List<string> batchNos = new List<string>();
-            string query = "Select Batch from stock where Name = '" + name + "' and qty > 0;";
+            string query = "Select Batch from stock where Product = '" + name + "' and qty > 0;";
 
             DataTable dataTable = _dbInterface.ExecuteQuery(query);
 
@@ -32,7 +32,7 @@ namespace NostrumDB
             return batchNos;
         }
 
-        public int getStockQuantity(string name, string batch)
+        public int GetStockQuantity(string name, string batch)
         {
             int quantity = 0;
             Stock order = new Stock();

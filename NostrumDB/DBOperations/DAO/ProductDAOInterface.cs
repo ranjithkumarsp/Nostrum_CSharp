@@ -10,11 +10,12 @@ namespace NostrumDB
 {
     interface IProductDAO
     {
-        bool addProduct(Product product);
-        Product getProduct(string name, string batch);
-        List<string> getProductNames();
-        List<string> getManufacturers();
-        bool updateProduct(Product product);
-        bool deleteProduct(string name, string batch);
+        bool AddProduct(Product product);
+        Product GetProduct(string name, string batch);
+        Product.DrugType GetProductType(string name);
+        List<string> GetProductNames();
+        List<string> GetManufacturers();
+        bool UpdateProduct(Product product);
+        bool DeleteProduct(string name, string batch);
     }
 }

@@ -3,29 +3,13 @@ using NostrumWPFUI.Helpers;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using Entity;
+using Nostrum;
 
 namespace NostrumWPFUI.ViewModel
 {
     public class BillFormViewModel : BaseViewModel
     {
-        private ObservableCollection<BillFormData> _billFormDataSourceCollection;
-        public ICommand OnLoadedCmd { get; set; }
-        public BillFormViewModel()
-        {
-            ProductDAO productDao = new ProductDAO(new MySQLDBInterface());
-            List<string> manfactures = productDao.getManufacturers();
-            manfactures.ForEach(item => { ManfAutoCompleteCollection.Add(item); });
-            OnLoadedCmd = new CustomDelegateCommand(this.OnLoadedMthd);
-            _billFormDataSourceCollection = new ObservableCollection<BillFormData>();
-            BillFormDataSourceCollection.Add(new BillFormData { SNo = "1", Product = "CYRA-D", BatchNo = "111", Packing = "1+1", Offer = "1+2", ExpDate = "feb18", Quantity = "100", Rate = "123", MRP = "100", Amount = "343" });
-            loadDummyData();
-        }
-
-        private void OnLoadedMthd(object obj)
-        {
-
-        }
-
         #region Properties
 
         private string _buyerNameandAddress;
@@ -36,12 +20,12 @@ namespace NostrumWPFUI.ViewModel
             set { _buyerNameandAddress = value; this.RaisePropertyChange(); }
         }
 
-        private string _date;
+        private string _billDate;
 
-        public string Date
+        public string BillDate
         {
-            get { return _date; }
-            set { _date = value; this.RaisePropertyChange(); }
+            get { return _billDate; }
+            set { _billDate = value; this.RaisePropertyChange(); }
         }
 
         private string _invoiceNo;
@@ -141,8 +125,55 @@ namespace NostrumWPFUI.ViewModel
             set { _invoiceAmountinWords = value; this.RaisePropertyChange(); }
         }
         
-
         #endregion
+
+        private Order _order;
+        private LineItem _orderLineItem;
+
+        private ObservableCollection<BillFormData> _billFormDataSourceCollection;
+        public ICommand OnLoadedCmd { get; set; }
+        public BillFormViewModel(Order order)
+        {
+            _order = order;
+            _orderLineItem = new LineItem();
+            Initialize();
+        }
+
+        private void Initialize()
+        {
+            BillDate = _order.Order_Date.ToShortDateString();
+            GenerateInvoiceNo();
+            PaymentTerms = _order.Payment_Terms + " Days";
+            FillClientDetails();
+            //ProductDAO productDao = new ProductDAO(new MySQLDBInterface());
+            //List<string> manfactures = productDao.getManufacturers();
+            //manfactures.ForEach(item => { ManfAutoCompleteCollection.Add(item); });
+            OnLoadedCmd = new CustomDelegateCommand(this.OnLoadedMthd);
+            BillFormDataSourceCollection = new ObservableCollection<BillFormData>();
+            //BillFormDataSourceCollection.Add(new BillFormData { SNo = "", Product = "", BatchNo = "", Packing = "", Offer = "", ExpDate = "", Quantity = "", Rate = "", MRP = "", Amount = "" });
+            //loadDummyData(_order);
+        }
+        private void OnLoadedMthd(object obj)
+        {
+        }
+        
+        private void GenerateInvoiceNo()
+        {
+            // Invoice number is of the format INV-001-FY20
+            if (_order.Order_Type == Order.OrderType.SaleOrder)
+                InvoiceNo = "INV-";
+            else if (_order.Order_Type == Order.OrderType.DonateOrder)
+                InvoiceNo = "DNT-";
+            InvoiceNo += Nostrum.Utils.numToNdigitString(_order.Order_Id,3) + "-" + _order.FY;
+        }
+
+        private void FillClientDetails()
+        {
+            ClientDAO clientDAO = new ClientDAO(new MySQLDBInterface());
+            Client client = clientDAO.GetClient(_order.Client_Name);
+            BuyersTINNo = client.TIN_No;
+            BuyersDLNo = client.DL_No;
+        }
 
         private ObservableCollection<string> _manfAutoCompleteCollection = new ObservableCollection<string>();
 
@@ -152,29 +183,16 @@ namespace NostrumWPFUI.ViewModel
             set { _manfAutoCompleteCollection = value; this.RaisePropertyChange(); }
         }
 
-        private int myVar;
-
-        public int MyProperty
-        {
-            get { return myVar; }
-            set
-            {
-                myVar = value;
-                this.RaisePropertyChange();
-            }
-        }
-
-
         public ObservableCollection<BillFormData> BillFormDataSourceCollection
         {
             get { return _billFormDataSourceCollection; }
             set { _billFormDataSourceCollection = value; this.RaisePropertyChange(); }
         }
 
-        public void loadDummyData()
+        public void loadDummyData(Order order)
         {
             BuyerNameandAddress = "";
-            Date = System.DateTime.Today.ToShortDateString();
+            BillDate = System.DateTime.Today.ToShortDateString();
             InvoiceNo = "12345678";
             PaymentTerms = "30 Days";
 
@@ -189,7 +207,6 @@ namespace NostrumWPFUI.ViewModel
             InvoiceAmount = "InvoiceAmount";
 
             InvoiceAmountinWords = "OneHundred and Fifty Five OneHundred and Fifty Five,,Five OneHundred and Fifty Five ";
-
 
         }
 

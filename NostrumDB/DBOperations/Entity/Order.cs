@@ -13,7 +13,7 @@ namespace Entity
             SaleOrder,
             DonateOrder
         }
-        private string _orderId;
+        private int _orderId;
         private string _fy;
         private DateTime _orderDate;
         private string _dispatchMode;
@@ -22,7 +22,7 @@ namespace Entity
         private double _discount;
         private int _paymentTerms;
         private OrderType _orderType;
-        public string Order_Id
+        public int Order_Id
         {
             get
             {

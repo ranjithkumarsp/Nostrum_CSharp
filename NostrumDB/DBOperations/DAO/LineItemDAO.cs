@@ -24,7 +24,7 @@ namespace NostrumDB
             return (nRowsAffected > 0);
         }
 
-        public bool deleteLineItem(string orderId, string fy, int sNo)
+        public bool deleteLineItem(int orderId, string fy, int sNo)
         {
             int nRowsAffected = 0;
             string query = "Delete from order_line_items where Order_Id = '" + orderId + "' and fy = '" + fy + "' and S_No = '"+ sNo +"';";
@@ -32,7 +32,7 @@ namespace NostrumDB
             return (nRowsAffected > 0);
         }
 
-        public bool deleteAllLineItems(string orderId, string fy)
+        public bool deleteAllLineItems(int orderId, string fy)
         {
             int nRowsAffected = 0;
             string query = "Delete from order_line_items where Order_Id = '" + orderId + "' and fy = '" + fy + "';";
@@ -40,7 +40,7 @@ namespace NostrumDB
             return (nRowsAffected > 0);
         }
 
-        public List<LineItem> getLineItems(string orderId, string fy)
+        public List<LineItem> getLineItems(int orderId, string fy)
         {
             List<LineItem> lineItems = new List<LineItem>();
             string query = "Select * from order_line_items where Order_Id = '" + orderId + "' and FY = '" + fy + "';";
@@ -50,7 +50,7 @@ namespace NostrumDB
             foreach (DataRow dr in dataTable.Rows)
             {
                 LineItem lineItem = new LineItem();
-                lineItem.Order_Id = dr["Order_Id"].ToString();
+                lineItem.Order_Id = (int)dr["Order_Id"];
                 lineItem.FY = dr["FY"].ToString();
                 lineItem.S_No = (int)dr["S_No"];
                 lineItem.Product_Name = dr["Product_Name"].ToString();

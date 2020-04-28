@@ -13,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+using Entity;
+
 namespace NostrumWPFUI.View
 {
     /// <summary>
@@ -20,10 +22,10 @@ namespace NostrumWPFUI.View
     /// </summary>
     public partial class BillFormView : Window
     {
-        public BillFormView()
+        public BillFormView(Order order)
         {
             InitializeComponent();
-            this.DataContext = new BillFormViewModel();
+            this.DataContext = new BillFormViewModel(order);
         }
 
         //tomake scroll over DataGrid

@@ -10,10 +10,10 @@ namespace NostrumDB
 {
     interface IClientDAO
     {
-        bool addClient(Client client);
-        Client getClient(string displayName);
-        List<string> getClients();
-        bool updateClient(Client client);
-        bool deleteClient(string displayName);
+        bool AddClient(Client client);
+        Client GetClient(string displayName);
+        List<string> GetClients();
+        bool UpdateClient(Client client);
+        bool DeleteClient(string displayName);
     }
 }

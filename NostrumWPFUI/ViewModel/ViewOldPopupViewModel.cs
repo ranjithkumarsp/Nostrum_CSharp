@@ -38,8 +38,14 @@ namespace NostrumWPFUI.ViewModel
         public RelayCommand<IClosable> OpenRelayCommand { get; private set; }
         public RelayCommand<IClosable> CancelRelayCommand { get; private set; }
 
-        
 
+        private List<string> _clientsList;
+
+        public List<string> ClientsList
+        {
+            get { return _clientsList; }
+            set { _clientsList = value; this.RaisePropertyChange(); }
+        }
 
         #endregion
 
@@ -52,9 +58,9 @@ namespace NostrumWPFUI.ViewModel
 
         private void OpenBillForm(IClosable _viewOldPopupView)
         {
-            BillFormView _billFormView = new BillFormView();
-            BillFormViewModel _billFormVM = new BillFormViewModel();
-            _billFormView.DataContext = _billFormVM;
+            Order order = new Order();
+            BillFormView _billFormView = new BillFormView(order);
+            _billFormView.DataContext = new BillFormViewModel(order);
             _billFormView.Owner = MainWindow;
             _billFormView.ShowDialog();
         }

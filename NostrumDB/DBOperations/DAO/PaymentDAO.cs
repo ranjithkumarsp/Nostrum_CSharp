@@ -24,7 +24,7 @@ namespace NostrumDB
             return (nRowsAffected > 0);
         }
 
-        public List<Payment> getPayments(string orderId, string fy)
+        public List<Payment> getPayments(int orderId, int fy)
         {
             List<Payment> payments = new List<Payment>();
             string query = "Select * from payments where Order_Id = '" + orderId + "' and FY = '" + fy + "';";
@@ -35,7 +35,7 @@ namespace NostrumDB
             {
                 Payment payment = new Payment();
                 payment.Payment_ID = dr["Payment_ID"].ToString();
-                payment.Order_ID = dr["Order_ID"].ToString();
+                payment.Order_ID = (int)dr["Order_ID"];
                 payment.FY = dr["FY"].ToString();
                 payment.Amount = (double)dr["Amount"];
                 payment.Pay_Date = (DateTime)dr["Pay_Date"];
@@ -45,7 +45,7 @@ namespace NostrumDB
             return payments;
         }
 
-        public double getTotalAmountPaid(string orderId, string fy)
+        public double getTotalAmountPaid(int orderId, int fy)
         {
             double total = 0;
             string query = "Select sum(Amount) from payments where Order_Id = '" + orderId + "' and FY = '" + fy + "';";

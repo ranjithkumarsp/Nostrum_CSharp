@@ -6,15 +6,11 @@ using System.Threading.Tasks;
 using Microsoft.Office.Interop.Excel;
 using Microsoft.Win32;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Windows;
 using Application = Microsoft.Office.Interop.Excel.Application;
 
@@ -25,8 +21,8 @@ namespace NostrumExcelReader
     {
 
         Application xlApp;
-        Workbook xlWorkbook;
-        _Worksheet xlSheet;
+        // Workbook xlWorkbook;
+        // _Worksheet xlSheet;
         
         string Filename = string.Empty;
         List<ExcelProduct> _ExcelProduct = new List<ExcelProduct>();

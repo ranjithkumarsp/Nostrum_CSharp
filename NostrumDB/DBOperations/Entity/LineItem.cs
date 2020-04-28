@@ -8,7 +8,7 @@ namespace Entity
 {
     public class LineItem
     {
-        private string _orderId;
+        private int _orderId;
         private string _fy;
         private int _sNo;
         private string _productName;
@@ -20,7 +20,7 @@ namespace Entity
         private int _quantity;
         private double _rate;
 
-        public string Order_Id
+        public int Order_Id
         {
             get
             {

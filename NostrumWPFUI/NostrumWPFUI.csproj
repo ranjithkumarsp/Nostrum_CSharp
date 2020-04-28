@@ -149,6 +149,8 @@
     <Compile Include="UIEntity\ClientPayment.cs" />
     <Compile Include="UIEntity\OutstandingPayment.cs" />
     <Compile Include="UIEntity\StockDisplay.cs" />
+    <Compile Include="Utils\Utils.cs" />
+    <Compile Include="ViewModel\AddLineItemViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\BillFormViewModel.cs" />
     <Compile Include="ViewModel\BillingViewModel.cs" />
@@ -162,6 +164,9 @@
     <Compile Include="ViewModel\ProductsViewModel.cs" />
     <Compile Include="ViewModel\StockDisplayPopupViewModel.cs" />
     <Compile Include="ViewModel\StockViewModel.cs" />
+    <Compile Include="View\AddLineItemView.xaml.cs">
+      <DependentUpon>AddLineItemView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\BillFormView.xaml.cs">
       <DependentUpon>BillFormView.xaml</DependentUpon>
     </Compile>
@@ -214,6 +219,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Styles\NostrumUIStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AddLineItemView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

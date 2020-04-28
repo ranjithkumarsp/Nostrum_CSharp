@@ -157,7 +157,7 @@ namespace NostrumWPFUI.ViewModel
             ExpDate = DateTime.Today;
             PurchaseDate = DateTime.Today;
             ProductDAO productDao = new ProductDAO(new MySQLDBInterface());
-            List<string> manfactures = productDao.getManufacturers();
+            List<string> manfactures = productDao.GetManufacturers();
             manfactures.ForEach(item => { ManfAutoCompleteCollection.Add(item); });
            // ManfAutoCompleteCollection.Add(); 
         }
@@ -197,7 +197,7 @@ namespace NostrumWPFUI.ViewModel
             ProductDAO productDao = new ProductDAO(new MySQLDBInterface());
             try
             {
-                if(productDao.addProduct(CreateProduct()))
+                if(productDao.AddProduct(CreateProduct()))
                 {
                     MessageBox.Show("Product successfully Added!");
                     ClearMethod(null);

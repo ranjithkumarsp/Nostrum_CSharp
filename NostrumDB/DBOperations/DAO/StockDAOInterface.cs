@@ -8,7 +8,7 @@ namespace NostrumDB
 {
     interface IStockDAO
     {
-        int getStockQuantity(string name, string batch);
-        List<string> getBatchNos(string name);
+        int GetStockQuantity(string name, string batch);
+        List<string> GetBatchNos(string name);
     }
 }

@@ -43,7 +43,7 @@
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
                     <TextBlock Text="NOSTRUM BIOTECH" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="36" FontFamily="Times New Roman" />
-                    <TextBlock Text="9/A, Shafiullah Street, R K Pet, Arni - 632 301."  Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial Unicode MS" FontSize="16"/>
+                    <TextBlock Text="19/A, Shafiullah Street, R K Pet, Arni - 632301."  Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial Unicode MS" FontSize="16"/>
                     <TextBlock Text="Tiruvannamalai District, Tamilnadu."  Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial Unicode MS" FontSize="14"/>
                     <TextBlock Text=" Ph: 9942529828, Email: nostrumbiotech@gmail.com"  Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial Unicode MS" FontSize="14"/>
                     <Border Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="9" BorderBrush="Gray" Background="Gray" BorderThickness="2"/>
@@ -72,13 +72,13 @@
                     </Border>
                         <Border Grid.Row="0" Grid.RowSpan="9" Grid.Column="2" BorderBrush="Gray" Background="Gray"/>
                     <TextBlock Text="Name and Address of Buyer:" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <RichTextBox  BorderBrush="Gray" BorderThickness="1" Grid.Row="3" Grid.RowSpan="4" Grid.Column="1"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,3,0" SpellCheck.IsEnabled="True"  />
+                    <RichTextBox BorderBrush="Gray" BorderThickness="1" Grid.Row="3" Grid.RowSpan="4" Grid.Column="1"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,3,0" SpellCheck.IsEnabled="True"  />
                     <!--<TextBox Text="Addr1" Grid.Row="4" Grid.Column="1"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
                     <TextBox Text="Addr2" Grid.Row="5" Grid.Column="1"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextAlignment="Left"/>
                     <TextBox Text="Addr3" Grid.Row="6" Grid.Column="1"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextAlignment="Left"/>-->
                     <TextBlock Text="Date" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     <TextBlock Text=":" Grid.Row="1" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <TextBlock Text="{Binding Date}" Grid.Row="1" Grid.Column="5"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding BillDate}" Grid.Row="1" Grid.Column="5"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
                     <TextBlock Text="Invoice Number" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     <TextBlock Text=":" Grid.Row="2" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
@@ -101,16 +101,16 @@
                 
             </Border>
             <Border x:Name="DataGridBorder" Grid.Row="3" Grid.Column="1"  Grid.ColumnSpan="2" BorderBrush="Gray" BorderThickness="3">
-                <Grid Name="DataGridHolder" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="5" MinHeight="250">                    
+                <Grid Name="DataGridHolder" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="5" MinHeight="250">
                     <DataGrid x:Name="BillingDataGrid" Grid.Row="3"  Grid.Column="1" Grid.ColumnSpan="5" 
                               ColumnWidth="SizeToCells" AutoGenerateColumns="False" SelectionMode="Single" SelectionUnit="Cell"
                               ItemsSource="{Binding BillFormDataSourceCollection}" PreviewMouseWheel="UIElement_OnPreviewMouseWheel"
-                              >
-                        
+                              CanUserAddRows="True">
+
                         <DataGrid.Columns>
                             <!--<DataGridTextColumn Header="S.No" Binding="{Binding SNo,UpdateSourceTrigger=LostFocus}" Width="35"/>-->
-                            <DataGridTemplateColumn Header="S.No" Width="35">
-                                <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataGridTextColumn Header="S.No" Width="35">
+                                <!--<DataGridTemplateColumn.CellEditingTemplate>
                                     <DataTemplate>
                                         <TextBox Text="{Binding Path=SNo,UpdateSourceTrigger=LostFocus}" BorderBrush="Gray" Background="LightPink" BorderThickness="2">
                                             <i:Interaction.Triggers>
@@ -120,20 +120,9 @@
                                             </i:Interaction.Triggers>
                                         </TextBox>
                                     </DataTemplate>
-                                </DataGridTemplateColumn.CellEditingTemplate>
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBox Text="{Binding Path=SNo,UpdateSourceTrigger=LostFocus}" BorderBrush="Red" BorderThickness="2">
-                                            <!--<i:Interaction.Triggers>
-                                                <i:EventTrigger EventName="Loaded">
-                                                    <i:InvokeCommandAction Command="{Binding OnLoadedCmd,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGrid}}}"/>
-                                                </i:EventTrigger>
-                                            </i:Interaction.Triggers>-->
-                                        </TextBox>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                        <DataGridTextColumn Header="Product" Binding="{Binding Product,UpdateSourceTrigger=PropertyChanged}" MinWidth="60" Width="60"/>
+                                </DataGridTemplateColumn.CellEditingTemplate>-->
+                            </DataGridTextColumn>
+                        <DataGridTextColumn Header="Product" Binding="{Binding Product,UpdateSourceTrigger=PropertyChanged}" MinWidth="125" Width="125"/>
                             <!--<DataGridTemplateColumn Header="Product" MinWidth="60">
                                 <DataGridTemplateColumn.CellEditingTemplate>
                                     <DataTemplate>
@@ -152,11 +141,11 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>-->
-                            <DataGridTextColumn Header="Batch No" Binding="{Binding BatchNo,UpdateSourceTrigger=LostFocus}" MinWidth="60" Width="60"/>
-                            <DataGridTextColumn Header="Packing" Binding="{Binding Packing}"  Width="60"/>
-                            <DataGridTextColumn Header="Offer" Binding="{Binding Offer}"   Width="60"/>
-                            <DataGridTextColumn Header="Exp Date" Binding="{Binding ExpDate}"  Width="60"/>
-                            <DataGridTextColumn Header="Qty" Binding="{Binding Quantity}"  Width="60"/>
+                            <DataGridTextColumn Header="Batch No" Binding="{Binding BatchNo,UpdateSourceTrigger=LostFocus}" MinWidth="100" Width="100"/>
+                            <DataGridTextColumn Header="Packing" Binding="{Binding Packing}"  Width="70"/>
+                            <DataGridTextColumn Header="Offer" Binding="{Binding Offer}"   Width="70"/>
+                            <DataGridTextColumn Header="Exp Date" Binding="{Binding ExpDate}"  Width="70"/>
+                            <DataGridTextColumn Header="Qty" Binding="{Binding Quantity}"  Width="70"/>
                             <DataGridTextColumn Header="Rate" Binding="{Binding Rate}"  Width="60"/>
                             <DataGridTextColumn Header="MRP" Binding="{Binding MRP}"  Width="60"/>
                             <DataGridTextColumn Header="Amount" Binding="{Binding Amount}"  Width="60"/>
