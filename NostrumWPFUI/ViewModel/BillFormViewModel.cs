@@ -146,25 +146,25 @@ namespace NostrumWPFUI.ViewModel
             set { _invoiceAmountinWords = value; this.RaisePropertyChange(); }
         }
 
-        private ObservableCollection<BillFormData> _billFormDataSourceCollection;
-        public ObservableCollection<BillFormData> BillFormDataSourceCollection
+        private ObservableCollection<LineItem> _lineItemSourceCollection;
+        public ObservableCollection<LineItem> LineItemSourceCollection
         {
-            get { return _billFormDataSourceCollection; }
-            set { _billFormDataSourceCollection = value; this.RaisePropertyChange(); }
+            get { return _lineItemSourceCollection; }
+            set { _lineItemSourceCollection = value; this.RaisePropertyChange(); }
         }
 
         #endregion
 
         private Order _order;
-        private List<BillFormData> _orderLineItems;
+        private List<LineItem> _orderLineItems;
         private IDBInterface _dbInterface;
 
         public ICommand DiscountModified { get; set; }
 
-        public BillFormViewModel(Order order, List<BillFormData> billFormDatas)
+        public BillFormViewModel(Order order, List<LineItem> LineItems)
         {
             _order = order;
-            _orderLineItems = billFormDatas;
+            _orderLineItems = LineItems;
             _dbInterface = new MySQLDBInterface();
             DiscountModified = new CustomDelegateCommand(DiscountModifiedMethod);
             Initialize();
@@ -189,7 +189,7 @@ namespace NostrumWPFUI.ViewModel
             GenerateInvoiceNo();
             PaymentTerms = _order.Payment_Terms + " Days";
             FillClientDetails();
-            BillFormDataSourceCollection = new ObservableCollection<BillFormData>(_orderLineItems);
+            LineItemSourceCollection = new ObservableCollection<LineItem>(_orderLineItems);
             FillBillValues();
         }
 
@@ -215,12 +215,12 @@ namespace NostrumWPFUI.ViewModel
 
         private void GenerateInvoiceNo()
         {
-            // Invoice number is of the format INV-001-FY20
+            // Invoice number is of the format INV-FY20-1
             if (_order.Order_Type == Order.OrderType.SaleOrder)
                 InvoiceNo = "INV-";
             else if (_order.Order_Type == Order.OrderType.DonateOrder)
                 InvoiceNo = "DNT-";
-            InvoiceNo += Nostrum.Utils.numToNdigitString(_order.Order_Id,3) + "-" + _order.FY;
+            InvoiceNo += _order.FY + "-"+_order.Order_Id;
         }
 
         private void FillClientDetails()
@@ -246,21 +246,7 @@ namespace NostrumWPFUI.ViewModel
 
             foreach (var item in _orderLineItems)
             {
-                LineItem lineItem = new LineItem();
-                lineItem.Order_Id = _order.Order_Id;
-                lineItem.FY = _order.FY;
-
-                lineItem.S_No = item.SNo;
-                lineItem.Product_Name = item.ProductName;
-                lineItem.Batch = item.BatchNo;
-                lineItem.Quantity = item.Quantity;
-                lineItem.Rate = item.Rate;
-                lineItem.Offer1 = item.Off1;
-                lineItem.Offer2 = item.Off2;
-                lineItem.Pack1 = item.Pack1;
-                lineItem.Pack2 = item.Pack2;
-
-                lineItemDAO.AddLineItem(lineItem);
+                lineItemDAO.AddLineItem(item);
             }
         }
     }

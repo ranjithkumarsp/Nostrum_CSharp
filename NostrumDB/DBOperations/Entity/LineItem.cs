@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NostrumDB;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -119,6 +120,34 @@ namespace Entity
                 _pack2 = value;
             }
         }
+
+        private Product.DrugType _drugType;
+        public string Packing
+        {
+            get
+            {
+                if (Product.DrugType.Syrup == _drugType)
+                {
+                    return Pack1 + " ml";
+                }
+                else
+                {
+                    return Pack1 + " x " + Pack2;
+                }
+            }
+        }
+
+        public string Offer
+        {
+            get
+            {
+                if (Offer1 == 0 || Offer2 == 0)
+                    return "Nett Rate!";
+                else
+                    return Offer1 + " + " + Offer2;
+            }
+        }
+
         public int Quantity
         {
             get
@@ -140,6 +169,74 @@ namespace Entity
             {
                 _rate = value;
             }
+        }
+        private string _expDate;
+
+        public string ExpDate
+        {
+            get { return _expDate; }
+            set { _expDate = value; }
+        }
+
+        private double _mrp;
+
+        public double MRP
+        {
+            get { return _mrp; }
+            set { _mrp = value; }
+        }
+
+        public double Amount
+        {
+            get { return Rate * Quantity; }
+        }
+
+        private double _cgst;
+
+        public double CGST
+        {
+            get { return _cgst; }
+            set { _cgst = value; }
+        }
+
+        private double _sgst;
+
+        public double SGST
+        {
+            get { return _sgst; }
+            set { _sgst = value; }
+        }
+
+        public void ClearAll()
+        {
+            Order_Id = 0;
+            FY = "";
+            S_No = 0;
+            Product_Name = "";
+            Batch = "";
+            Pack1 = 0;
+            Pack2 = 0;
+            Offer1 = 0;
+            Offer2 = 0;
+            Quantity = 0;
+            Rate = 0;
+
+            MRP = 0;
+            ExpDate = "";
+            _drugType = Product.DrugType.Tablet;
+            CGST = 0;
+            SGST = 0;
+        }
+        public void FillRemainingFields()
+        {
+            ProductDAO productDao = new ProductDAO(new MySQLDBInterface());
+            Product product = productDao.GetProduct(Product_Name, Batch);
+
+            MRP = product.MRP;
+            ExpDate = product.Exp_Date.ToString("MMM-yy");
+            _drugType = product.Drug_Type;
+            CGST = product.CGST;
+            SGST = product.SGST;
         }
     }
 }

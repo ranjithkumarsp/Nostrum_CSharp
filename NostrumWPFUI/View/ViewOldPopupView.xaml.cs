@@ -1,4 +1,5 @@
 ﻿using NostrumWPFUI.Helpers;
+using NostrumWPFUI.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,7 @@ namespace NostrumWPFUI.View
         public ViewOldPopupView()
         {
             InitializeComponent();
+            this.DataContext = new ViewOldPopupViewModel();
         }
         public void ClosePopupWindow()
         {

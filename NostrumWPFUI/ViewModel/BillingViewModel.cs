@@ -115,29 +115,18 @@ namespace NostrumWPFUI.ViewModel
         public ICommand BillingCommand { get; set; }
         public ICommand ClearCommand { get; set; }
         public ICommand ViewOldCommand { get; set; }
-        public ICommand EnterInvoiceCommand { get; set; }
         public RelayCommand<string> RadioButtonCheckedCommand { get; set; }
 
-        ViewOldPopupView viewOldPopupView;
-        ViewOldPopupViewModel _viewOldPopupViewModel;
-        
-        
         public BillingView billview;
         public void Initialize()
         {
             BillingCommand = new CustomDelegateCommand(BillingMethod);
             ClearCommand = new CustomDelegateCommand(ClearMethod);
-            EnterInvoiceCommand = new CustomDelegateCommand(EnterInvoiceMethod);
             ViewOldCommand = new CustomDelegateCommand(OpenViewOldPopUp);
 
             _order = new Order();
             GetClientsFromDB();
             ClearAll();
-            GenerateInvoiceNumber();
-        }
-
-        private void EnterInvoiceMethod(object obj)
-        {
             GenerateInvoiceNumber();
         }
 
@@ -161,11 +150,7 @@ namespace NostrumWPFUI.ViewModel
         }
         private void OpenViewOldPopUp(object obj)
         {
-            if (viewOldPopupView == null)
-                viewOldPopupView = new ViewOldPopupView();
-            if (_viewOldPopupViewModel == null)
-                _viewOldPopupViewModel = new ViewOldPopupViewModel();
-            viewOldPopupView.DataContext = _viewOldPopupViewModel;
+            ViewOldPopupView viewOldPopupView = new ViewOldPopupView();
             viewOldPopupView.Owner = MainWindow;
             viewOldPopupView.Show();
         }

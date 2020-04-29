@@ -23,56 +23,22 @@ namespace NostrumWPFUI.ViewModel
             set { _productList = value; this.RaisePropertyChange(); }
         }
 
-        private string _selectedProduct;
-
         public string SelectedProduct
         {
-            get { return _selectedProduct; }
+            get { return CurrentLineItem.Product_Name; }
             set
             {
-                _selectedProduct = value;
+                CurrentLineItem.Product_Name = value;
                 OnProductSelect();
                 this.RaisePropertyChange();
             }
         }
-        private int _pack1;
 
-        public int Pack1
+        private bool _saleOrder;
+
+        public bool SaleOrder
         {
-            get { return _pack1; }
-            set { _pack1 = value; this.RaisePropertyChange(); }
-        }
-
-        private int _pack2;
-
-        public int Pack2
-        {
-            get { return _pack2; }
-            set { _pack2 = value; this.RaisePropertyChange(); }
-        }
-
-        private int _off1;
-
-        public int Off1
-        {
-            get { return _off1; }
-            set { _off1 = value; this.RaisePropertyChange(); }
-        }
-
-        private int _off2;
-
-        public int Off2
-        {
-            get { return _off2; }
-            set { _off2 = value; this.RaisePropertyChange(); }
-        }
-
-        private int _qty;
-
-        public int Qty
-        {
-            get { return _qty; }
-            set { _qty = value; this.RaisePropertyChange(); }
+            get { return _saleOrder; }
         }
 
         private string _avlQtyToolTipString;
@@ -82,32 +48,12 @@ namespace NostrumWPFUI.ViewModel
             set { _avlQtyToolTipString = value; this.RaisePropertyChange(); }
         }
 
-        private double _rate;
-
-        public double Rate
-        {
-            get { return _rate; }
-            set { _rate = value; this.RaisePropertyChange(); }
-        }
-
         private List<string> _batchList;
 
         public List<string> Batches
         {
             get { return _batchList; }
             set { _batchList = value; this.RaisePropertyChange(); }
-        }
-
-        private string _selectedBatch;
-
-        public string SelectedBatch
-        {
-            get { return _selectedBatch; }
-            set
-            {
-                _selectedBatch = value;
-                this.RaisePropertyChange();
-            }
         }
 
         private string _packingUnitText;
@@ -127,12 +73,19 @@ namespace NostrumWPFUI.ViewModel
             set { _isPackingVisible = value; this.RaisePropertyChange(); }
         }
 
+        private LineItem _lineItem;
+
+        public LineItem CurrentLineItem
+        {
+            get { return _lineItem; }
+            set { _lineItem = value; this.RaisePropertyChange(); }
+        }
 
         #endregion
 
         int _sNo;
         Order _order;
-        List<BillFormData> _orderLineItems;
+        List<LineItem> _orderLineItems;
         IDBInterface _dBInterface;
         int _availableQty;
 
@@ -145,7 +98,9 @@ namespace NostrumWPFUI.ViewModel
             _sNo = 0;
             _availableQty = 0;
             _order = order;
-            _orderLineItems = new List<BillFormData>();
+            _saleOrder = (order.Order_Type == Order.OrderType.SaleOrder);
+            _lineItem = new LineItem();
+            _orderLineItems = new List<LineItem>();
             _dBInterface = new MySQLDBInterface();
             AddNextCommand = new CustomDelegateCommand(AddNextMethod);
             GenBillCommand = new CustomDelegateCommand(GenBillMethod);
@@ -156,10 +111,10 @@ namespace NostrumWPFUI.ViewModel
 
         private void OnEnteringQuantity(object obj)
         {
-            if (!String.IsNullOrWhiteSpace(SelectedProduct) && !(String.IsNullOrWhiteSpace(SelectedBatch)))
+            if (!String.IsNullOrWhiteSpace(SelectedProduct) && !(String.IsNullOrWhiteSpace(CurrentLineItem.Batch)))
             {
                 StockDAO stockDAO = new StockDAO(_dBInterface);
-                _availableQty = stockDAO.GetStockQuantity(SelectedProduct, SelectedBatch);
+                _availableQty = stockDAO.GetStockQuantity(SelectedProduct, CurrentLineItem.Batch);
                 AvailableQtyToolTipString = "Available Quantity: " + _availableQty;
             }
         }
@@ -182,7 +137,6 @@ namespace NostrumWPFUI.ViewModel
                 FillFormData();
                 ClearAll();
             }
-            
         }
 
         private bool ValidateFields()
@@ -192,21 +146,21 @@ namespace NostrumWPFUI.ViewModel
                 MessageBox.Show("Select a Valid Product", "Error");
                 return false;
             }
-            if(String.IsNullOrWhiteSpace(SelectedBatch))
+            if(String.IsNullOrWhiteSpace(CurrentLineItem.Batch))
             {
                 MessageBox.Show("Select a Valid Product", "Error");
                 return false;
             }
 
-            int reqQty = Qty;
-            if(Off1 != 0)
+            int reqQty = CurrentLineItem.Quantity;
+            if(CurrentLineItem.Offer1 != 0)
             {
-                reqQty = reqQty / Off1;
-                reqQty = reqQty * (Off1 + Off2);
+                reqQty = reqQty / CurrentLineItem.Offer1;
+                reqQty = reqQty * (CurrentLineItem.Offer1 + CurrentLineItem.Offer2);
             }
-            if(Pack2 != 0)
+            if(CurrentLineItem.Pack2 != 0)
             {
-                reqQty = reqQty * Pack1 * Pack2;
+                reqQty = reqQty * CurrentLineItem.Pack1 * CurrentLineItem.Pack2;
             }
 
             if (reqQty <= 0)
@@ -224,52 +178,21 @@ namespace NostrumWPFUI.ViewModel
 
         private void ClearAll()
         {
-            SelectedBatch = "";
-            SelectedProduct = ""; 
             Batches = null;
-            Pack1 = 0;
-            Pack2 = 0;
-            Off1 = 0;
-            Off2 = 0;
-            Qty = 0;
-            Rate = 0;
             _availableQty = 0;
+            CurrentLineItem.ClearAll();
         }
 
         private void FillFormData()
         {
-            ProductDAO productDao = new ProductDAO(_dBInterface);
-            Product product = productDao.GetProduct(SelectedProduct, SelectedBatch);
-
-            BillFormData billFormData = new BillFormData();
-            billFormData.SNo = ++_sNo;
-            billFormData.ProductName = SelectedProduct;
-            billFormData.BatchNo = SelectedBatch;
-            billFormData.DrugType = product.Drug_Type;
-            billFormData.Off1 = Off1;
-            billFormData.Off2 = Off2;
-            billFormData.Pack1 = Pack1;
-            billFormData.Pack2 = Pack2;
-            billFormData.Quantity = Qty;
-            billFormData.Rate = Rate;
-            billFormData.MRP = product.MRP;
-            billFormData.ExpDate = product.Exp_Date.ToString("MMM-yy");
-            billFormData.Amount = Rate * Qty;
-            billFormData.CGST = product.CGST;
-            billFormData.SGST = product.SGST;
-            
-            _orderLineItems.Add(billFormData);
+            CurrentLineItem.S_No = ++_sNo;
+            CurrentLineItem.FillRemainingFields();
+            _orderLineItems.Add(CurrentLineItem);
         }
 
         private void Initialize()
         {
             GetProductsFromDB();
-        }
-
-        public void GetProductDetails()
-        {
-            ProductDAO productDAO = new ProductDAO(_dBInterface);
-            productDAO.GetProduct(SelectedProduct, SelectedBatch);
         }
 
         private void OnProductSelect()

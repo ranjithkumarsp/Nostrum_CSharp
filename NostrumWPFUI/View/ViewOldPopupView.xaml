@@ -10,10 +10,7 @@
         Title="View Old" Height="360" Width="450" ShowInTaskbar="False" WindowStartupLocation="CenterScreen"
         WindowState="Normal" WindowStyle="SingleBorderWindow" ResizeMode="NoResize"
         >
-    <i:Interaction.Triggers>        
-        <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding OnLoadedCmd}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
-        </i:EventTrigger>
+    <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closing">
             <i:InvokeCommandAction Command="{Binding WindowCloseCommand}" />
         </i:EventTrigger>
@@ -25,9 +22,9 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="10"/>            
+            <RowDefinition Height="10"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="10"/>            
+            <RowDefinition Height="10"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="10"/>
             <RowDefinition Height="auto"/>
@@ -38,24 +35,51 @@
             <ColumnDefinition Width="20"/>
             <ColumnDefinition Width="140"/>
             <ColumnDefinition Width="10"/>
-            <ColumnDefinition Width="150"/>
-            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="183.2"/>
+            <ColumnDefinition Width="6.4"/>
         </Grid.ColumnDefinitions>
-        
-        <TextBlock Text="Client" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center"  />
-        <ComboBox Name="LoadClientCombo" ItemsSource="{Binding ClientsList}" SelectedItem="{Binding SelectedClient,UpdateSourceTrigger=PropertyChanged}"
-                  IsEditable="False" ShouldPreserveUserEnteredPrefix="True"
-                  Width="120" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" />
-        <TextBlock Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center"   TextWrapping="Wrap" Text="From"  Height="23"  FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" />
-        <xctk:DateTimePicker Grid.Row="3" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" Width="143" Height="30" />
-        
-        <TextBlock Grid.Row="5" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center"   TextWrapping="Wrap" Text="To"  Height="23"  FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" ClipToBounds="True" SnapsToDevicePixels="True" />
-        <xctk:DateTimePicker Format="ShortDate" TimePickerVisibility="Hidden"  TimePickerShowButtonSpinner="False" Grid.Row="5" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" Width="143" Height="30" />
-        
-        <TextBlock Grid.Row="7" Grid.Column="1"  HorizontalAlignment="Right" TextAlignment="Right" TextWrapping="Wrap" Text="Invoice Number" VerticalAlignment="Center" Height="23" Width="135" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold"/>
-        <ComboBox Name="InvoiceCombo" ItemsSource="{Binding ClientsList}" SelectedItem="{Binding SelectedClient,UpdateSourceTrigger=PropertyChanged}" Width="120" Grid.Row="7" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" />
-        <Button Content="Open" Command="{Binding OpenRelayCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}" Grid.Row="9" Grid.Column="1"  Height="25"  Width="100" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Center" />
-        <Button Content="CANCEL" Command="{Binding CancelRelayCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}" Grid.Row="9" Grid.Column="3"  Height="25" Width="100" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+        <TextBlock Text="Client" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Height="24"  FontFamily="Century Gothic" FontSize="16"  ClipToBounds="True" SnapsToDevicePixels="True" Grid.ColumnSpan="2" Margin="0,8.8,10,11.2" Width="91" />
+        <ComboBox Grid.Row="1" ItemsSource="{Binding ClientsList}" Grid.Column="3"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="169"  Height="30" IsEditable="True" IsSynchronizedWithCurrentItem="True" IsTabStop="True" StaysOpenOnEdit="True" AllowDrop="True" 
+                      SelectedItem="{Binding SelectedClient, UpdateSourceTrigger=PropertyChanged}" Margin="0,0.8,0,9.2">
+            <ComboBox.Style>
+                <Style TargetType="ComboBox">
+                    <Style.Triggers>
+                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                            <Setter Property="IsDropDownOpen" Value="true" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ComboBox.Style>
+        </ComboBox>
+        <TextBlock Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center"   TextWrapping="Wrap" Text="From"  Height="23"  FontFamily="Century Gothic" FontSize="16" Grid.ColumnSpan="2" Margin="0,7.4,10,12" Width="91" />
+        <xctk:DateTimePicker Format="ShortDate" ShowButtonSpinner="False" ShowDropDownButton="True"  TimePickerShowButtonSpinner="False" Grid.Row="3" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30"
+                             Text="{Binding FromDate,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}" />
+
+        <TextBlock Grid.Row="5" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center"   TextWrapping="Wrap" Text="To"  Height="24"  FontFamily="Century Gothic" FontSize="16"  ClipToBounds="True" SnapsToDevicePixels="True" Grid.ColumnSpan="2" Margin="0,8.6,10,11.4" Width="91" />
+        <xctk:DateTimePicker Format="ShortDate" ShowButtonSpinner="False" ShowDropDownButton="True"  TimePickerShowButtonSpinner="False" Grid.Row="5" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30"
+                             Text="{Binding ToDate,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}" />
+
+        <TextBlock Grid.Row="7" Grid.Column="1"  HorizontalAlignment="Right" TextAlignment="Left" TextWrapping="Wrap" Text="Invoice No" VerticalAlignment="Center" Height="24" Width="91" FontFamily="Century Gothic" FontSize="16" Grid.ColumnSpan="2" Margin="0,10.2,10,7.4"/>
+        <ComboBox Grid.Row="7" ItemsSource="{Binding InvoiceList}" Grid.Column="3"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="169"  Height="30" IsEditable="True" IsSynchronizedWithCurrentItem="True" IsTabStop="True" StaysOpenOnEdit="True" AllowDrop="True" 
+                      SelectedItem="{Binding SelectedInvoice}" Margin="0,0.8,0,9.2">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="GotKeyBoardFocus">
+                    <i:InvokeCommandAction Command="{Binding EnterInvoiceCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <ComboBox.Style>
+                <Style TargetType="ComboBox">
+                    <Style.Triggers>
+                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                            <Setter Property="IsDropDownOpen" Value="true" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ComboBox.Style>
+        </ComboBox>
+        <Button Content="Open" Command="{Binding OpenRelayCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}" Grid.Row="9" Grid.Column="1"  Height="25"  Width="100" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="0,9,10,0.4" />
+        <Button Content="CANCEL" Command="{Binding CancelRelayCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}" Grid.Row="9" Grid.Column="3"  Height="25" Width="100" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,9,0,0.4"/>
 
     </Grid>
 </Window>

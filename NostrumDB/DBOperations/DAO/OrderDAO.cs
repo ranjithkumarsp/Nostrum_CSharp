@@ -29,7 +29,7 @@ namespace NostrumDB
             return (nRowsAffected > 0);
         }
 
-        public bool DeleteOrder(string orderId, string fy)
+        public bool DeleteOrder(int orderId, string fy)
         {
             int nRowsAffected = 0;
             string query = "Delete from orders where Order_Id = '" + orderId + "' and fy = '" + fy + "';";
@@ -37,7 +37,7 @@ namespace NostrumDB
             return (nRowsAffected > 0);
         }
 
-        public Order GetOrder(string orderId, string fy)
+        public Order GetOrder(int orderId, string fy)
         {
             Order order = new Order();
             string query = "Select * from orders where Order_Id ='" + orderId + "' and fy = '" + fy + "';";
@@ -95,16 +95,34 @@ namespace NostrumDB
 
         public List<string> GetOrderIds()
         {
-            // To-do: Format for invoice number has INV or DNT in it. Need to add it.
-            List<string> orderIds = new List<string>();
-            string query = "Select Order_Id, FY from orders;";
+            string query = "Select Order_Id, FY, Order_Type from orders;";
+            return GetOrderIdsInternal(query);
+        }
+        public List<string> GetOrderIds(string clientName, string fromDate, string toDate)
+        {
+            string query = "Select Order_Id, FY, Order_Type from orders where Client_Name='" + clientName + "' and Order_Date between '" + fromDate + "' and '" + toDate + "';";
+            return GetOrderIdsInternal(query);
+        }
+
+        private List<string> GetOrderIdsInternal(string query)
+        {
+            // Invoice will be generated in the format INV-FY20-1
 
             DataTable dataTable = _dbInterface.ExecuteQuery(query);
-
+            List<string> orderIds = new List<string>();
             foreach (DataRow dr in dataTable.Rows)
             {
-                string orderId = dr["Order_Id"].ToString();
-                orderId += "-" + dr["FY"].ToString();
+                string orderId = "";
+                if(dr["Order_Type"].ToString().Equals("Donate"))
+                {
+                    orderId = "DNT-";
+                }
+                else
+                {
+                    orderId = "INV-";
+                }
+                orderId += dr["FY"].ToString();
+                orderId += "-" + dr["Order_Id"].ToString();
                 orderIds.Add(orderId);
             }
 

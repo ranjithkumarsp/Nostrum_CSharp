@@ -23,10 +23,10 @@ namespace NostrumWPFUI.View
     /// </summary>
     public partial class BillFormView : Window
     {
-        public BillFormView(Order order, List<BillFormData> billFormDatas)
+        public BillFormView(Order order, List<LineItem> lineItems)
         {
             InitializeComponent();
-            this.DataContext = new BillFormViewModel(order, billFormDatas);
+            this.DataContext = new BillFormViewModel(order, lineItems);
         }
 
         //tomake scroll over DataGrid
