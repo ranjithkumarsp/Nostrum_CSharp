@@ -38,7 +38,9 @@ namespace NostrumDB
             Stock order = new Stock();
             string query = "Select Qty from stock where Product ='" + name + "' and Batch = '" + batch + "';";
 
-            quantity = (int)_dbInterface.ExecuteScalar(query);
+            object obj = _dbInterface.ExecuteScalar(query);
+            if (obj != null && obj != DBNull.Value)
+                quantity = Convert.ToInt32(obj);
 
             return quantity;
         }

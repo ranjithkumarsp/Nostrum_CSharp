@@ -1,4 +1,5 @@
-﻿using NostrumWPFUI.ViewModel;
+﻿using Entity;
+using NostrumWPFUI.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace NostrumWPFUI.Helpers
 
         private string _product;
 
-        public string Product
+        public string ProductName
         {
             get { return _product; }
             set
@@ -41,20 +42,73 @@ namespace NostrumWPFUI.Helpers
             set { _batchNo = value; this.RaisePropertyChange(); }
         }
 
-        private string _packing;
+        private Product.DrugType _drugType;
+
+        public Product.DrugType DrugType
+        {
+            set
+            {
+                _drugType = value;
+            }
+        }
+
+        private int _pack1;
+
+        public int Pack1
+        {
+            get { return _pack1; }
+            set { _pack1 = value; }
+        }
+
+        private int _pack2;
+
+        public int Pack2
+        {
+            get { return _pack2; }
+            set { _pack2 = value; }
+        }
 
         public string Packing
         {
-            get { return _packing; }
-            set { _packing = value; this.RaisePropertyChange(); }
+            get
+            {
+                if (Product.DrugType.Syrup == _drugType)
+                {
+                    return Pack1 + " ml";
+                }
+                else
+                {
+                    return Pack1 + " x " + Pack2;
+                }
+            }
+        }
+
+        private int _off1;
+
+        public int Off1
+        {
+            get { return _off1; }
+            set { _off1 = value; }
+        }
+
+        private int _off2;
+
+        public int Off2
+        {
+            get { return _off2; }
+            set { _off2 = value; }
         }
 
         private string _offer;
 
         public string Offer
         {
-            get { return _offer; }
-            set { _offer = value; this.RaisePropertyChange(); }
+            get {
+                if (Off1 == 0 || Off2 == 0)
+                    return "Nett Rate!";
+                else
+                    return Off1 + " + " + Off2;
+            }
         }
 
         private string _expDate;

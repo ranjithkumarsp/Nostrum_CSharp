@@ -9,12 +9,12 @@ namespace NostrumDB
 {
     interface IOrderDAO
     {
-        bool addOrder(Order order);
-        bool deleteOrder(string orderId, string fy);
-        Order getOrder(string orderId, string fy);
-        List<string> getOrderIds();
-        int getNextInvNo(string FY);
-        int getNextInvNo();
-        bool updateOrder(Order order);
+        bool AddOrder(Order order);
+        bool DeleteOrder(string orderId, string fy);
+        Order GetOrder(string orderId, string fy);
+        List<string> GetOrderIds();
+        int GetNextInvNo(string FY);
+        int GetNextInvNo();
+        bool UpdateOrder(Order order);
     }
 }

@@ -16,7 +16,7 @@ namespace NostrumDB
             _dbInterface = dbInterface;
             _dbInterface.InitializeDB();
         }
-        public bool addPayment(Payment payment)
+        public bool AddPayment(Payment payment)
         {
             int nRowsAffected = 0;
             string query = "Insert into payments values('" + payment.Payment_ID + "','" + payment.Order_ID + "','" + payment.FY+ "','" + payment.Amount + "','" + payment.Pay_Date.ToString("yyyy-MM-dd") + "');";
@@ -24,7 +24,7 @@ namespace NostrumDB
             return (nRowsAffected > 0);
         }
 
-        public List<Payment> getPayments(int orderId, int fy)
+        public List<Payment> GetPayments(int orderId, int fy)
         {
             List<Payment> payments = new List<Payment>();
             string query = "Select * from payments where Order_Id = '" + orderId + "' and FY = '" + fy + "';";
@@ -45,12 +45,14 @@ namespace NostrumDB
             return payments;
         }
 
-        public double getTotalAmountPaid(int orderId, int fy)
+        public double GetTotalAmountPaid(int orderId, int fy)
         {
             double total = 0;
             string query = "Select sum(Amount) from payments where Order_Id = '" + orderId + "' and FY = '" + fy + "';";
 
-            total = _dbInterface.ExecuteScalar(query);
+            object obj = _dbInterface.ExecuteScalar(query);
+            if (obj != null && obj != DBNull.Value)
+                total = Convert.ToDouble(obj);
 
             return total;
         }

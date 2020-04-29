@@ -13,12 +13,32 @@ namespace NostrumWPFUI.ViewModel
     {
         #region Properties
 
-        private string _buyerNameandAddress;
+        private string _clientName;
 
-        public string BuyerNameandAddress
+        public string ClientName
         {
-            get { return _buyerNameandAddress; }
-            set { _buyerNameandAddress = value; this.RaisePropertyChange(); }
+            get { return _clientName; }
+            set
+            {
+                _clientName = value;
+                this.RaisePropertyChange();
+            }
+        }
+
+        private string _addr;
+
+        public string Address
+        {
+            get { return _addr; }
+            set { _addr = value; this.RaisePropertyChange(); }
+        }
+
+        private string _phone;
+
+        public string Phone
+        {
+            get { return _phone; }
+            set { _phone = value; this.RaisePropertyChange(); }
         }
 
         private string _billDate;
@@ -137,12 +157,15 @@ namespace NostrumWPFUI.ViewModel
 
         private Order _order;
         private List<BillFormData> _orderLineItems;
+        private IDBInterface _dbInterface;
+
         public ICommand DiscountModified { get; set; }
 
         public BillFormViewModel(Order order, List<BillFormData> billFormDatas)
         {
             _order = order;
             _orderLineItems = billFormDatas;
+            _dbInterface = new MySQLDBInterface();
             DiscountModified = new CustomDelegateCommand(DiscountModifiedMethod);
             Initialize();
         }
@@ -202,10 +225,43 @@ namespace NostrumWPFUI.ViewModel
 
         private void FillClientDetails()
         {
-            ClientDAO clientDAO = new ClientDAO(new MySQLDBInterface());
+            ClientDAO clientDAO = new ClientDAO(_dbInterface);
             Client client = clientDAO.GetClient(_order.Client_Name);
+            ClientName = client.Name;
+            Address = client.Addr;
+            Phone = client.Phone;
             BuyersTINNo = client.TIN_No;
             BuyersDLNo = client.DL_No;
+        }
+
+        private void SaveForm()
+        {
+            _order.Discount = Discount;
+            _order.Amount = InvoiceAmount;
+
+            OrderDAO orderDAO = new OrderDAO(_dbInterface);
+            orderDAO.AddOrder(_order);
+
+            LineItemDAO lineItemDAO = new LineItemDAO(_dbInterface);
+
+            foreach (var item in _orderLineItems)
+            {
+                LineItem lineItem = new LineItem();
+                lineItem.Order_Id = _order.Order_Id;
+                lineItem.FY = _order.FY;
+
+                lineItem.S_No = item.SNo;
+                lineItem.Product_Name = item.ProductName;
+                lineItem.Batch = item.BatchNo;
+                lineItem.Quantity = item.Quantity;
+                lineItem.Rate = item.Rate;
+                lineItem.Offer1 = item.Off1;
+                lineItem.Offer2 = item.Off2;
+                lineItem.Pack1 = item.Pack1;
+                lineItem.Pack2 = item.Pack2;
+
+                lineItemDAO.AddLineItem(lineItem);
+            }
         }
     }
 }

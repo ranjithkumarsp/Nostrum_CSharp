@@ -16,7 +16,7 @@ namespace NostrumDB
             _dbInterface = dbInterface;
             _dbInterface.InitializeDB();
         }
-        public bool addLineItem(LineItem lineItem)
+        public bool AddLineItem(LineItem lineItem)
         {
             int nRowsAffected = 0;
             string query = "Insert into order_line_items values('" + lineItem.Order_Id + "','" + lineItem.FY + "','" + lineItem.S_No + "','" + lineItem.Product_Name + "','" + lineItem.Batch + "','" + lineItem.Offer1 + "','" + lineItem.Offer2 + "','" + lineItem.Pack1 + "','" + lineItem.Pack2 + "','" + lineItem.Quantity + "','" + lineItem.Rate + "');";
@@ -24,7 +24,7 @@ namespace NostrumDB
             return (nRowsAffected > 0);
         }
 
-        public bool deleteLineItem(int orderId, string fy, int sNo)
+        public bool DeleteLineItem(int orderId, string fy, int sNo)
         {
             int nRowsAffected = 0;
             string query = "Delete from order_line_items where Order_Id = '" + orderId + "' and fy = '" + fy + "' and S_No = '"+ sNo +"';";
@@ -32,7 +32,7 @@ namespace NostrumDB
             return (nRowsAffected > 0);
         }
 
-        public bool deleteAllLineItems(int orderId, string fy)
+        public bool DeleteAllLineItems(int orderId, string fy)
         {
             int nRowsAffected = 0;
             string query = "Delete from order_line_items where Order_Id = '" + orderId + "' and fy = '" + fy + "';";
@@ -40,7 +40,7 @@ namespace NostrumDB
             return (nRowsAffected > 0);
         }
 
-        public List<LineItem> getLineItems(int orderId, string fy)
+        public List<LineItem> GetLineItems(int orderId, string fy)
         {
             List<LineItem> lineItems = new List<LineItem>();
             string query = "Select * from order_line_items where Order_Id = '" + orderId + "' and FY = '" + fy + "';";
@@ -67,10 +67,10 @@ namespace NostrumDB
             return lineItems;
         }
 
-        public bool updateLineItem(LineItem lineItem)
+        public bool UpdateLineItem(LineItem lineItem)
         {
-            deleteLineItem(lineItem.Order_Id, lineItem.FY, lineItem.S_No);
-            return addLineItem(lineItem);
+            DeleteLineItem(lineItem.Order_Id, lineItem.FY, lineItem.S_No);
+            return AddLineItem(lineItem);
         }
     }
 }

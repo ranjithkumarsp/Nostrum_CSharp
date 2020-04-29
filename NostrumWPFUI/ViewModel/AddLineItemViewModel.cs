@@ -243,16 +243,13 @@ namespace NostrumWPFUI.ViewModel
 
             BillFormData billFormData = new BillFormData();
             billFormData.SNo = ++_sNo;
-            billFormData.Product = SelectedProduct;
+            billFormData.ProductName = SelectedProduct;
             billFormData.BatchNo = SelectedBatch;
-            if (product.Drug_Type == Product.DrugType.Syrup)
-                billFormData.Packing = Pack1 + " ml";
-            else if (product.Drug_Type == Product.DrugType.Tablet)
-                billFormData.Packing = Pack1 + " x " + Pack2;
-            if (Off1 == 0 || Off2 == 0)
-                billFormData.Offer = "Nett Rate!";
-            else
-                billFormData.Offer = Off1 + " + " + Off2;
+            billFormData.DrugType = product.Drug_Type;
+            billFormData.Off1 = Off1;
+            billFormData.Off2 = Off2;
+            billFormData.Pack1 = Pack1;
+            billFormData.Pack2 = Pack2;
             billFormData.Quantity = Qty;
             billFormData.Rate = Rate;
             billFormData.MRP = product.MRP;
@@ -288,7 +285,6 @@ namespace NostrumWPFUI.ViewModel
                 Product.DrugType type = productDAO.GetProductType(SelectedProduct);
                 if (type == Product.DrugType.Syrup)
                 {
-                    //To-do: hide pack2 and change the x label to ml.
                     IsPackingVisible = false;
                     PackingUnitText = "ML";
                 }

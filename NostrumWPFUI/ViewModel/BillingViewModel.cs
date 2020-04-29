@@ -197,7 +197,7 @@ namespace NostrumWPFUI.ViewModel
         public void GenerateInvoiceNumber()
         {
             OrderDAO orderDAO = new OrderDAO(new MySQLDBInterface());
-            InvoiceNumber = orderDAO.getNextInvNo(FinancialYear);
+            InvoiceNumber = orderDAO.GetNextInvNo(FinancialYear);
         }
     }
 }

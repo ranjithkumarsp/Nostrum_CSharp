@@ -18,6 +18,6 @@ namespace NostrumDB
         void InitializeDB();
         int ExecuteNonQuery(string query);
         DataTable ExecuteQuery(string query);
-        double ExecuteScalar(string query);
+        object ExecuteScalar(string query);
     }
 }

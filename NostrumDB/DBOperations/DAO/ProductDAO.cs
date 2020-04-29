@@ -94,7 +94,13 @@ namespace NostrumDB
             Product.DrugType type = Product.DrugType.Tablet;
             string query = "Select Drug_Type from products where name = '" + name + "';";
 
-            type = (Product.DrugType)_dbInterface.ExecuteScalar(query);
+            object obj = _dbInterface.ExecuteScalar(query);
+            string drugType = "";
+            if (obj != null && obj != DBNull.Value)
+                drugType = Convert.ToString(obj);
+
+            type = drugType.Equals("Syrup") ? Product.DrugType.Syrup : Product.DrugType.Tablet;
+            
             return type;
         }
 

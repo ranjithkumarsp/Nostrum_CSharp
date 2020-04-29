@@ -114,19 +114,14 @@ namespace NostrumDB
             }
         }
 
-        public double ExecuteScalar(string query)
+        public object ExecuteScalar(string query)
         {
-            double val = 0;
+            object obj = null;
             try
             {
                 ConnectionObj.Open();
                 MySqlCommand cmd = new MySqlCommand(query, ConnectionObj);
-                object obj = cmd.ExecuteScalar();
-                if(obj != null && obj != DBNull.Value)
-                {
-                    val = Convert.ToDouble(obj);
-                }
-                
+                obj = cmd.ExecuteScalar();
                 cmd.Dispose();
             }
             catch (Exception e)
@@ -137,7 +132,7 @@ namespace NostrumDB
             {
                 ConnectionObj.Close();
             }
-            return val;
+            return obj;
         }
     }
 }

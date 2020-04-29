@@ -10,8 +10,8 @@ namespace NostrumDB
 {
     interface IPaymentDAO
     {
-        bool addPayment(Payment payment);
-        List<Payment> getPayments(int orderId, int fy);
-        double getTotalAmountPaid(int orderId, int fy);
+        bool AddPayment(Payment payment);
+        List<Payment> GetPayments(int orderId, int fy);
+        double GetTotalAmountPaid(int orderId, int fy);
     }
 }
