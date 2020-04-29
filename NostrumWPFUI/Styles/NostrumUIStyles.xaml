@@ -3,6 +3,7 @@
                      xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
                     xmlns:local="clr-namespace:NostrumWPFUI.Styles"
                     xmlns:behaviours="clr-namespace:NostrumWPFUI.Behaviours"
+                    xmlns:const="clr-namespace:NostrumWPFUI.Constants"
                     >
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary>
@@ -195,11 +196,15 @@
     <Style TargetType="{x:Type xctk:DateTimePicker}">
         <Setter Property="TimePickerVisibility" Value="Hidden"/>
         <Setter Property="Format" Value="ShortDate"/>
+        <Setter Property="ShowButtonSpinner" Value="False"/>
+        <Setter Property="ShowDropDownButton" Value="True"/>
+        <Setter Property="TimePickerAllowSpin" Value="False"/>
+        <Setter Property="TimePickerShowButtonSpinner" Value="False"/>
     </Style>
     <!--<Style TargetType="{x:Type TextBox}">
         <Setter Property="TextBlock.TextAlignment" Value="Right"/>
     </Style>-->
-
+    
 
 
 </ResourceDictionary>

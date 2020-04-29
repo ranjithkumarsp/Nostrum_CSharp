@@ -149,6 +149,7 @@
     <Compile Include="Behaviours\AutoCompleteBehavior.cs" />
     <Compile Include="Behaviours\SelectAllFocusBehavior.cs" />
     <Compile Include="Behaviours\WindowClosingBehavior.cs" />
+    <Compile Include="Constants\NostrumConstants.cs" />
     <Compile Include="Converters\DataToRowBackgroundColorConverter.cs" />
     <Compile Include="Helpers\CustomDelegateCommand.cs" />
     <Compile Include="Helpers\DebugConverter.cs" />
@@ -350,5 +351,6 @@
     <Content Include="Dll%27s\Microsoft.Office.Interop.Excel.dll" />
     <Content Include="Dll%27s\Newtonsoft.Json.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

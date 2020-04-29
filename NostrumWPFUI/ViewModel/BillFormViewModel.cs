@@ -6,6 +6,7 @@ using System.Windows.Input;
 using Entity;
 using Nostrum;
 using System;
+using System.Windows;
 
 namespace NostrumWPFUI.ViewModel
 {
@@ -160,6 +161,8 @@ namespace NostrumWPFUI.ViewModel
         private IDBInterface _dbInterface;
 
         public ICommand DiscountModified { get; set; }
+        public ICommand SaveBillForm { get; set; }
+        public RelayCommand<IClosable> CloseBillFormWindowCommand { get; private set; }
 
         public BillFormViewModel(Order order, List<LineItem> LineItems)
         {
@@ -167,7 +170,18 @@ namespace NostrumWPFUI.ViewModel
             _orderLineItems = LineItems;
             _dbInterface = new MySQLDBInterface();
             DiscountModified = new CustomDelegateCommand(DiscountModifiedMethod);
+            SaveBillForm = new CustomDelegateCommand(SaveForm);
+            CloseBillFormWindowCommand = new RelayCommand<IClosable>(this.CloseBillForm);
             Initialize();
+        }
+        private void CloseBillForm(IClosable _billFormWindow)
+        {
+            MessageBoxResult result = MessageBox.Show("Are you really want to exit?", "Exit",
+                MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+            if(result == MessageBoxResult.Yes)
+            {
+                _billFormWindow.ClosePopupWindow();
+            }
         }
 
         private void DiscountModifiedMethod(object obj)
@@ -234,7 +248,7 @@ namespace NostrumWPFUI.ViewModel
             BuyersDLNo = client.DL_No;
         }
 
-        private void SaveForm()
+        private void SaveForm(object obj)
         {
             _order.Discount = Discount;
             _order.Amount = InvoiceAmount;

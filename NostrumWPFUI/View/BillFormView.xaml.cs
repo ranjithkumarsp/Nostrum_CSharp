@@ -21,12 +21,20 @@ namespace NostrumWPFUI.View
     /// <summary>
     /// Interaction logic for BillFormView.xaml
     /// </summary>
-    public partial class BillFormView : Window
+    public partial class BillFormView : Window,IClosable
     {
         public BillFormView(Order order, List<LineItem> lineItems)
         {
             InitializeComponent();
             this.DataContext = new BillFormViewModel(order, lineItems);
+        }
+        public void ClosePopupWindow()
+        {
+            this.Close();
+        }
+        public void HidePopupWindow()
+        {
+            throw new NotImplementedException();
         }
 
         //tomake scroll over DataGrid
