@@ -12,6 +12,7 @@
         Title="BillFormView" Height="820" Width="790" 
         ShowInTaskbar="False" WindowStartupLocation="CenterScreen"
         WindowState="Normal" WindowStyle="SingleBorderWindow" ResizeMode="CanResizeWithGrip" 
+        behaviors:WndExitAftConfirmBehaviour.Enabled="False"
         >
     <Grid>
         <Grid.RowDefinitions>

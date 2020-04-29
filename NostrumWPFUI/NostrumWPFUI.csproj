@@ -148,6 +148,7 @@
     </ApplicationDefinition>
     <Compile Include="Behaviours\AutoCompleteBehavior.cs" />
     <Compile Include="Behaviours\SelectAllFocusBehavior.cs" />
+    <Compile Include="Behaviours\WndExitAftConfirmBehaviour.cs" />
     <Compile Include="Behaviours\WindowClosingBehavior.cs" />
     <Compile Include="Constants\NostrumConstants.cs" />
     <Compile Include="Converters\DataToRowBackgroundColorConverter.cs" />
