@@ -110,6 +110,7 @@ namespace NostrumWPFUI.ViewModel
 
         private void FetchInvoiceNos(object obj)
         {
+            //To-Do: Think of a better place to have this. If the cursor is in combobox and user shifts to and fro across different windows, this will call that many number of DB calls.
             if(!String.IsNullOrWhiteSpace(SelectedClient))
             {
                 OrderDAO orderDAO = new OrderDAO(_dbInterface);
