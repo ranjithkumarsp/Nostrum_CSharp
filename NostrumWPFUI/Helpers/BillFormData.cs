@@ -96,5 +96,23 @@ namespace NostrumWPFUI.Helpers
             get { return _amount; }
             set { _amount = value; this.RaisePropertyChange(); }
         }
+
+        private double _cgst;
+
+        public double CGST
+        {
+            get { return _cgst; }
+            set { _cgst = value; }
+        }
+
+        private double _sgst;
+
+        public double SGST
+        {
+            get { return _sgst; }
+            set { _sgst = value; }
+        }
+
+
     }
 }

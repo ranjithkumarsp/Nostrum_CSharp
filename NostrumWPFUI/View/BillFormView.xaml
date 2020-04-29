@@ -8,15 +8,15 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Title="BillFormView" Height="800" Width="800"
+        Title="BillFormView" Height="689.2" Width="762.4"
         ShowInTaskbar="False" WindowStartupLocation="CenterScreen"
         WindowState="Normal" WindowStyle="SingleBorderWindow" ResizeMode="NoResize"
         >
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-        <Grid>
+        <Grid Height="952">
             <Grid.RowDefinitions>
                 <RowDefinition Height="35" />
-            <RowDefinition Height="auto" x:Name="HeaderRow"/>
+                <RowDefinition Height="auto" x:Name="HeaderRow"/>
                 <RowDefinition Height="3" />
                 <RowDefinition Height="auto" x:Name="DataGridRow"/>
                 <RowDefinition Height="3" />
@@ -48,64 +48,65 @@
                     <TextBlock Text=" Ph: 9942529828, Email: nostrumbiotech@gmail.com"  Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial Unicode MS" FontSize="14"/>
                     <Border Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="9" BorderBrush="Gray" Background="Gray" BorderThickness="2"/>
                     <Grid Name="BillInfo" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="5">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="0"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="35"/>
-                        <RowDefinition Height="35"/>
-                        <RowDefinition Height="35"/>
-                        <RowDefinition Height="35"/>
-                        <RowDefinition Height="0"/>
-                        <RowDefinition Height="5"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="3"/>
-                        <ColumnDefinition Width="400"/>
-                        <ColumnDefinition Width="2"/>
-                        <ColumnDefinition Width="150"/>
-                        <ColumnDefinition Width="10"/>
-                        <ColumnDefinition Width="150"/>                        
-                        <ColumnDefinition Width="3"/>
-                    </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="35"/>
+                            <RowDefinition Height="35"/>
+                            <RowDefinition Height="35"/>
+                            <RowDefinition Height="35"/>
+                            <RowDefinition Height="0"/>
+                            <RowDefinition Height="5"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3"/>
+                            <ColumnDefinition Width="400"/>
+                            <ColumnDefinition Width="2"/>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="3"/>
+                        </Grid.ColumnDefinitions>
                         <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" BorderBrush="Gray" BorderThickness="0,0,0,2">
-                        <Label Content="GSTIN : 33CHDPR7092D1ZA" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    </Border>
+                            <Label Content="GSTIN : 33CHDPR7092D1ZA" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        </Border>
                         <Border Grid.Row="0" Grid.RowSpan="9" Grid.Column="2" BorderBrush="Gray" Background="Gray"/>
-                    <TextBlock Text="Name and Address of Buyer:" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <RichTextBox BorderBrush="Gray" BorderThickness="1" Grid.Row="3" Grid.RowSpan="4" Grid.Column="1"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,3,0" SpellCheck.IsEnabled="True"  />
-                    <!--<TextBox Text="Addr1" Grid.Row="4" Grid.Column="1"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                        <TextBlock Text="Name and Address of Buyer:" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <RichTextBox BorderBrush="Gray" BorderThickness="1" Grid.Row="3" Grid.RowSpan="4" Grid.Column="1"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,3,0" SpellCheck.IsEnabled="True"  />
+                        <!--<TextBox Text="Addr1" Grid.Row="4" Grid.Column="1"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
                     <TextBox Text="Addr2" Grid.Row="5" Grid.Column="1"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextAlignment="Left"/>
                     <TextBox Text="Addr3" Grid.Row="6" Grid.Column="1"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextAlignment="Left"/>-->
-                    <TextBlock Text="Date" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <TextBlock Text=":" Grid.Row="1" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <TextBlock Text="{Binding BillDate}" Grid.Row="1" Grid.Column="5"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <TextBlock Text="Date" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <TextBlock Text=":" Grid.Row="1" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <TextBlock Text="{Binding BillDate}" Grid.Row="1" Grid.Column="5"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
-                    <TextBlock Text="Invoice Number" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <TextBlock Text=":" Grid.Row="2" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <TextBlock Text="{Binding InvoiceNo}" Grid.Row="2" Grid.Column="5"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    
-                    <GridSplitter Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="5" Height="5" Background="Gray" BorderThickness="2" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
-                    
-                    <TextBlock Grid.Row="3" Grid.Column="3" Text="Payment Terms"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <TextBlock Grid.Row="3"   Grid.Column="4"  Text=":" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <TextBlock Grid.Row="3"  Grid.Column="5" Text="{Binding PaymentTerms}"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <TextBlock Text="Invoice Number" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <TextBlock Text=":" Grid.Row="2" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <TextBlock Text="{Binding InvoiceNo}" Grid.Row="2" Grid.Column="5"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
-                    <TextBlock Grid.Row="4" Grid.Column="3" Text="Drug License No"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <TextBlock Grid.Row="4"   Grid.Column="4"  Text=":" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <TextBlock Grid.Row="4"  Grid.Column="5" Text="VLT/996/20B"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <TextBlock Grid.Row="5"  Grid.Column="5" Text="VLT/918/21B"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <GridSplitter Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="5" Height="5" Background="Gray" BorderThickness="2" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+
+                        <TextBlock Grid.Row="3" Grid.Column="3" Text="Payment Terms"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Row="3"   Grid.Column="4"  Text=":" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Row="3"  Grid.Column="5" Text="{Binding PaymentTerms}"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+                        <TextBlock Grid.Row="4" Grid.Column="3" Text="Drug License No"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Row="4"   Grid.Column="4"  Text=":" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Row="4"  Grid.Column="5" Text="VLT/996/20B"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Row="5"  Grid.Column="5" Text="VLT/918/21B"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
 
+                    </Grid>
                 </Grid>
-                </Grid>
-                
+
             </Border>
             <Border x:Name="DataGridBorder" Grid.Row="3" Grid.Column="1"  Grid.ColumnSpan="2" BorderBrush="Gray" BorderThickness="3">
                 <Grid Name="DataGridHolder" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="5" MinHeight="250">
                     <DataGrid x:Name="BillingDataGrid" Grid.Row="3"  Grid.Column="1" Grid.ColumnSpan="5" 
                               ColumnWidth="SizeToCells" AutoGenerateColumns="False" SelectionMode="Single" SelectionUnit="Cell"
                               ItemsSource="{Binding BillFormDataSourceCollection}" PreviewMouseWheel="UIElement_OnPreviewMouseWheel"
-                              CanUserAddRows="False">
+                              CanUserAddRows="False"
+                              Background="White">
 
                         <DataGrid.Columns>
                             <!--<DataGridTextColumn Header="S.No" Binding="{Binding SNo,UpdateSourceTrigger=LostFocus}" Width="35"/>-->
@@ -122,7 +123,7 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellEditingTemplate>-->
                             </DataGridTextColumn>
-                        <DataGridTextColumn Header="Product" Binding="{Binding Product,UpdateSourceTrigger=PropertyChanged}" MinWidth="125" Width="125"/>
+                            <DataGridTextColumn Header="Product" Binding="{Binding Product,UpdateSourceTrigger=PropertyChanged}" MinWidth="125" Width="125"/>
                             <!--<DataGridTemplateColumn Header="Product" MinWidth="60">
                                 <DataGridTemplateColumn.CellEditingTemplate>
                                     <DataTemplate>
@@ -168,9 +169,9 @@
                         <ColumnDefinition Width="450"/>
                         <ColumnDefinition Width="2"/>
                         <ColumnDefinition Width="auto"/>
-                        
+
                     </Grid.ColumnDefinitions>
-                <Border Grid.Row="1" Grid.Column="1" BorderBrush="Gray" BorderThickness="2" >
+                    <Border Grid.Row="1" Grid.Column="1" BorderBrush="Gray" BorderThickness="2" >
                         <Grid x:Name="BuyersInfoGrid" Grid.Row="1" Grid.Column="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="2"/>
@@ -192,11 +193,11 @@
                             <TextBlock Text="Buyers TIN No" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                             <TextBlock Text=":" Margin="0,0,20,0" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                             <TextBlock Text="{Binding BuyersTINNo}" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        <TextBlock Text="D/L No" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBlock Text="D/L No" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                             <TextBlock Text=":" Margin="0,0,20,0" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                             <TextBlock Text="{Binding BuyersDLNo}" Grid.Row="3" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        <Border Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="5"  BorderBrush="Gray" BorderThickness="2"/>
-                        <TextBlock Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="3" Text="Invoice Amount In Words:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <Border Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="5"  BorderBrush="Gray" BorderThickness="2"/>
+                            <TextBlock Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="3" Text="Invoice Amount In Words:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                             <TextBlock Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding InvoiceAmountinWords}" VerticalAlignment="Top" HorizontalAlignment="Left" TextWrapping="Wrap"/>
                             <!--<TextBlock Text=" OneHundred and Fifty Five"/>-->
 
@@ -206,14 +207,14 @@
 
                     <Grid x:Name="BillingValueGrid" Grid.Row="1" Grid.Column="3">
                         <Grid.RowDefinitions>
-                        <RowDefinition Height="0" />
-                        <RowDefinition Height="30" />
-                        <RowDefinition Height="30" />
-                        <RowDefinition Height="30" />
-                        <RowDefinition Height="30" />
-                        <RowDefinition Height="30" />
-                        <RowDefinition Height="30" />
-                        <RowDefinition Height="30" />
+                            <RowDefinition Height="0" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="3"/>
@@ -221,52 +222,58 @@
                             <ColumnDefinition Width="0"/>
                             <ColumnDefinition Width="115"/>
                         </Grid.ColumnDefinitions>
-                    <Label Content="Value" Grid.Row="1" Grid.Column="1" BorderBrush="Gray" BorderThickness="2,2,1,1" TextBlock.TextAlignment="Left"/>
-                    <Label Content="Discount" Grid.Row="2" Grid.Column="1" BorderBrush="Gray" BorderThickness="2,1,1,1" TextBlock.TextAlignment="Left"/>
-                    <Label Content="Net Value" Grid.Row="3" Grid.Column="1" BorderBrush="Gray" BorderThickness="2,1,1,1" TextBlock.TextAlignment="Left"/>
-                    <Label Content="CGST" Grid.Row="4" Grid.Column="1" BorderBrush="Gray" BorderThickness="2,1,1,1" TextBlock.TextAlignment="Left"/>
-                    <Label Content="SGST" Grid.Row="5" Grid.Column="1" BorderBrush="Gray" BorderThickness="2,1,1,1" TextBlock.TextAlignment="Left"/>
-                    <Label Content="Total" Grid.Row="6" Grid.Column="1" BorderBrush="Gray" BorderThickness="2,1,1,1" TextBlock.TextAlignment="Left"/>
-                    <Label Content="Invoice Amount" TextBlock.FontWeight="Bold"  Grid.Row="7" Grid.Column="1" BorderBrush="Gray" BorderThickness="2,1,1,2" TextBlock.TextAlignment="Left"/>
+                        <Label Content="Value" Grid.Row="1" Grid.Column="1" BorderBrush="Gray" BorderThickness="2,2,1,1" TextBlock.TextAlignment="Left"/>
+                        <Label Content="Discount" Grid.Row="2" Grid.Column="1" BorderBrush="Gray" BorderThickness="2,1,1,1" TextBlock.TextAlignment="Left"/>
+                        <Label Content="Net Value" Grid.Row="3" Grid.Column="1" BorderBrush="Gray" BorderThickness="2,1,1,1" TextBlock.TextAlignment="Left"/>
+                        <Label Content="CGST" Grid.Row="4" Grid.Column="1" BorderBrush="Gray" BorderThickness="2,1,1,1" TextBlock.TextAlignment="Left"/>
+                        <Label Content="SGST" Grid.Row="5" Grid.Column="1" BorderBrush="Gray" BorderThickness="2,1,1,1" TextBlock.TextAlignment="Left"/>
+                        <Label Content="Total" Grid.Row="6" Grid.Column="1" BorderBrush="Gray" BorderThickness="2,1,1,1" TextBlock.TextAlignment="Left"/>
+                        <Label Content="Invoice Amount" TextBlock.FontWeight="Bold"  Grid.Row="7" Grid.Column="1" BorderBrush="Gray" BorderThickness="2,1,1,2" TextBlock.TextAlignment="Left"/>
 
                         <Label Content="{Binding BillValue}" Grid.Row="1" Grid.Column="3" BorderBrush="Gray" BorderThickness="1,2,2,1" TextBlock.TextAlignment="Left"/>
-                        <Label Content="{Binding Discount}" Grid.Row="2" Grid.Column="3" BorderBrush="Gray" BorderThickness="1,1,2,1" TextBlock.TextAlignment="Left"/>
+                        <TextBox Text="{Binding Discount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Row="2" Grid.Column="3" BorderBrush="Gray" BorderThickness="1,1,2,1" TextBlock.TextAlignment="Left">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                    <i:InvokeCommandAction Command="{Binding DiscountModified}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
                         <Label Content="{Binding NetValue}" Grid.Row="3" Grid.Column="3" BorderBrush="Gray" BorderThickness="1,1,2,1" TextBlock.TextAlignment="Left"/>
-                        <Label Content="{Binding CGST}" Grid.Row="4" Grid.Column="3" BorderBrush="Gray" BorderThickness="1,1,2,1" TextBlock.TextAlignment="Left"/>
+                        <Label Content="{Binding CGST}" Grid.Row="4" Grid.Column="1" BorderBrush="Gray" BorderThickness="1,1,2,1" TextBlock.TextAlignment="Left" Grid.ColumnSpan="3" Margin="139.8,0,0.4,0"/>
                         <Label Content="{Binding SGST}" Grid.Row="5" Grid.Column="3" BorderBrush="Gray" BorderThickness="1,1,2,1" TextBlock.TextAlignment="Left"/>
                         <Label Content="{Binding Total}" Grid.Row="6" Grid.Column="3" BorderBrush="Gray" BorderThickness="1,1,2,1" TextBlock.TextAlignment="Left"/>
                         <Label Content="{Binding InvoiceAmount}" Grid.Row="7" Grid.Column="3" BorderBrush="Gray" BorderThickness="1,1,2,2" TextBlock.TextAlignment="Left"/>
-                </Grid>
-                <Border Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" BorderBrush="Gray" BorderThickness="2">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="2"/>
-                            <RowDefinition Height="25"/>
-                            <RowDefinition Height="25"/>
-                            <RowDefinition Height="25"/>
-                            <RowDefinition Height="5"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="3"/>
-                            <ColumnDefinition Width="150"/>
-                            <ColumnDefinition Width="250"/>
-                            <ColumnDefinition Width="200*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" 
+                    </Grid>
+                    <Border Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" BorderBrush="Gray" BorderThickness="2">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="2"/>
+                                <RowDefinition Height="25"/>
+                                <RowDefinition Height="25"/>
+                                <RowDefinition Height="25"/>
+                                <RowDefinition Height="5"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3"/>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="250"/>
+                                <ColumnDefinition Width="200*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" 
                                    Text="Received above mentioned goods are in good condition. In case of any dispute, the court of jurisdiction shall be at"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"
                                    />
-                        <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Text="Arni only"
+                            <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Text="Arni only"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Row="3" Grid.Column="2"  Text="Authorised Signature"
-                                    HorizontalAlignment="Right" VerticalAlignment="Center"
+                            <TextBlock Grid.Row="3" Grid.Column="3"  Text="Authorised Signature"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0.4,35.2,9.2"
                                    />
-                    </Grid>
-                </Border>
+                        </Grid>
+                    </Border>
                 </Grid>
             </Border>
         </Grid>
     </ScrollViewer>
-    
-        
+
+
 </Window>

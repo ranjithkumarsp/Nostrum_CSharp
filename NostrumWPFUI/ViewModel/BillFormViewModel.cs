@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Entity;
 using Nostrum;
+using System;
 
 namespace NostrumWPFUI.ViewModel
 {
@@ -60,58 +61,58 @@ namespace NostrumWPFUI.ViewModel
             set { _buyersDLNo = value; this.RaisePropertyChange(); }
         }
 
-        private string _billValue;
+        private double _billValue;
 
-        public string BillValue
+        public double BillValue
         {
             get { return _billValue; }
             set { _billValue = value; this.RaisePropertyChange(); }
         }
 
-        private string _discount;
+        private double _discount;
 
-        public string Discount
+        public double Discount
         {
             get { return _discount; }
             set { _discount = value; this.RaisePropertyChange(); }
         }
 
-        private string _netValue;
+        private double _netValue;
 
-        public string NetValue
+        public double NetValue
         {
             get { return _netValue; }
             set { _netValue = value; this.RaisePropertyChange(); }
         }
 
-        private string _cgst;
+        private double _cgst;
 
-        public string CGST
+        public double CGST
         {
             get { return _cgst; }
             set { _cgst = value; this.RaisePropertyChange(); }
         }
 
-        private string _sgst;
+        private double _sgst;
 
-        public string SGST
+        public double SGST
         {
             get { return _sgst; }
             set { _sgst = value; this.RaisePropertyChange(); }
         }
 
 
-        private string _total;
+        private double _total;
 
-        public string Total
+        public double Total
         {
             get { return _total; }
             set { _total = value; this.RaisePropertyChange(); }
         }
 
-        private string _invoiceAmount;
+        private long _invoiceAmount;
 
-        public string InvoiceAmount
+        public long InvoiceAmount
         {
             get { return _invoiceAmount; }
             set { _invoiceAmount = value; this.RaisePropertyChange(); }
@@ -124,19 +125,39 @@ namespace NostrumWPFUI.ViewModel
             get { return _invoiceAmountinWords; }
             set { _invoiceAmountinWords = value; this.RaisePropertyChange(); }
         }
-        
+
+        private ObservableCollection<BillFormData> _billFormDataSourceCollection;
+        public ObservableCollection<BillFormData> BillFormDataSourceCollection
+        {
+            get { return _billFormDataSourceCollection; }
+            set { _billFormDataSourceCollection = value; this.RaisePropertyChange(); }
+        }
+
         #endregion
 
         private Order _order;
         private List<BillFormData> _orderLineItems;
+        public ICommand DiscountModified { get; set; }
 
-        private ObservableCollection<BillFormData> _billFormDataSourceCollection;
-        public ICommand OnLoadedCmd { get; set; }
         public BillFormViewModel(Order order, List<BillFormData> billFormDatas)
         {
             _order = order;
             _orderLineItems = billFormDatas;
+            DiscountModified = new CustomDelegateCommand(DiscountModifiedMethod);
             Initialize();
+        }
+
+        private void DiscountModifiedMethod(object obj)
+        {
+            CalculateInvoice();
+        }
+
+        private void CalculateInvoice()
+        {
+            NetValue = BillValue - Discount;
+            Total = NetValue + CGST + SGST;
+            InvoiceAmount = (long)Math.Round(Total);
+            InvoiceAmountinWords = Nostrum.Utils.numInWords(InvoiceAmount, 0) + " Rupees only";
         }
 
         private void Initialize()
@@ -145,18 +166,30 @@ namespace NostrumWPFUI.ViewModel
             GenerateInvoiceNo();
             PaymentTerms = _order.Payment_Terms + " Days";
             FillClientDetails();
-            //ProductDAO productDao = new ProductDAO(new MySQLDBInterface());
-            //List<string> manfactures = productDao.getManufacturers();
-            //manfactures.ForEach(item => { ManfAutoCompleteCollection.Add(item); });
-            OnLoadedCmd = new CustomDelegateCommand(this.OnLoadedMthd);
             BillFormDataSourceCollection = new ObservableCollection<BillFormData>(_orderLineItems);
-            //BillFormDataSourceCollection.Add(new BillFormData { SNo = "", Product = "", BatchNo = "", Packing = "", Offer = "", ExpDate = "", Quantity = "", Rate = "", MRP = "", Amount = "" });
-            //loadDummyData(_order);
+            FillBillValues();
         }
-        private void OnLoadedMthd(object obj)
+
+        private void FillBillValues()
         {
+            double total = 0;
+            double cgst = 0;
+            double sgst = 0;
+
+            foreach(var item in _orderLineItems)
+            {
+                total += item.Amount;
+                cgst += ((item.CGST * item.Amount) / 100);
+                sgst += ((item.SGST * item.Amount) / 100);
+            }
+
+            BillValue = total;
+            CGST = cgst;
+            SGST = sgst;
+
+            CalculateInvoice();
         }
-        
+
         private void GenerateInvoiceNo()
         {
             // Invoice number is of the format INV-001-FY20
@@ -174,42 +207,5 @@ namespace NostrumWPFUI.ViewModel
             BuyersTINNo = client.TIN_No;
             BuyersDLNo = client.DL_No;
         }
-
-        private ObservableCollection<string> _manfAutoCompleteCollection = new ObservableCollection<string>();
-
-        public ObservableCollection<string> ManfAutoCompleteCollection
-        {
-            get { return _manfAutoCompleteCollection; }
-            set { _manfAutoCompleteCollection = value; this.RaisePropertyChange(); }
-        }
-
-        public ObservableCollection<BillFormData> BillFormDataSourceCollection
-        {
-            get { return _billFormDataSourceCollection; }
-            set { _billFormDataSourceCollection = value; this.RaisePropertyChange(); }
-        }
-
-        public void loadDummyData(Order order)
-        {
-            BuyerNameandAddress = "";
-            BillDate = System.DateTime.Today.ToShortDateString();
-            InvoiceNo = "12345678";
-            PaymentTerms = "30 Days";
-
-            BuyersTINNo = "BuyersTin 1234";
-            BuyersDLNo = "BuyersDL 1234";
-            BillValue = "BillValue";
-            Discount = "Discount";
-            NetValue = "NetValue";
-            CGST = "CGST";
-            SGST = "SGST";
-            Total = "Total";
-            InvoiceAmount = "InvoiceAmount";
-
-            InvoiceAmountinWords = "OneHundred and Fifty Five OneHundred and Fifty Five,,Five OneHundred and Fifty Five ";
-
-        }
-
-
     }
 }

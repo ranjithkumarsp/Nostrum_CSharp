@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using Entity;
 using NostrumDB;
@@ -39,7 +40,7 @@ namespace NostrumWPFUI.ViewModel
         public int Pack1
         {
             get { return _pack1; }
-            set { _pack1 = value; }
+            set { _pack1 = value; this.RaisePropertyChange(); }
         }
 
         private int _pack2;
@@ -47,7 +48,7 @@ namespace NostrumWPFUI.ViewModel
         public int Pack2
         {
             get { return _pack2; }
-            set { _pack2 = value; }
+            set { _pack2 = value; this.RaisePropertyChange(); }
         }
 
         private int _off1;
@@ -55,7 +56,7 @@ namespace NostrumWPFUI.ViewModel
         public int Off1
         {
             get { return _off1; }
-            set { _off1 = value; }
+            set { _off1 = value; this.RaisePropertyChange(); }
         }
 
         private int _off2;
@@ -63,7 +64,7 @@ namespace NostrumWPFUI.ViewModel
         public int Off2
         {
             get { return _off2; }
-            set { _off2 = value; }
+            set { _off2 = value; this.RaisePropertyChange(); }
         }
 
         private int _qty;
@@ -71,7 +72,14 @@ namespace NostrumWPFUI.ViewModel
         public int Qty
         {
             get { return _qty; }
-            set { _qty = value; }
+            set { _qty = value; this.RaisePropertyChange(); }
+        }
+
+        private string _avlQtyToolTipString;
+        public string AvailableQtyToolTipString
+        {
+            get { return _avlQtyToolTipString; }
+            set { _avlQtyToolTipString = value; this.RaisePropertyChange(); }
         }
 
         private double _rate;
@@ -79,7 +87,7 @@ namespace NostrumWPFUI.ViewModel
         public double Rate
         {
             get { return _rate; }
-            set { _rate = value; }
+            set { _rate = value; this.RaisePropertyChange(); }
         }
 
         private List<string> _batchList;
@@ -126,33 +134,92 @@ namespace NostrumWPFUI.ViewModel
         Order _order;
         List<BillFormData> _orderLineItems;
         IDBInterface _dBInterface;
+        int _availableQty;
+
         public ICommand AddNextCommand { get; set; }
         public ICommand GenBillCommand { get; set; }
+        public ICommand QtyEnterCommand { get; set; }
 
         public AddLineItemViewModel(Order order)
         {
             _sNo = 0;
+            _availableQty = 0;
             _order = order;
             _orderLineItems = new List<BillFormData>();
             _dBInterface = new MySQLDBInterface();
             AddNextCommand = new CustomDelegateCommand(AddNextMethod);
             GenBillCommand = new CustomDelegateCommand(GenBillMethod);
+            QtyEnterCommand = new CustomDelegateCommand(OnEnteringQuantity);
             
             Initialize();
         }
 
+        private void OnEnteringQuantity(object obj)
+        {
+            if (!String.IsNullOrWhiteSpace(SelectedProduct) && !(String.IsNullOrWhiteSpace(SelectedBatch)))
+            {
+                StockDAO stockDAO = new StockDAO(_dBInterface);
+                _availableQty = stockDAO.GetStockQuantity(SelectedProduct, SelectedBatch);
+                AvailableQtyToolTipString = "Available Quantity: " + _availableQty;
+            }
+        }
+
         private void GenBillMethod(object obj)
         {
-            FillFormData();
-            BillFormView bfm = new BillFormView(_order, _orderLineItems);
-            bfm.Owner = MainWindow;
-            bfm.ShowDialog();
+            if (ValidateFields())
+            {
+                FillFormData();
+                BillFormView bfm = new BillFormView(_order, _orderLineItems);
+                bfm.Owner = MainWindow;
+                bfm.ShowDialog();
+            }
         }
 
         private void AddNextMethod(object obj)
         {
-            FillFormData();
-            ClearAll();
+            if(ValidateFields())
+            {
+                FillFormData();
+                ClearAll();
+            }
+            
+        }
+
+        private bool ValidateFields()
+        {
+            if(String.IsNullOrWhiteSpace(SelectedProduct))
+            {
+                MessageBox.Show("Select a Valid Product", "Error");
+                return false;
+            }
+            if(String.IsNullOrWhiteSpace(SelectedBatch))
+            {
+                MessageBox.Show("Select a Valid Product", "Error");
+                return false;
+            }
+
+            int reqQty = Qty;
+            if(Off1 != 0)
+            {
+                reqQty = reqQty / Off1;
+                reqQty = reqQty * (Off1 + Off2);
+            }
+            if(Pack2 != 0)
+            {
+                reqQty = reqQty * Pack1 * Pack2;
+            }
+
+            if (reqQty <= 0)
+            {
+                MessageBox.Show("Invalid Quantity", "Error");
+                return false;
+            }
+            else if (reqQty > _availableQty)
+            {
+                MessageBox.Show("Required quantity(" + reqQty + ") is more than available quantity(" + _availableQty + ")", "Error");
+                return false;
+            }
+            return true;
         }
 
         private void ClearAll()
@@ -166,6 +233,7 @@ namespace NostrumWPFUI.ViewModel
             Off2 = 0;
             Qty = 0;
             Rate = 0;
+            _availableQty = 0;
         }
 
         private void FillFormData()
@@ -188,8 +256,10 @@ namespace NostrumWPFUI.ViewModel
             billFormData.Quantity = Qty;
             billFormData.Rate = Rate;
             billFormData.MRP = product.MRP;
-            billFormData.ExpDate = product.Exp_Date.ToString();
+            billFormData.ExpDate = product.Exp_Date.ToString("MMM-yy");
             billFormData.Amount = Rate * Qty;
+            billFormData.CGST = product.CGST;
+            billFormData.SGST = product.SGST;
             
             _orderLineItems.Add(billFormData);
         }
@@ -207,8 +277,12 @@ namespace NostrumWPFUI.ViewModel
 
         private void OnProductSelect()
         {
-            if(!String.IsNullOrWhiteSpace(SelectedProduct))
+            if (String.IsNullOrWhiteSpace(SelectedProduct))
             {
+                Batches = null;
+            }
+            else
+            { 
                 FillBatchList();
                 ProductDAO productDAO = new ProductDAO(_dBInterface);
                 Product.DrugType type = productDAO.GetProductType(SelectedProduct);
