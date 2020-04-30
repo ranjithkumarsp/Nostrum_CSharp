@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NostrumWPFUI.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,22 @@ namespace NostrumWPFUI.View
         public EditProductPopUpView()
         {
             InitializeComponent();
+            this.DataContext = new EditProductPopUpViewModel();
+        }
+        public void OkButtonClicked(object o, EventArgs e)
+        {
+            if (ProductNameCombo.SelectedItem != null && BatchNumberCombo.SelectedItem != null)
+                this.DialogResult = true;
+        }
+        public void OnBatchSelect(object o, EventArgs e)
+        {
+            OkButton.IsEnabled = true;
+        }
+
+        public void GetSelectedValues(out string product, out string batch)
+        {
+            product = ProductNameCombo.SelectedValue.ToString();
+            batch = BatchNumberCombo.SelectedValue.ToString();
         }
     }
 }

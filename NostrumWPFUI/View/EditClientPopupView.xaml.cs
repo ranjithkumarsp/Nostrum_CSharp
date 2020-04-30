@@ -23,8 +23,8 @@ namespace NostrumWPFUI.View
     {
         public EditClientPopupView()
         {
-            this.DataContext = new EditClientPopupViewModel();
             InitializeComponent();
+            this.DataContext = new EditClientPopupViewModel();
         }
 
         public void OkButtonClicked(object o, EventArgs e)

@@ -20,7 +20,7 @@ namespace NostrumWPFUI.ViewModel
             get { return CurrentClient.Name; }
             set
             {
-                CurrentClient.Name = value;
+                CurrentClient.Name = NostrumHelper.UppercaseFirst(value);
                 this.RaisePropertyChange();
             }
         }
@@ -75,12 +75,12 @@ namespace NostrumWPFUI.ViewModel
             }
         }
 
-        private string _clientNameBtn;
+        private string _submitButtonText;
 
-        public string ClientNameBtn
+        public string SubmitButtonText
         {
-            get { return _clientNameBtn; }
-            set { _clientNameBtn = value; this.RaisePropertyChange(); }
+            get { return _submitButtonText; }
+            set { _submitButtonText = value; this.RaisePropertyChange(); }
         }
 
 
@@ -105,9 +105,9 @@ namespace NostrumWPFUI.ViewModel
             {
                 _isNewClient = value;
                 if (_isNewClient)
-                    ClientNameBtn = "Add Client";
+                    SubmitButtonText = "Add Client";
                 else
-                    ClientNameBtn = "Update Client";
+                    SubmitButtonText = "Update Client";
             }
         }
 

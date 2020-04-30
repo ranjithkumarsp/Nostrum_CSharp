@@ -11,22 +11,15 @@ namespace NostrumWPFUI.ViewModel
 {
     public class EditProductPopUpViewModel : BaseViewModel
     {
-        public ICommand OKCommand { get; set; }
-        public ICommand CancelCommand { get; set; }
-
         public EditProductPopUpViewModel()
         {
-            OnPopupLoad();
+            Initialize();
         }
 
-        public void OnPopupLoad()
+        public void Initialize()
         {
-            OKCommand = new CustomDelegateCommand(OkMethod);
-            CancelCommand = new CustomDelegateCommand(CancelMethod);
             ProductDAO dao = new ProductDAO(new MySQLDBInterface());
             ProductNameList = dao.GetProductNames();
-            SelectedProduct = ProductNameList.FirstOrDefault();
-            //ProductsList = dao.getProduct();
         }
 
         private List<string> _productNameList;
@@ -37,14 +30,6 @@ namespace NostrumWPFUI.ViewModel
             set { _productNameList = value; this.RaisePropertyChange(); }
         }
 
-        private List<string> _productsList;
-
-        public List<string> ProductsList
-        {
-            get { return _productsList; }
-            set { _productsList = value; this.RaisePropertyChange(); }
-        }
-
         private string _selectedProduct;
 
         public string SelectedProduct
@@ -53,43 +38,23 @@ namespace NostrumWPFUI.ViewModel
             set
             {
                 _selectedProduct = value;
-
+                GetBatchNos();
                 this.RaisePropertyChange();
             }
         }
 
-        private string _selectedBatchNumber;
+        private List<string> _batchNumberList;
 
-        public string SelectedBatchNumber
+        public List<string> BatchNumberList
         {
-            get { return _selectedBatchNumber; }
-            set { _selectedBatchNumber = value; this.RaisePropertyChange(); }
+            get { return _batchNumberList; }
+            set { _batchNumberList = value; this.RaisePropertyChange(); }
         }
 
-        private List<string> _batchNumerList;
-
-        public List<string> BatchNumerList
+        private void GetBatchNos()
         {
-            get { return _batchNumerList; }
-            set { _batchNumerList = value; this.RaisePropertyChange(); }
+            StockDAO dao = new StockDAO(new MySQLDBInterface());
+            BatchNumberList = dao.GetBatchNos(SelectedProduct);
         }
-
-        private void CancelMethod(object obj)
-        {
-           
-        }
-
-        private void OkMethod(object obj)
-        {
-           
-        }
-
-        private void UpdateBatchNumerList()
-        {
-
-        }
-
-       
-
     }
 }

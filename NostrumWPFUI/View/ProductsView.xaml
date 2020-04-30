@@ -52,21 +52,21 @@
             <TextBlock Grid.Row="11" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right" TextWrapping="Wrap" Text="Date of Purchase" VerticalAlignment="Center" Height="23" Width="135" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" />
             <TextBlock Grid.Row="12" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right" TextWrapping="Wrap" Text="Invoice Number" VerticalAlignment="Center" Height="23" Width="135" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold"/>
 
-            <TextBox Text ="{Binding ProductName}"  Grid.Row="1" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="169"   Grid.ColumnSpan="2" Height="30" />
+            <TextBox Text ="{Binding ProductName}"  Grid.Row="1" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="169"   Grid.ColumnSpan="2" Height="30" TextAlignment="Left"/>
             <RadioButton  IsChecked="{Binding Tablet}" Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="3" Content="Tablet" GroupName="DrugType" VerticalAlignment="Center" HorizontalAlignment="Left" />
             <RadioButton  IsChecked="{Binding Syrup}" Grid.Row="2" Grid.Column="5"  Content="Syrup" Grid.ColumnSpan="2" GroupName="DrugType" HorizontalAlignment="Left" VerticalAlignment="Center"  />
-            <TextBox Text ="{Binding BatchNo}" Grid.Row="3" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2"/>
-            <xctk:DateTimePicker Format="ShortDate" Text ="{Binding MfgDate}" Background="AliceBlue" Grid.Row="4" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30" Grid.ColumnSpan="2" />
-            <xctk:DateTimePicker Format="ShortDate" Text ="{Binding ExpDate}" Grid.Row="5" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30" Grid.ColumnSpan="2" />
-            <TextBox Text ="{Binding Quantity}" Grid.Row="6" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2"  />
-            <TextBox Text ="{Binding CGST}" Grid.Row="7" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2"  />
-            <TextBox Text ="{Binding SGST}" Grid.Row="8" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2"  />
-            <TextBox Text ="{Binding MRP}" BorderThickness="2" Grid.Row="9" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2"  />
+            <TextBox Text ="{Binding BatchNo}" Grid.Row="3" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2" TextAlignment="Left"/>
+            <DatePicker SelectedDateFormat="Short" Text ="{Binding MfgDate}" Grid.Row="4" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30" Grid.ColumnSpan="2" />
+            <DatePicker SelectedDateFormat="Short" Text ="{Binding ExpDate}" Grid.Row="5" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30" Grid.ColumnSpan="2" />
+            <TextBox Text ="{Binding Quantity}" Grid.Row="6" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2" TextAlignment="Left" />
+            <TextBox Text ="{Binding CGST}" Grid.Row="7" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2" TextAlignment="Left" />
+            <TextBox Text ="{Binding SGST}" Grid.Row="8" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2" TextAlignment="Left" />
+            <TextBox Text ="{Binding MRP}" BorderThickness="2" Grid.Row="9" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2" TextAlignment="Left" />
             <TextBox Text ="{Binding Manufacturer,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Row="10" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2" 
                     behaviors:AutoCompleteBehavior.AutoCompleteItemsSource="{Binding ManfAutoCompleteCollection}" 
                     behaviors:AutoCompleteBehavior.AutoCompleteStringComparison="InvariantCultureIgnoreCase"                      
-                     />
-            <xctk:DateTimePicker Format="ShortDate" Text ="{Binding PurchaseDate}" Grid.Row="11" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30" Grid.ColumnSpan="2"  />
+                    TextAlignment="Left" />
+            <DatePicker SelectedDateFormat="Short" Text ="{Binding PurchaseDate}" Grid.Row="11" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30" Grid.ColumnSpan="2"  />
             <TextBox Text ="{Binding PurchaseInvoiceNo}" BorderThickness="2" Grid.Row="12" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2"   />
             <Button Content="EditProduct" Style="{StaticResource BoldLinkButton}" Grid.Row="1" Grid.Column="6" Command="{Binding EditProductCommand}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
@@ -76,7 +76,7 @@
                     <ColumnDefinition Width="20"/>
                     <ColumnDefinition Width="140"/>
                 </Grid.ColumnDefinitions>
-                <Button Content="Submit" Grid.Column="0" Command="{Binding SubmitCommand}" Height="30" Width="100" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                <Button IsDefault="True" Content="{Binding SubmitButtonText,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Column="0" Command="{Binding SubmitCommand}" Height="30" Width="100" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                 <Button Content="Clear" Grid.Column="2" Command="{Binding ClearCommand}" Height="30" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
             </Grid>

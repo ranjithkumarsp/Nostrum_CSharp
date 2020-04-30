@@ -18,19 +18,31 @@ namespace NostrumWPFUI.ViewModel
     {
         #region Properties
 
-        private string _productName;
-
         public string ProductName
         {
-            get { return _productName; }
-            set { _productName = value; this.RaisePropertyChange(); }
+            get { return CurrentProduct.Name; }
+            set
+            {
+                CurrentProduct.Name = NostrumHelper.UppercaseFirst(value);
+                this.RaisePropertyChange();
+            }
         }
+
         private bool _tablet;
 
         public bool Tablet
         {
             get { return _tablet; }
-            set { _tablet = value; this.RaisePropertyChange(); }
+            set
+            {
+                _tablet = value;
+                if(_tablet)
+                {
+                    CurrentProduct.Drug_Type = Product.DrugType.Tablet;
+                    _syrup = false;
+                }                
+                this.RaisePropertyChange();
+            }
         }
 
         private bool _syrup;
@@ -38,95 +50,82 @@ namespace NostrumWPFUI.ViewModel
         public bool Syrup
         {
             get { return _syrup; }
-            set { _syrup = value; this.RaisePropertyChange(); }
+            set
+            {
+                _syrup = value;
+                if(_syrup)
+                {
+                    CurrentProduct.Drug_Type = Product.DrugType.Syrup;
+                    _tablet = false;
+                }                
+                this.RaisePropertyChange();
+            }
         }
-
-        private string _batchNo;
 
         public string BatchNo
         {
-            get { return _batchNo; }
-            set { _batchNo = value; this.RaisePropertyChange(); }
+            get { return CurrentProduct.Batch; }
+            set { CurrentProduct.Batch = value; this.RaisePropertyChange(); }
         }
-
-        private DateTime _mfgDate;
 
         public DateTime MfgDate
         {
-            get { return _mfgDate; }
-            set { _mfgDate = value; this.RaisePropertyChange(); }
+            get { return CurrentProduct.Mfg_Date; }
+            set { CurrentProduct.Mfg_Date = value; this.RaisePropertyChange(); }
         }
-
-        private DateTime _expDate;
 
         public DateTime ExpDate
         {
-            get { return _expDate; }
-            set { _expDate = value; this.RaisePropertyChange(); }
+            get { return CurrentProduct.Exp_Date; }
+            set { CurrentProduct.Exp_Date = value; this.RaisePropertyChange(); }
         }
-
-        private int _qty;
 
         public int Quantity
         {
-            get { return _qty; }
-            set { _qty = value; this.RaisePropertyChange(); }
+            get { return CurrentProduct.Quantity; }
+            set { CurrentProduct.Quantity = value; this.RaisePropertyChange(); }
         }
-
-        private double _cgst;
 
         public double CGST
         {
-            get { return _cgst; }
-            set { _cgst = value; this.RaisePropertyChange(); }
+            get { return CurrentProduct.CGST; }
+            set { CurrentProduct.CGST = value; this.RaisePropertyChange(); }
         }
-
-        private double _sgst;
 
         public double SGST
         {
-            get { return _sgst; }
-            set { _sgst = value; this.RaisePropertyChange(); }
+            get { return CurrentProduct.SGST; }
+            set { CurrentProduct.SGST = value; this.RaisePropertyChange(); }
         }
-
-        private double _mrp;
-
         public double MRP
         {
-            get { return _mrp; }
-            set { _mrp = value; this.RaisePropertyChange(); }
+            get { return CurrentProduct.MRP; }
+            set { CurrentProduct.MRP = value; this.RaisePropertyChange(); }
         }
-
-        private string _mfr;
 
         public string Manufacturer
         {
             get
             {
-                return _mfr;
+                return CurrentProduct.Manufacturer;
             }
             set
             {
-                _mfr = NostrumHelper.UppercaseFirst(value); 
-                
+                CurrentProduct.Manufacturer = NostrumHelper.UppercaseFirst(value); 
                 this.RaisePropertyChange();
             }
         }
 
-        private DateTime _purchaseDate;
-
         public DateTime PurchaseDate
         {
-            get { return _purchaseDate; }
-            set { _purchaseDate = value; this.RaisePropertyChange(); }
+            get { return CurrentProduct.Purchase_Date; }
+            set { CurrentProduct.Purchase_Date = value; this.RaisePropertyChange(); }
         }
-
-        private string _invNo;
 
         public string PurchaseInvoiceNo
         {
-            get { return _invNo; }
-            set { _invNo = value; this.RaisePropertyChange(); }
+            get { return CurrentProduct.Purchase_Invoice; }
+            set { CurrentProduct.Purchase_Invoice = value; this.RaisePropertyChange(); }
         }
 
         private ObservableCollection<string> _manfAutoCompleteCollection = new ObservableCollection<string>();
@@ -137,6 +136,37 @@ namespace NostrumWPFUI.ViewModel
             set { _manfAutoCompleteCollection = value;this.RaisePropertyChange(); }
         }
 
+        private bool _isNewProduct;
+
+        public bool IsNewProduct
+        {
+            get { return _isNewProduct; }
+            set
+            {
+                _isNewProduct = value;
+                if (_isNewProduct)
+                    SubmitButtonText = "Add Product";
+                else
+                    SubmitButtonText = "Update Product";
+            }
+        }
+
+        private string _submitButtonText;
+
+        public string SubmitButtonText
+        {
+            get { return _submitButtonText; }
+            set { _submitButtonText = value; this.RaisePropertyChange(); }
+        }
+
+        private Product _currentProduct;
+        private IDBInterface _dbInterface;
+
+        public Product CurrentProduct
+        {
+            get { return _currentProduct; }
+            set { _currentProduct = value; }
+        }
         #endregion
 
         public ProductsViewModel()
@@ -153,51 +183,104 @@ namespace NostrumWPFUI.ViewModel
             SubmitCommand = new CustomDelegateCommand(SubmitMethod);
             ClearCommand = new CustomDelegateCommand(ClearMethod);
             EditProductCommand = new CustomDelegateCommand(EditProductMethod);
-            MfgDate = DateTime.Today;
-            ExpDate = DateTime.Today;
-            PurchaseDate = DateTime.Today;
-            ProductDAO productDao = new ProductDAO(new MySQLDBInterface());
-            List<string> manfactures = productDao.GetManufacturers();
-            manfactures.ForEach(item => { ManfAutoCompleteCollection.Add(item); });
-           // ManfAutoCompleteCollection.Add(); 
+            CurrentProduct = new Product();
+            _dbInterface = new MySQLDBInterface();
+            ClearMethod(null);
         }
 
         private void EditProductMethod(object obj)
         {
             EditProductPopUpView editproductPopup = new EditProductPopUpView();
-            EditProductPopUpViewModel _editProductPopUpViewModel = new EditProductPopUpViewModel();
-            editproductPopup.DataContext = _editProductPopUpViewModel;
             editproductPopup.Owner = MainWindow;
-            editproductPopup.ShowDialog();
-            
+            if(editproductPopup.ShowDialog() == true)
+            {
+                IsNewProduct = false;
+                string product, batch;
+                editproductPopup.GetSelectedValues(out product, out batch);
+                FillProduct(product, batch);
+            }
         }
 
-        private Entity.Product CreateProduct()
+        private void FillProduct(string product, string batch)
         {
-            Product p = new Product();
-            p.Name = ProductName;
-            p.Batch = BatchNo;
-            if (Tablet)
-                p.Drug_Type = Product.DrugType.Tablet;
-            else if (Syrup)
-                p.Drug_Type = Product.DrugType.Syrup;
-            p.Mfg_Date = MfgDate;
-            p.Exp_Date = ExpDate;
-            p.Quantity = Quantity;
-            p.CGST = CGST;
-            p.SGST = SGST;
-            p.MRP = MRP;
-            p.Manufacturer = Manufacturer;
-            p.Purchase_Date = PurchaseDate;
-            p.Purchase_Invoice = PurchaseInvoiceNo;
-            return p;
+            ProductDAO productDAO = new ProductDAO(_dbInterface);
+            Product prod = productDAO.GetProduct(product, batch);
+            ProductName = prod.Name;
+            BatchNo = prod.Batch;
+            if (prod.Drug_Type == Product.DrugType.Tablet)
+                Tablet = true;
+            else
+                Syrup = true;
+            MfgDate = prod.Mfg_Date;
+            ExpDate = prod.Exp_Date;
+            Quantity = prod.Quantity;
+            CGST = prod.CGST;
+            SGST = prod.SGST;
+            MRP = prod.MRP;
+            Manufacturer = prod.Manufacturer;
+            PurchaseDate = prod.Purchase_Date;
+            PurchaseInvoiceNo = prod.Purchase_Invoice;
         }
+
+        private bool CanAddProduct()
+        {
+            if (String.IsNullOrWhiteSpace(ProductName))
+            {
+                MessageBox.Show("Product Name cannot be empty");
+                return false;
+            }
+            if (String.IsNullOrWhiteSpace(BatchNo))
+            {
+                MessageBox.Show("Batch Number cannot be empty");
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         public void SubmitMethod(object param)
         {
-            ProductDAO productDao = new ProductDAO(new MySQLDBInterface());
+            if(CanAddProduct())
+            {
+                ProductDAO productDAO = new ProductDAO(_dbInterface);
+                if(IsNewProduct)
+                {
+                    AddProduct(productDAO);
+                }
+                else
+                {
+                    UpdateProduct(productDAO);
+                }
+            }
+        }
+
+        private void UpdateProduct(ProductDAO productDAO)
+        {
             try
             {
-                if(productDao.AddProduct(CreateProduct()))
+                if (productDAO.UpdateProduct(CurrentProduct))
+                {
+                    MessageBox.Show("Product Updated successfully!");
+                    ClearMethod(null);
+                }
+                else
+                {
+                    MessageBox.Show("Unable to add client!");
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+        }
+
+        private void AddProduct(ProductDAO productDAO)
+        {
+            try
+            {
+                if (productDAO.AddProduct(CurrentProduct))
                 {
                     MessageBox.Show("Product successfully Added!");
                     ClearMethod(null);
@@ -212,11 +295,13 @@ namespace NostrumWPFUI.ViewModel
                 MessageBox.Show(e.Message);
             }
         }
+
         public void ClearMethod(object param)
         {
-            ProductName = String.Empty;
-            BatchNo = String.Empty;
-            Tablet = false;
+            IsNewProduct = true;
+            ProductName = string.Empty;
+            BatchNo = string.Empty;
+            Tablet = true;
             Syrup = false;
             MfgDate = DateTime.Today;
             ExpDate = DateTime.Today;
@@ -224,9 +309,16 @@ namespace NostrumWPFUI.ViewModel
             CGST = 0;
             SGST = 0;
             MRP = 0;
-            Manufacturer = String.Empty;
+            Manufacturer = string.Empty;
             PurchaseDate = DateTime.Today;
-            PurchaseInvoiceNo = String.Empty;
+            PurchaseInvoiceNo = string.Empty;
+        }
+
+        private void FillManufacturerSuggestion()
+        {
+            ProductDAO productDao = new ProductDAO(_dbInterface);
+            List<string> manfactures = productDao.GetManufacturers();
+            manfactures.ForEach(item => { ManfAutoCompleteCollection.Add(item); });
         }
     }
 }
