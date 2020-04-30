@@ -21,7 +21,7 @@ namespace NostrumDB
         public bool AddClient(Client client)
         {
             int nRowsAffected = 0;
-            string query = "Insert into clients values('"+client.Name+"','" + client.Phone + "','" + client.Display_Name + "','" + client.Addr1 + "','" + client.Addr2 + "','" + client.Addr3 + "','" + client.TIN_No + "','" + client.DL_No + "');";
+            string query = "Insert into clients values('"+client.Name+"','" + client.Phone + "','" + client.Display_Name + "','" + client.Address + "','" + client.TIN_No + "','" + client.DL_No + "');";
             nRowsAffected = _dbInterface.ExecuteNonQuery(query);
             return (nRowsAffected > 0);
         }
@@ -46,9 +46,7 @@ namespace NostrumDB
                 client.Name = reader["Name"].ToString();
                 client.Phone = reader["Phone"].ToString();
                 client.Display_Name = reader["Display_Name"].ToString();
-                client.Addr1 = reader["Addr1"].ToString();
-                client.Addr2 = reader["Addr2"].ToString();
-                client.Addr3 = reader["Addr3"].ToString();
+                client.Address = reader["Address"].ToString();
                 client.TIN_No = reader["TIN_No"].ToString();
                 client.DL_No = reader["DL_No"].ToString();
             }
@@ -87,9 +85,7 @@ namespace NostrumDB
             {
                 client.Name = dr["Name"].ToString();
                 client.Display_Name = dr["Display_Name"].ToString();
-                client.Addr1 = dr["Addr1"].ToString();
-                client.Addr2 = dr["Addr2"].ToString();
-                client.Addr3 = dr["Addr3"].ToString();                
+                client.Address = dr["Address"].ToString();
                 client.DL_No = dr["DL_No"].ToString();
                 client.Phone = dr["Phone"].ToString();
                 client.TIN_No = dr["TIN_No"].ToString();
@@ -103,7 +99,7 @@ namespace NostrumDB
         public bool UpdateClient(Client client)
         {
             int nRowsAffected = 0;
-            string query = "Update clients set Name = '" + client.Name + "', Phone = '" + client.Phone + "', Addr1 = '" + client.Addr1 + "', Addr2 = '" + client.Addr2 + "', Addr3 = '" + client.Addr3 + "', TIN_No = '" + client.TIN_No + "', DL_No = '" + client.DL_No + "' where Display_Name = '" + client.Display_Name + "';";
+            string query = "Update clients set Name = '" + client.Name + "', Phone = '" + client.Phone + "', Address = '" + client.Address + "', TIN_No = '" + client.TIN_No + "', DL_No = '" + client.DL_No + "' where Display_Name = '" + client.Display_Name + "';";
             nRowsAffected = _dbInterface.ExecuteNonQuery(query);
             return (nRowsAffected > 0);
         }

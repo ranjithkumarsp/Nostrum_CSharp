@@ -11,64 +11,66 @@ using System.Windows.Input;
 
 namespace NostrumWPFUI.ViewModel
 {
-    public class ClientsViewModel : BaseViewModel, IDataErrorInfo
+    public class ClientsViewModel : BaseViewModel
     {
         #region Properties
 
-        private string _clientName;
-
         public string ClientName
         {
-            get { return _clientName; }
+            get { return CurrentClient.Name; }
             set
             {
-                _clientName = value;
+                CurrentClient.Name = value;
                 this.RaisePropertyChange();
             }
         }
-
-        private string _dispName;
 
         public string DisplayName
         {
-            get { return _dispName; }
+            get { return CurrentClient.Display_Name; }
             set
             {
-                _dispName = value;
+                CurrentClient.Display_Name = value;
                 this.RaisePropertyChange();
             }
         }
-        private string _addr;
 
         public string Address
         {
-            get { return _addr; }
+            get { return CurrentClient.Address; }
             set
             {
-                _addr = value;
+                CurrentClient.Address = value;
                 this.RaisePropertyChange();
             }
         }
-
-        private string _dlNo;
 
         public string DLNo
         {
-            get { return _dlNo; }
+            get { return CurrentClient.DL_No; }
             set
             {
-                _dlNo = value;
+                CurrentClient.DL_No = value;
                 this.RaisePropertyChange();
             }
         }
-        private string _tinNo;
 
         public string TinNo
         {
-            get { return _tinNo; }
+            get { return CurrentClient.TIN_No; }
             set
             {
-                _tinNo = value;
+                CurrentClient.TIN_No = value;
+                this.RaisePropertyChange();
+            }
+        }
+
+        public string MobileNo
+        {
+            get { return CurrentClient.Phone; }
+            set
+            {
+                CurrentClient.Phone = value;
                 this.RaisePropertyChange();
             }
         }
@@ -87,158 +89,114 @@ namespace NostrumWPFUI.ViewModel
         public Client CurrentClient
         {
             get { return _currClient; }
-            set { _currClient = value; this.RaisePropertyChange(); }
+            set
+            {
+                _currClient = value;
+            }
         }
 
-        private string _MobileNo;
+        private bool _isNewClient;
+        private IDBInterface _dbInterface;
 
-        public string MobileNo
+        public bool IsNewClient
         {
-            get { return _MobileNo; }
-            set { _MobileNo = value; this.RaisePropertyChange(); }
+            get { return _isNewClient; }
+            set
+            {
+                _isNewClient = value;
+                if (_isNewClient)
+                    ClientNameBtn = "Add Client";
+                else
+                    ClientNameBtn = "Update Client";
+            }
         }
-
-
-        List<string> ClientsFromDB = new List<string>();
 
         #endregion
 
         public ClientsViewModel()
         {
             Initialize();
-
         }
 
         //public ICommand AddClientCommand { get; set; }
         public ICommand ClearCommand { get; set; }
         public ICommand EditUserCommand { get; set; }
-        public ICommand OnLoadedCmd { get; set; }
-        public RelayCommand AddClientCommand { get; set; }
-
-        public string Error
-        {
-            get { return null; }
-        }
-
+        public ICommand AddClientCommand { get; set; }
         public string this[string propertyName]
         {
             get
             {
                 string result = string.Empty;
-                //if (propertyName == "ClientName")
-                //{
-                //    if (this.ClientName == "")
-                //        result = "Name can not be empty";
-                //}
-                //else if(propertyName == "DisplayName")
-                //{
-                //    if (this.DisplayName == "")
-                //        result = string.Format("{0} Cannot be Empty", propertyName);
-                //}
-                //else if (propertyName == "Address")
-                //{
-                //    if (this.Address == "")
-                //        result = string.Format("{0} Cannot be Empty", propertyName);
-                //}
                 switch (propertyName)
                 {
                     case "ClientName":
-                        if (this.ClientName == "")
+                        if (ClientName == "")
                         {
                             result = string.Format("{0} Cannot be Empty", propertyName);
                         }
 
                         break;
                     case "DisplayName":
-                        if (this.DisplayName == "")
+                        if (DisplayName == "")
                         {
                             result = string.Format("{0} Cannot be Empty", propertyName);
                         }
 
                         break;
                     case "Address":
-                        if (this.Address == "")
+                        if (Address == "")
                         {
                             result = string.Format("{0} Cannot be Empty", propertyName);
                         }
 
                         break;
                     case "DLNo":
-                        if (this.DLNo == "")
+                        if (DLNo == "")
                         {
                             result = string.Format("{0} Cannot be Empty", propertyName);
                         }
 
                         break;
                     case "TinNo":
-                        if (this.TinNo == "")
+                        if (TinNo == "")
                         {
                             result = string.Format("{0} Cannot be Empty", propertyName);
                         }
 
                         break;
                     case "MobileNo":
-                        if (this.MobileNo == "")
+                        if (MobileNo == "")
                         {
                             result = string.Format("{0} Cannot be Empty", propertyName);
                         }
-
                         break;
-
                 }
-
-                if (ErrorCollection.ContainsKey(propertyName))
-                {
-                    ErrorCollection[propertyName] = result;
-                }
-                else if (result != null)
-                {
-                    ErrorCollection.Add(propertyName, result);
-                }
-                RaisePropertyChange("ErrorCollection");
                 return result;
             }
         }
 
-        //public string this[string property]
-        //{
-        //    get
-        //    {
-        //        PropertyInfo propertyInfo = this.GetType().GetProperty(property);
-        //        var results = new List<ValidationResult>();
-
-        //        var result = Validator.TryValidateProperty(
-        //                                  propertyInfo.GetValue(this, null),
-        //                                  new ValidationContext(this, null, null)
-        //                                  {
-        //                                      MemberName = property
-        //                                  },
-        //                                  results);
-
-        //        if (!result)
-        //        {
-        //            var validationResult = results.First();
-        //            return validationResult.ErrorMessage;
-        //        }
-
-        //        return string.Empty;
-        //    }
-        //}
-
         public void Initialize()
         {
-            //AddClientCommand = new CustomDelegateCommand(AddClientMethod,CanAddClient);
+            CurrentClient = new Client();
+            _dbInterface = new MySQLDBInterface();
+            AddClientCommand = new CustomDelegateCommand(OnSubmitMethod);
             ClearCommand = new CustomDelegateCommand(ClearMethod);
             EditUserCommand = new CustomDelegateCommand(EditClientMethod);
-            OnLoadedCmd = new CustomDelegateCommand(this.OnLoadedMthd);
-            ClientNameBtn = "Add Client";
-            AddClientCommand = new RelayCommand(AddClientMethod, CanAddClient);
+            //AddClientCommand = new RelayCommand(AddClientMethod, CanAddClient); Relay command keeps calling the CanExecute method. Need to revisit on the usage of this. 
+
+            ClearMethod(null);
         }
 
-        private bool canaddclient(object obj)
+        private bool CanAddClient()
         {
-            if (ErrorCollection.Any(x => x.Value != ""))
+            if (String.IsNullOrWhiteSpace(ClientName))
             {
+                MessageBox.Show("Client Name cannot be empty");
+                return false;
+            }
+            if(String.IsNullOrWhiteSpace(DisplayName))
+            {
+                MessageBox.Show("Display Name cannot be empty");
                 return false;
             }
             else
@@ -247,135 +205,29 @@ namespace NostrumWPFUI.ViewModel
             }
         }
 
-        private void addclient(object obj)
+        public void OnSubmitMethod(object param)
         {
-
-        }
-
-        private bool CanAddClient(object arg)
-        {
-            if (ErrorCollection.Any(x => x.Value != ""))
+            if(CanAddClient())
             {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
-
-        private void OnLoadedMthd(object obj)
-        {
-
-        }
-
-        private Entity.Client CreateClient()
-        {
-            Entity.Client cl = new Client();
-            cl.Name = ClientName;
-            cl.Display_Name = DisplayName;
-
-            string[] addrArr = Address.Split(new char[] { '\r', '\n' }, 3, StringSplitOptions.RemoveEmptyEntries);
-            cl.Addr1 = addrArr[0];
-            if (addrArr.Length > 1)
-            {
-                cl.Addr2 = addrArr[1];
-            }
-
-            if (addrArr.Length > 2)
-            {
-                cl.Addr3 = addrArr[2];
-            }
-
-            cl.DL_No = DLNo;
-            cl.TIN_No = TinNo;
-            cl.Phone = MobileNo;
-            return cl;
-        }
-        public void AddClientMethod(object param)
-        {
-            if (ClientNameBtn.Equals("Add Client"))
-            {
-                Client cl = CreateClient();
-                ClientDAO clientDao = new ClientDAO(new MySQLDBInterface());
-                try
+                ClientDAO clientDAO = new ClientDAO(_dbInterface);
+                if (IsNewClient)
                 {
-                    if (clientDao.AddClient(cl))
-                    {
-                        MessageBox.Show("Client successfully Added!");
-                       // ClearMethod(null);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Unable to add client!");
-                    }
+                    AddClient(clientDAO);
                 }
-                catch (Exception e)
+                else
                 {
-                    MessageBox.Show(e.Message);
+                    UpdateClient(clientDAO);
                 }
             }
-            else
-            {
-                UpdateClientMethod(CurrentClient);
-            }
         }
-        public void ClearMethod(object param)
+        public void UpdateClient(ClientDAO clientDAO)
         {
-            DisplayName = String.Empty;
-            ClientName = String.Empty;
-            Address = String.Empty;
-            DLNo = String.Empty;
-            TinNo = String.Empty;
-            MobileNo = string.Empty;
-            ClientNameBtn = "Add Client";
-        }
-        public void EditClientMethod(object param)
-        {
-            Client c1 = new Client();
-            EditClientPopupView editClient = new EditClientPopupView();
-            EditClientPopupViewModel editPopupclientVM = new EditClientPopupViewModel();
-            editClient.DataContext = editPopupclientVM;
-            editClient.Owner = MainWindow;
-            //editClient.Topmost = true;
-            editClient.ShowDialog();
-            var selectedClient = editPopupclientVM.SelectedClient;
-            ClientNameBtn = !string.IsNullOrWhiteSpace(selectedClient) ? ClientNameBtn = "Update Client" : ClientNameBtn = "Add Client";
-            CurrentClient = GetClientDetails(selectedClient);
-            LoadClient(CurrentClient);
-        }
-        public Client GetClientDetails(string clientname)
-        {
-            Entity.Client p = new Entity.Client();
-            ClientDAO dao = new ClientDAO(new MySQLDBInterface());
-            //p.Order_ID = "INV-001";
-            //p.FY = "FY20";
-            //p.Payment_ID = "2";
-            //p.Amount = 1000;
-            //p.Pay_Date = new DateTime(2020, 01, 01);
-            //dao.addPayment(p);
-            return dao.GetClient(clientname);
-        }
-
-        private void LoadClient(Client client)
-        {
-            ClientName = client.Name;
-            DisplayName = client.Display_Name;
-            Address = client.Addr;
-            DLNo = client.DL_No;
-            TinNo = client.TIN_No;
-            MobileNo = client.Phone;
-        }
-        public void UpdateClientMethod(object param)
-        {
-            Client cl = CreateClient();
-            ClientDAO clientDao = new ClientDAO(new MySQLDBInterface());
             try
             {
-                if (clientDao.UpdateClient(cl))
+                if (clientDAO.UpdateClient(CurrentClient))
                 {
                     MessageBox.Show("Client successfully Updated!");
-                    //ClearMethod(null);
+                    ClearMethod(null);
                 }
                 else
                 {
@@ -386,6 +238,59 @@ namespace NostrumWPFUI.ViewModel
             {
                 MessageBox.Show(e.Message);
             }
+        }
+
+        private void AddClient(ClientDAO clientDAO)
+        {
+            try
+            {
+                if (clientDAO.AddClient(CurrentClient))
+                {
+                    MessageBox.Show("Client successfully Added!");
+                    ClearMethod(null);
+                }
+                else
+                {
+                    MessageBox.Show("Unable to add client!");
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+        }
+        public void ClearMethod(object param)
+        {
+            IsNewClient = true;
+            DisplayName = string.Empty;
+            ClientName = string.Empty;
+            Address = string.Empty;
+            DLNo = string.Empty;
+            TinNo = string.Empty;
+            MobileNo = string.Empty;
+        }
+        public void EditClientMethod(object param)
+        {
+            EditClientPopupView editClient = new EditClientPopupView();
+            editClient.Owner = MainWindow;
+
+            if(editClient.ShowDialog() == true)
+            {
+                var selectedClient = editClient.GetSelectedClient();
+                IsNewClient = false;
+                FillClientDetails(selectedClient);
+            }            
+        }
+        public void FillClientDetails(string clientname)
+        {
+            ClientDAO dao = new ClientDAO(_dbInterface);
+            Client client = dao.GetClient(clientname);
+            ClientName = client.Name;
+            DisplayName = client.Display_Name;
+            Address = client.Address;
+            DLNo = client.DL_No;
+            TinNo = client.TIN_No;
+            MobileNo = client.Phone;
         }
     }
 }

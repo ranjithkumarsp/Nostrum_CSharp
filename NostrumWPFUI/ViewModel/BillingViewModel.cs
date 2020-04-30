@@ -160,7 +160,7 @@ namespace NostrumWPFUI.ViewModel
             PaymentTerms = 30;
             SetFinancialYear(DateTime.Now);
             InvoiceNumber = 0;
-            ClientName = ClientsList.ElementAt < string >(0);
+            ClientName = "";
             IsBillingChecked = true;
         }
         private void GetClientsFromDB()

@@ -242,7 +242,7 @@ namespace NostrumWPFUI.ViewModel
             ClientDAO clientDAO = new ClientDAO(_dbInterface);
             Client client = clientDAO.GetClient(_order.Client_Name);
             ClientName = client.Name;
-            Address = client.Addr;
+            Address = client.Address;
             Phone = client.Phone;
             BuyersTINNo = client.TIN_No;
             BuyersDLNo = client.DL_No;

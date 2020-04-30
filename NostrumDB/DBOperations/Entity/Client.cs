@@ -11,9 +11,7 @@ namespace Entity
         private string _name;
         private string _phone;
         private string _displayName;
-        private string _addr1;
-        private string _addr2;
-        private string _addr3;
+        private string _address;
         private string _tinNo;
         private string _dlNo;
 
@@ -27,9 +25,7 @@ namespace Entity
             {
                 _name = value;
             }
-        }
-
-        
+        }        
 
         public string Phone
         {
@@ -53,44 +49,16 @@ namespace Entity
                 _displayName = value;
             }
         }
-        public string Addr
+
+        public string Address
         {
             get
             {
-                return _addr1+"\r\n"+_addr2+"\r\n"+_addr3;
-            }
-        }
-        public string Addr1
-        {
-            get
-            {
-                return _addr1;
+                return _address;
             }
             set
             {
-                _addr1 = value;
-            }
-        }
-        public string Addr2
-        {
-            get
-            {
-                return _addr2;
-            }
-            set
-            {
-                _addr2 = value;
-            }
-        }
-        public string Addr3
-        {
-            get
-            {
-                return _addr3;
-            }
-            set
-            {
-                _addr3 = value;
+                _address = value;
             }
         }
         public string TIN_No

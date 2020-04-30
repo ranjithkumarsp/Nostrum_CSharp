@@ -1,4 +1,5 @@
 ﻿using NostrumWPFUI.Helpers;
+using NostrumWPFUI.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,18 @@ namespace NostrumWPFUI.View
     {
         public EditClientPopupView()
         {
+            this.DataContext = new EditClientPopupViewModel();
             InitializeComponent();
+        }
+
+        public void OkButtonClicked(object o, EventArgs e)
+        {
+            if(LoadClientCombo.SelectedItem != null)
+                this.DialogResult = true;
+        }
+        public string GetSelectedClient()
+        {
+            return LoadClientCombo.SelectedValue.ToString();
         }
         public void ClosePopupWindow()
         {
