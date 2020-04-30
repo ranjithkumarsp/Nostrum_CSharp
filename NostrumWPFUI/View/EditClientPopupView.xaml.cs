@@ -19,7 +19,7 @@ namespace NostrumWPFUI.View
     /// <summary>
     /// Interaction logic for EditClientPopupView.xaml
     /// </summary>
-    public partial class EditClientPopupView : Window,IClosable
+    public partial class EditClientPopupView : Window
     {
         public EditClientPopupView()
         {
@@ -32,18 +32,14 @@ namespace NostrumWPFUI.View
             if(LoadClientCombo.SelectedItem != null)
                 this.DialogResult = true;
         }
+
+        public void OnClientSelected(object o, EventArgs e)
+        {
+            OkButton.IsEnabled = true;
+        }
         public string GetSelectedClient()
         {
             return LoadClientCombo.SelectedValue.ToString();
-        }
-        public void ClosePopupWindow()
-        {
-            this.Close();
-        }
-
-        public void HidePopupWindow()
-        {
-            this.Hide();
         }
     }
 }
