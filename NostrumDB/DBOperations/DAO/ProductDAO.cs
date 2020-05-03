@@ -74,6 +74,41 @@ namespace NostrumDB
             return product;
         }
 
+        public List<Product> GetProducts(string name, DateTime from, DateTime to)
+        {
+            string query = "Select * from products where name = '" + name + "' and Purchase_date between '" + from.ToString("yyyy-MM-dd") + "' and '" + to.ToString("yyyy-MM-dd") + "';";
+            List<Product> products = new List<Product>();
+            DataTable dataTable = _dbInterface.ExecuteQuery(query);
+            foreach (DataRow dr in dataTable.Rows)
+            {
+                Product product = new Product();
+                product.Name = dr["Name"].ToString();
+                product.Batch = dr["Batch"].ToString();
+                product.Drug_Type = (Product.DrugType)Enum.Parse(typeof(Product.DrugType), dr["Drug_Type"].ToString(), true);
+                product.Mfg_Date = (DateTime)dr["Mfg_Date"];
+                product.Exp_Date = (DateTime)dr["Exp_Date"];
+                product.Quantity = (int)dr["Quantity"];
+                product.CGST = (double)dr["CGST"];
+                product.SGST = (double)dr["SGST"];
+                product.MRP = (double)dr["MRP"];
+                product.Manufacturer = dr["Manufacturer"].ToString();
+                product.Purchase_Date = (DateTime)dr["Purchase_Date"];
+                product.Purchase_Invoice = dr["Purchase_Invoice"].ToString();
+                products.Add(product);
+            }
+            return products;
+        }
+
+        public bool IsProductExpired(string name, string batch)
+        {
+            int count = 0;
+            string query = "Select count(name) from products where name = '" + name + "' and batch = '" + batch + "' and Last_day(Exp_Date) < curdate();";
+            object obj = _dbInterface.ExecuteScalar(query);
+            if (obj != null && obj != DBNull.Value)
+                count = Convert.ToInt32(obj);
+            return (count > 0);
+        }
+
         public List<string> GetProductNames()
         {
             List<string> productNames = new List<string>();

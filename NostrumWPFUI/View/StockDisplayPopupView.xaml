@@ -83,7 +83,8 @@
                           ColumnWidth="*" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                           EnableRowVirtualization="false" EnableColumnVirtualization="false" 
                           FlowDirection="LeftToRight" FontSize="15" 
-                          CanUserAddRows="False" CanUserReorderColumns="False">
+                          CanUserAddRows="False" CanUserReorderColumns="False"
+                          IsEnabled="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
                             <DataGridTextColumn Header="InvoiceNo" Binding="{Binding InvoiceNo}"/>

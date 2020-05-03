@@ -72,9 +72,9 @@ namespace NostrumWPFUI.UIEntity
             set { _saleQty = value; }
         }
 
-        private string _stock;
+        private int _stock;
 
-        public string Stock
+        public int Stock
         {
             get { return _stock; }
             set { _stock = value; }

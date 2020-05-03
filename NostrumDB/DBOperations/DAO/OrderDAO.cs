@@ -93,14 +93,62 @@ namespace NostrumDB
             return ++invNo;
         }
 
+        public List<Product> GetSaleData(string name, DateTime from, DateTime to)
+        {
+            List<Product> productList = new List<Product>();
+            string query = "SELECT Orders.Order_Date as date, Orders.Order_Type as type, Orders.Order_Id as id, Orders.fy as fy, Orders.Client_Name as client, order_line_items.batch as batch, order_line_items.quantity as qty, order_line_items.offer1 as off1, order_line_items.offer2 as off2, order_line_items.pack1 as pack1, order_line_items.pack2 as pack2 FROM Orders inner join order_line_items where Orders.Order_Id=order_line_items.order_id and Orders.fy=order_line_items.fy and order_line_items.product_name='" + name + "'and Orders.Order_date between '" + from.ToString("yyyy-MM-dd") + "' and '" + to.ToString("yyyy-MM-dd") + "' order by Orders.Order_Date;";
+
+            DataTable dataTable = _dbInterface.ExecuteQuery(query);
+            List<string> orderIds = new List<string>();
+            foreach (DataRow dr in dataTable.Rows)
+            {
+                Product prod = new Product();
+                prod.Name = name;
+                prod.Batch = dr["batch"].ToString();
+                prod.Manufacturer = dr["client"].ToString();
+                prod.Purchase_Date = (DateTime)dr["date"];
+                int off1 = (int)dr["off1"];
+                int off2 = (int)dr["off2"];
+                int pack1 = (int)dr["pack1"];
+                int pack2 = (int)dr["pack2"];
+                int qty = (int)dr["qty"];
+
+                int saleQty = qty;
+
+                if (off1 != 0 && off2 != 0)
+                    saleQty = (qty / off1) * (off1 + off2);
+
+                if (pack2 != 0 && pack1 != 0)
+                {
+                    saleQty = saleQty * pack1 * pack2;
+                }
+                
+                prod.Quantity = saleQty;
+                string invNo = "";
+                if (dr["type"].ToString().Equals("Donate"))
+                {
+                    invNo = "Donated";
+                }
+                else
+                {
+                    invNo = "INV-";
+                    invNo += dr["fy"].ToString();
+                    invNo += "-" + dr["id"].ToString();
+                }                
+                prod.Purchase_Invoice = invNo;
+                productList.Add(prod);
+            }
+            return productList;
+        }
+
         public List<string> GetOrderIds()
         {
             string query = "Select Order_Id, FY, Order_Type from orders;";
             return GetOrderIdsInternal(query);
         }
-        public List<string> GetOrderIds(string clientName, string fromDate, string toDate)
+        public List<string> GetOrderIds(string clientName, DateTime fromDate, DateTime toDate)
         {
-            string query = "Select Order_Id, FY, Order_Type from orders where Client_Name='" + clientName + "' and Order_Date between '" + fromDate + "' and '" + toDate + "';";
+            string query = "Select Order_Id, FY, Order_Type from orders where Client_Name='" + clientName + "' and Order_Date between '" + fromDate.ToString("yyyy-MM-dd") + "' and '" + toDate.ToString("yyyy-MM-dd") + "';";
             return GetOrderIdsInternal(query);
         }
 

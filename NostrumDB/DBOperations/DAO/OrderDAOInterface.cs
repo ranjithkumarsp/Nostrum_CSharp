@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace NostrumDB
         bool DeleteOrder(int orderId, string fy);
         Order GetOrder(int orderId, string fy);
         List<string> GetOrderIds();
-        List<string> GetOrderIds(string clientName, string FromDate, string ToDate);
+        List<string> GetOrderIds(string clientName, DateTime FromDate, DateTime ToDate);
         int GetNextInvNo(string FY);
         int GetNextInvNo();
         bool UpdateOrder(Order order);

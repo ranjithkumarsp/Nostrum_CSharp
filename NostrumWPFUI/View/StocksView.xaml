@@ -23,46 +23,35 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition x:Name="PStocksLeftMargin" Width="140"/>
                 <ColumnDefinition Width="40"/>
-                <ColumnDefinition Width="110"/>
-                <ColumnDefinition Width="40"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition x:Name="StocksRightMargin" Width="80"/>
+                <ColumnDefinition Width="135.2"/>
+                <ColumnDefinition Width="29.6"/>
+                <ColumnDefinition Width="Auto" MinWidth="192.8"/>
+                <ColumnDefinition x:Name="StocksRightMargin" Width="62.4"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Row="1" Grid.Column="2"  HorizontalAlignment="Right" VerticalAlignment="Center"  TextWrapping="Wrap" Text="Product" Height="23" Width="Auto" FontSize="16" FontFamily="Century Gothic" FontWeight="Bold" />
-            <TextBlock Grid.Row="2" Grid.Column="2"  HorizontalAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap" Text="From"  Height="23" Width="Auto" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" />
-            <TextBlock Grid.Row="3" Grid.Column="2"  HorizontalAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap" Text="To"  Height="23" Width="Auto" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" ClipToBounds="True" SnapsToDevicePixels="True"  />
-            <ComboBox Grid.Row="1" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="169"  Height="30" />
-            <xctk:DateTimePicker Format="ShortDate" Grid.Row="2" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30" />
-            <!--<DatePicker  Grid.Row="3" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30" />-->
-            <DatePicker Grid.Row="3" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30">
-                <DatePicker.CommandBindings>
-                    <CommandBinding Command="local:MyCommands.SelectToday" CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed"/>
-                </DatePicker.CommandBindings>
-                <DatePicker.CalendarStyle>
-                    <Style TargetType="{x:Type Calendar}">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type Calendar}">
-                                    <StackPanel HorizontalAlignment="Center" Name="PART_Root">
-                                        <Label Name="datelabel" Content="{Binding Source={x:Static sys:DateTime.Today}}" Visibility="Hidden"/>
-                                        <CalendarItem Background="{TemplateBinding Control.Background}" BorderBrush="{TemplateBinding Control.BorderBrush}" BorderThickness="{TemplateBinding Control.BorderThickness}" Name="PART_CalendarItem" Style="{TemplateBinding Calendar.CalendarItemStyle}" />
-                                        <Button Content="{Binding ElementName=datelabel,Path=Content, StringFormat='Today{0}'}" Command="local:MyCommands.SelectToday" CommandParameter="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
-                                    </StackPanel>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
+            <TextBlock Grid.Row="1" Grid.Column="2"  HorizontalAlignment="Right" VerticalAlignment="Center"  TextWrapping="Wrap" Text="Product" Height="24" Width="72" FontSize="16" FontFamily="Century Gothic" FontWeight="Bold" Margin="0,16,0.6,16" />
+            <TextBlock Grid.Row="2" Grid.Column="2"  HorizontalAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap" Text="From"  Height="24" Width="72" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" Margin="0,16,0.6,16" />
+            <TextBlock Grid.Row="3" Grid.Column="2"  HorizontalAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap" Text="To"  Height="24" Width="72" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" ClipToBounds="True" SnapsToDevicePixels="True" Margin="0,16,0.6,16"  />
+            <ComboBox Grid.Row="1" Grid.Column="4" ItemsSource="{Binding Products}"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="169" IsEditable="True" IsSynchronizedWithCurrentItem="True" IsTabStop="True" StaysOpenOnEdit="True" AllowDrop="True"
+                  SelectedItem="{Binding SelectedProduct, UpdateSourceTrigger=LostFocus}" Height="40" Margin="5,6,0,0">
+                <ComboBox.Style>
+                    <Style TargetType="ComboBox">
+                        <Style.Triggers>
+                            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                <Setter Property="IsDropDownOpen" Value="true" />
+                            </Trigger>
+                        </Style.Triggers>
                     </Style>
-                </DatePicker.CalendarStyle>
-            </DatePicker>
-            <Grid Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="5">
+                </ComboBox.Style>
+            </ComboBox>
+            <DatePicker Text="{Binding FromDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectedDateFormat="Short" Grid.Row="2" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30" Margin="4,13,0,13" />
+            <DatePicker Text="{Binding Todate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectedDateFormat="Short" Grid.Row="3" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30" Margin="4,13,0,13" />
+            <Grid Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="4" Margin="0.4,0.2,-4.2,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="140"/>
                     <ColumnDefinition Width="35"/>
                     <ColumnDefinition Width="140"/>
                 </Grid.ColumnDefinitions>
-                <Button Content="Show" Grid.Column="0" Command="{Binding ShowCommand}" CommandParameter="Stock Show" />
-                <Button Content="Clear" Grid.Column="2" Command="{Binding ClearCommand}" CommandParameter="Stock Clear"/>
-
+                <Button IsDefault="True" Content="Show" Grid.Column="1" Command="{Binding ShowCommand}" Grid.ColumnSpan="2" Margin="0.2,0,35.6,0" />
             </Grid>
         </Grid>
     </Grid>

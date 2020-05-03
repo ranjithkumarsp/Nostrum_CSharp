@@ -1,4 +1,6 @@
-﻿using NostrumWPFUI.UIEntity;
+﻿using Entity;
+using NostrumDB;
+using NostrumWPFUI.UIEntity;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,12 +12,95 @@ namespace NostrumWPFUI.ViewModel
 {
     public class StockDisplayPopupViewModel :BaseViewModel
     {
-        public StockDisplayPopupViewModel()
+        private int _stock;
+        public int RemainingStock { get => _stock; set => _stock = value; }
+
+        public StockDisplayPopupViewModel(string prod, DateTime from, DateTime to)
         {
-            LoadDummydata();
+            _dbInterface = new MySQLDBInterface();
+            StockDisplayCollection = new ObservableCollection<StockDisplay>();
+            LoadStock(prod, from , to);
+        }
+
+        private void LoadStock(string product, DateTime from, DateTime to)
+        {
+            List<Product> purchasedStock = GetPurchaseList(product, from, to);
+            foreach(var prod in purchasedStock)
+            {
+                FillPurchaseData(prod);
+                FillSaleData(prod, from, to);
+                FillExpiredData(prod);
+            }
+        }
+
+        private List<Product> GetPurchaseList(string prod, DateTime from, DateTime to)
+        {
+            ProductDAO productDAO = new ProductDAO(_dbInterface);
+            return productDAO.GetProducts(prod, from, to);
+        }
+
+        private void FillPurchaseData(Product prod)
+        {
+            StockDisplay disp = new StockDisplay();
+            disp.Date = prod.Purchase_Date.ToString("dd-MMM-yyyy");
+            disp.InvoiceNo = prod.Purchase_Invoice;
+            disp.Manufacturer = prod.Manufacturer;
+            disp.BatchNo = prod.Batch;
+            disp.ManufactureDate = prod.Mfg_Date.ToString("MMM-yyyy");
+            disp.ExpiryDate = prod.Exp_Date.ToString("MMM-yyyy");
+            disp.PurchaseQty = prod.Quantity.ToString();
+            disp.SaleQty = "-";
+            disp.Stock = prod.Quantity;
+            RemainingStock = prod.Quantity;
+            StockDisplayCollection.Add(disp);
+        }
+
+        private void FillExpiredData(Product prod)
+        {
+            ProductDAO productDAO = new ProductDAO(_dbInterface);
+            bool expired = productDAO.IsProductExpired(prod.Name, prod.Batch);
+
+            if(expired)
+            {
+                StockDisplay disp = new StockDisplay();
+                disp.Date = prod.Purchase_Date.ToString("dd-MMM-yyyy");
+                disp.InvoiceNo = "Expired";
+                disp.Manufacturer = prod.Manufacturer;
+                disp.BatchNo = prod.Batch;
+                disp.ManufactureDate = prod.Mfg_Date.ToString("MMM-yyyy");
+                disp.ExpiryDate = prod.Exp_Date.ToString("MMM-yyyy");
+                disp.PurchaseQty = "-";
+                disp.SaleQty = RemainingStock.ToString();
+                disp.Stock = 0;
+                StockDisplayCollection.Add(disp);
+            }
+            
+        }
+
+        private void FillSaleData(Product prod, DateTime from, DateTime to)
+        {
+            OrderDAO orderDAO = new OrderDAO(_dbInterface);
+            List<Product> products = orderDAO.GetSaleData(prod.Name, from, to);
+
+            foreach(var product in products)
+            {
+                StockDisplay disp = new StockDisplay();
+                disp.Date = product.Purchase_Date.ToString("dd-MMM-yyyy");
+                disp.InvoiceNo = product.Purchase_Invoice;
+                disp.Manufacturer = product.Manufacturer;
+                disp.BatchNo = product.Batch;
+                disp.ManufactureDate = prod.Mfg_Date.ToString("MMM-yyyy");
+                disp.ExpiryDate = prod.Exp_Date.ToString("MMM-yyyy");
+                disp.PurchaseQty = "-";
+                disp.SaleQty = product.Quantity.ToString();
+                disp.Stock = RemainingStock - product.Quantity;
+                RemainingStock = disp.Stock;
+                StockDisplayCollection.Add(disp);
+            }
         }
 
         private ObservableCollection<StockDisplay> _stockDisplayCollection;
+        private IDBInterface _dbInterface;
 
         public ObservableCollection<StockDisplay> StockDisplayCollection
         {
@@ -23,13 +108,6 @@ namespace NostrumWPFUI.ViewModel
             set { _stockDisplayCollection = value; this.RaisePropertyChange(); }
         }
 
-        public void LoadDummydata()
-        {
-            StockDisplayCollection = new ObservableCollection<StockDisplay>();
-            StockDisplayCollection.Add(new StockDisplay {  InvoiceNo = "001", BatchNo="111", ExpiryDate= "13/02/2022", ManufactureDate= "13/02/2022", Manufacturer="nostrum", PurchaseQty="11", Remarks="dummy",
-
-                Date = "13/02/2020",  SaleQty="55", Stock="5000"});
-            
-        }
+        
     }
 }

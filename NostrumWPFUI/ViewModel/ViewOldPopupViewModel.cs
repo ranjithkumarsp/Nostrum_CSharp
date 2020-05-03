@@ -109,7 +109,7 @@ namespace NostrumWPFUI.ViewModel
             if(!String.IsNullOrWhiteSpace(SelectedClient))
             {
                 OrderDAO orderDAO = new OrderDAO(_dbInterface);
-                InvoiceList = orderDAO.GetOrderIds(SelectedClient, FromDate.ToString("yyyy-MM-dd"), ToDate.ToString("yyyy-MM-dd"));
+                InvoiceList = orderDAO.GetOrderIds(SelectedClient, FromDate, ToDate);
             }
         }
 
