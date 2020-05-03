@@ -60,7 +60,7 @@ namespace NostrumDB
                 lineItem.Pack1 = (int)dr["Pack1"];
                 lineItem.Pack2 = (int)dr["Pack2"];
                 lineItem.Quantity = (int)dr["Quantity"];
-                lineItem.Rate = (int)dr["Rate"];
+                lineItem.Rate = (double)dr["Rate"];
                 lineItem.FillRemainingFields();
                 lineItems.Add(lineItem);
             }

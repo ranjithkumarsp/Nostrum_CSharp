@@ -9,7 +9,7 @@
              xmlns:local="clr-namespace:NostrumWPFUI.View"
              xmlns:behaviours="clr-namespace:NostrumWPFUI.Behaviours"
              mc:Ignorable="d" x:Name="BillingViewMainView"
-             d:DesignHeight="450" d:DesignWidth="800">    
+             d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid Background="WhiteSmoke">
             <Grid.RowDefinitions>
@@ -57,7 +57,7 @@
             <TextBlock Text="Payment Terms" Grid.Row="8" Grid.Column="2"  HorizontalAlignment="Right"  TextWrapping="Wrap"  VerticalAlignment="Center" Height="23" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" ClipToBounds="True" SnapsToDevicePixels="True" 
                        Visibility="{Binding IsBillingChecked,Converter={StaticResource BooleanToVisibilityConverter}}"
                        />
-            <TextBox Grid.Row="8" Grid.Column="4" TextAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="45" Width="61" Height="36" 
+            <TextBox Grid.Row="8" Grid.Column="4" TextAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="45" Width="61" Height="36" 
                      Text="{Binding PaymentTerms,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                       Visibility="{Binding IsBillingChecked,Converter={StaticResource BooleanToVisibilityConverter}}"
                      behaviours:SelectAllFocusBehavior.Enable="True" 
@@ -80,11 +80,10 @@
                     </Style>
                 </ComboBox.Style>
             </ComboBox>
-            <xctk:DateTimePicker Format="ShortDate" ShowButtonSpinner="False" ShowDropDownButton="True"  TimePickerShowButtonSpinner="False" Grid.Row="5" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30"
-                                 Text="{Binding OrderDate,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}"
-                                 />
+            <DatePicker SelectedDateFormat="Short" Grid.Row="5" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" 
+                                 Text="{Binding OrderDate,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}"/>
             <TextBox x:Name="FinancialYear" Text="{Binding FinancialYear,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}" Grid.Row="6" Grid.Column="4" TextAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="169" Width="Auto" Height="36"  
-                     TextBlock.TextAlignment="Right"
+                     TextBlock.TextAlignment="Left"
                      />
             <TextBox x:Name="InvoiceNumber" Text="{Binding InvoiceNumber,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}" Grid.Row="7" Grid.Column="4" TextAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="169" Width="Auto" Height="36"/>
             <Grid Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="5">
@@ -94,8 +93,8 @@
                     <ColumnDefinition Width="140"/>
                 </Grid.ColumnDefinitions>
                 <Button Content="Add Items" Grid.Column="0" Command="{Binding BillingCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}" IsDefault="True"/>
-                <Button Content="Clear" Grid.Column="2" Command="{Binding ClearCommand}"/>                
-            </Grid>         
+                <Button Content="Clear" Grid.Column="2" Command="{Binding ClearCommand}"/>
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>

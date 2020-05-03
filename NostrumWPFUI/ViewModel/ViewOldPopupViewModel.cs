@@ -18,11 +18,9 @@ namespace NostrumWPFUI.ViewModel
         #region Constructor
 
         public ViewOldPopupViewModel()
-        {            
-            WindowCloseCommand = new CustomDelegateCommand(WindowClosingMethod);
+        { 
             EnterInvoiceCommand = new CustomDelegateCommand(FetchInvoiceNos);
-            CancelRelayCommand = new RelayCommand<IClosable>(this.CancelMethod);
-            OpenRelayCommand = new RelayCommand<IClosable>(this.OpenBillForm);
+            OpenCommand = new CustomDelegateCommand(OpenBillForm);
             _dbInterface = new MySQLDBInterface();
 
             Initialize();
@@ -39,11 +37,8 @@ namespace NostrumWPFUI.ViewModel
 
         #region Properties
 
-        public ICommand WindowCloseCommand { get; set; }
         public ICommand EnterInvoiceCommand { get; set; }
-        public DelegateCommand<IClosable> CloseWindowCommand { get; set; }
-        public RelayCommand<IClosable> OpenRelayCommand { get; private set; }
-        public RelayCommand<IClosable> CancelRelayCommand { get; private set; }
+        public ICommand OpenCommand { get; private set; }
 
 
         private List<string> _clientsList;
@@ -118,7 +113,7 @@ namespace NostrumWPFUI.ViewModel
             }
         }
 
-        private void OpenBillForm(IClosable _viewOldPopupView)
+        private void OpenBillForm(object obj)
         {
             if(String.IsNullOrWhiteSpace(SelectedInvoice))
             {
@@ -131,6 +126,7 @@ namespace NostrumWPFUI.ViewModel
 
             OrderDAO orderDAO = new OrderDAO(_dbInterface);
             Order order = orderDAO.GetOrder(orderId, fy);
+            order.IsNewOrder = false;
 
             LineItemDAO lineItemDAO = new LineItemDAO(_dbInterface);
             List<LineItem> lineItems = lineItemDAO.GetLineItems(orderId, fy);
@@ -155,20 +151,6 @@ namespace NostrumWPFUI.ViewModel
             orderId = Convert.ToInt32(SelectedInvoice.Substring(index + 1));
             return orderId;
         }
-
-        private void CancelMethod(IClosable _viewOldPopupView)
-        {
-            
-            if (_viewOldPopupView != null)
-            {
-                _viewOldPopupView.HidePopupWindow();
-            }
-        }
-
-        private void WindowClosingMethod(object obj)
-        {
-            
-        }    
 
         public void GetClientsFromDB()
         {

@@ -90,12 +90,10 @@ namespace NostrumWPFUI.ViewModel
             set { _billValue = value; this.RaisePropertyChange(); }
         }
 
-        private double _discount;
-
         public double Discount
         {
-            get { return _discount; }
-            set { _discount = value; this.RaisePropertyChange(); }
+            get { return CurrentOrder.Discount; }
+            set { CurrentOrder.Discount = value; this.RaisePropertyChange(); }
         }
 
         private double _netValue;
@@ -131,12 +129,10 @@ namespace NostrumWPFUI.ViewModel
             set { _total = value; this.RaisePropertyChange(); }
         }
 
-        private long _invoiceAmount;
-
         public long InvoiceAmount
         {
-            get { return _invoiceAmount; }
-            set { _invoiceAmount = value; this.RaisePropertyChange(); }
+            get { return CurrentOrder.Amount; }
+            set { CurrentOrder.Amount = value; this.RaisePropertyChange(); }
         }
 
         private string _invoiceAmountinWords;
@@ -157,6 +153,14 @@ namespace NostrumWPFUI.ViewModel
         #endregion
 
         private Order _order;
+        public Order CurrentOrder
+        {
+            get { return _order; }
+            set
+            {
+                _order = value;
+            }
+        }
         private List<LineItem> _orderLineItems;
         private IDBInterface _dbInterface;
 
@@ -166,7 +170,7 @@ namespace NostrumWPFUI.ViewModel
 
         public BillFormViewModel(Order order, List<LineItem> LineItems)
         {
-            _order = order;
+            CurrentOrder = order;
             _orderLineItems = LineItems;
             _dbInterface = new MySQLDBInterface();
             DiscountModified = new CustomDelegateCommand(DiscountModifiedMethod);
@@ -176,9 +180,14 @@ namespace NostrumWPFUI.ViewModel
         }
         private void CloseBillForm(IClosable _billFormWindow)
         {
-            MessageBoxResult result = MessageBox.Show("Are you really want to exit?", "Exit",
-                MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+            MessageBoxResult result = MessageBox.Show("Save changes?", "Exit",
+                MessageBoxButton.YesNoCancel, MessageBoxImage.Question, MessageBoxResult.Yes);
             if(result == MessageBoxResult.Yes)
+            {
+                SaveForm(null);
+                _billFormWindow.ClosePopupWindow();
+            }
+            else if(result == MessageBoxResult.No)
             {
                 _billFormWindow.ClosePopupWindow();
             }
@@ -192,16 +201,16 @@ namespace NostrumWPFUI.ViewModel
         private void CalculateInvoice()
         {
             NetValue = BillValue - Discount;
-            Total = NetValue + CGST + SGST;
+            Total = Math.Round(NetValue + CGST + SGST, 2);
             InvoiceAmount = (long)Math.Round(Total);
             InvoiceAmountinWords = Nostrum.Utils.numInWords(InvoiceAmount, 0) + " Rupees only";
         }
 
         private void Initialize()
         {
-            BillDate = _order.Order_Date.ToShortDateString();
+            BillDate = CurrentOrder.Order_Date.ToShortDateString();
             GenerateInvoiceNo();
-            PaymentTerms = _order.Payment_Terms + " Days";
+            PaymentTerms = CurrentOrder.Payment_Terms + " Days";
             FillClientDetails();
             LineItemSourceCollection = new ObservableCollection<LineItem>(_orderLineItems);
             FillBillValues();
@@ -230,17 +239,17 @@ namespace NostrumWPFUI.ViewModel
         private void GenerateInvoiceNo()
         {
             // Invoice number is of the format INV-FY20-1
-            if (_order.Order_Type == Order.OrderType.SaleOrder)
+            if (CurrentOrder.Order_Type == Order.OrderType.SaleOrder)
                 InvoiceNo = "INV-";
-            else if (_order.Order_Type == Order.OrderType.DonateOrder)
+            else if (CurrentOrder.Order_Type == Order.OrderType.DonateOrder)
                 InvoiceNo = "DNT-";
-            InvoiceNo += _order.FY + "-"+_order.Order_Id;
+            InvoiceNo += CurrentOrder.FY + "-"+ CurrentOrder.Order_Id;
         }
 
         private void FillClientDetails()
         {
             ClientDAO clientDAO = new ClientDAO(_dbInterface);
-            Client client = clientDAO.GetClient(_order.Client_Name);
+            Client client = clientDAO.GetClient(CurrentOrder.Client_Name);
             ClientName = client.Name;
             Address = client.Address;
             Phone = client.Phone;
@@ -250,18 +259,54 @@ namespace NostrumWPFUI.ViewModel
 
         private void SaveForm(object obj)
         {
-            _order.Discount = Discount;
-            _order.Amount = InvoiceAmount;
+            if(CurrentOrder.IsNewOrder)
+            {
+                if(SaveToDataBase())
+                {
+                    MessageBox.Show("Successfully saved the bill", "Info");
+                }
+            }
+            else
+            {
+                if(UpdateToDatabase())
+                {
+                    MessageBox.Show("Successfully updated the changes", "Info");
+                }
+            }
+            
+        }
 
+        private bool UpdateToDatabase()
+        {
             OrderDAO orderDAO = new OrderDAO(_dbInterface);
-            orderDAO.AddOrder(_order);
+            orderDAO.UpdateOrder(CurrentOrder);
 
             LineItemDAO lineItemDAO = new LineItemDAO(_dbInterface);
 
             foreach (var item in _orderLineItems)
             {
+                item.Order_Id = CurrentOrder.Order_Id;
+                item.FY = CurrentOrder.FY;
+                lineItemDAO.UpdateLineItem(item);
+            }
+            return true;
+        }
+
+        private bool SaveToDataBase()
+        {
+            OrderDAO orderDAO = new OrderDAO(_dbInterface);
+            orderDAO.AddOrder(CurrentOrder);
+
+            LineItemDAO lineItemDAO = new LineItemDAO(_dbInterface);
+
+            foreach (var item in _orderLineItems)
+            {
+                item.Order_Id = CurrentOrder.Order_Id;
+                item.FY = CurrentOrder.FY;
                 lineItemDAO.AddLineItem(item);
             }
+
+            return true;
         }
     }
 }

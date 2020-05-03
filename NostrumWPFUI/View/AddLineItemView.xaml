@@ -56,7 +56,7 @@
         <Popup x:Name="qtyPopUp" Opened="QuantityPopUpOpened" Placement="Top" PlacementTarget="{Binding ElementName=txtQuantity}" IsOpen="False">
             <TextBlock Text="{Binding AvailableQtyToolTipString, UpdateSourceTrigger=PropertyChanged}" Background="Wheat"/>
         </Popup>
-        <TextBox IsEnabled="{Binding SaleOrder}" Text="{Binding CurrentLineItem.Rate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Left" Height="23" Margin="228,185,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox IsEnabled="{Binding SaleOrder}" Text="{Binding CurrentLineItem.Rate, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" HorizontalAlignment="Left" Height="23" Margin="228,185,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Button Content="Add Next" Command="{Binding AddNextCommand}" HorizontalAlignment="Left" Margin="123,229,0,0" VerticalAlignment="Top" Width="75" Height="27" />
         <Button Content="Generate Bill" Command="{Binding GenBillCommand}" HorizontalAlignment="Left" Margin="228,229,0,0" VerticalAlignment="Top" Width="86" Height="27"/>
     </Grid>

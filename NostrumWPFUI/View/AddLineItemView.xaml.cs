@@ -32,7 +32,7 @@ namespace NostrumWPFUI.View
         private void QuantityPopUpOpened(object sender, EventArgs e)
         {
             DispatcherTimer time = new DispatcherTimer();
-            time.Interval = TimeSpan.FromSeconds(10);
+            time.Interval = TimeSpan.FromSeconds(5);
             time.Start();
             time.Tick += delegate
             {

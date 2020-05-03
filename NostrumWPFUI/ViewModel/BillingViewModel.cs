@@ -33,7 +33,15 @@ namespace NostrumWPFUI.ViewModel
         public bool IsBillingChecked
         {
             get { return _isBillingChecked; }
-            set { _isBillingChecked = value; this.RaisePropertyChange(); }
+            set {
+                _isBillingChecked = value;
+                if(_isBillingChecked)
+                {
+                    CurrentOrder.Order_Type = Order.OrderType.SaleOrder;
+                    _isDonationChecked = false;
+                }
+                this.RaisePropertyChange();
+            }
         }
 
         private bool _isDonationChecked;
@@ -41,65 +49,63 @@ namespace NostrumWPFUI.ViewModel
         public bool IsDonationChecked
         {
             get { return _isDonationChecked; }
-            set { _isDonationChecked = value; this.RaisePropertyChange(); }
+            set {
+                _isDonationChecked = value;
+                if (_isDonationChecked)
+                {
+                    CurrentOrder.Order_Type = Order.OrderType.DonateOrder;
+                    _isBillingChecked = false;
+                }
+                this.RaisePropertyChange();
+            }
         }
-
-        private string _clientName;
 
         public string ClientName
         {
-            get { return _clientName; }
+            get { return CurrentOrder.Client_Name; }
             set
             {
-                _clientName = value;
+                CurrentOrder.Client_Name = value;
                 this.RaisePropertyChange();
             }
         }
-
-        private int _invNo;
 
         public int InvoiceNumber
         {
-            get { return _invNo; }
+            get { return CurrentOrder.Order_Id; }
             set
             {
-                _invNo = value;
+                CurrentOrder.Order_Id = value;
                 this.RaisePropertyChange();
             }
         }
-
-        private string _fy;
 
         public string FinancialYear
         {
-            get { return _fy; }
+            get { return CurrentOrder.FY; }
             set
             {
-                _fy = value;
+                CurrentOrder.FY = value;
                 this.RaisePropertyChange();
             }
         }
-
-        private DateTime _orderDate;
 
         public DateTime OrderDate
         {
-            get { return _orderDate; }
+            get { return CurrentOrder.Order_Date; }
             set
             {
-                _orderDate = value;
+                CurrentOrder.Order_Date = value;
                 this.RaisePropertyChange();
             }
         }
 
-        private int _paymentTerms;
-
         public int PaymentTerms
         {
-            get { return _paymentTerms; }
+            get { return CurrentOrder.Payment_Terms; }
             set
             {
-                _paymentTerms = value;
+                CurrentOrder.Payment_Terms = value;
                 this.RaisePropertyChange();
             }
         }
@@ -107,6 +113,12 @@ namespace NostrumWPFUI.ViewModel
         #endregion
 
         private Order _order;
+
+        public Order CurrentOrder
+        {
+            get { return _order; }
+            set { _order = value;  }
+        }
         public BillingViewModel()
         {
             Initialize();
@@ -115,7 +127,6 @@ namespace NostrumWPFUI.ViewModel
         public ICommand BillingCommand { get; set; }
         public ICommand ClearCommand { get; set; }
         public ICommand ViewOldCommand { get; set; }
-        public RelayCommand<string> RadioButtonCheckedCommand { get; set; }
 
         public BillingView billview;
         public void Initialize()
@@ -124,7 +135,8 @@ namespace NostrumWPFUI.ViewModel
             ClearCommand = new CustomDelegateCommand(ClearMethod);
             ViewOldCommand = new CustomDelegateCommand(OpenViewOldPopUp);
 
-            _order = new Order();
+            CurrentOrder = new Order();
+            
             GetClientsFromDB();
             ClearAll();
             GenerateInvoiceNumber();
@@ -132,15 +144,7 @@ namespace NostrumWPFUI.ViewModel
 
         public void BillingMethod(object param)
         {
-            _order.Client_Name = ClientName;
-            _order.Order_Id = InvoiceNumber;
-            _order.FY = FinancialYear;
-            _order.Order_Type = IsBillingChecked ? Order.OrderType.SaleOrder : Order.OrderType.DonateOrder;
-            _order.Order_Date = OrderDate;
-            //_order.Dispatch_Mode //To-do: Need to understand the use of Dispatch mode.
-            _order.Payment_Terms = PaymentTerms;
-
-            AddLineItemView addLineItemView = new AddLineItemView(_order);
+            AddLineItemView addLineItemView = new AddLineItemView(CurrentOrder);
             addLineItemView.Owner = MainWindow;
             addLineItemView.ShowDialog();
         }
@@ -152,15 +156,16 @@ namespace NostrumWPFUI.ViewModel
         {
             ViewOldPopupView viewOldPopupView = new ViewOldPopupView();
             viewOldPopupView.Owner = MainWindow;
-            viewOldPopupView.Show();
+            viewOldPopupView.ShowDialog();
         }
         public void ClearAll()
         {
-            OrderDate = DateTime.Now;
+            OrderDate = DateTime.Today;
             PaymentTerms = 30;
-            SetFinancialYear(DateTime.Now);
+            SetFinancialYear(DateTime.Today);
             InvoiceNumber = 0;
-            ClientName = "";
+            if (ClientsList.Count > 0)
+                ClientName = ClientsList.First<string>();
             IsBillingChecked = true;
         }
         private void GetClientsFromDB()

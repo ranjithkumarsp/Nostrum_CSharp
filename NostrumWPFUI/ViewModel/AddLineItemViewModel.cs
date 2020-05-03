@@ -83,7 +83,6 @@ namespace NostrumWPFUI.ViewModel
 
         #endregion
 
-        int _sNo;
         Order _order;
         List<LineItem> _orderLineItems;
         IDBInterface _dBInterface;
@@ -95,7 +94,6 @@ namespace NostrumWPFUI.ViewModel
 
         public AddLineItemViewModel(Order order)
         {
-            _sNo = 0;
             _availableQty = 0;
             _order = order;
             _saleOrder = (order.Order_Type == Order.OrderType.SaleOrder);
@@ -121,12 +119,25 @@ namespace NostrumWPFUI.ViewModel
 
         private void GenBillMethod(object obj)
         {
-            if (ValidateFields())
+            if (!String.IsNullOrWhiteSpace(CurrentLineItem.Batch))
             {
-                FillFormData();
+                if(ValidateFields())
+                {
+                    FillFormData();
+                    ClearAll();
+                }
+                else { return; }
+            }
+            if (_orderLineItems.Count > 0)
+            {
+                _order.IsNewOrder = true;
                 BillFormView bfm = new BillFormView(_order, _orderLineItems);
                 bfm.Owner = MainWindow;
                 bfm.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Add at least one product to generate Bill", "Error");
             }
         }
 
@@ -141,14 +152,9 @@ namespace NostrumWPFUI.ViewModel
 
         private bool ValidateFields()
         {
-            if(String.IsNullOrWhiteSpace(SelectedProduct))
+            if(String.IsNullOrWhiteSpace(SelectedProduct) || String.IsNullOrWhiteSpace(CurrentLineItem.Batch))
             {
-                MessageBox.Show("Select a Valid Product", "Error");
-                return false;
-            }
-            if(String.IsNullOrWhiteSpace(CurrentLineItem.Batch))
-            {
-                MessageBox.Show("Select a Valid Product", "Error");
+                MessageBox.Show("Select a Valid Product & Batch", "Error");
                 return false;
             }
 
@@ -178,14 +184,15 @@ namespace NostrumWPFUI.ViewModel
 
         private void ClearAll()
         {
+            CurrentLineItem = new LineItem();
+            CurrentLineItem.ClearAll();
             Batches = null;
             _availableQty = 0;
-            CurrentLineItem.ClearAll();
         }
 
         private void FillFormData()
         {
-            CurrentLineItem.S_No = ++_sNo;
+            CurrentLineItem.S_No = _orderLineItems.Count + 1;
             CurrentLineItem.FillRemainingFields();
             _orderLineItems.Add(CurrentLineItem);
         }

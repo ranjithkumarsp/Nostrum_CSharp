@@ -19,20 +19,12 @@ namespace NostrumWPFUI.View
     /// <summary>
     /// Interaction logic for EditClientPopupView.xaml
     /// </summary>
-    public partial class ViewOldPopupView : Window,IClosable
+    public partial class ViewOldPopupView : Window
     {
         public ViewOldPopupView()
         {
             InitializeComponent();
             this.DataContext = new ViewOldPopupViewModel();
-        }
-        public void ClosePopupWindow()
-        {
-            this.Close();
-        }
-        public void HidePopupWindow()
-        {
-            this.Hide();
         }
     }
 }

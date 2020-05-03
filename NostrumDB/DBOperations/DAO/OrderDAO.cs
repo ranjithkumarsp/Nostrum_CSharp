@@ -51,7 +51,7 @@ namespace NostrumDB
                 order.Order_Date = (DateTime) reader["Order_Date"];
                 order.Dispatch_Mode = reader["Dispatch_Mode"].ToString();
                 order.Client_Name = reader["Client_Name"].ToString();
-                order.Amount = (double)reader["Amount"];
+                order.Amount = (int)reader["Amount"];
                 order.Discount = (double)reader["Discount"];
                 order.Payment_Terms = (int)reader["Payment_Terms"];
             }

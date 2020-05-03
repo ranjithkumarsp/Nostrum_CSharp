@@ -16,7 +16,7 @@ namespace NostrumDB
         private const string _password = "1234";
 
         private static MySqlConnection _dbConn;
-
+        private MySqlTransaction _mySqlTransaction;
         public MySqlConnection ConnectionObj
         {
             get
@@ -58,19 +58,22 @@ namespace NostrumDB
 
         public void InitializeDB()
         {
-            MySqlConnectionStringBuilder builder = new MySqlConnectionStringBuilder();
-            builder.Server = SERVER;
-            builder.UserID = USERNAME;
-            builder.Password = PASSWORD;
-            builder.Database = DATABASE;
+            if(_dbConn == null)
+            {
+                MySqlConnectionStringBuilder builder = new MySqlConnectionStringBuilder();
+                builder.Server = SERVER;
+                builder.UserID = USERNAME;
+                builder.Password = PASSWORD;
+                builder.Database = DATABASE;
 
-            string connString = builder.ToString();
+                string connString = builder.ToString();
 
-            builder = null;
+                builder = null;
 
-            Console.WriteLine(connString);
+                Console.WriteLine(connString);
 
-            _dbConn = new MySqlConnection(connString);
+                _dbConn = new MySqlConnection(connString);
+            }
         }
 
         public int ExecuteNonQuery(string query)
@@ -80,6 +83,7 @@ namespace NostrumDB
             {
                 MySqlCommand cmd = new MySqlCommand(query, ConnectionObj);
                 ConnectionObj.Open();
+                //cmd.Transaction = _mySqlTransaction;
                 nRowsAffected = cmd.ExecuteNonQuery();
             }
             catch (Exception e)
@@ -134,5 +138,20 @@ namespace NostrumDB
             }
             return obj;
         }
+
+        //public void BeginTransaction()
+        //{
+        //    _mySqlTransaction = ConnectionObj.BeginTransaction();
+        //}
+
+        //public void CommitChanges()
+        //{
+        //    _mySqlTransaction.Commit();
+        //}
+
+        //public void RollbackChanges()
+        //{
+        //    _mySqlTransaction.Rollback();
+        //}
     }
 }
