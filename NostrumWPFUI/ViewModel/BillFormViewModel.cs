@@ -7,6 +7,8 @@ using Entity;
 using Nostrum;
 using System;
 using System.Windows;
+using System.Windows.Controls;
+using NostrumWPFUI.View;
 
 namespace NostrumWPFUI.ViewModel
 {
@@ -166,6 +168,7 @@ namespace NostrumWPFUI.ViewModel
 
         public ICommand DiscountModified { get; set; }
         public ICommand SaveBillForm { get; set; }
+        public ICommand PrintBillForm { get; set; }
         public RelayCommand<IClosable> CloseBillFormWindowCommand { get; private set; }
 
         public BillFormViewModel(Order order, List<LineItem> LineItems)
@@ -175,9 +178,11 @@ namespace NostrumWPFUI.ViewModel
             _dbInterface = new MySQLDBInterface();
             DiscountModified = new CustomDelegateCommand(DiscountModifiedMethod);
             SaveBillForm = new CustomDelegateCommand(SaveForm);
+            PrintBillForm = new CustomDelegateCommand(_printBillForm);
             CloseBillFormWindowCommand = new RelayCommand<IClosable>(this.CloseBillForm);
             Initialize();
-        }
+        }        
+
         private void CloseBillForm(IClosable _billFormWindow)
         {
             MessageBoxResult result = MessageBox.Show("Save changes?", "Exit",
@@ -307,6 +312,26 @@ namespace NostrumWPFUI.ViewModel
             }
 
             return true;
+        }
+
+        private void _printBillForm(object obj)
+        {
+            BillFormView _billFormView = obj as BillFormView;
+            Grid _gridtoprint = obj as Grid; 
+
+            PrintDialog prnt = new PrintDialog();
+            if (prnt != null)
+            {
+                Size pageSize = new Size(prnt.PrintableAreaWidth, prnt.PrintableAreaHeight);
+                _billFormView.Measure(pageSize);
+                _billFormView.Arrange(new Rect(25, 25, pageSize.Width, pageSize.Height));
+
+                if (prnt.ShowDialog() == true)
+                {
+                    prnt.PrintVisual(_billFormView, "Nostrum Billing");
+                }
+            }
+
         }
     }
 }

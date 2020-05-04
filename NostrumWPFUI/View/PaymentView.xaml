@@ -5,6 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:local="clr-namespace:NostrumWPFUI.View" x:Name="PaymentMainView"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:prism="http://prismlibrary.com/"
              xmlns:converters="clr-namespace:NostrumWPFUI.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -56,9 +58,20 @@
                           ColumnWidth="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5"
                           EnableRowVirtualization="false" EnableColumnVirtualization="false" 
                           FlowDirection="LeftToRight" FontSize="15"
-                          CanUserAddRows="False" CanUserReorderColumns="False" IsHitTestVisible="False"
-                          Visibility="{Binding IsClientInvoiceGridVisible,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource BooleanToVisibilityConverter}}"
+                          CanUserAddRows="False" CanUserReorderColumns="False" SelectionMode="Single" SelectionUnit="FullRow" IsReadOnly="True"
+                          Visibility="{Binding IsClientInvoiceGridVisible,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource BooleanToVisibilityConverter}}"                         
                           >
+                    <DataGrid.Resources>
+                        <Style TargetType="{x:Type DataGridCell}">
+                            <Setter Property="IsHitTestVisible" Value="False"/>
+                        </Style>
+                    </DataGrid.Resources>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDoubleClick">
+                            <!--<prism:InvokeCommandAction Command="{Binding SelectedCommand}" TriggerParameterPath="AddedItems" />-->
+                            <i:InvokeCommandAction Command="{Binding SelectedCommand}" CommandParameter="{Binding ElementName=ClientInvoice,Path=SelectedItem}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                     <DataGrid.RowStyle>
                         <Style TargetType="DataGridRow">
                             <Setter Property="Background" >
@@ -70,7 +83,7 @@
                                     </MultiBinding>
                                 </Setter.Value>
                             </Setter>
-                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Foreground" Value="Black"/>
                             <Style.Triggers>
                                 <Trigger Property="IsSelected" Value="True">
                                     <Setter Property="Background" Value="{x:Null}" />
@@ -78,8 +91,7 @@
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
-                    </DataGrid.RowStyle>
-                    
+                    </DataGrid.RowStyle>                    
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Invoice Number" Binding="{Binding InvoiceNo}"/>
                         <DataGridTextColumn Header="Client" Binding="{Binding Client}"/>
