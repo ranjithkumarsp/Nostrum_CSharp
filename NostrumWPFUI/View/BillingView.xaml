@@ -21,7 +21,7 @@
                 <RowDefinition Height="55"/>
                 <RowDefinition Height="55"/>
                 <RowDefinition Height="55"/>
-                <RowDefinition Height="55"/>
+                <RowDefinition Height="55" x:Name="paymtTerms"/>
                 <RowDefinition Height="35"/>
                 <RowDefinition Height="15"/>
                 <RowDefinition Height="30"/>
@@ -36,7 +36,9 @@
                 <ColumnDefinition x:Name="RightMargin" Width="80"/>
             </Grid.ColumnDefinitions>
             <Button Content="View Old" Style="{StaticResource BoldLinkButton}" Grid.Row="0" Grid.Column="6" Command="{Binding ViewOldCommand}" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
-            <RadioButton Name="BillingRadioBtn" Content="Billing" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding IsBillingChecked,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+            <RadioButton Name="BillingRadioBtn" Content="Billing" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding IsBillingChecked,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                         Checked="BillingRadioBtn_Checked" 
+                         >
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Checked">
                         <i:InvokeCommandAction Command="{Binding RadioButtonCheckedCommand}" CommandParameter="{Binding ElementName=BillingRadioBtn,Path=Name}"/>

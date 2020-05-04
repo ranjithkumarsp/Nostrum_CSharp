@@ -86,5 +86,12 @@ namespace NostrumWPFUI.View
                 }
             }
         }
+        //TO Hide the row when Donation Radio button is selected.
+        private void BillingRadioBtn_Checked(object sender, RoutedEventArgs e)
+        {
+            RowDefinition r = new RowDefinition();
+            r.Height = new GridLength(0, GridUnitType.Auto);
+            paymtTerms.Height = r.Height;
+        }
     }
 }

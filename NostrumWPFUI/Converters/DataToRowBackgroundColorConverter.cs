@@ -16,14 +16,14 @@ namespace NostrumWPFUI.Converters
         {
             double amount = (double) values[0];
             double balance = (double)values[1];
-            
+            //Color pinkcolor = (Color)ColorConverter.ConvertFromString("#ffb6c1");
 
             if (amount.Equals(balance))                
-                return new SolidColorBrush(Colors.Red) { Opacity = 0.7 };                
+                return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffb6c1")) { Opacity = 1 };                
             else if(balance == 0 || balance.Equals(0))
-                return new SolidColorBrush(Colors.Green) { Opacity = 1 };
+                return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#90ee90")) { Opacity = 1 };
             else if(balance > 0 && balance <amount )
-                return new SolidColorBrush(Colors.Yellow) { Opacity = 0.7 };
+                return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#eee8aa")) { Opacity = 1 };
             else
                 return new SolidColorBrush(Colors.BurlyWood) { Opacity = 0.7 };
 
@@ -41,3 +41,4 @@ namespace NostrumWPFUI.Converters
         }
     }
 }
+//https://stackoverflow.com/questions/2109756/how-do-i-get-the-color-from-a-hexadecimal-color-code-using-net

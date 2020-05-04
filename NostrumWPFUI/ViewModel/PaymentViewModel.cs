@@ -1,6 +1,7 @@
 ﻿using NostrumWPFUI.Helpers;
 using NostrumWPFUI.UIEntity;
 using NostrumWPFUI.View;
+using Prism.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -69,5 +70,20 @@ namespace NostrumWPFUI.ViewModel
             ClientPaymentCollection.Add(new ClientPayment { InvoiceNo = "004", Client = "ranji", Date = "1/02/2020", Amount = 4500, Balance = 0 });
         }
 
+        private DelegateCommand<ClientPayment> _fieldName;
+        public DelegateCommand<ClientPayment> SelectedCommand =>
+            _fieldName ?? (_fieldName = new DelegateCommand<ClientPayment>(ExecuteSelectedCommand));
+
+        private void ExecuteSelectedCommand(ClientPayment _selectedClient)
+        {
+            ClientPayment _selectedClientfromView = _selectedClient;
+            
+            // To:Do Open Bill payment view
+
+            //Have to check on usage of TriggerParameterPath="AddedItems"
+            //prism:InvokeCommandAction
+            //ClientPayment rw1 = ((object[])obj)[0] as ClientPayment;
+
+        }
     }
 }

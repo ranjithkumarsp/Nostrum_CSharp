@@ -50,6 +50,6 @@ namespace NostrumWPFUI.View
                 var parent = ((Control)sender).Parent as UIElement;
                 parent?.RaiseEvent(eventArg);
             }
-        }
+        }        
     }
 }

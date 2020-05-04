@@ -60,7 +60,7 @@ namespace NostrumWPFUI.Behaviours
         {
             e.Cancel = !ShowExitDialog(sender as Window);
         }
-
+        
         static bool ShowExitDialog(Window window)
         {
             MessageBoxResult result = MessageBox.Show(window, "Are you really want to exit?", "Exit",
