@@ -46,7 +46,7 @@ namespace NostrumDB
                 client.Name = reader["Name"].ToString();
                 client.Phone = reader["Phone"].ToString();
                 client.Display_Name = reader["Display_Name"].ToString();
-                client.Address = reader["Addr1"].ToString(); // TO DO :Address Column not avail in Table
+                client.Address = reader["Address"].ToString();
                 client.TIN_No = reader["TIN_No"].ToString();
                 client.DL_No = reader["DL_No"].ToString();
             }

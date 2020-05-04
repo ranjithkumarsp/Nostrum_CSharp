@@ -83,7 +83,7 @@
                 </ComboBox.Style>
             </ComboBox>
             <DatePicker SelectedDateFormat="Short" Grid.Row="5" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" 
-                                 Text="{Binding OrderDate,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}"/>
+                                 SelectedDate="{Binding OrderDate,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}"/>
             <TextBox x:Name="FinancialYear" Text="{Binding FinancialYear,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}" Grid.Row="6" Grid.Column="4" TextAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="169" Width="Auto" Height="36"  
                      TextBlock.TextAlignment="Left"
                      />

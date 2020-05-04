@@ -43,8 +43,8 @@
                     </Style>
                 </ComboBox.Style>
             </ComboBox>
-            <DatePicker Text="{Binding FromDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectedDateFormat="Short" Grid.Row="2" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30" Margin="4,13,0,13" />
-            <DatePicker Text="{Binding Todate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectedDateFormat="Short" Grid.Row="3" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30" Margin="4,13,0,13" />
+            <DatePicker SelectedDate="{Binding FromDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectedDateFormat="Short" Grid.Row="2" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30" Margin="4,13,0,13" />
+            <DatePicker SelectedDate="{Binding ToDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectedDateFormat="Short" Grid.Row="3" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" Height="30" Margin="4,13,0,13" />
             <Grid Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="4" Margin="0.4,0.2,-4.2,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="140"/>

@@ -93,10 +93,10 @@ namespace NostrumDB
             return ++invNo;
         }
 
-        public List<Product> GetSaleData(string name, DateTime from, DateTime to)
+        public List<Product> GetSaleData(string name, string batch, DateTime from, DateTime to)
         {
             List<Product> productList = new List<Product>();
-            string query = "SELECT Orders.Order_Date as date, Orders.Order_Type as type, Orders.Order_Id as id, Orders.fy as fy, Orders.Client_Name as client, order_line_items.batch as batch, order_line_items.quantity as qty, order_line_items.offer1 as off1, order_line_items.offer2 as off2, order_line_items.pack1 as pack1, order_line_items.pack2 as pack2 FROM Orders inner join order_line_items where Orders.Order_Id=order_line_items.order_id and Orders.fy=order_line_items.fy and order_line_items.product_name='" + name + "'and Orders.Order_date between '" + from.ToString("yyyy-MM-dd") + "' and '" + to.ToString("yyyy-MM-dd") + "' order by Orders.Order_Date;";
+            string query = "SELECT Orders.Order_Date as date, Orders.Order_Type as type, Orders.Order_Id as id, Orders.fy as fy, Orders.Client_Name as client, order_line_items.batch as batch, order_line_items.quantity as qty, order_line_items.offer1 as off1, order_line_items.offer2 as off2, order_line_items.pack1 as pack1, order_line_items.pack2 as pack2 FROM Orders inner join order_line_items where Orders.Order_Id=order_line_items.order_id and Orders.fy=order_line_items.fy and order_line_items.product_name='" + name + "' and order_line_items.batch='"+batch+"' and Orders.Order_date between '" + from.ToString("yyyy-MM-dd") + "' and '" + to.ToString("yyyy-MM-dd") + "' order by Orders.Order_Date;";
 
             DataTable dataTable = _dbInterface.ExecuteQuery(query);
             List<string> orderIds = new List<string>();

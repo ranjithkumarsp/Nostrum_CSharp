@@ -13,12 +13,26 @@ namespace NostrumWPFUI.ViewModel
     public class StockDisplayPopupViewModel :BaseViewModel
     {
         private int _stock;
+        private string txtProduct;
+        private string txtFromTo;
+
         public int RemainingStock { get => _stock; set => _stock = value; }
+        public string TxtProduct {
+            get
+            {
+                return "Stock Register - " + txtProduct;
+            }
+
+            set => txtProduct = value;
+        }
+        public string TxtFromTo { get => txtFromTo; set => txtFromTo = value; }
 
         public StockDisplayPopupViewModel(string prod, DateTime from, DateTime to)
         {
             _dbInterface = new MySQLDBInterface();
             StockDisplayCollection = new ObservableCollection<StockDisplay>();
+            TxtProduct = prod;
+            TxtFromTo = from.ToString("dd-MMM-yyyy") + " to " + to.ToString("dd-MMM-yyyy");
             LoadStock(prod, from , to);
         }
 
@@ -80,7 +94,7 @@ namespace NostrumWPFUI.ViewModel
         private void FillSaleData(Product prod, DateTime from, DateTime to)
         {
             OrderDAO orderDAO = new OrderDAO(_dbInterface);
-            List<Product> products = orderDAO.GetSaleData(prod.Name, from, to);
+            List<Product> products = orderDAO.GetSaleData(prod.Name, prod.Batch, from, to);
 
             foreach(var product in products)
             {
@@ -108,6 +122,5 @@ namespace NostrumWPFUI.ViewModel
             set { _stockDisplayCollection = value; this.RaisePropertyChange(); }
         }
 
-        
     }
 }

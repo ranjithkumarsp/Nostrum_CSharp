@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `nostrumex` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `nostrumex`;
 -- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: nostrumex
@@ -14,14 +16,6 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
---
--- Current Database: `nostrumex`
---
-
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `nostrumex` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-
-USE `nostrumex`;
 
 --
 -- Table structure for table `clients`
@@ -191,7 +185,7 @@ CREATE TABLE `orders` (
   `Order_Date` date NOT NULL,
   `Dispatch_Mode` varchar(10) NOT NULL,
   `Client_Name` varchar(45) NOT NULL,
-  `Amount` double DEFAULT NULL,
+  `Amount` int DEFAULT NULL,
   `Discount` double DEFAULT NULL,
   `Payment_Terms` int NOT NULL DEFAULT '30',
   `Order_Type` enum('Donate','Sale') NOT NULL DEFAULT 'Sale',
@@ -359,4 +353,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-05-01  3:41:45
+-- Dump completed on 2020-05-05  0:01:18

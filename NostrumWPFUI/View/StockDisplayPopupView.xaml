@@ -22,7 +22,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
-            <RowDefinition Height="150"/>
+            <RowDefinition Height="120"/>
             <RowDefinition Height="5"/>
             <RowDefinition Height="300*"/>
             <RowDefinition Height="75"/>
@@ -43,16 +43,13 @@
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="30"/>
                     <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
                     <RowDefinition Height="3"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <TextBlock Text="NOSTRUM BIOTECH" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="36" FontFamily="Times New Roman" />
-                <TextBlock Text="9/A, Shafiullah Street, R K Pet, Arni - 632 301."  Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial Unicode MS" FontSize="16"/>
-                <TextBlock Text="Tiruvannamalai District, Tamilnadu."  Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial Unicode MS" FontSize="14"/>
-                <TextBlock Text=" Ph: 9942529828, Email: nostrumbiotech@gmail.com"  Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial Unicode MS" FontSize="14"/>
+                <TextBlock Text="{Binding TxtProduct}"  Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial Unicode MS" FontSize="16"/>
+                <TextBlock Text="{Binding TxtFromTo}"  Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial Unicode MS" FontSize="14"/>
                 <Border Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="9" BorderBrush="Gray" Background="Gray" BorderThickness="2"/>
-
             </Grid>
 
         </Border>
@@ -84,7 +81,7 @@
                           EnableRowVirtualization="false" EnableColumnVirtualization="false" 
                           FlowDirection="LeftToRight" FontSize="15" 
                           CanUserAddRows="False" CanUserReorderColumns="False"
-                          IsEnabled="False">
+                          IsReadOnly="True">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
                             <DataGridTextColumn Header="InvoiceNo" Binding="{Binding InvoiceNo}"/>
