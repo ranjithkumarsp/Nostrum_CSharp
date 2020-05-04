@@ -178,6 +178,7 @@
     <Compile Include="ViewModel\BillFormViewModel.cs" />
     <Compile Include="ViewModel\BillingViewModel.cs" />
     <Compile Include="ViewModel\ClientsViewModel.cs" />
+    <Compile Include="ViewModel\MakePaymentViewModel.cs" />
     <Compile Include="ViewModel\ViewOldPopupViewModel.cs" />
     <Compile Include="ViewModel\EditClientPopupViewModel.cs" />
     <Compile Include="ViewModel\EditProductPopUpViewModel.cs" />
@@ -198,6 +199,9 @@
     </Compile>
     <Compile Include="View\ClientsView.xaml.cs">
       <DependentUpon>ClientsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MakePaymentView.xaml.cs">
+      <DependentUpon>MakePaymentView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ViewOldPopupView.xaml.cs">
       <DependentUpon>ViewOldPopupView.xaml</DependentUpon>
@@ -258,6 +262,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ClientsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MakePaymentView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

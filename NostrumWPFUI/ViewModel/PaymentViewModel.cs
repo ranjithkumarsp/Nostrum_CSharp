@@ -14,6 +14,8 @@ namespace NostrumWPFUI.ViewModel
 {
     public class PaymentViewModel : BaseViewModel
     {
+        MakePaymentView _makePaymentView;
+        MakePaymentViewModel _makePaymentViewModel;
         public PaymentViewModel()
         {
             Initialize();
@@ -77,8 +79,15 @@ namespace NostrumWPFUI.ViewModel
         private void ExecuteSelectedCommand(ClientPayment _selectedClient)
         {
             ClientPayment _selectedClientfromView = _selectedClient;
-            
-            // To:Do Open Bill payment view
+            //if (_makePaymentView == null)
+                _makePaymentView = new MakePaymentView();
+            //if (_makePaymentViewModel == null)
+                _makePaymentViewModel = new MakePaymentViewModel();
+            _makePaymentView.DataContext = _makePaymentViewModel;
+            _makePaymentViewModel.SelectedClient = _selectedClient;
+            _makePaymentView.Owner = MainWindow;
+            _makePaymentView.ShowDialog();
+
 
             //Have to check on usage of TriggerParameterPath="AddedItems"
             //prism:InvokeCommandAction
