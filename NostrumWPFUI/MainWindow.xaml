@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:NostrumWPFUI"
         xmlns:Views="clr-namespace:NostrumWPFUI.View"
         mc:Ignorable="d"
-        Title="MainWindow" Name="NostrumMainWindow" 
+        Title="Nostrum" Name="NostrumMainWindow" 
         Height="750" Width="850" Closing="NostrumMainWindow_Closing"
         WindowStartupLocation="CenterScreen"  ResizeMode="CanMinimize"
         >
