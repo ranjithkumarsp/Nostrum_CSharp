@@ -119,6 +119,13 @@ namespace NostrumWPFUI.ViewModel
 
         private void GenBillMethod(object obj)
         {
+            //Close LineItemPop up to avoid user entering the details again.
+            AddLineItemView _addlineItemView = obj as AddLineItemView;
+            if(_addlineItemView != null)
+            {
+                _addlineItemView.Close();
+            }
+
             if (!String.IsNullOrWhiteSpace(CurrentLineItem.Batch))
             {
                 if(ValidateFields())

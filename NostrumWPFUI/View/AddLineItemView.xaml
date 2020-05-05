@@ -6,7 +6,10 @@
         xmlns:local="clr-namespace:NostrumWPFUI.View"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Title="AddLineItems" Height="314.72" Width="401.733" WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+        Title="AddLineItems" Height="314.72" Width="401.733"        
+        ShowInTaskbar="False" WindowStartupLocation="CenterScreen"
+        WindowState="Normal" WindowStyle="SingleBorderWindow" ResizeMode="NoResize" 
+        >
     <Grid>
         <TextBlock HorizontalAlignment="Left" Margin="99,31,0,0" TextWrapping="Wrap" Text="Product" VerticalAlignment="Top" Height="23"/>
         <ComboBox ItemsSource="{Binding Products}"  HorizontalAlignment="Left" Margin="228,25,0,0" VerticalAlignment="Top" Width="120" IsEditable="True" IsSynchronizedWithCurrentItem="True" IsTabStop="True" StaysOpenOnEdit="True" AllowDrop="True"
@@ -58,6 +61,6 @@
         </Popup>
         <TextBox IsEnabled="{Binding SaleOrder}" Text="{Binding CurrentLineItem.Rate, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" HorizontalAlignment="Left" Height="23" Margin="228,185,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Button Content="Add Next" Command="{Binding AddNextCommand}" HorizontalAlignment="Left" Margin="123,229,0,0" VerticalAlignment="Top" Width="75" Height="27" />
-        <Button Content="Generate Bill" Command="{Binding GenBillCommand}" HorizontalAlignment="Left" Margin="228,229,0,0" VerticalAlignment="Top" Width="86" Height="27"/>
+        <Button Content="Generate Bill" Command="{Binding GenBillCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}" HorizontalAlignment="Left" Margin="228,229,0,0" VerticalAlignment="Top" Width="86" Height="27"/>
     </Grid>
 </Window>
