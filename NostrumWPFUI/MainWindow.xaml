@@ -45,7 +45,7 @@
                 <Views:StocksView/>
             </TabItem>
             <TabItem Header="Import Excel" Name="ImportExcelTab">
-                <Views:ExcelImportView/>
+                <!--<Views:ExcelImportView/>-->
             </TabItem>
         </TabControl>
 

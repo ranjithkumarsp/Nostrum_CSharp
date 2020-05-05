@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NostrumWPFUI.View"
-         xmlns:behaviors="clr-namespace:NostrumWPFUI.Behaviours"
+        xmlns:behaviors="clr-namespace:NostrumWPFUI.Behaviours"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:const="clr-namespace:NostrumWPFUI.Constants"
@@ -12,7 +12,7 @@
         Title="BillFormView" Height="790" Width="810" 
         ShowInTaskbar="False" WindowStartupLocation="CenterScreen"
         WindowState="Normal" WindowStyle="SingleBorderWindow" ResizeMode="CanResizeWithGrip" 
-        behaviors:WndExitAftConfirmBehaviour.Enabled="False"
+        behaviors:WndExitAftConfirmBehaviour.Enabled="True"
         >
     <Grid x:Name="BillFormMainGrid">
         <Grid.RowDefinitions>
@@ -22,13 +22,14 @@
         <Menu Name="FileMenu" Grid.Row="0" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" MinWidth="750" Width="{Binding ElementName=BillFormWindow,Path=Width}">
             <MenuItem Name="File" Header="File">
                 <MenuItem Header="Save" Command="{Binding SaveBillForm}"/>
-                <MenuItem Header="Save As"/>               
+                <MenuItem Header="Save As"/>
+                <MenuItem Name="Exit" Header="Exit" 
+                      Command="{Binding CloseBillFormWindowCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
+                      />
             </MenuItem>            
             <MenuItem Header="Print"  
                           Command="{Binding PrintBillForm}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}}"/>
-            <MenuItem Name="Exit" Header="Exit" 
-                      Command="{Binding CloseBillFormWindowCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
-                      />
+            
         </Menu>
         <ScrollViewer x:Name="scrollbar" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Grid.Row="1">
             <Grid Height="952" x:Name="_gridtoprint">
@@ -91,22 +92,22 @@
                             <Border Grid.Row="0" Grid.RowSpan="8" Grid.Column="2" BorderBrush="Gray" Background="Gray" Margin="0,0,0.4,-0.4"/>
                             <TextBlock Text="Name and Address of Buyer:" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Height="16" Margin="3,4,0,4.8" Width="150" Grid.ColumnSpan="2"/>
                             <!--<RichTextBox BorderBrush="Gray" BorderThickness="1" Grid.Row="3" Grid.RowSpan="4" Grid.Column="1"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,3,0" SpellCheck.IsEnabled="True"  />-->
-                            <TextBox Text="{Binding ClientName}" Grid.Row="3"  HorizontalAlignment="Left" VerticalAlignment="Top" TextAlignment="Left" BorderThickness="0" BorderBrush="Transparent" Height="16" Margin="3,0.2,0,0" Width="4" Grid.ColumnSpan="2"/>
-                            <TextBox Text="{Binding Address}" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextAlignment="Left" BorderThickness="0" BorderBrush="Transparent" Grid.ColumnSpan="2" Margin="3,0.4,0,0"/>
-                            <TextBox Text="{Binding Phone}" Grid.Row="5"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextAlignment="Left" BorderThickness="0" BorderBrush="Transparent" Grid.ColumnSpan="2" Margin="3,0,0,4.6" Grid.RowSpan="3"/>
+                            <TextBox Text="{Binding ClientName}" Grid.Row="3"  HorizontalAlignment="Left" VerticalAlignment="Top" TextAlignment="Left" BorderThickness="0" BorderBrush="Transparent" Height="16" Width="Auto" Grid.ColumnSpan="2"/>
+                            <TextBox Text="{Binding Address}" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextAlignment="Left" BorderThickness="0" BorderBrush="Transparent" Grid.ColumnSpan="2" />
+                            <TextBox Text="{Binding Phone}" Grid.Row="5"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextAlignment="Left" BorderThickness="0" BorderBrush="Transparent" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
                             <TextBlock Text="Date" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2" Height="16" Margin="2,6,0,6" Width="25"/>
-                            <TextBlock Text=":" Grid.Row="1" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center" Height="16" Margin="0.2,6,0,6" Width="3"/>
-                            <TextBlock Text="{Binding BillDate}" Grid.Row="1" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center" Height="16" Margin="10.2,6,0,6" Width="0"/>
+                            <TextBlock Text=":" Grid.Row="1" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center" Height="16" />
+                            <TextBlock Text="{Binding BillDate}" Grid.Row="1" Grid.Column="5"  HorizontalAlignment="Left" VerticalAlignment="Center" Height="16" Margin="2,6,0,6" />
 
                             <TextBlock Text="Invoice Number" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2" Height="16" Margin="2,4,0,4.8" Width="84"/>
-                            <TextBlock Text=":" Grid.Row="2" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center" Height="16" Margin="0.2,4,0,4.8" Width="3"/>
-                            <TextBlock Text="{Binding InvoiceNo}" Grid.Row="2" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center" Height="16" Margin="10.2,4,0,4.8" Width="0"/>
+                            <TextBlock Text=":" Grid.Row="2" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center" Height="16" />
+                            <TextBlock Text="{Binding InvoiceNo}" Grid.Row="2" Grid.Column="5"  HorizontalAlignment="Left" VerticalAlignment="Center" Height="16" Margin="2,6,0,6" />
 
-                            <GridSplitter Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Height="5" Background="Gray" BorderThickness="2" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0.2,1.4,0"/>
+                            <GridSplitter Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="5" Height="5" Background="Gray" BorderThickness="2" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,-5,0" />
 
                             <TextBlock Grid.Row="3" Grid.Column="2" Text="Payment Terms"  HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2" Height="16" Margin="2,4.2,0,4.6" Width="80"/>
-                            <TextBlock Grid.Row="3"   Grid.Column="4"  Text=":" HorizontalAlignment="Left" VerticalAlignment="Center" Height="16" Margin="0.2,4.2,0,4.6" Width="3"/>
-                            <TextBlock Grid.Row="3"  Grid.Column="4" Text="{Binding PaymentTerms}"  HorizontalAlignment="Left" VerticalAlignment="Center" Height="16" Margin="10.2,4.2,0,4.6" Width="0"/>
+                            <TextBlock Grid.Row="3"   Grid.Column="4"  Text=":" HorizontalAlignment="Left" VerticalAlignment="Center" Height="16"/>
+                            <TextBlock Grid.Row="3"  Grid.Column="5" Text="{Binding PaymentTerms}"  HorizontalAlignment="Left" VerticalAlignment="Center" Height="16" Margin="2,6,0,6"/>
 
                             <TextBlock Grid.Row="4" Grid.Column="2" Text="Drug License No"  HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2" Height="16" Margin="2,17.4,0,17" Width="87"/>
                             <TextBlock Grid.Row="4"   Grid.Column="4"  Text=":" HorizontalAlignment="Left" VerticalAlignment="Center" Height="16" Margin="0.2,17.4,0,17" Width="3"/>
@@ -116,7 +117,7 @@
                     </Grid>
                 </Border>
                 <Border x:Name="DataGridBorder" Grid.Row="3" Grid.Column="1"  Grid.ColumnSpan="2" BorderBrush="Gray" BorderThickness="3">
-                    <Grid Name="DataGridHolder" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="5" MinHeight="55">
+                    <Grid Name="DataGridHolder" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="5" MinHeight="155">
                         <DataGrid x:Name="BillingDataGrid" Grid.Row="3"  Grid.Column="1" Grid.ColumnSpan="5" 
                               ColumnWidth="SizeToCells" AutoGenerateColumns="False" SelectionMode="Single" SelectionUnit="Cell"
                               ItemsSource="{Binding LineItemSourceCollection}" PreviewMouseWheel="UIElement_OnPreviewMouseWheel"

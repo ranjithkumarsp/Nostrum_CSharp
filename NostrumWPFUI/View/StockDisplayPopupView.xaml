@@ -7,7 +7,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Title="StockDisplayPopupView"
-        Height="650" Width="750"
+        Height="500" Width="770"
         ShowInTaskbar="False" WindowStartupLocation="CenterScreen"
         WindowState="Normal" WindowStyle="SingleBorderWindow" ResizeMode="NoResize"
         >
@@ -21,20 +21,18 @@
     </i:Interaction.Triggers>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="35"/>
             <RowDefinition Height="120"/>
             <RowDefinition Height="5"/>
-            <RowDefinition Height="300*"/>
-            <RowDefinition Height="75"/>
-            <RowDefinition Height="75"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="300*"/>                   
+            <RowDefinition Height="35"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="30"/>
+            <ColumnDefinition Width="15"/>
             <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="350"/>
             <ColumnDefinition Width="158*"/>
-            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="15"/>
         </Grid.ColumnDefinitions>
 
         <Border x:Name="HeaderGridBorder" Grid.Row="1" Grid.Column="1"  Grid.ColumnSpan="3" BorderBrush="Gray" BorderThickness="3">
@@ -51,57 +49,52 @@
                 <TextBlock Text="{Binding TxtFromTo}"  Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial Unicode MS" FontSize="14"/>
                 <Border Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="9" BorderBrush="Gray" Background="Gray" BorderThickness="2"/>
             </Grid>
-
         </Border>
-
         <Border x:Name="DataGridBorder" Grid.Row="3" Grid.Column="1"  Grid.ColumnSpan="3" BorderBrush="Gray" BorderThickness="3">
-
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="10"/>
                     <RowDefinition Height="2"/>
                     <RowDefinition Height="230*"/>
                     <RowDefinition Height="40"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="3"/>
                     <ColumnDefinition Width="220"/>
                     <ColumnDefinition Width="150"/>
                     <ColumnDefinition Width="100"/>
                     <ColumnDefinition Width="100*"/>
-                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="3"/>
                 </Grid.ColumnDefinitions>
-                <!--<TextBlock Text="OUTSTANDING UP TO:" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Right" FontFamily="Arial" FontSize="20" FontStyle="Normal" FontWeight="UltraBold"/>-->
-                <!--<TextBlock Text="14-FEB 2020" Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2"  VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0" FontFamily="Arial" FontSize="20" FontStyle="Normal" FontWeight="UltraBold"/>-->
-                <ScrollViewer Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" >
-                    <DataGrid Name="OutstandingPaymentGrid" 
-                          MinWidth="450" MinHeight="100" Height="Auto"  
-                          ItemsSource="{Binding StockDisplayCollection}" AutoGenerateColumns="False"
-                          ColumnWidth="*" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-                          EnableRowVirtualization="false" EnableColumnVirtualization="false" 
-                          FlowDirection="LeftToRight" FontSize="15" 
-                          CanUserAddRows="False" CanUserReorderColumns="False"
+                
+                <!--<ScrollViewer Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">-->                    
+                <DataGrid Name="OutstandingPaymentGrid" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" 
+                          ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                          ScrollViewer.VerticalScrollBarVisibility="Auto"
+                          MinHeight="100" Height="Auto" Width="Auto" 
+                          ItemsSource="{Binding StockDisplayCollection}" 
+						  AutoGenerateColumns="False" 
+                          CanUserAddRows="False" 
+						  SelectionMode="Single" 
+						  SelectionUnit="FullRow"						  
+						  CanUserReorderColumns="False"                          
                           IsReadOnly="True">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
-                            <DataGridTextColumn Header="InvoiceNo" Binding="{Binding InvoiceNo}"/>
-                            <DataGridTextColumn Header="Manufacturer" Binding="{Binding Manufacturer}"/>
-                            <DataGridTextColumn Header="BatchNo" Binding="{Binding BatchNo}"/>
+                            <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="Auto"/>
+                            <DataGridTextColumn Header="InvoiceNo" Binding="{Binding InvoiceNo}" Width="Auto"/>
+                            <DataGridTextColumn Header="Manufacturer" Binding="{Binding Manufacturer}" Width="Auto"/>
+                            <DataGridTextColumn Header="BatchNo" Binding="{Binding BatchNo}" Width="Auto"/>
 
-                            <DataGridTextColumn Header="ManufactureDate" Binding="{Binding ManufactureDate}"/>
-                            <DataGridTextColumn Header="ExpiryDate" Binding="{Binding ExpiryDate}"/>
-                            <DataGridTextColumn Header="PurchaseQty" Binding="{Binding PurchaseQty}"/>
-                            <DataGridTextColumn Header="SaleQty" Binding="{Binding SaleQty}"/>
+                            <DataGridTextColumn Header="Manufacture Date" Binding="{Binding ManufactureDate}" Width="Auto"/>
+                            <DataGridTextColumn Header="Expiry Date" Binding="{Binding ExpiryDate}" Width="Auto"/>
+                            <DataGridTextColumn Header="Purchase Qty" Binding="{Binding PurchaseQty}" Width="Auto"/>
+                            <DataGridTextColumn Header="Sale Qty" Binding="{Binding SaleQty}" Width="Auto"/>
 
-                            <DataGridTextColumn Header="Stock" Binding="{Binding Stock}"/>
-                            <DataGridTextColumn Header="Remarks" Binding="{Binding Remarks}"/>
-
+                            <DataGridTextColumn Header="Stock" Binding="{Binding Stock}" Width="Auto"/>
+                        <DataGridTextColumn Header="Remarks" Binding="{Binding Remarks}"  Width="*"/>
                         </DataGrid.Columns>
-
-
                     </DataGrid>
-                </ScrollViewer>
-                
+                <!--</ScrollViewer>-->                
                 <!--<TextBlock Text="TOTAL" Grid.Row="3" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="18" FontWeight="Heavy"/>
                 <TextBlock Text="{Binding TotalOutStanding,UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="18" FontWeight="Heavy"/>-->
             </Grid>

@@ -316,19 +316,19 @@ namespace NostrumWPFUI.ViewModel
 
         private void _printBillForm(object obj)
         {
-            BillFormView _billFormView = obj as BillFormView;
+            //BillFormView _billFormView = obj as BillFormView; // TODO : Convert full screen to pdf with out menu and scroll bars.
             Grid _gridtoprint = obj as Grid; 
 
             PrintDialog prnt = new PrintDialog();
             if (prnt != null)
             {
                 Size pageSize = new Size(prnt.PrintableAreaWidth, prnt.PrintableAreaHeight);
-                _billFormView.Measure(pageSize);
-                _billFormView.Arrange(new Rect(25, 25, pageSize.Width, pageSize.Height));
+                _gridtoprint.Measure(pageSize);
+                _gridtoprint.Arrange(new Rect(25, 25, pageSize.Width, pageSize.Height));
 
                 if (prnt.ShowDialog() == true)
                 {
-                    prnt.PrintVisual(_billFormView, "Nostrum Billing");
+                    prnt.PrintVisual(_gridtoprint, "Nostrum Billing");
                 }
             }
 

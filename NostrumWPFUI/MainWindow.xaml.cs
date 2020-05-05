@@ -34,10 +34,10 @@ namespace NostrumWPFUI
         {           
             var activetview = VisualHelpers.GetChildOfType<UserControl>(this.NostrumMainWindow);
             var _userControlsInMainWindow = VisualHelpers.GetLogicalChildrenCollection<UserControl>(NostrumMainWindow);
-            ExcelImportView _excelImportView = _userControlsInMainWindow.Where(x => x.Name.Equals("ExcelImportMainView")).FirstOrDefault() as ExcelImportView;
-            if (_excelImportView != null && _excelImportView.xlApp != null)
-                _excelImportView.CLEAN(true);
-            System.Windows.Forms.Application.ExitThread(); //Closes all underlying threads
+            //ExcelImportView _excelImportView = _userControlsInMainWindow.Where(x => x.Name.Equals("ExcelImportMainView")).FirstOrDefault() as ExcelImportView;
+           // if (_excelImportView != null && _excelImportView.xlApp != null)
+           //     _excelImportView.CLEAN(true);
+           // System.Windows.Forms.Application.ExitThread(); //Closes all underlying threads
 
         }
 
