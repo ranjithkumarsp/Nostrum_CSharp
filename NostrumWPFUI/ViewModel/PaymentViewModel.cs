@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace NostrumWPFUI.ViewModel
@@ -93,6 +94,17 @@ namespace NostrumWPFUI.ViewModel
             //prism:InvokeCommandAction
             //ClientPayment rw1 = ((object[])obj)[0] as ClientPayment;
 
+        }
+
+        private DelegateCommand<object> _selectedrow;
+        public DelegateCommand<object> SelectedRowCommand =>
+            _selectedrow ?? (_selectedrow = new DelegateCommand<object>(ExecuteSelectedRowCommand));
+
+        private void ExecuteSelectedRowCommand(object obj)
+        {
+            DataGrid dg = obj as DataGrid;
+            var selectedindex = dg.SelectedIndex;
+            var selectedItem = dg.SelectedItem;
         }
     }
 }

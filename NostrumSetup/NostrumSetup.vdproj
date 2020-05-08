@@ -1577,7 +1577,7 @@
             "SourcePath" = "8:D:\\04-Nostrum developement resorces\\NDP47-KB3186497-x86-x64-AllOS-ENU.exe"
             "TargetName" = "8:NDP47-KB3186497-x86-x64-AllOS-ENU.exe"
             "Tag" = "8:"
-            "Folder" = "8:_B8A02DA91656439EB4B2B66E2040062D"
+            "Folder" = "8:_2AC4300B546F43BB9BC291DC4B691D28"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1857,13 +1857,24 @@
                 {
                     "{9EF0B969-E518-4E46-987F-47570745A589}:_160DE386122F4E26A8E0A38291AE603D"
                     {
-                    "Name" = "8:App"
+                    "Name" = "8:Nostrum"
                     "AlwaysCreate" = "11:FALSE"
                     "Condition" = "8:"
                     "Transitive" = "11:FALSE"
                     "Property" = "8:_CBCCE026FE444E8D8F838982F0C7A394"
                         "Folders"
                         {
+                            "{9EF0B969-E518-4E46-987F-47570745A589}:_2AC4300B546F43BB9BC291DC4B691D28"
+                            {
+                            "Name" = "8:Microsoft .NET Framework 4.7"
+                            "AlwaysCreate" = "11:FALSE"
+                            "Condition" = "8:"
+                            "Transitive" = "11:FALSE"
+                            "Property" = "8:_924A7D23355448DB9B6DAC3352F0ED6A"
+                                "Folders"
+                                {
+                                }
+                            }
                         }
                     }
                 }
@@ -1889,17 +1900,6 @@
             "Property" = "8:TARGETDIR"
                 "Folders"
                 {
-                    "{9EF0B969-E518-4E46-987F-47570745A589}:_B8A02DA91656439EB4B2B66E2040062D"
-                    {
-                    "Name" = "8:Microsoft .NET Framework 4.7"
-                    "AlwaysCreate" = "11:FALSE"
-                    "Condition" = "8:"
-                    "Transitive" = "11:FALSE"
-                    "Property" = "8:_924A7D23355448DB9B6DAC3352F0ED6A"
-                        "Folders"
-                        {
-                        }
-                    }
                 }
             }
         }
@@ -1919,7 +1919,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Nostrum"
         "ProductCode" = "8:{EEDAB75E-8373-4281-BD08-C7833EF6F5DA}"
-        "PackageCode" = "8:{A1345417-8D18-4A12-BF03-77E6EFD52E7D}"
+        "PackageCode" = "8:{DD993D0E-0270-4849-81B4-ADC71CA4789E}"
         "UpgradeCode" = "8:{9354B4D0-89C5-44C1-A3C6-25E02F593473}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
