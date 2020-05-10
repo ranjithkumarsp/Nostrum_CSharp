@@ -9,36 +9,53 @@
              xmlns:local="clr-namespace:NostrumWPFUI.View"
              xmlns:behaviours="clr-namespace:NostrumWPFUI.Behaviours"
              mc:Ignorable="d" x:Name="BillingViewMainView"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="550" d:DesignWidth="800">
     <Grid>
         <Grid Background="WhiteSmoke">
             <Grid.RowDefinitions>
                 <RowDefinition x:Name="header" Height="55"/>
                 <RowDefinition Height="5"/>
-                <RowDefinition Height="35"/>
+                <RowDefinition Height="55"/>
                 <RowDefinition Height="5"/>
                 <RowDefinition Height="55"/>
                 <RowDefinition Height="55"/>
                 <RowDefinition Height="55"/>
                 <RowDefinition Height="55"/>
                 <RowDefinition Height="55" x:Name="paymtTerms"/>
-                <RowDefinition Height="35"/>
+                <RowDefinition Height="55" x:Name="DispatchMode"/>
+                <RowDefinition Height="15"/>
+                <RowDefinition Height="35" x:Name="Buttongrid"/>
                 <RowDefinition Height="15"/>
                 <RowDefinition Height="30"/>
                 <RowDefinition x:Name="footer" Height="55"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition x:Name="LeftMargin" Width="140"/>
-                <ColumnDefinition Width="30"/>
-                <ColumnDefinition Width="150"/>
-                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="155"/>
+                <ColumnDefinition Width="35"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition x:Name="RightMargin" Width="80"/>
             </Grid.ColumnDefinitions>
             <Button Content="View Old" Style="{StaticResource BoldLinkButton}" Grid.Row="0" Grid.Column="6" Command="{Binding ViewOldCommand}" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
-            <RadioButton Name="BillingRadioBtn" Content="Billing" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding IsBillingChecked,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                         Checked="BillingRadioBtn_Checked" />
-            <RadioButton Name="DonationRadioBtn" Content="Donation" Grid.Row="2" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding IsDonationChecked,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
+            <RadioButton Name="BillingRadioBtn" Content="Billing" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" IsChecked="{Binding IsBillingChecked,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                         Checked="BillingRadioBtn_Checked" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold"
+                         >
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Checked">
+                        <i:InvokeCommandAction Command="{Binding RadioButtonCheckedCommand}" CommandParameter="{Binding ElementName=BillingRadioBtn,Path=Name}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </RadioButton>
+            <RadioButton Name="DonationRadioBtn" Content="Donation" Grid.Row="2" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding IsDonationChecked,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                         FontFamily="Century Gothic" FontSize="16" FontWeight="Bold"
+                         >
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Checked">
+                        <i:InvokeCommandAction Command="{Binding RadioButtonCheckedCommand}" CommandParameter="{Binding ElementName=DonationRadioBtn,Path=Name}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </RadioButton>
             <TextBlock Grid.Row="4" Grid.Column="2"  HorizontalAlignment="Right"  TextWrapping="Wrap" Text="Client Name" VerticalAlignment="Center" Height="23"  FontSize="16" FontFamily="Century Gothic" FontWeight="Bold" />
             <TextBlock Grid.Row="5" Grid.Column="2"  HorizontalAlignment="Right"  TextWrapping="Wrap" Text="Date" VerticalAlignment="Center" Height="23" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" />
             <TextBlock Grid.Row="6" Grid.Column="2"  HorizontalAlignment="Right"  TextWrapping="Wrap" Text="Financial Year" VerticalAlignment="Center" Height="23"  FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" ClipToBounds="True" SnapsToDevicePixels="True" />
@@ -54,6 +71,10 @@
             <TextBlock Text="Days" Grid.Row="8" Grid.Column="4" TextAlignment="Center"  HorizontalAlignment="Left" VerticalAlignment="Center"  Width="50" Height="35" FontWeight="Bold" RenderTransformOrigin="-2.289,0.622" Margin="66.2,16,0,5"
                         Visibility="{Binding IsBillingChecked,Converter={StaticResource BooleanToVisibilityConverter}}"
                        />
+            <TextBlock Text="Dispatch Mode" Grid.Row="9" Grid.Column="2"  HorizontalAlignment="Right"  TextWrapping="Wrap" VerticalAlignment="Center" Height="23"  FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" ClipToBounds="True" SnapsToDevicePixels="True" />
+
+            <TextBox x:Name="DispatchModeTxtBox" Text="{Binding DispatchMode,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}" Grid.Row="9" Grid.Column="4" TextAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="169" Width="Auto" Height="36"/>
+
             <ComboBox Grid.Row="4" ItemsSource="{Binding ClientsList}" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="169"  Height="30" IsEditable="True" IsSynchronizedWithCurrentItem="True" IsTabStop="True" StaysOpenOnEdit="True" AllowDrop="True" 
                       PreviewTextInput="PreviewTextInput_EnhanceComboSearch"
                       PreviewKeyUp="PreviewKeyUp_EnhanceComboSearch"
@@ -71,7 +92,9 @@
             </ComboBox>
             <DatePicker SelectedDateFormat="Short" Grid.Row="5" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" 
                                  SelectedDate="{Binding OrderDate,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}"/>
-            <TextBox x:Name="FinancialYear" Text="{Binding FinancialYear,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}" Grid.Row="6" Grid.Column="4" TextAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="169" Width="Auto" Height="36" />
+            <TextBox x:Name="FinancialYear" Text="{Binding FinancialYear,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}" Grid.Row="6" Grid.Column="4" TextAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="169" Width="Auto" Height="36" 
+                     TextBlock.TextAlignment="Left"
+                     />
             <TextBox x:Name="InvoiceNumber" Text="{Binding InvoiceNumber,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}" Grid.Row="7" Grid.Column="4" TextAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="169" Width="Auto" Height="36" >
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="GotKeyboardFocus">
@@ -79,10 +102,10 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </TextBox>
-            <Grid Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="5">
+            <Grid Grid.Row="11" Grid.Column="4" Grid.ColumnSpan="5" Margin="-155,0,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="140"/>
-                    <ColumnDefinition Width="35"/>
+                    <ColumnDefinition Width="15"/>
                     <ColumnDefinition Width="140"/>
                 </Grid.ColumnDefinitions>
                 <Button Content="Add Items" Grid.Column="0" Command="{Binding BillingCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}" IsDefault="True"/>

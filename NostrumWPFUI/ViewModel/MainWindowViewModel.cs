@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using NostrumExcelReader;
+using Prism.Commands;
 
 namespace NostrumWPFUI.ViewModel
 {
@@ -36,6 +37,15 @@ namespace NostrumWPFUI.ViewModel
         public void ClearMethod(object param)
         {
 
+        }
+
+        private DelegateCommand<object> _TabselectionChange;
+        public DelegateCommand<object> TabSelectionChangedCommand =>
+            _TabselectionChange ?? (_TabselectionChange = new DelegateCommand<object>(ExecuteTabSelectionChangedCommand));
+
+        private void ExecuteTabSelectionChangedCommand(object obj)
+        {
+            
         }
     }
 }

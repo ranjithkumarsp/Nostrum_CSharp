@@ -28,7 +28,7 @@ namespace NostrumWPFUI.Behaviours
 
         public static readonly DependencyProperty EnabledProperty =
             DependencyProperty.RegisterAttached("Enabled", typeof(bool),
-            typeof(WindowClosingBehavior),
+            typeof(WndExitAftConfirmBehaviour),
             new UIPropertyMetadata(false, new PropertyChangedCallback(OnValueChange)));
 
         private static void OnValueChange(DependencyObject d, DependencyPropertyChangedEventArgs e)

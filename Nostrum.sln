@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NostrumDB", "NostrumDB\DBOp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDBOperations", "NostrumDB\TestDBOperations\TestDBOperations.csproj", "{4785A32B-81C5-4B66-9AC0-529E76ACC586}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NostrumWPFUI", "NostrumWPFUI\NostrumWPFUI.csproj", "{3E4386ED-59B7-448F-937F-39EFC89A5199}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nostrum", "NostrumWPFUI\Nostrum.csproj", "{3E4386ED-59B7-448F-937F-39EFC89A5199}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelReader", "ExcelReader\ExcelReader.csproj", "{BB2B2C6F-C2A5-4B34-A776-50637A7CEC75}"
 EndProject

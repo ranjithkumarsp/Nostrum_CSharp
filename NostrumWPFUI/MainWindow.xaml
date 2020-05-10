@@ -6,6 +6,7 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:NostrumWPFUI"
         xmlns:Views="clr-namespace:NostrumWPFUI.View"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
         mc:Ignorable="d"
         Title="Nostrum" Name="NostrumMainWindow" 
         Height="750" Width="850" Closing="NostrumMainWindow_Closing"
@@ -29,6 +30,11 @@
         </Menu>-->
         <TabControl  TabStripPlacement="Top" HorizontalAlignment="Left" Height="{Binding ElementName=NostrumMainWindow,Path=Height}" VerticalAlignment="Top" Width="{Binding ElementName=NostrumMainWindow,Path=Width}" 
                      Margin="0,0,0,0" SelectedIndex="0" SelectionChanged="TabControl_SelectionChanged">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding TabSelectionChangedCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TabControl}}}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <TabItem Header="Billing" Name="BillingTab">
                 <Views:BillingView/>
             </TabItem>
@@ -44,9 +50,9 @@
             <TabItem Header="Stocks" Name="StocksTab">
                 <Views:StocksView/>
             </TabItem>
-            <TabItem Header="Import Excel" Name="ImportExcelTab">
-                <!--<Views:ExcelImportView/>-->
-            </TabItem>
+            <!--<TabItem Header="Import Excel" Name="ImportExcelTab">
+                <Views:ExcelImportView/>
+            </TabItem>-->
         </TabControl>
 
 

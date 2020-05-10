@@ -111,6 +111,15 @@ namespace NostrumWPFUI.ViewModel
             }
         }
 
+        private string _dispatchMode;
+
+        public string DispatchMode
+        {
+            get { return CurrentOrder.Dispatch_Mode; }
+            set { CurrentOrder.Dispatch_Mode = value; this.RaisePropertyChange(); }
+        }
+
+
         #endregion
 
         private Order _order;
@@ -186,7 +195,7 @@ namespace NostrumWPFUI.ViewModel
             if (ClientsList.Count > 0)
                 ClientName = ClientsList.First<string>();
             IsBillingChecked = true;
-        }
+            DispatchMode = string.Empty;        }
         private void GetClientsFromDB()
         {
             ClientDAO dao = new ClientDAO(new MySQLDBInterface());

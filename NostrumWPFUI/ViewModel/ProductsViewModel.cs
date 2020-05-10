@@ -11,6 +11,7 @@ using Entity;
 using System.Windows;
 using NostrumWPFUI.View;
 using System.Collections.ObjectModel;
+using Prism.Commands;
 
 namespace NostrumWPFUI.ViewModel
 {
@@ -177,7 +178,15 @@ namespace NostrumWPFUI.ViewModel
         public ICommand SubmitCommand { get; set; }
         public ICommand ClearCommand { get; set; }
         public ICommand EditProductCommand { get; set; }
-        
+
+        private DelegateCommand<object> _OnLoadcmd;
+        public DelegateCommand<object> OnLoadCommand =>
+            _OnLoadcmd ?? (_OnLoadcmd = new DelegateCommand<object>(ExecuteOnLoadCommand));
+
+        private void ExecuteOnLoadCommand(object obj)
+        {
+            FillManufacturerSuggestion();
+        }
 
         public void Initialize()
         {
@@ -187,6 +196,7 @@ namespace NostrumWPFUI.ViewModel
             CurrentProduct = new Product();
             _dbInterface = new MySQLDBInterface();
             ClearMethod(null);
+            FillManufacturerSuggestion();
         }
 
         private void EditProductMethod(object obj)
@@ -285,6 +295,7 @@ namespace NostrumWPFUI.ViewModel
                 {
                     MessageBox.Show("Product successfully Added!");
                     ClearMethod(null);
+                    FillManufacturerSuggestion();
                 }
                 else
                 {

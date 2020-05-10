@@ -157,6 +157,17 @@ namespace NostrumWPFUI.ViewModel
             set { _lineItemSourceCollection = value; this.RaisePropertyChange(); }
         }
 
+        //DispatchMode
+
+        private string _dispatchMode;
+
+        public string DispatchMode
+        {
+            get { return CurrentOrder.Dispatch_Mode; }
+            set { CurrentOrder.Dispatch_Mode = value; this.RaisePropertyChange(); }
+        }
+
+
         #endregion
 
         private Order _order;
@@ -174,6 +185,8 @@ namespace NostrumWPFUI.ViewModel
         public ICommand DiscountModified { get; set; }
         public ICommand SaveBillForm { get; set; }
         public ICommand PrintBillForm { get; set; }
+
+        public ICommand SaveAsPDFCommand { get; set; }
         public RelayCommand<IClosable> CloseBillFormWindowCommand { get; private set; }
 
         public BillFormViewModel(Order order, List<LineItem> LineItems)
@@ -185,6 +198,7 @@ namespace NostrumWPFUI.ViewModel
             SaveBillForm = new CustomDelegateCommand(SaveForm);
             PrintBillForm = new CustomDelegateCommand(_printBillForm);
             CloseBillFormWindowCommand = new RelayCommand<IClosable>(this.CloseBillForm);
+            SaveAsPDFCommand = new PrintCommand();
             Initialize();
         }        
 
