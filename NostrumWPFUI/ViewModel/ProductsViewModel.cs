@@ -144,6 +144,7 @@ namespace NostrumWPFUI.ViewModel
             set
             {
                 _isNewProduct = value;
+                this.RaisePropertyChange();
                 if (_isNewProduct)
                     SubmitButtonText = "Add Product";
                 else

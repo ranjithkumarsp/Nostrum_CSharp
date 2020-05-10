@@ -54,6 +54,7 @@ namespace NostrumWPFUI.ViewModel
                 if (_isDonationChecked)
                 {
                     CurrentOrder.Order_Type = Order.OrderType.DonateOrder;
+                    CurrentOrder.Payment_Terms = 0;
                     _isBillingChecked = false;
                 }
                 this.RaisePropertyChange();
@@ -125,6 +126,7 @@ namespace NostrumWPFUI.ViewModel
         }
 
         public ICommand BillingCommand { get; set; }
+        public ICommand InvoiceEnterCommand { get; set; }
         public ICommand ClearCommand { get; set; }
         public ICommand ViewOldCommand { get; set; }
 
@@ -134,19 +136,36 @@ namespace NostrumWPFUI.ViewModel
             BillingCommand = new CustomDelegateCommand(BillingMethod);
             ClearCommand = new CustomDelegateCommand(ClearMethod);
             ViewOldCommand = new CustomDelegateCommand(OpenViewOldPopUp);
+            InvoiceEnterCommand = new CustomDelegateCommand(GenerateInvoiceNumber);
 
             CurrentOrder = new Order();
             
             GetClientsFromDB();
             ClearAll();
-            GenerateInvoiceNumber();
+            GenerateInvoiceNumber(null);
+        }
+
+        private void Refresh(object param)
+        {
+            GetClientsFromDB();
+            ClearAll();
+            GenerateInvoiceNumber(null);
         }
 
         public void BillingMethod(object param)
         {
-            AddLineItemView addLineItemView = new AddLineItemView(CurrentOrder);
-            addLineItemView.Owner = MainWindow;
-            addLineItemView.ShowDialog();
+            if (String.IsNullOrWhiteSpace(ClientName))
+            {
+                MessageBox.Show("Add client first", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+            else 
+            { 
+                AddLineItemView addLineItemView = new AddLineItemView(CurrentOrder);
+                addLineItemView.Owner = MainWindow;
+                addLineItemView.ShowDialog();
+                GenerateInvoiceNumber(null);
+            }            
         }
         public void ClearMethod(object param)
         {
@@ -184,7 +203,7 @@ namespace NostrumWPFUI.ViewModel
                 FinancialYear = "FY" + (date.Year % 100); // Modulo dividing by 100 to convert the year to two digit.
         }
 
-        public void GenerateInvoiceNumber()
+        public void GenerateInvoiceNumber(object o)
         {
             OrderDAO orderDAO = new OrderDAO(new MySQLDBInterface());
             InvoiceNumber = orderDAO.GetNextInvNo(FinancialYear);

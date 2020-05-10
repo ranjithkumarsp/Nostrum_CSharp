@@ -37,21 +37,8 @@
             </Grid.ColumnDefinitions>
             <Button Content="View Old" Style="{StaticResource BoldLinkButton}" Grid.Row="0" Grid.Column="6" Command="{Binding ViewOldCommand}" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
             <RadioButton Name="BillingRadioBtn" Content="Billing" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding IsBillingChecked,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                         Checked="BillingRadioBtn_Checked" 
-                         >
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Checked">
-                        <i:InvokeCommandAction Command="{Binding RadioButtonCheckedCommand}" CommandParameter="{Binding ElementName=BillingRadioBtn,Path=Name}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </RadioButton>
-            <RadioButton Name="DonationRadioBtn" Content="Donation" Grid.Row="2" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding IsDonationChecked,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Checked">
-                        <i:InvokeCommandAction Command="{Binding RadioButtonCheckedCommand}" CommandParameter="{Binding ElementName=DonationRadioBtn,Path=Name}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </RadioButton>
+                         Checked="BillingRadioBtn_Checked" />
+            <RadioButton Name="DonationRadioBtn" Content="Donation" Grid.Row="2" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding IsDonationChecked,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
             <TextBlock Grid.Row="4" Grid.Column="2"  HorizontalAlignment="Right"  TextWrapping="Wrap" Text="Client Name" VerticalAlignment="Center" Height="23"  FontSize="16" FontFamily="Century Gothic" FontWeight="Bold" />
             <TextBlock Grid.Row="5" Grid.Column="2"  HorizontalAlignment="Right"  TextWrapping="Wrap" Text="Date" VerticalAlignment="Center" Height="23" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" />
             <TextBlock Grid.Row="6" Grid.Column="2"  HorizontalAlignment="Right"  TextWrapping="Wrap" Text="Financial Year" VerticalAlignment="Center" Height="23"  FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" ClipToBounds="True" SnapsToDevicePixels="True" />
@@ -84,10 +71,14 @@
             </ComboBox>
             <DatePicker SelectedDateFormat="Short" Grid.Row="5" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="169" 
                                  SelectedDate="{Binding OrderDate,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}"/>
-            <TextBox x:Name="FinancialYear" Text="{Binding FinancialYear,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}" Grid.Row="6" Grid.Column="4" TextAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="169" Width="Auto" Height="36"  
-                     TextBlock.TextAlignment="Left"
-                     />
-            <TextBox x:Name="InvoiceNumber" Text="{Binding InvoiceNumber,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}" Grid.Row="7" Grid.Column="4" TextAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="169" Width="Auto" Height="36"/>
+            <TextBox x:Name="FinancialYear" Text="{Binding FinancialYear,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}" Grid.Row="6" Grid.Column="4" TextAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="169" Width="Auto" Height="36" />
+            <TextBox x:Name="InvoiceNumber" Text="{Binding InvoiceNumber,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}" Grid.Row="7" Grid.Column="4" TextAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="169" Width="Auto" Height="36" >
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="GotKeyboardFocus">
+                        <i:InvokeCommandAction Command="{Binding InvoiceEnterCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </TextBox>
             <Grid Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="140"/>

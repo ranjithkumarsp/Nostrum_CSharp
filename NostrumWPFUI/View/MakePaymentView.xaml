@@ -19,27 +19,34 @@
                 <Setter Property="FontSize" Value="18"/>
             </Style>
         </Grid.Resources>
-        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Invoice" VerticalAlignment="Top" TextAlignment="Center" Margin="154,47,0,0" Height="27" Width="101"/>
-        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" TextAlignment="Center" Margin="273,47,0,0" Height="27" Width="149"
-                   Text="{Binding SelectedClient.InvoiceNo,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                   />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="19*"/>
+            <RowDefinition Height="21*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="{Binding Header, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" TextAlignment="Center" Margin="141,41,97,100.2" Height="30"/>
+        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Invoice" VerticalAlignment="Top" TextAlignment="Right" Margin="87,97,0,0" Height="30" Width="169" />
 
-        <TextBlock HorizontalAlignment="Left" Height="33" Margin="73,105,0,0" TextWrapping="NoWrap" Text="OutStanding Balance" VerticalAlignment="Top" Width="169"/>
-        <!--<xctk:WatermarkTextBox Watermark="Address"-->
-        <TextBlock HorizontalAlignment="Left" Height="29" Margin="95,156,0,0" TextWrapping="NoWrap" Text="Payment To Make" VerticalAlignment="Top" Width="160"/>
-        
-        <TextBox HorizontalAlignment="Left" Height="33" Margin="288,105,0,0" TextWrapping="NoWrap"  VerticalAlignment="Top" Width="134"
+        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Width="134"  Height="30" Margin="302,97,0,44.373"
+                  Text ="{Binding InvoiceNumber, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+
+        <TextBlock HorizontalAlignment="Left" Height="30" Margin="85,147,0,0" TextWrapping="NoWrap" Text="Outstanding Balance" VerticalAlignment="Top" Width="169" TextAlignment="Right" Grid.RowSpan="2"/>
+        <TextBlock HorizontalAlignment="Left" Height="30" Margin="85,25.627,0,0" TextWrapping="NoWrap" Text="Payment To Make" VerticalAlignment="Top" Width="169" TextAlignment="Right" Grid.Row="1"/>
+
+        <TextBox HorizontalAlignment="Left" Height="30" Margin="302,147,0,0" TextWrapping="NoWrap"  VerticalAlignment="Top" Width="134"
                  TextAlignment="Right"
                  Text="{Binding OutstandingBalance,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                 />
-        <Button Content="Make Payment" IsDefault="True" HorizontalAlignment="Left" Margin="127,219,0,0" VerticalAlignment="Top" Width="128" Height="32"
-                Command="{Binding MakePaymentCommand}"
-                />
-        <Button Content="Cancel" IsCancel="True" HorizontalAlignment="Left" Margin="317,219,0,0" VerticalAlignment="Top" Width="134" Height="32" RenderTransformOrigin="1.607,0.722"/>
-        <TextBox HorizontalAlignment="Left" Height="33" Margin="288,152,0,0" TextWrapping="NoWrap"  VerticalAlignment="Top" Width="134"
+                 IsEnabled="False" Grid.RowSpan="2" />
+
+        <TextBox HorizontalAlignment="Left" Height="30" Margin="302,25.627,0,0" TextWrapping="NoWrap"  VerticalAlignment="Top" Width="134"
             TextAlignment="Right"
-            Text="{Binding PaymentAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            Text="{Binding PaymentAmount, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Grid.Row="1"
                  />
+        <Button Content="Make Payment" IsDefault="True" HorizontalAlignment="Left" Margin="141,123.8,0,0" VerticalAlignment="Top" Width="128" Height="32"
+                Command="{Binding MakePaymentCommand}" Grid.Row="1"
+                />
+        <Button Content="Cancel" IsCancel="True" HorizontalAlignment="Left" Margin="302,123.8,0,0" VerticalAlignment="Top" Width="134" Height="32" RenderTransformOrigin="1.607,0.722" Grid.Row="1"/>
+        <TextBlock HorizontalAlignment="Left" Height="30" Margin="85,74.8,0,0" TextWrapping="NoWrap" Text="Pay Date" VerticalAlignment="Top" Width="169" TextAlignment="Right" Grid.Row="1"/>
+        <DatePicker SelectedDate="{Binding PayDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" SelectedDateFormat="Short" HorizontalAlignment="Left" Height="30" Margin="302,74.8,0,0" VerticalAlignment="Top" Width="134"  Grid.Row="1"/>
 
     </Grid>
 </Window>

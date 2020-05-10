@@ -18,7 +18,8 @@ namespace Entity
         private DateTime _orderDate;
         private string _dispatchMode;
         private string _clientName;
-        private long _amount;
+        private int _amount;
+        private int _balance;
         private double _discount;
         private int _paymentTerms;
         private OrderType _orderType;
@@ -77,7 +78,7 @@ namespace Entity
                 _clientName = value;
             }
         }
-        public long Amount
+        public int Amount
         {
             get
             {
@@ -131,5 +132,7 @@ namespace Entity
                 _isNewOrder = value;
             }
         }
+
+        public int Balance { get => _balance; set => _balance = value; }
     }
 }

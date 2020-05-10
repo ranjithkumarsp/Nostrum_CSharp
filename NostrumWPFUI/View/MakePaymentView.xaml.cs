@@ -20,10 +20,10 @@ namespace NostrumWPFUI.View
     /// </summary>
     public partial class MakePaymentView : Window
     {
-        public MakePaymentView()
+        public MakePaymentView(UIEntity.ClientPayment selectedClient, List<string> pendingInvoiceList)
         {
             InitializeComponent();
-           
+            this.DataContext = new MakePaymentViewModel(selectedClient, pendingInvoiceList);
         }
     }
 }

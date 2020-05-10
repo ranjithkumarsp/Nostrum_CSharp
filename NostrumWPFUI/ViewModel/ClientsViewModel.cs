@@ -104,6 +104,7 @@ namespace NostrumWPFUI.ViewModel
             set
             {
                 _isNewClient = value;
+                this.RaisePropertyChange();
                 if (_isNewClient)
                     SubmitButtonText = "Add Client";
                 else

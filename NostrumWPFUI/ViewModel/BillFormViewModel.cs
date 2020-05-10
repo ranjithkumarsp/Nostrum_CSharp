@@ -131,10 +131,15 @@ namespace NostrumWPFUI.ViewModel
             set { _total = value; this.RaisePropertyChange(); }
         }
 
-        public long InvoiceAmount
+        public int InvoiceAmount
         {
             get { return CurrentOrder.Amount; }
-            set { CurrentOrder.Amount = value; this.RaisePropertyChange(); }
+            set 
+            { 
+                CurrentOrder.Amount = value;
+                CurrentOrder.Balance = value;
+                this.RaisePropertyChange(); 
+            }
         }
 
         private string _invoiceAmountinWords;
@@ -207,7 +212,7 @@ namespace NostrumWPFUI.ViewModel
         {
             NetValue = BillValue - Discount;
             Total = Math.Round(NetValue + CGST + SGST, 2);
-            InvoiceAmount = (long)Math.Round(Total);
+            InvoiceAmount = (int)Math.Round(Total);
             InvoiceAmountinWords = Nostrum.Utils.numInWords(InvoiceAmount, 0) + " Rupees only";
         }
 

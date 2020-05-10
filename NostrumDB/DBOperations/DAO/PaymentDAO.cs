@@ -19,7 +19,7 @@ namespace NostrumDB
         public bool AddPayment(Payment payment)
         {
             int nRowsAffected = 0;
-            string query = "Insert into payments values('" + payment.Payment_ID + "','" + payment.Order_ID + "','" + payment.FY+ "','" + payment.Amount + "','" + payment.Pay_Date.ToString("yyyy-MM-dd") + "');";
+            string query = "Insert into payments values(0,'" + payment.Order_ID + "','" + payment.FY+ "','" + payment.PaymentMade + "','" + payment.Pay_Date.ToString("yyyy-MM-dd") + "');";
             nRowsAffected = _dbInterface.ExecuteNonQuery(query);
             return (nRowsAffected > 0);
         }
@@ -34,10 +34,9 @@ namespace NostrumDB
             foreach (DataRow dr in dataTable.Rows)
             {
                 Payment payment = new Payment();
-                payment.Payment_ID = dr["Payment_ID"].ToString();
                 payment.Order_ID = (int)dr["Order_ID"];
                 payment.FY = dr["FY"].ToString();
-                payment.Amount = (double)dr["Amount"];
+                payment.PaymentMade = (int)dr["Payment"];
                 payment.Pay_Date = (DateTime)dr["Pay_Date"];
                 payments.Add(payment);
             }
@@ -48,7 +47,7 @@ namespace NostrumDB
         public double GetTotalAmountPaid(int orderId, int fy)
         {
             double total = 0;
-            string query = "Select sum(Amount) from payments where Order_Id = '" + orderId + "' and FY = '" + fy + "';";
+            string query = "Select sum(Payment) from payments where Order_Id = '" + orderId + "' and FY = '" + fy + "';";
 
             object obj = _dbInterface.ExecuteScalar(query);
             if (obj != null && obj != DBNull.Value)

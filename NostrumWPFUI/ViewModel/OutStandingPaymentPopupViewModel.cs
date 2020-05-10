@@ -1,4 +1,6 @@
-﻿using NostrumWPFUI.Helpers;
+﻿using Entity;
+using NostrumDB;
+using NostrumWPFUI.Helpers;
 using NostrumWPFUI.UIEntity;
 using System;
 using System.Collections.Generic;
@@ -12,10 +14,28 @@ namespace NostrumWPFUI.ViewModel
 {
     public class OutStandingPaymentPopupViewModel : BaseViewModel
     {
-        public OutStandingPaymentPopupViewModel()
+        public OutStandingPaymentPopupViewModel(List<Order> orders)
         {
-            LoadDummydata();            
-        }       
+            OutstandingPaymentGridCollection = new ObservableCollection<OutstandingPayment>();
+            FillOutstandingForm(orders);
+        }
+
+        private void FillOutstandingForm(List<Order> paymentList)
+        {
+            int s_no = 0;
+            foreach (var item in paymentList)
+            {
+                if(item.Balance > 0)
+                {
+                    OutstandingPayment payment = new OutstandingPayment();
+                    payment.SerialNo = ++s_no + ".";
+                    payment.InvoiceNo = "INV-" + item.FY + "-" + item.Order_Id;
+                    payment.InvoiceDate = item.Order_Date.ToString("dd-MMM-yyyy");
+                    payment.InvoiceAmount = item.Balance;
+                    OutstandingPaymentGridCollection.Add(payment);
+                }
+            }
+        }
 
         public int TotalOutStanding
         {
@@ -31,15 +51,6 @@ namespace NostrumWPFUI.ViewModel
         {
             get { return _outstandingPaymentGridCollection; }
             set { _outstandingPaymentGridCollection = value; this.RaisePropertyChange(); }
-        }
-
-        public void LoadDummydata()
-        {
-            OutstandingPaymentGridCollection = new ObservableCollection<OutstandingPayment>();
-            OutstandingPaymentGridCollection.Add(new OutstandingPayment { SerialNo = "01", InvoiceDate = "13/02/2020", InvoiceNo = "001",  InvoiceAmount = 1500});
-            OutstandingPaymentGridCollection.Add(new OutstandingPayment { SerialNo = "02", InvoiceDate = "11/02/2020", InvoiceNo = "002",  InvoiceAmount = 2500 });
-            OutstandingPaymentGridCollection.Add(new OutstandingPayment { SerialNo = "03", InvoiceDate = "10/02/2020", InvoiceNo = "003",  InvoiceAmount = 3500 }); 
-                  
         }
     }
 }

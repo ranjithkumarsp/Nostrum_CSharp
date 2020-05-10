@@ -1,4 +1,5 @@
-﻿using NostrumWPFUI.Helpers;
+﻿using Entity;
+using NostrumWPFUI.Helpers;
 using NostrumWPFUI.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -21,10 +22,10 @@ namespace NostrumWPFUI.View
     /// </summary>
     public partial class OutStandingPaymentPopupView : Window, IClosable
     {
-        public OutStandingPaymentPopupView()
+        public OutStandingPaymentPopupView(List<Order> paymentList)
         {
             InitializeComponent();
-            this.DataContext = new OutStandingPaymentPopupViewModel();
+            this.DataContext = new OutStandingPaymentPopupViewModel(paymentList);
         }
 
         public void ClosePopupWindow()

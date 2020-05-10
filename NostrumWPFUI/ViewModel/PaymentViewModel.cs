@@ -1,4 +1,6 @@
-﻿using NostrumWPFUI.Helpers;
+﻿using Entity;
+using NostrumDB;
+using NostrumWPFUI.Helpers;
 using NostrumWPFUI.UIEntity;
 using NostrumWPFUI.View;
 using Prism.Commands;
@@ -8,15 +10,13 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
+using System.Windows;
 using System.Windows.Input;
 
 namespace NostrumWPFUI.ViewModel
 {
     public class PaymentViewModel : BaseViewModel
     {
-        MakePaymentView _makePaymentView;
-        MakePaymentViewModel _makePaymentViewModel;
         public PaymentViewModel()
         {
             Initialize();
@@ -24,87 +24,181 @@ namespace NostrumWPFUI.ViewModel
         public ICommand InvoiceDetailsCommand { get; set; }
         public ICommand OutStandingDetailsCommand { get; set; }
 
-        private bool _isClientInvoiceGridVisible;
-
-        public bool IsClientInvoiceGridVisible
-        {
-            get { return _isClientInvoiceGridVisible; }
-            set { _isClientInvoiceGridVisible = value; this.RaisePropertyChange(); }
-        }
-
-
-        private ObservableCollection<ClientPayment> _clientPaymentCollection;
+        private ObservableCollection<ClientPayment> _clientPaymentList;
 
         public ObservableCollection<ClientPayment> ClientPaymentCollection
         {
-            get { return _clientPaymentCollection; }
-            set { _clientPaymentCollection = value; this.RaisePropertyChange(); }
+            get { return _clientPaymentList; }
+            set { _clientPaymentList = value; this.RaisePropertyChange(); }
         }
 
+        private List<string> _pendingInvoiceList;
+        public List<string> PendingInvoiceList { get => _pendingInvoiceList; set => _pendingInvoiceList = value; }
+
+        private List<string> _clientsList;
+
+        public List<string> ClientsList
+        {
+            get { return _clientsList; }
+            set { _clientsList = value; this.RaisePropertyChange(); }
+        }
+
+        private string _selectedClient;
+
+        public string SelectedClient
+        {
+            get { return _selectedClient; }
+            set { _selectedClient = value; }
+        }
+
+
+        private bool _isGridVisible;
+
+        public bool IsGridVisible
+        {
+            get { return _isGridVisible; }
+            set { _isGridVisible = value; this.RaisePropertyChange(); }
+        }
+
+        private DateTime _fromDate;
+
+        public DateTime FromDate
+        {
+            get { return _fromDate; }
+            set { _fromDate = value; }
+        }
+
+        private DateTime _toDate;
+
+        public DateTime ToDate
+        {
+            get { return _toDate; }
+            set { _toDate = value; }
+        }
 
         public void Initialize()
         {
-            InvoiceDetailsCommand = new CustomDelegateCommand(InvoiceDetailsMethod);
+            IsGridVisible = false;
+            FromDate = DateTime.Today.AddYears(-1);
+            ToDate = DateTime.Today;
+            _dbInterface = new MySQLDBInterface();
+
+            InvoiceDetailsCommand = new CustomDelegateCommand(LoadInvoiceDetailsMethod);
             OutStandingDetailsCommand = new CustomDelegateCommand(OutStandingDetailsMethod);
-            IsClientInvoiceGridVisible = false;
-            LoadDummydata();
-           
+            ClientPaymentCollection = new ObservableCollection<ClientPayment>();
+            PendingInvoiceList = new List<string>();
+
+            GetClientsFromDB();
         }
 
-        public void InvoiceDetailsMethod(object param)
+        private void GetClientsFromDB()
         {
-            IsClientInvoiceGridVisible = true;
+            ClientDAO dao = new ClientDAO(_dbInterface);
+            ClientsList = dao.GetClients();
+            if(ClientsList.Count > 0)
+            {
+                SelectedClient = ClientsList[0];
+            }
         }
+
+        public void LoadInvoiceDetailsMethod(object param)
+        { 
+            IsGridVisible = true;
+            ClientPaymentCollection.Clear();
+            PendingInvoiceList.Clear();
+
+            List<Order> paymentList = GetOrderDetailsFromDB(SelectedClient, FromDate, ToDate);
+
+            if(paymentList.Count > 0)
+            {
+                foreach (var item in paymentList)
+                {
+                    ClientPayment clientPayment = new ClientPayment();
+                    clientPayment.OrderId = item.Order_Id;
+                    clientPayment.FY = item.FY;
+                    clientPayment.Client = item.Client_Name;
+                    clientPayment.Date = item.Order_Date.ToString("dd-MMM-yyyy");
+                    clientPayment.Amount = item.Amount;
+                    clientPayment.Balance = item.Balance;
+                    ClientPaymentCollection.Add(clientPayment);
+                    if(clientPayment.Balance != 0)
+                    {
+                        PendingInvoiceList.Add(clientPayment.InvoiceNo);
+                    }
+                }
+            }
+            else
+            {
+                IsGridVisible = false;
+                MessageBox.Show("No Sale order available for the selected client for the selected period", "Info");
+            }
+        }
+
+        private List<Order> GetOrderDetailsFromDB(string selectedClient, DateTime fromDate, DateTime toDate)
+        {
+            List<Order> orders = new List<Order>();
+            if (String.IsNullOrWhiteSpace(SelectedClient))
+            {
+                MessageBox.Show("Select Client", "Error");
+                return orders;
+            }
+            else
+            {
+                OrderDAO orderDAO = new OrderDAO(_dbInterface);
+                orders = orderDAO.GetPaymentDetails(SelectedClient, FromDate, ToDate);
+            }
+            return orders;
+        }
+
+        private List<Order> GetPendingOrdersFromDB(string selectedClient, DateTime fromDate, DateTime toDate)
+        {
+            List<Order> orders = new List<Order>();
+            if (String.IsNullOrWhiteSpace(SelectedClient))
+            {
+                MessageBox.Show("Select Client", "Error");
+                return orders;
+            }
+            else
+            {
+                OrderDAO orderDAO = new OrderDAO(_dbInterface);
+                orders = orderDAO.GetPendingPayments(SelectedClient, FromDate, ToDate);
+            }
+            return orders;
+        }
+
         public void OutStandingDetailsMethod(object param)
         {
-            OutStandingPaymentPopupView outstandingPaymentPopup = new OutStandingPaymentPopupView();
-            OutStandingPaymentPopupViewModel _outStandingPaymentPopupViewModel = new OutStandingPaymentPopupViewModel();
-            outstandingPaymentPopup.DataContext = _outStandingPaymentPopupViewModel;
-            outstandingPaymentPopup.Owner = MainWindow;
-            outstandingPaymentPopup.ShowDialog();
-        }
-
-        public void LoadDummydata()
-        {
-            ClientPaymentCollection = new ObservableCollection<ClientPayment>();
-            ClientPaymentCollection.Add(new ClientPayment { InvoiceNo = "001", Client = "raj", Date = "13/02/2020", Amount = 1500, Balance = 500 });
-            ClientPaymentCollection.Add(new ClientPayment { InvoiceNo = "002", Client = "kamal", Date = "10/02/2020", Amount = 1500, Balance = 0 });
-            ClientPaymentCollection.Add(new ClientPayment { InvoiceNo = "003", Client = "abi", Date = "13/01/2020", Amount = 2500, Balance = 2500 });
-            ClientPaymentCollection.Add(new ClientPayment { InvoiceNo = "004", Client = "ranji", Date = "1/02/2020", Amount = 4500, Balance = 0 });
+            List<Order> paymentList = GetPendingOrdersFromDB(SelectedClient, FromDate, ToDate);
+            if(paymentList.Count > 0)
+            {
+                OutStandingPaymentPopupView outstandingPaymentPopup = new OutStandingPaymentPopupView(paymentList);
+                outstandingPaymentPopup.Owner = MainWindow;
+                outstandingPaymentPopup.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("No outstanding for the selected client", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
         }
 
         private DelegateCommand<ClientPayment> _fieldName;
+        private IDBInterface _dbInterface;
+
         public DelegateCommand<ClientPayment> SelectedCommand =>
             _fieldName ?? (_fieldName = new DelegateCommand<ClientPayment>(ExecuteSelectedCommand));
 
-        private void ExecuteSelectedCommand(ClientPayment _selectedClient)
+        private void ExecuteSelectedCommand(ClientPayment selectedClient)
         {
-            ClientPayment _selectedClientfromView = _selectedClient;
-            //if (_makePaymentView == null)
-                _makePaymentView = new MakePaymentView();
-            //if (_makePaymentViewModel == null)
-                _makePaymentViewModel = new MakePaymentViewModel();
-            _makePaymentView.DataContext = _makePaymentViewModel;
-            _makePaymentViewModel.SelectedClient = _selectedClient;
-            _makePaymentView.Owner = MainWindow;
-            _makePaymentView.ShowDialog();
-
-
-            //Have to check on usage of TriggerParameterPath="AddedItems"
-            //prism:InvokeCommandAction
-            //ClientPayment rw1 = ((object[])obj)[0] as ClientPayment;
-
-        }
-
-        private DelegateCommand<object> _selectedrow;
-        public DelegateCommand<object> SelectedRowCommand =>
-            _selectedrow ?? (_selectedrow = new DelegateCommand<object>(ExecuteSelectedRowCommand));
-
-        private void ExecuteSelectedRowCommand(object obj)
-        {
-            DataGrid dg = obj as DataGrid;
-            var selectedindex = dg.SelectedIndex;
-            var selectedItem = dg.SelectedItem;
+            if (selectedClient != null && selectedClient.Balance == 0)
+            {
+                MessageBox.Show("No Outstanding for this bill.", "Info");
+                return;
+            }
+            MakePaymentView makePaymentView = new MakePaymentView(selectedClient, PendingInvoiceList);
+            makePaymentView.Owner = MainWindow;
+            makePaymentView.ShowDialog();
+            LoadInvoiceDetailsMethod(null);
         }
     }
 }

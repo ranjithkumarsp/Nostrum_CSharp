@@ -9,12 +9,26 @@ namespace NostrumWPFUI.UIEntity
 {
     public class ClientPayment :BaseViewModel
     {
-        private string _invoiceNo;
+
+        private int _orderId;
+
+        public int OrderId
+        {
+            get { return _orderId; }
+            set { _orderId = value; }
+        }
+
+        private string _fy;
+
+        public string FY
+        {
+            get { return _fy; }
+            set { _fy = value; }
+        }
 
         public string InvoiceNo
         {
-            get { return _invoiceNo; }
-            set { _invoiceNo = value; this.RaisePropertyChange(); }
+            get { return "INV-"+FY+"-"+OrderId; }
         }
 
         private string _client;
@@ -33,17 +47,17 @@ namespace NostrumWPFUI.UIEntity
             set { _datet = value; this.RaisePropertyChange(); }
         }
 
-        private double _amount;
+        private int _amount;
 
-        public double Amount
+        public int Amount
         {
             get { return _amount; }
             set { _amount = value; this.RaisePropertyChange(); }
         }
 
-        private double _balance;
+        private int _balance;
 
-        public double Balance
+        public int Balance
         {
             get { return _balance; }
             set { _balance = value; this.RaisePropertyChange(); }

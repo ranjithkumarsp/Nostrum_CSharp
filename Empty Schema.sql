@@ -36,15 +36,6 @@ CREATE TABLE `clients` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `clients`
---
-
-LOCK TABLES `clients` WRITE;
-/*!40000 ALTER TABLE `clients` DISABLE KEYS */;
-/*!40000 ALTER TABLE `clients` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `order_line_items`
 --
 
@@ -70,15 +61,6 @@ CREATE TABLE `order_line_items` (
   CONSTRAINT `Order-Product-Key` FOREIGN KEY (`Product_Name`, `Batch`) REFERENCES `products` (`Name`, `Batch`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `order_line_items`
---
-
-LOCK TABLES `order_line_items` WRITE;
-/*!40000 ALTER TABLE `order_line_items` DISABLE KEYS */;
-/*!40000 ALTER TABLE `order_line_items` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -183,26 +165,18 @@ CREATE TABLE `orders` (
   `Order_Id` int NOT NULL,
   `FY` varchar(4) NOT NULL,
   `Order_Date` date NOT NULL,
-  `Dispatch_Mode` varchar(10) NOT NULL,
-  `Client_Name` varchar(45) NOT NULL,
-  `Amount` int DEFAULT NULL,
-  `Discount` double DEFAULT NULL,
-  `Payment_Terms` int NOT NULL DEFAULT '30',
   `Order_Type` enum('Donate','Sale') NOT NULL DEFAULT 'Sale',
+  `Client_Name` varchar(45) NOT NULL,
+  `Amount` int DEFAULT '0',
+  `Balance` int DEFAULT '0',
+  `Discount` double DEFAULT '0',
+  `Payment_Terms` int NOT NULL DEFAULT '30',
+  `Dispatch_Mode` varchar(10) NOT NULL,
   PRIMARY KEY (`Order_Id`,`FY`),
   KEY `Order_Client_idx` (`Client_Name`),
   CONSTRAINT `Order_Client` FOREIGN KEY (`Client_Name`) REFERENCES `clients` (`Display_Name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `orders`
---
-
-LOCK TABLES `orders` WRITE;
-/*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-/*!40000 ALTER TABLE `orders` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `payments`
@@ -212,26 +186,37 @@ DROP TABLE IF EXISTS `payments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `payments` (
-  `Payment_ID` int NOT NULL,
+  `Payment_ID` int NOT NULL AUTO_INCREMENT,
   `Order_ID` int NOT NULL,
   `FY` varchar(4) NOT NULL,
-  `Amount` double NOT NULL,
+  `Payment` int NOT NULL,
   `Pay_Date` date NOT NULL,
   PRIMARY KEY (`Payment_ID`),
   KEY `Order-Payment-Key_idx` (`Order_ID`),
   KEY `Order-Payment-Key_idx1` (`Order_ID`,`FY`),
   CONSTRAINT `Order-Payment-Key` FOREIGN KEY (`Order_ID`, `FY`) REFERENCES `orders` (`Order_Id`, `FY`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `payments`
---
-
-LOCK TABLES `payments` WRITE;
-/*!40000 ALTER TABLE `payments` DISABLE KEYS */;
-/*!40000 ALTER TABLE `payments` ENABLE KEYS */;
-UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `payments_AFTER_INSERT` AFTER INSERT ON `payments` FOR EACH ROW BEGIN
+	DECLARE `balance` INT;
+    SET `balance` = (SELECT orders.Balance FROM orders WHERE orders.Order_Id = NEW.Order_Id AND orders.fy = NEW.fy);
+    SET `balance` = `balance` - NEW.payment;
+    UPDATE orders SET balance = `balance` WHERE orders.order_id = NEW.order_id AND orders.fy = NEW.fy;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `products`
@@ -256,15 +241,6 @@ CREATE TABLE `products` (
   PRIMARY KEY (`Name`,`Batch`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `products`
---
-
-LOCK TABLES `products` WRITE;
-/*!40000 ALTER TABLE `products` DISABLE KEYS */;
-/*!40000 ALTER TABLE `products` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -334,15 +310,6 @@ CREATE TABLE `stock` (
   CONSTRAINT `Stock_product_key` FOREIGN KEY (`Product`, `Batch`) REFERENCES `products` (`Name`, `Batch`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `stock`
---
-
-LOCK TABLES `stock` WRITE;
-/*!40000 ALTER TABLE `stock` DISABLE KEYS */;
-/*!40000 ALTER TABLE `stock` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -353,4 +320,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-05-05  0:01:18
+-- Dump completed on 2020-05-10 20:51:14

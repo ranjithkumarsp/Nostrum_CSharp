@@ -16,7 +16,7 @@ namespace NostrumDB
         private const string _password = "1234";
 
         private static MySqlConnection _dbConn;
-        private MySqlTransaction _mySqlTransaction;
+       // private MySqlTransaction _mySqlTransaction;
         public MySqlConnection ConnectionObj
         {
             get

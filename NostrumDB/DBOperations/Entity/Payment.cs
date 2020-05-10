@@ -8,23 +8,11 @@ namespace Entity
 {
     public class Payment
     {
-        private string _paymentId;
         private int _orderId;
         private string _fy;
-        private double _amount;
+        private int _payment;
         private DateTime _payDate;
 
-        public string Payment_ID
-        {
-            get
-            {
-                return _paymentId;
-            }
-            set
-            {
-                _paymentId = value;
-            }
-        }
         public int Order_ID
         {
             get
@@ -47,17 +35,19 @@ namespace Entity
                 _fy = value;
             }
         }
-        public double Amount
+
+        public int PaymentMade
         {
             get
             {
-                return _amount;
+                return _payment;
             }
             set
             {
-                _amount = value;
+                _payment = value;
             }
         }
+        
         public DateTime Pay_Date
         {
             get
