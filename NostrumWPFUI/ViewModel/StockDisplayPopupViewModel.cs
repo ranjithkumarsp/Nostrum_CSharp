@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace NostrumWPFUI.ViewModel
 {
@@ -26,7 +27,7 @@ namespace NostrumWPFUI.ViewModel
             set => txtProduct = value;
         }
         public string TxtFromTo { get => txtFromTo; set => txtFromTo = value; }
-
+        public ICommand SaveAsPDFCommand { get; set; }
         public StockDisplayPopupViewModel(string prod, DateTime from, DateTime to)
         {
             _dbInterface = new MySQLDBInterface();
@@ -34,6 +35,7 @@ namespace NostrumWPFUI.ViewModel
             TxtProduct = prod;
             TxtFromTo = from.ToString("dd-MMM-yyyy") + " to " + to.ToString("dd-MMM-yyyy");
             LoadStock(prod, from , to);
+            SaveAsPDFCommand = new NostrumWPFUI.Helpers.PrintCommand();
         }
 
         private void LoadStock(string product, DateTime from, DateTime to)

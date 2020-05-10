@@ -42,7 +42,9 @@
             Text="{Binding PaymentAmount, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Grid.Row="1"
                  />
         <Button Content="Make Payment" IsDefault="True" HorizontalAlignment="Left" Margin="141,123.8,0,0" VerticalAlignment="Top" Width="128" Height="32"
-                Command="{Binding MakePaymentCommand}" Grid.Row="1"
+                Command="{Binding MakePaymentCommand}" 
+                CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
+                Grid.Row="1"
                 />
         <Button Content="Cancel" IsCancel="True" HorizontalAlignment="Left" Margin="302,123.8,0,0" VerticalAlignment="Top" Width="134" Height="32" RenderTransformOrigin="1.607,0.722" Grid.Row="1"/>
         <TextBlock HorizontalAlignment="Left" Height="30" Margin="85,74.8,0,0" TextWrapping="NoWrap" Text="Pay Date" VerticalAlignment="Top" Width="169" TextAlignment="Right" Grid.Row="1"/>

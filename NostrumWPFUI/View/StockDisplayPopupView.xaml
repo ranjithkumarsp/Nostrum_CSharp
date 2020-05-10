@@ -34,7 +34,10 @@
             <ColumnDefinition Width="158*"/>
             <ColumnDefinition Width="15"/>
         </Grid.ColumnDefinitions>
-
+        <Button x:Name="SaveasPdfButton" Content="Save As PDF" Style="{StaticResource BoldLinkButton}" Grid.Row="0" Grid.Column="3" Command="{Binding SaveAsPDFCommand}" HorizontalAlignment="Right" VerticalAlignment="Top"
+                CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}}"
+                Click="Button_Click"
+                />
         <Border x:Name="HeaderGridBorder" Grid.Row="1" Grid.Column="1"  Grid.ColumnSpan="3" BorderBrush="Gray" BorderThickness="3">
             <Grid Name="HeaderGrid" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="5">
                 <Grid.RowDefinitions>
@@ -66,6 +69,7 @@
                     <ColumnDefinition Width="100*"/>
                     <ColumnDefinition Width="3"/>
                 </Grid.ColumnDefinitions>
+
                 
                 <!--<ScrollViewer Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">-->                    
                 <DataGrid Name="OutstandingPaymentGrid" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" 
@@ -77,14 +81,13 @@
                           CanUserAddRows="False" 
 						  SelectionMode="Single" 
 						  SelectionUnit="FullRow"						  
-						  CanUserReorderColumns="False"                          
+						  CanUserReorderColumns="False" CanUserResizeColumns="False"                         
                           IsReadOnly="True">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="Auto"/>
                             <DataGridTextColumn Header="InvoiceNo" Binding="{Binding InvoiceNo}" Width="Auto"/>
                             <DataGridTextColumn Header="Manufacturer" Binding="{Binding Manufacturer}" Width="Auto"/>
                             <DataGridTextColumn Header="BatchNo" Binding="{Binding BatchNo}" Width="Auto"/>
-
                             <DataGridTextColumn Header="Manufacture Date" Binding="{Binding ManufactureDate}" Width="Auto"/>
                             <DataGridTextColumn Header="Expiry Date" Binding="{Binding ExpiryDate}" Width="Auto"/>
                             <DataGridTextColumn Header="Purchase Qty" Binding="{Binding PurchaseQty}" Width="Auto"/>

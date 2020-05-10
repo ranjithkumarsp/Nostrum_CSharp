@@ -27,7 +27,7 @@
                       Command="{Binding CloseBillFormWindowCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
                       />
             </MenuItem>
-            <MenuItem Header="Print"  
+            <MenuItem Header="Print" Click="MenuItem_Click"  
                           Command="{Binding SaveAsPDFCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}}"/>
 
         </Menu>
@@ -124,7 +124,7 @@
                         <DataGrid x:Name="BillingDataGrid" Grid.Row="3"  Grid.Column="1" Grid.ColumnSpan="5" 
                               ColumnWidth="SizeToCells" AutoGenerateColumns="False" SelectionMode="Single" SelectionUnit="Cell"
                               ItemsSource="{Binding LineItemSourceCollection}" PreviewMouseWheel="UIElement_OnPreviewMouseWheel"
-                              CanUserAddRows="False"
+                              CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" IsReadOnly="True" 
                               Background="White">
 
                             <DataGrid.Columns>

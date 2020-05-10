@@ -37,5 +37,10 @@ namespace NostrumWPFUI.View
         {
             this.Hide();
         }
+
+        private void SaveasPdfButton_Click(object sender, RoutedEventArgs e)
+        {
+            SaveasPdfButton.Visibility = Visibility.Collapsed;
+        }
     }
 }

@@ -35,7 +35,10 @@
             <ColumnDefinition Width="158*"/>
             <ColumnDefinition Width="30"/>
         </Grid.ColumnDefinitions>
-
+        <Button x:Name="SaveasPdfButton" Content="Save As PDF" Style="{StaticResource BoldLinkButton}" Grid.Row="0" Grid.Column="3" Command="{Binding SaveAsPDFCommand}" HorizontalAlignment="Right" VerticalAlignment="Top"
+                CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}}"
+                Click="SaveasPdfButton_Click" 
+                />
         <Border x:Name="HeaderGridBorder" Grid.Row="1" Grid.Column="1"  Grid.ColumnSpan="3" BorderBrush="Gray" BorderThickness="3">
             <Grid Name="HeaderGrid" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="5">
                 <Grid.RowDefinitions>
@@ -70,7 +73,7 @@
                     <ColumnDefinition Width="5"/>
                     <ColumnDefinition Width="220"/>
                     <ColumnDefinition Width="150"/>
-                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="130"/>
                     <ColumnDefinition Width="100*"/>
                     <ColumnDefinition Width="5"/>
                 </Grid.ColumnDefinitions>
@@ -84,7 +87,9 @@
                            ScrollViewer.HorizontalScrollBarVisibility="Auto"
                           ScrollViewer.VerticalScrollBarVisibility="Auto"
                           FlowDirection="LeftToRight" FontSize="15" 
-                          CanUserAddRows="False" CanUserReorderColumns="False">
+                          CanUserAddRows="False" CanUserReorderColumns="False"
+                          CanUserDeleteRows="False" CanUserResizeRows="False" CanUserResizeColumns="False" IsReadOnly="True" 
+                          >
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="S.No" Binding="{Binding SerialNo}"/>
                         <DataGridTextColumn Header="Invoice Date" Binding="{Binding InvoiceDate}"/>
@@ -94,8 +99,9 @@
             
             
             </DataGrid>
-                <TextBlock Text="TOTAL" Grid.Row="3" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="18" FontWeight="Heavy"/>
-                <TextBlock Text="{Binding TotalOutStanding,UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="18" FontWeight="Heavy"/>
+                <TextBlock Text="TOTAL : " Grid.Row="3" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="18" FontWeight="Heavy"/>
+                <TextBlock Text="{Binding TotalOutStanding,UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="4" VerticalAlignment="Center" 
+                           HorizontalAlignment="Left" FontSize="18" FontWeight="Heavy" Margin="0,0,0,0"/>
                 <TextBlock Text="With Regards," Grid.Row="4" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" FontSize="16" FontWeight="Normal"/>
                 <TextBlock Text="Rajganesh.S" Grid.Row="5" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="15" FontWeight="Normal"/>
             </Grid>

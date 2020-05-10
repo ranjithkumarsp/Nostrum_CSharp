@@ -50,6 +50,11 @@ namespace NostrumWPFUI.View
                 var parent = ((Control)sender).Parent as UIElement;
                 parent?.RaiseEvent(eventArg);
             }
-        }        
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            FileMenu.Visibility = Visibility.Hidden;
+        }
     }
 }

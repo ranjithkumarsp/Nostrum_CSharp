@@ -26,6 +26,9 @@ namespace NostrumWPFUI.View
             this.DataContext = new StockDisplayPopupViewModel(prod, from, to);
         }
 
-        
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            SaveasPdfButton.Visibility = Visibility.Collapsed;
+        }
     }
 }

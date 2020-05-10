@@ -339,6 +339,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Resource Include="Images\Nostrum.ico" />
+    <Resource Include="Images\Nostrum.PNG" />
+    <Resource Include="Images\Nostrum1.PNG" />
+    <Resource Include="Images\NostrumLogo.jpeg" />
     <Content Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -1,6 +1,7 @@
 ﻿using Entity;
 using NostrumDB;
 using NostrumWPFUI.UIEntity;
+using NostrumWPFUI.View;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace NostrumWPFUI.ViewModel
 {
     public class MakePaymentViewModel : BaseViewModel
     {
+        MakePaymentView _makePaymentview;
         public MakePaymentViewModel(ClientPayment selectedClient, List<string> pendingInvoiceList)
         {
             SelectedClient = selectedClient;
@@ -92,12 +94,13 @@ namespace NostrumWPFUI.ViewModel
 
         #region Commands
 
-        private DelegateCommand _makepayment;
-        public DelegateCommand MakePaymentCommand =>
-            _makepayment ?? (_makepayment = new DelegateCommand(ExecuteMakePayment));
+        private DelegateCommand<object> _makepayment;
+        public DelegateCommand<object> MakePaymentCommand =>
+            _makepayment ?? (_makepayment = new DelegateCommand<object>(ExecuteMakePayment));
 
-        public void ExecuteMakePayment()
+        public void ExecuteMakePayment(object param)
         {
+            _makePaymentview = param as MakePaymentView;
             Payment payment = new Payment();
             payment.Order_ID = SelectedClient.OrderId;
             payment.FY = SelectedClient.FY;
@@ -107,6 +110,8 @@ namespace NostrumWPFUI.ViewModel
             if(paymentDAO.AddPayment(payment))
             {
                 MessageBox.Show("Payment Added Successfully", "Info", MessageBoxButton.OK,MessageBoxImage.Information);
+                if (_makePaymentview != null)
+                    _makePaymentview.Close();
             }
             else
             {

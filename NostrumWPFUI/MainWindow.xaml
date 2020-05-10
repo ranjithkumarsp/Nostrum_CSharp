@@ -35,7 +35,7 @@
                     <i:InvokeCommandAction Command="{Binding TabSelectionChangedCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TabControl}}}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
-            <TabItem Header="Billing" Name="BillingTab">
+            <TabItem Header="Billing" Name="BillingTab">                
                 <Views:BillingView/>
             </TabItem>
             <TabItem Header="Payment" Name="PaymentTab">

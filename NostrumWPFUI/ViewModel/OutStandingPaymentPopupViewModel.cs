@@ -14,10 +14,12 @@ namespace NostrumWPFUI.ViewModel
 {
     public class OutStandingPaymentPopupViewModel : BaseViewModel
     {
+        public ICommand SaveAsPDFCommand { get; set; }
         public OutStandingPaymentPopupViewModel(List<Order> orders)
         {
             OutstandingPaymentGridCollection = new ObservableCollection<OutstandingPayment>();
             FillOutstandingForm(orders);
+            SaveAsPDFCommand = new PrintCommand();
         }
 
         private void FillOutstandingForm(List<Order> paymentList)

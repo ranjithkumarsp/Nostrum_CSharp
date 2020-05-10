@@ -8,10 +8,13 @@
              xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
              xmlns:local="clr-namespace:NostrumWPFUI.View"
              xmlns:behaviours="clr-namespace:NostrumWPFUI.Behaviours"
-             mc:Ignorable="d" x:Name="BillingViewMainView"
+             mc:Ignorable="d" x:Name="BillingViewMainView" 
              d:DesignHeight="550" d:DesignWidth="800">
+    <UserControl.Background>
+        <ImageBrush ImageSource="../Images/Nostrum.PNG" TileMode="None" Stretch="UniformToFill"/>
+    </UserControl.Background>
     <Grid>
-        <Grid Background="WhiteSmoke">
+        <Grid Background="WhiteSmoke">            
             <Grid.RowDefinitions>
                 <RowDefinition x:Name="header" Height="55"/>
                 <RowDefinition Height="5"/>

@@ -52,13 +52,13 @@
                 <Button Content="Invoice Details" Grid.Column="0"  Height="30"  VerticalAlignment="Center" Command="{Binding InvoiceDetailsCommand}" Grid.ColumnSpan="3" Margin="56,5,120.6,0"/>
                 <Button Content="Outstanding" Grid.Column="2" Height="30" Command="{Binding OutStandingDetailsCommand}"  VerticalAlignment="Center" Margin="56.2,5,-56.4,0" />
             </Grid>
-            <ScrollViewer Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="4" Visibility="{Binding IsClientInvoiceGridVisible,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,21.8,23.2,10.4" Grid.RowSpan="2">
+            <ScrollViewer Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="4" Visibility="{Binding IsClientInvoiceGridVisible,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource BooleanToVisibilityConverter}}"  Grid.RowSpan="2">
                 <DataGrid Name="ClientInvoice"  MinHeight="100" Height="166" Width="403"  
                           ItemsSource="{Binding ClientPaymentCollection}" AutoGenerateColumns="False"
                           ColumnWidth="auto" HorizontalAlignment="Left" VerticalAlignment="Top"
                           EnableRowVirtualization="false" EnableColumnVirtualization="false" 
-                          FlowDirection="LeftToRight" FontSize="15" 
-                          CanUserAddRows="False" CanUserReorderColumns="False" SelectionMode="Single" SelectionUnit="FullRow" IsReadOnly="True"
+                          FlowDirection="LeftToRight" FontSize="15" CanUserResizeColumns="False" IsReadOnly="True"
+                          CanUserAddRows="False" CanUserReorderColumns="False" SelectionMode="Single" SelectionUnit="FullRow" 
                           Visibility="{Binding IsGridVisible,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource BooleanToVisibilityConverter}}"                         
                           >
                     <DataGrid.Resources>
@@ -111,11 +111,11 @@
                         </Style>
                     </DataGrid.RowStyle>
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Invoice Number" Binding="{Binding InvoiceNo}" Width="Auto"/>
-                        <DataGridTextColumn Header="Client" Binding="{Binding Client}" Width="Auto"/>
-                        <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="Auto"/>
-                        <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" Width="Auto"/>
-                        <DataGridTextColumn Header="Balance" Binding="{Binding Balance}" Width="Auto"/>
+                        <DataGridTextColumn Header="Invoice Number" Binding="{Binding InvoiceNo}" Width="*" CanUserResize="False"/>
+                        <DataGridTextColumn Header="Client" Binding="{Binding Client}" Width="Auto" CanUserResize="False"/>
+                        <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="Auto" CanUserResize="False"/>
+                        <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" Width="Auto" CanUserResize="False"/>
+                        <DataGridTextColumn Header="Balance" Binding="{Binding Balance}" Width="Auto" CanUserResize="False"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </ScrollViewer>
