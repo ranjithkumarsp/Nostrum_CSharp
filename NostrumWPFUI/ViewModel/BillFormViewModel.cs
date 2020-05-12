@@ -158,9 +158,6 @@ namespace NostrumWPFUI.ViewModel
         }
 
         //DispatchMode
-
-        private string _dispatchMode;
-
         public string DispatchMode
         {
             get { return CurrentOrder.Dispatch_Mode; }
@@ -186,8 +183,11 @@ namespace NostrumWPFUI.ViewModel
         public ICommand SaveBillForm { get; set; }
         public ICommand PrintBillForm { get; set; }
 
-        public ICommand SaveAsPDFCommand { get; set; }
+        public ICommand SaveAsPDF { get; set; }
+        public ICommand SaveAsExcel { get; set; }
+        public ICommand SaveAsImage { get; set; }
         public RelayCommand<IClosable> CloseBillFormWindowCommand { get; private set; }
+        public string lblDLNo { get; private set; }
 
         public BillFormViewModel(Order order, List<LineItem> LineItems)
         {
@@ -196,11 +196,16 @@ namespace NostrumWPFUI.ViewModel
             _dbInterface = new MySQLDBInterface();
             DiscountModified = new CustomDelegateCommand(DiscountModifiedMethod);
             SaveBillForm = new CustomDelegateCommand(SaveForm);
-            PrintBillForm = new CustomDelegateCommand(_printBillForm);
+            SaveAsPDF = new CustomDelegateCommand(SaveAsPDFMethod);
             CloseBillFormWindowCommand = new RelayCommand<IClosable>(this.CloseBillForm);
-            SaveAsPDFCommand = new PrintCommand();
+            PrintBillForm = new PrintCommand();
             Initialize();
-        }        
+        }
+
+        private void SaveAsPDFMethod(object obj)
+        {
+            throw new NotImplementedException();
+        }
 
         private void CloseBillForm(IClosable _billFormWindow)
         {
@@ -279,6 +284,14 @@ namespace NostrumWPFUI.ViewModel
             Phone = client.Phone;
             BuyersTINNo = client.TIN_No;
             BuyersDLNo = client.DL_No;
+            if(client.Type.Equals("Doctor"))
+            {
+                lblDLNo = "Regn No.";
+            }
+            else
+            {
+                lblDLNo = "Drug License No.";
+            }
         }
 
         private void SaveForm(object obj)
@@ -333,24 +346,24 @@ namespace NostrumWPFUI.ViewModel
             return true;
         }
 
-        private void _printBillForm(object obj)
-        {
-            //BillFormView _billFormView = obj as BillFormView; // TODO : Convert full screen to pdf with out menu and scroll bars.
-            Grid _gridtoprint = obj as Grid; 
+        //private void _printBillForm(object obj)
+        //{
+        //    //BillFormView _billFormView = obj as BillFormView; // TODO : Convert full screen to pdf with out menu and scroll bars.
+        //    Grid _gridtoprint = obj as Grid; 
 
-            PrintDialog prnt = new PrintDialog();
-            if (prnt != null)
-            {
-                Size pageSize = new Size(prnt.PrintableAreaWidth, prnt.PrintableAreaHeight);
-                _gridtoprint.Measure(pageSize);
-                _gridtoprint.Arrange(new Rect(25, 25, pageSize.Width, pageSize.Height));
+        //    PrintDialog prnt = new PrintDialog();
+        //    if (prnt != null)
+        //    {
+        //        Size pageSize = new Size(prnt.PrintableAreaWidth, prnt.PrintableAreaHeight);
+        //        _gridtoprint.Measure(pageSize);
+        //        _gridtoprint.Arrange(new Rect(25, 25, pageSize.Width, pageSize.Height));
 
-                if (prnt.ShowDialog() == true)
-                {
-                    prnt.PrintVisual(_gridtoprint, "Nostrum Billing");
-                }
-            }
+        //        if (prnt.ShowDialog() == true)
+        //        {
+        //            prnt.PrintVisual(_gridtoprint, "Nostrum Billing");
+        //        }
+        //    }
 
-        }
+        //}
     }
 }

@@ -126,7 +126,7 @@ namespace Entity
         {
             get
             {
-                if (Product.DrugType.Syrup == _drugType)
+                if (Product.DrugType.Syrup == _drugType || Product.DrugType.Suspension == _drugType)
                 {
                     return Pack1 + " ml";
                 }
@@ -142,7 +142,7 @@ namespace Entity
             get
             {
                 if (Offer1 == 0 || Offer2 == 0)
-                    return "Nett Rate!";
+                    return "Nett Rate";
                 else
                     return Offer1 + " + " + Offer2;
             }
@@ -235,6 +235,11 @@ namespace Entity
             MRP = product.MRP;
             ExpDate = product.Exp_Date.ToString("MMM-yy");
             _drugType = product.Drug_Type;
+            if (_drugType == Product.DrugType.Syrup || _drugType == Product.DrugType.Suspension)
+            {
+                Pack1 = product.Pack1;
+                Pack2 = 0;
+            }
             CGST = product.CGST;
             SGST = product.SGST;
         }

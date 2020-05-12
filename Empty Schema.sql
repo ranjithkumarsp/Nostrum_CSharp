@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `nostrumex` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `nostrumex`;
--- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.20, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: nostrumex
 -- ------------------------------------------------------
--- Server version	8.0.19
+-- Server version	8.0.20
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -31,6 +31,7 @@ CREATE TABLE `clients` (
   `Address` varchar(300) DEFAULT NULL,
   `TIN_No` varchar(20) DEFAULT NULL,
   `DL_No` varchar(20) DEFAULT NULL,
+  `Type` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`Display_Name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -170,7 +171,7 @@ CREATE TABLE `orders` (
   `Amount` int DEFAULT '0',
   `Balance` int DEFAULT '0',
   `Discount` double DEFAULT '0',
-  `Payment_Terms` int NOT NULL DEFAULT '30',
+  `Payment_Terms` varchar(10) NOT NULL DEFAULT '30',
   `Dispatch_Mode` varchar(10) NOT NULL,
   PRIMARY KEY (`Order_Id`,`FY`),
   KEY `Order_Client_idx` (`Client_Name`),
@@ -228,9 +229,11 @@ DROP TABLE IF EXISTS `products`;
 CREATE TABLE `products` (
   `Name` varchar(25) NOT NULL,
   `Batch` varchar(25) NOT NULL,
-  `Drug_Type` enum('Tablet','Syrup') NOT NULL,
-  `Mfg_Date` date NOT NULL,
-  `Exp_Date` date NOT NULL,
+  `Drug_Type` enum('Tablet','Syrup','Capsule','Suspension') NOT NULL,
+  `Mfg_Date` datetime NOT NULL,
+  `Exp_Date` datetime NOT NULL,
+  `Pack1` int DEFAULT NULL,
+  `Pack2` int DEFAULT NULL,
   `Quantity` int NOT NULL,
   `CGST` double NOT NULL,
   `SGST` double NOT NULL,
@@ -251,7 +254,12 @@ CREATE TABLE `products` (
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `Create_Stock` AFTER INSERT ON `products` FOR EACH ROW BEGIN
-insert into stock values(new.Name,new.batch,new.quantity);
+SET @quantity = new.quantity;
+if new.Drug_Type like 'Tablet' or new.Drug_Type like 'Capsule'
+Then
+	SET @quantity = @quantity * new.Pack1 * new.Pack2;
+End if;
+insert into stock values(new.Name,new.batch,@quantity);
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -268,9 +276,26 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `Update_Stock` AFTER UPDATE ON `products` FOR EACH ROW BEGIN
-declare `saleqty` int;
-set `saleqty` = NEW.quantity - OLD.quantity;
-update stock set qty = qty + `saleqty` where Product=NEW.name and batch=NEW.batch;
+	declare `oldqty` int;
+	declare `newqty` int;
+	declare `qty` int;
+
+	if old.Drug_Type like 'Tablet' or old.Drug_Type like 'Capsule'
+	then
+		SET `oldqty` = old.quantity * old.pack1 * old.pack2;
+	else
+		SET `oldqty` = old.quantity;
+	end if;
+
+	if new.Drug_Type like 'Tablet' or new.Drug_Type like 'Capsule'
+	then
+		SET `newqty` = new.quantity * new.pack1 * new.pack2;
+	else
+		SET `newqty` = new.quantity;
+	end if;
+
+	set `qty` = `newqty` - `oldqty`;
+	update stock set qty = qty + `qty` where Product=NEW.name and batch=NEW.batch;
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -310,6 +335,14 @@ CREATE TABLE `stock` (
   CONSTRAINT `Stock_product_key` FOREIGN KEY (`Product`, `Batch`) REFERENCES `products` (`Name`, `Batch`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping events for database 'nostrumex'
+--
+
+--
+-- Dumping routines for database 'nostrumex'
+--
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -320,4 +353,4 @@ CREATE TABLE `stock` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-05-10 20:51:14
+-- Dump completed on 2020-05-12  9:48:39

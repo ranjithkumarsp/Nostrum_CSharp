@@ -12,6 +12,7 @@ using System.Windows;
 using NostrumWPFUI.View;
 using System.Collections.ObjectModel;
 using Prism.Commands;
+using System.ComponentModel;
 
 namespace NostrumWPFUI.ViewModel
 {
@@ -24,41 +25,22 @@ namespace NostrumWPFUI.ViewModel
             get { return CurrentProduct.Name; }
             set
             {
+                if (value.Length > 24)
+                {
+                    MessageBox.Show("Product Name too big", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
                 CurrentProduct.Name = NostrumHelper.UppercaseFirst(value);
                 this.RaisePropertyChange();
             }
         }
 
-        private bool _tablet;
-
-        public bool Tablet
+        public string Type
         {
-            get { return _tablet; }
+            get { return CurrentProduct.StrDrugType; }
             set
             {
-                _tablet = value;
-                if(_tablet)
-                {
-                    CurrentProduct.Drug_Type = Product.DrugType.Tablet;
-                    _syrup = false;
-                }                
-                this.RaisePropertyChange();
-            }
-        }
-
-        private bool _syrup;
-
-        public bool Syrup
-        {
-            get { return _syrup; }
-            set
-            {
-                _syrup = value;
-                if(_syrup)
-                {
-                    CurrentProduct.Drug_Type = Product.DrugType.Syrup;
-                    _tablet = false;
-                }                
+                CurrentProduct.StrDrugType = value;
                 this.RaisePropertyChange();
             }
         }
@@ -66,37 +48,124 @@ namespace NostrumWPFUI.ViewModel
         public string BatchNo
         {
             get { return CurrentProduct.Batch; }
-            set { CurrentProduct.Batch = value; this.RaisePropertyChange(); }
+            set 
+            {
+                if (value.Length > 24)
+                {
+                    MessageBox.Show("Batch No too big", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                CurrentProduct.Batch = value; 
+                this.RaisePropertyChange(); 
+            }
         }
 
-        public DateTime MfgDate
+        public string MfgDate
         {
-            get { return CurrentProduct.Mfg_Date; }
-            set { CurrentProduct.Mfg_Date = value; this.RaisePropertyChange(); }
+            get { return CurrentProduct.Mfg_Date.ToString("MMM-yyyy"); }
+            set 
+            {
+                DateTime result;
+                if (DateTime.TryParseExact(value, "MMM-yyyy", null, System.Globalization.DateTimeStyles.None, out result))
+                {
+                    CurrentProduct.Mfg_Date = result;
+                    this.RaisePropertyChange();
+                }
+                else
+                {
+                    MessageBox.Show("Invalid date format", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }                
+            }
         }
 
-        public DateTime ExpDate
+        public string ExpDate
         {
-            get { return CurrentProduct.Exp_Date; }
-            set { CurrentProduct.Exp_Date = value; this.RaisePropertyChange(); }
+            get { return CurrentProduct.Exp_Date.ToString("MMM-yyyy"); }
+            set 
+            {
+                DateTime result;
+                if (DateTime.TryParseExact(value, "MMM-yyyy", null, System.Globalization.DateTimeStyles.None, out result))
+                {
+                    CurrentProduct.Exp_Date = result;
+                    this.RaisePropertyChange();
+                }
+                else
+                {
+                    MessageBox.Show("Invalid date format. Try MMM-yyyy format", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
         }
 
+        public int Pack1
+        {
+            get { return CurrentProduct.Pack1; }
+            set
+            {
+                if (value < 1)
+                {
+                    MessageBox.Show("Invalid Packing", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                CurrentProduct.Pack1 = value;
+                this.RaisePropertyChange();
+            }
+        }
+        public int Pack2
+        {
+            get { return CurrentProduct.Pack2; }
+            set
+            {
+                if (value < 1)
+                {
+                    MessageBox.Show("Invalid Packing", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                CurrentProduct.Pack2 = value;
+                this.RaisePropertyChange();
+            }
+        }
         public int Quantity
         {
             get { return CurrentProduct.Quantity; }
-            set { CurrentProduct.Quantity = value; this.RaisePropertyChange(); }
+            set { 
+                if(value < 1)
+                {
+                    MessageBox.Show("Invalid Quantity", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                CurrentProduct.Quantity = value; 
+                this.RaisePropertyChange(); 
+            }
         }
 
         public double CGST
         {
             get { return CurrentProduct.CGST; }
-            set { CurrentProduct.CGST = value; this.RaisePropertyChange(); }
+            set 
+            {
+                if (value < 0)
+                {
+                    MessageBox.Show("Invalid CGST", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                CurrentProduct.CGST = value; 
+                this.RaisePropertyChange(); 
+            }
         }
 
         public double SGST
         {
             get { return CurrentProduct.SGST; }
-            set { CurrentProduct.SGST = value; this.RaisePropertyChange(); }
+            set 
+            {
+                if (value < 0)
+                {
+                    MessageBox.Show("Invalid SGST", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                CurrentProduct.SGST = value; 
+                this.RaisePropertyChange(); 
+            }
         }
         public double MRP
         {
@@ -112,6 +181,11 @@ namespace NostrumWPFUI.ViewModel
             }
             set
             {
+                if (value.Length > 44)
+                {
+                    MessageBox.Show("Manufacturer too big", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
                 CurrentProduct.Manufacturer = NostrumHelper.UppercaseFirst(value); 
                 this.RaisePropertyChange();
             }
@@ -164,6 +238,8 @@ namespace NostrumWPFUI.ViewModel
         private Product _currentProduct;
         private IDBInterface _dbInterface;
 
+        public ObservableCollection<string> DrugTypeList { get; private set; }
+
         public Product CurrentProduct
         {
             get { return _currentProduct; }
@@ -195,6 +271,7 @@ namespace NostrumWPFUI.ViewModel
             EditProductCommand = new CustomDelegateCommand(EditProductMethod);
             CurrentProduct = new Product();
             _dbInterface = new MySQLDBInterface();
+            DrugTypeList = new ObservableCollection<string>(Product.ValidProductTypes);
             ClearMethod(null);
             FillManufacturerSuggestion();
         }
@@ -218,12 +295,11 @@ namespace NostrumWPFUI.ViewModel
             Product prod = productDAO.GetProduct(product, batch);
             ProductName = prod.Name;
             BatchNo = prod.Batch;
-            if (prod.Drug_Type == Product.DrugType.Tablet)
-                Tablet = true;
-            else
-                Syrup = true;
-            MfgDate = prod.Mfg_Date;
-            ExpDate = prod.Exp_Date;
+            Type = prod.StrDrugType;
+            MfgDate = prod.Mfg_Date.ToString("MMM-yyyy");
+            ExpDate = prod.Exp_Date.ToString("MMM-yyyy");
+            Pack1 = prod.Pack1;
+            Pack2 = prod.Pack2;
             Quantity = prod.Quantity;
             CGST = prod.CGST;
             SGST = prod.SGST;
@@ -313,13 +389,14 @@ namespace NostrumWPFUI.ViewModel
             IsNewProduct = true;
             ProductName = string.Empty;
             BatchNo = string.Empty;
-            Tablet = true;
-            Syrup = false;
-            MfgDate = DateTime.Today;
-            ExpDate = DateTime.Today;
-            Quantity = 0;
-            CGST = 0;
-            SGST = 0;
+            Type = DrugTypeList.First<string>();
+            MfgDate = DateTime.Today.ToString("MMM-yyyy");
+            ExpDate = DateTime.Today.ToString("MMM-yyyy");
+            Pack1 = 1;
+            Pack2 = 1;
+            Quantity = 1;
+            CGST = 6;
+            SGST = 6;
             MRP = 0;
             Manufacturer = string.Empty;
             PurchaseDate = DateTime.Today;

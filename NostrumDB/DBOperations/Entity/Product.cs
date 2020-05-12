@@ -8,155 +8,71 @@ namespace Entity
 {
     public class Product
     {
+        public static List<string> ValidProductTypes = new List<string> { "Tablet", "Syrup", "Capsule", "Suspension" };
         public enum DrugType
         {
             Tablet = 0,
-            Syrup = 1
+            Syrup,
+            Capsule,
+            Suspension,
         }
 
-        private string _name;
-        private string _batch;
-        private DrugType _drugType;
-        private DateTime _mfgDate;
-        private DateTime _expDate;
-        private int _quantity;
-        private double _cgst;
-        private double _sgst;
-        private double _mrp;
-        private string _manufacuturer;
-        private DateTime _purchaseDate;
-        private string _purchaseInvNo;
-        public string Name
+        public static string DrugTypeToString(DrugType type)
+        {
+            switch (type)
+            {
+                case DrugType.Tablet:
+                    return ValidProductTypes[(int)DrugType.Tablet];
+                case DrugType.Syrup:
+                    return ValidProductTypes[(int)DrugType.Syrup];
+                case DrugType.Capsule:
+                    return ValidProductTypes[(int)DrugType.Capsule];
+                case DrugType.Suspension:
+                    return ValidProductTypes[(int)DrugType.Suspension];
+                default:
+                    return ValidProductTypes[(int)DrugType.Tablet];
+            }
+        }
+
+        public static DrugType StringToDrugType(string dt)
+        {
+            DrugType type = DrugType.Tablet;
+            if (dt.Equals(ValidProductTypes[(int)DrugType.Tablet]))
+                type = DrugType.Tablet;
+            else if (dt.Equals(ValidProductTypes[(int)DrugType.Capsule]))
+                type = DrugType.Capsule;
+            else if (dt.Equals(ValidProductTypes[(int)DrugType.Syrup]))
+                type = DrugType.Syrup;
+            else if (dt.Equals(ValidProductTypes[(int)DrugType.Suspension]))
+                type = DrugType.Suspension;
+            return type;
+        }
+
+        public string StrDrugType
         {
             get
             {
-                return _name;
+                return DrugTypeToString(Drug_Type);
             }
             set
             {
-                _name = value;
+                Drug_Type = StringToDrugType(value);               
             }
         }
-        public string Batch
-        {
-            get
-            {
-                return _batch;
-            }
-            set
-            {
-                _batch = value;
-            }
-        }
-        public DrugType Drug_Type
-        {
-            get
-            {
-                return _drugType;
-            }
-            set
-            {
-                _drugType = value;
-            }
-        }
-        public DateTime Mfg_Date
-        {
-            get
-            {
-                return _mfgDate;
-            }
-            set
-            {
-                _mfgDate = value;
-            }
-        }
-        public DateTime Exp_Date
-        {
-            get
-            {
-                return _expDate;
-            }
-            set
-            {
-                _expDate = value;
-            }
-        }
-        public int Quantity
-        {
-            get
-            {
-                return _quantity;
-            }
-            set
-            {
-                _quantity = value;
-            }
-        }
-        public double CGST
-        {
-            get
-            {
-                return _cgst;
-            }
-            set
-            {
-                _cgst = value;
-            }
-        }
-        public double SGST
-        {
-            get
-            {
-                return _sgst;
-            }
-            set
-            {
-                _sgst = value;
-            }
-        }
-        public double MRP
-        {
-            get
-            {
-                return _mrp;
-            }
-            set
-            {
-                _mrp = value;
-            }
-        }
-        public string Manufacturer
-        {
-            get
-            {
-                return _manufacuturer;
-            }
-            set
-            {
-                _manufacuturer = value;
-            }
-        }
-        public DateTime Purchase_Date
-        {
-            get
-            {
-                return _purchaseDate;
-            }
-            set
-            {
-                _purchaseDate = value;
-            }
-        }
-        public string Purchase_Invoice
-        {
-            get
-            {
-                return _purchaseInvNo;
-            }
-            set
-            {
-                _purchaseInvNo = value;
-            }
-        }
+
+        public string Name { get; set; }
+        public string Batch { get; set; }
+        public DrugType Drug_Type { get; set; }
+        public DateTime Mfg_Date { get; set; }
+        public DateTime Exp_Date { get; set; }
+        public int Pack1 { get; set; }
+        public int Pack2 { get; set; }
+        public int Quantity { get; set; }
+        public double CGST { get; set; }
+        public double SGST { get; set; }
+        public double MRP { get; set; }
+        public string Manufacturer { get; set; }
+        public DateTime Purchase_Date { get; set; }
+        public string Purchase_Invoice { get; set; }
     }
 }

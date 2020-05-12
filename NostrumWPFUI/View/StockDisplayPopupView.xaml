@@ -34,10 +34,8 @@
             <ColumnDefinition Width="158*"/>
             <ColumnDefinition Width="15"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="SaveasPdfButton" Content="Save As PDF" Style="{StaticResource BoldLinkButton}" Grid.Row="0" Grid.Column="3" Command="{Binding SaveAsPDFCommand}" HorizontalAlignment="Right" VerticalAlignment="Top"
-                CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}}"
-                Click="Button_Click"
-                />
+        <Button x:Name="SaveasPdfButton" Content="Print" Style="{StaticResource BoldLinkButton}" Grid.Row="0" Grid.Column="3" Command="{Binding SaveAsPDFCommand}" HorizontalAlignment="Right" VerticalAlignment="Top"
+                CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}}" />
         <Border x:Name="HeaderGridBorder" Grid.Row="1" Grid.Column="1"  Grid.ColumnSpan="3" BorderBrush="Gray" BorderThickness="3">
             <Grid Name="HeaderGrid" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="5">
                 <Grid.RowDefinitions>

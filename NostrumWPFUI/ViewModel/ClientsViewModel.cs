@@ -4,6 +4,7 @@ using NostrumWPFUI.Helpers;
 using NostrumWPFUI.View;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -44,7 +45,15 @@ namespace NostrumWPFUI.ViewModel
                 this.RaisePropertyChange();
             }
         }
-
+        public string SelectedType 
+        { 
+            get { return CurrentClient.Type; }
+            set
+            {
+                CurrentClient.Type = value;
+                this.RaisePropertyChange();
+            } 
+        }
         public string DLNo
         {
             get { return CurrentClient.DL_No; }
@@ -120,6 +129,8 @@ namespace NostrumWPFUI.ViewModel
         }
 
         //public ICommand AddClientCommand { get; set; }
+        public ObservableCollection<string> ClientType { get; set; }
+
         public ICommand ClearCommand { get; set; }
         public ICommand EditUserCommand { get; set; }
         public ICommand AddClientCommand { get; set; }
@@ -184,7 +195,10 @@ namespace NostrumWPFUI.ViewModel
             ClearCommand = new CustomDelegateCommand(ClearMethod);
             EditUserCommand = new CustomDelegateCommand(EditClientMethod);
             //AddClientCommand = new RelayCommand(AddClientMethod, CanAddClient); Relay command keeps calling the CanExecute method. Need to revisit on the usage of this. 
-
+            ClientType = new ObservableCollection<string>();
+            ClientType.Add("Pharmacist");
+            ClientType.Add("Doctor");
+            SelectedType = ClientType.First<string>();
             ClearMethod(null);
         }
 

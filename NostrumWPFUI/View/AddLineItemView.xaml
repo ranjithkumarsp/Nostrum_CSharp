@@ -41,10 +41,11 @@
         <TextBlock HorizontalAlignment="Left" Margin="99,121,0,0" TextWrapping="Wrap" Text="Offer" VerticalAlignment="Top" Height="23"/>
         <TextBlock HorizontalAlignment="Left" Margin="99,150,0,0" TextWrapping="Wrap" Text="Quantity" VerticalAlignment="Top" Height="23"/>
         <TextBlock HorizontalAlignment="Left" Margin="99,183,0,0" TextWrapping="Wrap" Text="Rate" VerticalAlignment="Top" Height="23"/>
-        <TextBox Text="{Binding CurrentLineItem.Pack1, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Left" Height="16" Margin="228,91,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="45"/>
+        <TextBox Text="{Binding CurrentLineItem.Pack1, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Left" Height="16" Margin="228,91,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="45"
+                 IsEnabled="{Binding IsProductSolid, Mode=OneWay}"/>
         <TextBlock HorizontalAlignment="Left" Margin="283,91,0,0" TextWrapping="Wrap" Text="{Binding PackingUnitText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  VerticalAlignment="Top" Width="18"/>
         <TextBox Text="{Binding CurrentLineItem.Pack2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
-                 Visibility="{Binding IsPackingVisible,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,Converter={StaticResource BooleanToVisibilityConverter}}"
+                 Visibility="{Binding IsProductSolid,Mode=OneWay,Converter={StaticResource BooleanToVisibilityConverter}}"
                  HorizontalAlignment="Left" Height="16" Margin="311,91,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="37"/>
         <TextBox Text="{Binding CurrentLineItem.Offer1, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Left" Height="16" Margin="228,121,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="45"/>
         <TextBlock HorizontalAlignment="Left" Margin="283,121,0,0" TextWrapping="Wrap" Text="+" VerticalAlignment="Top" Width="18"/>

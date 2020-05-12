@@ -54,7 +54,7 @@ namespace NostrumWPFUI.ViewModel
                 if (_isDonationChecked)
                 {
                     CurrentOrder.Order_Type = Order.OrderType.DonateOrder;
-                    CurrentOrder.Payment_Terms = 0;
+                    CurrentOrder.Payment_Terms = "-";
                     _isBillingChecked = false;
                 }
                 this.RaisePropertyChange();
@@ -101,7 +101,7 @@ namespace NostrumWPFUI.ViewModel
             }
         }
 
-        public int PaymentTerms
+        public string PaymentTerms
         {
             get { return CurrentOrder.Payment_Terms; }
             set
@@ -110,8 +110,6 @@ namespace NostrumWPFUI.ViewModel
                 this.RaisePropertyChange();
             }
         }
-
-        private string _dispatchMode;
 
         public string DispatchMode
         {

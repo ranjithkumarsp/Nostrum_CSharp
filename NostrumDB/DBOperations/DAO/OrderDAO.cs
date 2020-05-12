@@ -54,7 +54,7 @@ namespace NostrumDB
                 order.Amount = (int)reader["Amount"];
                 order.Balance = (int)reader["Balance"];
                 order.Discount = (double)reader["Discount"];
-                order.Payment_Terms = (int)reader["Payment_Terms"];
+                order.Payment_Terms = reader["Payment_Terms"].ToString();
             }
             else
             {

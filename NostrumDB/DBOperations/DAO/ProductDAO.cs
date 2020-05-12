@@ -16,7 +16,7 @@ namespace NostrumDB
         public bool AddProduct(Product product)
         {
             int nRowsAffected = 0;
-            string query = "Insert into products values('" + product.Name + "','" + product.Batch+ "','" + product.Drug_Type+ "','" + product.Mfg_Date.ToString("yyyy-MM-dd") + "','" + product.Exp_Date.ToString("yyyy-MM-dd") + "','" + product.Quantity + "','" + product.CGST+ "','" + product.SGST+ "','" + product.MRP + "','" + product.Manufacturer + "','" + product.Purchase_Date.ToString("yyyy-MM-dd") + "','" + product.Purchase_Invoice + "');";
+            string query = "Insert into products values('" + product.Name + "','" + product.Batch+ "','" + product.Drug_Type+ "','" + product.Mfg_Date.ToString("yyyy-MM-dd") + "','" + product.Exp_Date.ToString("yyyy-MM-dd") + "','" + product.Pack1 + "','" + product.Pack2 + "','" + product.Quantity + "','" + product.CGST+ "','" + product.SGST+ "','" + product.MRP + "','" + product.Manufacturer + "','" + product.Purchase_Date.ToString("yyyy-MM-dd") + "','" + product.Purchase_Invoice + "');";
             nRowsAffected = _dbInterface.ExecuteNonQuery(query);
             return (nRowsAffected > 0);
         }
@@ -58,6 +58,8 @@ namespace NostrumDB
                 product.Drug_Type = (Product.DrugType) Enum.Parse(typeof(Product.DrugType), reader["Drug_Type"].ToString(), true);
                 product.Mfg_Date = (DateTime) reader["Mfg_Date"];
                 product.Exp_Date = (DateTime) reader["Exp_Date"];
+                product.Pack1 = (int)reader["Pack1"];
+                product.Pack2 = (int)reader["Pack2"];
                 product.Quantity = (int)reader["Quantity"];
                 product.CGST = (double)reader["CGST"];
                 product.SGST = (double)reader["SGST"];
@@ -87,6 +89,8 @@ namespace NostrumDB
                 product.Drug_Type = (Product.DrugType)Enum.Parse(typeof(Product.DrugType), dr["Drug_Type"].ToString(), true);
                 product.Mfg_Date = (DateTime)dr["Mfg_Date"];
                 product.Exp_Date = (DateTime)dr["Exp_Date"];
+                product.Pack1 = (int)dr["Pack1"];
+                product.Pack2 = (int)dr["Pack2"];
                 product.Quantity = (int)dr["Quantity"];
                 product.CGST = (double)dr["CGST"];
                 product.SGST = (double)dr["SGST"];
@@ -126,7 +130,6 @@ namespace NostrumDB
 
         public Product.DrugType GetProductType(string name)
         {
-            Product.DrugType type = Product.DrugType.Tablet;
             string query = "Select Drug_Type from products where name = '" + name + "';";
 
             object obj = _dbInterface.ExecuteScalar(query);
@@ -134,15 +137,13 @@ namespace NostrumDB
             if (obj != null && obj != DBNull.Value)
                 drugType = Convert.ToString(obj);
 
-            type = drugType.Equals("Syrup") ? Product.DrugType.Syrup : Product.DrugType.Tablet;
-            
-            return type;
+            return Product.StringToDrugType(drugType);
         }
 
         public bool UpdateProduct(Product product)
         {
             int nRowsAffected = 0;
-            string query = "Update products set Drug_Type = '" + product.Drug_Type + "', Mfg_Date = '" + product.Mfg_Date.ToString("yyyy-MM-dd") + "', Exp_Date = '" + product.Exp_Date.ToString("yyyy-MM-dd") + "', Quantity = '" + product.Quantity + "', CGST = '" + product.CGST + "', SGST = '" + product.SGST + "', MRP = '" + product.MRP + "', Manufacturer = '" + product.Manufacturer + "', Purchase_Date = '" + product.Purchase_Date.ToString("yyyy-MM-dd") + "', Purchase_Invoice = '" + product.Purchase_Invoice + "' where Name = '" + product.Name + "' and Batch = '" + product.Batch + "';";
+            string query = "Update products set Drug_Type = '" + product.Drug_Type + "', Mfg_Date = '" + product.Mfg_Date.ToString("yyyy-MM-dd") + "', Exp_Date = '" + product.Exp_Date.ToString("yyyy-MM-dd") + "', Pack1 = '" + product.Pack1 + "', Pack2 = '" + product.Pack2 + "', Quantity = '" + product.Quantity + "', CGST = '" + product.CGST + "', SGST = '" + product.SGST + "', MRP = '" + product.MRP + "', Manufacturer = '" + product.Manufacturer + "', Purchase_Date = '" + product.Purchase_Date.ToString("yyyy-MM-dd") + "', Purchase_Invoice = '" + product.Purchase_Invoice + "' where Name = '" + product.Name + "' and Batch = '" + product.Batch + "';";
             nRowsAffected = _dbInterface.ExecuteNonQuery(query);
             return (nRowsAffected > 0);
         }

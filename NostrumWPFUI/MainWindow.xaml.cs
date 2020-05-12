@@ -45,7 +45,7 @@ namespace NostrumWPFUI
         {
             TabControl tc = sender as TabControl; //The sender is a type of TabControl...
 
-            if (tc != null)
+            if (tc != null && tc.SelectedItem != null)
             {
                 var item = tc.SelectedItem;
                 TabItem selectedtabname = tc.SelectedItem as TabItem;

@@ -10,6 +10,7 @@ namespace Entity
     {
         private string _name;
         private string _phone;
+        private string _type;
         private string _displayName;
         private string _address;
         private string _tinNo;
@@ -83,5 +84,7 @@ namespace Entity
                 _dlNo = value;
             }
         }
+
+        public string Type { get => _type; set => _type = value; }
     }
 }

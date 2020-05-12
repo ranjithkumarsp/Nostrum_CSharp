@@ -65,12 +65,12 @@ namespace NostrumWPFUI.ViewModel
         }
 
 
-        private bool _isPackingVisible;
+        private bool _isProductSolid;
 
-        public bool IsPackingVisible
+        public bool IsProductSolid
         {
-            get { return _isPackingVisible; }
-            set { _isPackingVisible = value; this.RaisePropertyChange(); }
+            get { return _isProductSolid; }
+            set { _isProductSolid = value; this.RaisePropertyChange(); }
         }
 
         private LineItem _lineItem;
@@ -112,8 +112,20 @@ namespace NostrumWPFUI.ViewModel
             if (!String.IsNullOrWhiteSpace(SelectedProduct) && !(String.IsNullOrWhiteSpace(CurrentLineItem.Batch)))
             {
                 StockDAO stockDAO = new StockDAO(_dBInterface);
+                int tmpQty = 0;
                 _availableQty = stockDAO.GetStockQuantity(SelectedProduct, CurrentLineItem.Batch);
-                AvailableQtyToolTipString = "Available Quantity: " + _availableQty;
+                tmpQty = _availableQty;
+                if (IsProductSolid)
+                {
+                    if(CurrentLineItem.Pack1 !=0 && CurrentLineItem.Pack2 != 0)
+                        tmpQty = tmpQty / (CurrentLineItem.Pack1 * CurrentLineItem.Pack2);
+                }
+                if ((CurrentLineItem.Offer1!=0) && ((CurrentLineItem.Offer1 + CurrentLineItem.Offer2) != 0))
+                {
+                    tmpQty = tmpQty / CurrentLineItem.Offer1;
+                    tmpQty = tmpQty / (CurrentLineItem.Offer1 + CurrentLineItem.Offer2);
+                }
+                AvailableQtyToolTipString = "Available Quantity: " + tmpQty;
             }
         }
 
@@ -220,17 +232,16 @@ namespace NostrumWPFUI.ViewModel
                 FillBatchList();
                 ProductDAO productDAO = new ProductDAO(_dBInterface);
                 Product.DrugType type = productDAO.GetProductType(SelectedProduct);
-                if (type == Product.DrugType.Syrup)
+                if (type == Product.DrugType.Syrup || type == Product.DrugType.Suspension)
                 {
-                    IsPackingVisible = false;
+                    IsProductSolid = false;
+                    CurrentLineItem.Pack1 = 100;
                     PackingUnitText = "ML";
                 }
                 else
                 {
-                    //Do the reverse.
-                    IsPackingVisible = true;
+                    IsProductSolid = true;
                     PackingUnitText = "X";
-                    
                 }
             }
         }

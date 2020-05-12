@@ -20,13 +20,14 @@
             </ResourceDictionary.MergedDictionaries>
             <conv:DebugConverter x:Key="DebugConverter"/>
         </ResourceDictionary>
-        
+
     </UserControl.Resources>
     <Grid>
         <Grid Background="WhiteSmoke">
             <Grid.RowDefinitions>
                 <RowDefinition x:Name="header2" Height="34.515"/>
                 <RowDefinition Height="21.485"/>
+                <RowDefinition Height="45"/>
                 <RowDefinition Height="45"/>
                 <RowDefinition Height="45"/>
                 <RowDefinition Height="90"/>
@@ -48,30 +49,34 @@
                 <ColumnDefinition x:Name="RightMargin2" Width="36.146"/>
                 <ColumnDefinition Width="90"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Row="2" Grid.Column="2"  HorizontalAlignment="Right" VerticalAlignment="Center"  TextWrapping="Wrap" Text="Client Name"  Height="23" Width="Auto" FontSize="16" FontFamily="Century Gothic" FontWeight="Bold"  />
-            <TextBlock Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap" Text="Display Name"  Height="23" Width="Auto" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" />
-            <TextBlock Grid.Row="4" Grid.Column="2"  HorizontalAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap" Text="Address"  Height="23" Width="Auto" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" ClipToBounds="True" SnapsToDevicePixels="True" />
-            <TextBlock Grid.Row="5" Grid.Column="2"  HorizontalAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap" Text="Mobile No"  Height="23" Width="Auto" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold"  />
-            <TextBlock Grid.Row="6" Grid.Column="2"  HorizontalAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap" Text="D/L No"  Height="23" Width="Auto" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold"  />
-            <TextBlock Grid.Row="7" Grid.Column="2"  HorizontalAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap" Text="TIN No"  Height="23" Width="Auto" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold"  />
+            <TextBlock Grid.Row="2" Grid.Column="2"  HorizontalAlignment="Right" VerticalAlignment="Center"  TextWrapping="Wrap" Text="Client Type"  Height="23" Width="Auto" FontSize="16" FontFamily="Century Gothic" FontWeight="Bold"  />
+            <TextBlock Grid.Row="3" Grid.Column="2"  HorizontalAlignment="Right" VerticalAlignment="Center"  TextWrapping="Wrap" Text="Client Name"  Height="23" Width="Auto" FontSize="16" FontFamily="Century Gothic" FontWeight="Bold"  />
+            <TextBlock Grid.Row="4" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap" Text="Display Name"  Height="23" Width="Auto" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" />
+            <TextBlock Grid.Row="5" Grid.Column="2"  HorizontalAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap" Text="Address"  Height="23" Width="Auto" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" ClipToBounds="True" SnapsToDevicePixels="True" />
+            <TextBlock Grid.Row="6" Grid.Column="2"  HorizontalAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap" Text="Mobile No"  Height="23" Width="Auto" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold"  />
+            <TextBlock Name="lblDLNo"  Grid.Row="7" Grid.Column="2"  HorizontalAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap" Text="D/L No"  Height="23" Width="Auto" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold"  />
+            <TextBlock Grid.Row="8" Grid.Column="2"  HorizontalAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap" Text="GST No"  Height="23" Width="Auto" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold"  />
 
-            <xctk:WatermarkTextBox Watermark="Client Name" Grid.Row="2" Grid.Column="5" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding ClientName, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True, Mode=TwoWay}"  Width="169"  Height="30" />
-            <xctk:WatermarkTextBox Watermark="A Short Name" Grid.Row="3" Grid.Column="5" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding DisplayName, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True, Mode=TwoWay}" IsEnabled="{Binding IsNewClient, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Width="169" Height="30"  />
-            <xctk:WatermarkTextBox Watermark="Address" Grid.Row="4" Grid.Column="5" HorizontalAlignment="Left" Height="75"   VerticalAlignment="Center" Text="{Binding Address, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True, Mode=TwoWay}" Width="169" AcceptsReturn="True"  />
-            <xctk:WatermarkTextBox Watermark="Mobile No" Grid.Row="5" Grid.Column="5" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" Text="{Binding MobileNo, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True, Mode=TwoWay}" VerticalAlignment="Center" Width="169"   />
-            <xctk:WatermarkTextBox Watermark="D.L. No" Grid.Row="6" Grid.Column="5" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" Text="{Binding DLNo, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True, Mode=TwoWay}" VerticalAlignment="Center" Width="169"   />
-            <xctk:WatermarkTextBox Watermark="TIN No" Grid.Row="7" Grid.Column="5" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" Text="{Binding TinNo, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True, Mode=TwoWay}" VerticalAlignment="Center" Width="169"   />
+            <ComboBox Name="cmbClientType" Grid.Row="2" Grid.Column="5" ItemsSource="{Binding ClientType, UpdateSourceTrigger=PropertyChanged}" Height="30"
+                      SelectedItem="{Binding SelectedType, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
+                      SelectionChanged="ClientTypeSelectionChanged" />
+            <xctk:WatermarkTextBox Watermark="Client Name" Grid.Row="3" Grid.Column="5" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding ClientName, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True, Mode=TwoWay}"  Width="169"  Height="30" />
+            <xctk:WatermarkTextBox Watermark="A Short Name" Grid.Row="4" Grid.Column="5" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding DisplayName, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True, Mode=TwoWay}" IsEnabled="{Binding IsNewClient, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Width="169" Height="30"  />
+            <xctk:WatermarkTextBox Watermark="Address" Grid.Row="5" Grid.Column="5" HorizontalAlignment="Left" Height="75"   VerticalAlignment="Center" Text="{Binding Address, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True, Mode=TwoWay}" Width="169" AcceptsReturn="True"  />
+            <xctk:WatermarkTextBox Watermark="Mobile No" Grid.Row="6" Grid.Column="5" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" Text="{Binding MobileNo, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True, Mode=TwoWay}" VerticalAlignment="Center" Width="169"   />
+            <xctk:WatermarkTextBox Name="txtDLNo" Watermark="D.L. No" Grid.Row="7" Grid.Column="5" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" Text="{Binding DLNo, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True, Mode=TwoWay}" VerticalAlignment="Center" Width="169"   />
+            <xctk:WatermarkTextBox Watermark="GST No" Grid.Row="8" Grid.Column="5" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" Text="{Binding TinNo, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True, Mode=TwoWay}" VerticalAlignment="Center" Width="169"   />
             <Button Content="Edit Client" Style="{StaticResource BoldLinkButton}" Grid.Row="1" Grid.Column="7" Grid.ColumnSpan="2" Command="{Binding EditUserCommand}" />
-            <Grid Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="5"  >
+            <Grid Grid.Row="9" Grid.ColumnSpan="6" Margin="134,14.8,0.2,0.2" Grid.RowSpan="2"  >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="210"/>
                     <ColumnDefinition Width="0"/>
                     <ColumnDefinition Width="140"/>
-                    
+
                 </Grid.ColumnDefinitions>
                 <Button IsDefault="True" Content="{Binding SubmitButtonText,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Height="30" Width="100" Grid.Column="0" Command="{Binding AddClientCommand}" HorizontalAlignment="Right"  VerticalAlignment="Center"/>
                 <Button Content="Clear" Height="30" Width="100" Grid.Column="2" Command="{Binding ClearCommand}" HorizontalAlignment="Center"  VerticalAlignment="Center"/>
-                
+
             </Grid>
         </Grid>
     </Grid>

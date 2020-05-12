@@ -9,7 +9,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:const="clr-namespace:NostrumWPFUI.Constants"
         mc:Ignorable="d" x:Name="BillFormWindow"
-        Title="BillFormView" Height="820" Width="810" 
+        Title="BillFormView" Height="720" Width="810" 
         ShowInTaskbar="False" WindowStartupLocation="CenterScreen"
         WindowState="Normal" WindowStyle="SingleBorderWindow" ResizeMode="NoResize" 
         behaviors:WndExitAftConfirmBehaviour.Enabled="True"
@@ -22,14 +22,17 @@
         <Menu Name="FileMenu" Grid.Row="0" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" MinWidth="750" Width="{Binding ElementName=BillFormWindow,Path=Width}">
             <MenuItem Name="File" Header="File">
                 <MenuItem Header="Save" Command="{Binding SaveBillForm}"/>
-                <MenuItem Header="Save As"/>
+                <!--<MenuItem Header="Save As">
+                    <MenuItem Header="PDF" Command="{Binding SaveAsPDF}" CommandParameter="{Binding ElementName=_gridtoprint}"/>
+                    <MenuItem Header="Excel" Command="{Binding SaveAsExcel}" CommandParameter="{Binding ElementName=_gridtoprint}"/>
+                    <MenuItem Header="Image" Command="{Binding SaveAsImage}" CommandParameter="{Binding ElementName=_gridtoprint}"/>
+                </MenuItem>-->
+                <MenuItem Header="Print"
+                          Command="{Binding PrintBillForm}" CommandParameter="{Binding ElementName=_gridtoprint}"/>
                 <MenuItem Name="Exit" Header="Exit" 
                       Command="{Binding CloseBillFormWindowCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
                       />
             </MenuItem>
-            <MenuItem Header="Print" Click="MenuItem_Click"  
-                          Command="{Binding SaveAsPDFCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}}"/>
-
         </Menu>
         <ScrollViewer x:Name="scrollbar" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Grid.Row="1">
             <Grid Height="Auto" x:Name="_gridtoprint">
@@ -214,10 +217,10 @@
                                 <!--Need Splitter below here-->
                                 <!--<GridSplitter Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" Height="5" Background="Gray" BorderThickness="2" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>-->
                                 <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5"  BorderBrush="Gray" BorderThickness="2"/>
-                                <TextBlock Text="Buyers TIN No" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                <TextBlock Text="Buyers GST No" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                                 <TextBlock Text=":" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Top"/>
                                 <TextBlock Text="{Binding BuyersTINNo}" Grid.Row="3" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                                <TextBlock Text="D/L No" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                <TextBlock Text="{Binding lblDLNo, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                                 <TextBlock Text=":"  Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
                                 <TextBlock Text="{Binding BuyersDLNo}" Grid.Row="3" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                                 <Border Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="5"  BorderBrush="Gray" BorderThickness="2"/>

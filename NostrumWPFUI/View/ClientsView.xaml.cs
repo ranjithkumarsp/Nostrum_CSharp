@@ -26,5 +26,19 @@ namespace NostrumWPFUI.View
             InitializeComponent();
             this.DataContext = new ClientsViewModel();
         }
+
+        private void ClientTypeSelectionChanged(object sender, EventArgs e)
+        {
+            if(cmbClientType.SelectedValue.Equals("Doctor"))
+            {
+                this.lblDLNo.Text = "Regn No.";
+                this.txtDLNo.Watermark = "Regn No.";
+            }
+            else
+            {
+                this.lblDLNo.Text = "D/L No.";
+                this.txtDLNo.Watermark = "D.L. No.";
+            }
+        }
     }
 }
