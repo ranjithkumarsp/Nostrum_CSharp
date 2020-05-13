@@ -67,21 +67,25 @@ namespace NostrumWPFUI.ViewModel
         }        
         #endregion
         public ICommand ShowCommand { get; set; }
+        public ICommand RefreshCommand { get; set; }
 
         public void Initialize()
         {
             _dBInterface = new MySQLDBInterface();
             ShowCommand = new CustomDelegateCommand(ShowMethod);
+            RefreshCommand = new CustomDelegateCommand(Refresh);
             FromDate = DateTime.Today.AddYears(-1);
             ToDate = DateTime.Today;
             GetProductsFromDB();
         }
 
+        private void Refresh(object obj)
+        {
+            GetProductsFromDB();
+        }
+
         public void ShowMethod(object param)
         {
-            ProductDAO productDAO = new ProductDAO(_dBInterface);
-            List<Product> purchasedStock = productDAO.GetProducts(SelectedProduct, FromDate, ToDate);
-
             StockDisplayPopupView stockdisplaypopupview = new StockDisplayPopupView(SelectedProduct, FromDate, ToDate);
             stockdisplaypopupview.Owner = MainWindow;
             stockdisplaypopupview.ShowDialog();
@@ -91,6 +95,10 @@ namespace NostrumWPFUI.ViewModel
         {
             ProductDAO productDAO = new ProductDAO(_dBInterface);
             Products = productDAO.GetProductNames();
+            if(Products.Count > 0)
+            {
+                SelectedProduct = Products.First<string>();
+            }    
         }
     }
 }

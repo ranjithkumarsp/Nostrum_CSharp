@@ -136,6 +136,7 @@ namespace NostrumWPFUI.ViewModel
         public ICommand InvoiceEnterCommand { get; set; }
         public ICommand ClearCommand { get; set; }
         public ICommand ViewOldCommand { get; set; }
+        public ICommand RefreshCommand { get; set; }
 
         public BillingView billview;
         public void Initialize()
@@ -143,6 +144,7 @@ namespace NostrumWPFUI.ViewModel
             BillingCommand = new CustomDelegateCommand(BillingMethod);
             ClearCommand = new CustomDelegateCommand(ClearMethod);
             ViewOldCommand = new CustomDelegateCommand(OpenViewOldPopUp);
+            RefreshCommand = new CustomDelegateCommand(Refresh);
             InvoiceEnterCommand = new CustomDelegateCommand(GenerateInvoiceNumber);
 
             CurrentOrder = new Order();

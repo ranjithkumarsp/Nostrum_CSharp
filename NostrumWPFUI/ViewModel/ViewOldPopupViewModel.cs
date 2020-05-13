@@ -115,11 +115,15 @@ namespace NostrumWPFUI.ViewModel
 
         private void OpenBillForm(object obj)
         {
+            ViewOldPopupView view = obj as ViewOldPopupView;
+
             if(String.IsNullOrWhiteSpace(SelectedInvoice))
             {
                 MessageBox.Show("Select a valid Invoice number", "Error");
                 return;
             }
+            
+            view.Close(); // Close the current view before opening the next view.
 
             string fy = ExtractFY();
             int orderId = ExtractOrderId();

@@ -274,6 +274,28 @@ namespace NostrumWPFUI.ViewModel
                 MessageBox.Show(e.Message);
             }
         }
+
+        private void DeleteClient(string selectedClient)
+        {
+            try
+            {
+                ClientDAO clientDAO = new ClientDAO(_dbInterface);
+                if (clientDAO.DeleteClient(selectedClient))
+                {
+                    MessageBox.Show("Client successfully Deleted!");
+                    ClearMethod(null);
+                }
+                else
+                {
+                    MessageBox.Show("Unable to Delete client!");
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+        }
+
         public void ClearMethod(object param)
         {
             IsNewClient = true;
@@ -291,11 +313,25 @@ namespace NostrumWPFUI.ViewModel
 
             if(editClient.ShowDialog() == true)
             {
-                var selectedClient = editClient.GetSelectedClient();
-                IsNewClient = false;
-                FillClientDetails(selectedClient);
+                if (editClient.GetActionTaken() == View.EditPopUpView.ActionTaken.Edit)
+                {
+                    var selectedClient = editClient.GetSelectedClient();
+                    IsNewClient = false;
+                    FillClientDetails(selectedClient);
+                }
+                else if (editClient.GetActionTaken() == View.EditPopUpView.ActionTaken.Delete)
+                {
+                    MessageBoxResult result = MessageBox.Show("Deleting the client will remove the entries the orders he has placed. Want to Continue?", "Delete",
+               MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        var selectedClient = editClient.GetSelectedClient();
+                        DeleteClient(selectedClient);
+                    }
+                } 
             }            
         }
+
         public void FillClientDetails(string clientname)
         {
             ClientDAO dao = new ClientDAO(_dbInterface);
@@ -306,6 +342,7 @@ namespace NostrumWPFUI.ViewModel
             DLNo = client.DL_No;
             TinNo = client.TIN_No;
             MobileNo = client.Phone;
+            SelectedType = client.Type;
         }
     }
 }

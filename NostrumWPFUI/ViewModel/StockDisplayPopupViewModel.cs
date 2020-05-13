@@ -52,11 +52,12 @@ namespace NostrumWPFUI.ViewModel
         private List<Product> GetPurchaseList(string prod, DateTime from, DateTime to)
         {
             ProductDAO productDAO = new ProductDAO(_dbInterface);
-            return productDAO.GetProducts(prod, from, to);
+            return productDAO.GetPurchasedProducts(prod, from, to);
         }
 
         private void FillPurchaseData(Product prod)
         {
+            int quantity = 0;
             StockDisplay disp = new StockDisplay();
             disp.Date = prod.Purchase_Date.ToString("dd-MMM-yyyy");
             disp.InvoiceNo = prod.Purchase_Invoice;
@@ -64,10 +65,19 @@ namespace NostrumWPFUI.ViewModel
             disp.BatchNo = prod.Batch;
             disp.ManufactureDate = prod.Mfg_Date.ToString("MMM-yyyy");
             disp.ExpiryDate = prod.Exp_Date.ToString("MMM-yyyy");
-            disp.PurchaseQty = prod.Quantity.ToString();
+            if(prod.Drug_Type == Product.DrugType.Suspension || prod.Drug_Type == Product.DrugType.Syrup)
+            {
+                quantity = prod.Quantity;
+            }
+            else
+            {
+                quantity = prod.Quantity * prod.Pack1 * prod.Pack2;
+            }
+            
+            disp.PurchaseQty = quantity.ToString();
             disp.SaleQty = "-";
-            disp.Stock = prod.Quantity;
-            RemainingStock = prod.Quantity;
+            disp.Stock = quantity;
+            RemainingStock = quantity;
             StockDisplayCollection.Add(disp);
         }
 

@@ -23,7 +23,7 @@ namespace NostrumWPFUI.ViewModel
         }
         public ICommand InvoiceDetailsCommand { get; set; }
         public ICommand OutStandingDetailsCommand { get; set; }
-
+        public ICommand RefreshCommand { get; set; }
         private ObservableCollection<ClientPayment> _clientPaymentList;
 
         public ObservableCollection<ClientPayment> ClientPaymentCollection
@@ -84,10 +84,16 @@ namespace NostrumWPFUI.ViewModel
             _dbInterface = new MySQLDBInterface();
 
             InvoiceDetailsCommand = new CustomDelegateCommand(LoadInvoiceDetailsMethod);
+            RefreshCommand = new CustomDelegateCommand(Refresh);
             OutStandingDetailsCommand = new CustomDelegateCommand(OutStandingDetailsMethod);
             ClientPaymentCollection = new ObservableCollection<ClientPayment>();
             PendingInvoiceList = new List<string>();
 
+            GetClientsFromDB();
+        }
+
+        private void Refresh(object obj)
+        {
             GetClientsFromDB();
         }
 

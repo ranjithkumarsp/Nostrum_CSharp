@@ -131,10 +131,8 @@ namespace NostrumWPFUI.ViewModel
 
         private void GenBillMethod(object obj)
         {
-            
             AddLineItemView _addlineItemView = obj as AddLineItemView;
             
-
             if (!String.IsNullOrWhiteSpace(CurrentLineItem.Batch))
             {
                 if(ValidateFields())
@@ -147,6 +145,7 @@ namespace NostrumWPFUI.ViewModel
             if (_orderLineItems.Count > 0)
             {
                 _order.IsNewOrder = true;
+                _addlineItemView.Close();
                 BillFormView bfm = new BillFormView(_order, _orderLineItems);
                 bfm.Owner = MainWindow;
                 bfm.ShowDialog();
@@ -154,11 +153,6 @@ namespace NostrumWPFUI.ViewModel
             else
             {
                 MessageBox.Show("Add at least one product to generate Bill", "Error");
-            }
-            //Close LineItemPop up to avoid user entering the details again.//If error don't close the popup
-            if (_addlineItemView != null && ValidateFields())
-            {
-                _addlineItemView.Close();
             }
         }
 
@@ -237,7 +231,6 @@ namespace NostrumWPFUI.ViewModel
                 if (type == Product.DrugType.Syrup || type == Product.DrugType.Suspension)
                 {
                     IsProductSolid = false;
-                    CurrentLineItem.Pack1 = 100;
                     PackingUnitText = "ML";
                 }
                 else

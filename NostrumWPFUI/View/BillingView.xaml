@@ -14,7 +14,7 @@
         <ImageBrush ImageSource="../Images/Nostrum.PNG" TileMode="None" Stretch="UniformToFill"/>
     </UserControl.Background>
     <Grid>
-        <Grid Background="WhiteSmoke">            
+        <Grid Background="WhiteSmoke">
             <Grid.RowDefinitions>
                 <RowDefinition x:Name="header" Height="55"/>
                 <RowDefinition Height="5"/>
@@ -38,8 +38,10 @@
                 <ColumnDefinition Width="155"/>
                 <ColumnDefinition Width="35"/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition x:Name="Refresh" Width="80"/>
                 <ColumnDefinition x:Name="RightMargin" Width="80"/>
             </Grid.ColumnDefinitions>
+            <Button Content="Refresh" Style="{StaticResource BoldLinkButton}" Grid.Row="0" Grid.Column="5" Command="{Binding RefreshCommand}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,14,0.2"/>
             <Button Content="View Old" Style="{StaticResource BoldLinkButton}" Grid.Row="0" Grid.Column="6" Command="{Binding ViewOldCommand}" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
             <RadioButton Name="BillingRadioBtn" Content="Billing" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" IsChecked="{Binding IsBillingChecked,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                          Checked="BillingRadioBtn_Checked" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold"
@@ -79,9 +81,6 @@
             <TextBox x:Name="DispatchModeTxtBox" Text="{Binding DispatchMode,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}" Grid.Row="9" Grid.Column="4" TextAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="169" Width="Auto" Height="36"/>
 
             <ComboBox Grid.Row="4" ItemsSource="{Binding ClientsList}" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="169"  Height="30" IsEditable="True" IsSynchronizedWithCurrentItem="True" IsTabStop="True" StaysOpenOnEdit="True" AllowDrop="True" 
-                      PreviewTextInput="PreviewTextInput_EnhanceComboSearch"
-                      PreviewKeyUp="PreviewKeyUp_EnhanceComboSearch"
-                      DataObject.Pasting="Pasting_EnhanceComboSearch"
                       SelectedItem="{Binding ClientName}">
                 <ComboBox.Style>
                     <Style TargetType="ComboBox">
