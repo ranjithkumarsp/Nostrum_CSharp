@@ -187,7 +187,7 @@ namespace NostrumWPFUI.ViewModel
         public void ClearAll()
         {
             OrderDate = DateTime.Today;
-            PaymentTerms = 30;
+            PaymentTerms = "30";
             SetFinancialYear(DateTime.Today);
             InvoiceNumber = 0;
             if (ClientsList.Count > 0)

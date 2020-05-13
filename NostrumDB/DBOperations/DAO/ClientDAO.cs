@@ -49,6 +49,7 @@ namespace NostrumDB
                 client.Address = reader["Address"].ToString();
                 client.TIN_No = reader["TIN_No"].ToString();
                 client.DL_No = reader["DL_No"].ToString();
+                client.Type = reader["Type"].ToString();
             }
             else
             {

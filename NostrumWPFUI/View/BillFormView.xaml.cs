@@ -50,6 +50,60 @@ namespace NostrumWPFUI.View
                 var parent = ((Control)sender).Parent as UIElement;
                 parent?.RaiseEvent(eventArg);
             }
+        }       
+
+        public void Print_MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            //Double _RowHeight = 30;
+            //if (DiscountTxtBox.Text.Equals("0"))
+            //  _RowHeight = 35;
+            //else            
+            // _RowHeight = 30;
+
+            //RowDefinition r1 = new RowDefinition();
+            //RowDefinition r2 = new RowDefinition(); 
+            //RowDefinition r3 = new RowDefinition();
+            //RowDefinition r4 = new RowDefinition(); 
+            //RowDefinition r5 = new RowDefinition();
+            //RowDefinition r6 = new RowDefinition();
+            //RowDefinition r7 = new RowDefinition();
+
+
+            //Value_row.Height = new GridLength(_RowHeight, GridUnitType.Pixel);
+            //if (DiscountTxtBox.Text.Equals("0"))
+            //    Discount_row.Height = new GridLength(0, GridUnitType.Pixel);
+            //else
+            //    Discount_row.Height = new GridLength(_RowHeight, GridUnitType.Pixel);
+            //Net_Value_row.Height = new GridLength(_RowHeight, GridUnitType.Pixel);
+            //CGST_row.Height = new GridLength(_RowHeight, GridUnitType.Pixel);
+            //SGST_row.Height = new GridLength(_RowHeight, GridUnitType.Pixel);
+            //Total_row.Height = new GridLength(_RowHeight, GridUnitType.Pixel);
+            //InvoiceAmount_row.Height = new GridLength(_RowHeight, GridUnitType.Pixel);
+
+            SetRowDefinitions(false);
+
         }
+
+        public void SetRowDefinitions(bool _canshowDiscount)
+        {            
+            Double _RowHeight = 30;
+            if (DiscountTxtBox.Text.Equals("0") && !_canshowDiscount)
+                _RowHeight = 35;
+            else
+                _RowHeight = 30;  
+
+            Value_row.Height = new GridLength(_RowHeight, GridUnitType.Pixel);
+            if (DiscountTxtBox.Text.Equals("0") && !_canshowDiscount)
+                Discount_row.Height = new GridLength(0, GridUnitType.Pixel);
+            else
+                Discount_row.Height = new GridLength(_RowHeight, GridUnitType.Pixel);
+            Net_Value_row.Height = new GridLength(_RowHeight, GridUnitType.Pixel);
+            CGST_row.Height = new GridLength(_RowHeight, GridUnitType.Pixel);
+            SGST_row.Height = new GridLength(_RowHeight, GridUnitType.Pixel);
+            Total_row.Height = new GridLength(_RowHeight, GridUnitType.Pixel);
+            InvoiceAmount_row.Height = new GridLength(_RowHeight, GridUnitType.Pixel);
+        }
+
+
     }
 }

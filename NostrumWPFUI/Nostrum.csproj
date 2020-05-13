@@ -168,6 +168,7 @@
     <Compile Include="Behaviours\WindowClosingBehavior.cs" />
     <Compile Include="Constants\NostrumConstants.cs" />
     <Compile Include="Converters\DataToRowBackgroundColorConverter.cs" />
+    <Compile Include="Converters\DiscountRowHeightConverter.cs" />
     <Compile Include="Helpers\CustomDelegateCommand.cs" />
     <Compile Include="Helpers\DebugConverter.cs" />
     <Compile Include="Helpers\ExcelProduct.cs" />
@@ -343,6 +344,14 @@
     <Resource Include="Images\Nostrum.PNG" />
     <Resource Include="Images\Nostrum1.PNG" />
     <Resource Include="Images\NostrumLogo.jpeg" />
+    <Resource Include="Images\print.png" />
+    <Resource Include="Images\printer-.png" />
+    <Resource Include="Images\printer.png" />
+    <Resource Include="Images\save-64.png" />
+    <Resource Include="Images\saveaspdf.png" />
+    <Resource Include="Images\savetocloud.png" />
+    <Resource Include="Images\savetodb.png" />
+    <Resource Include="Images\savetodb1.png" />
     <Content Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

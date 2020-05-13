@@ -131,12 +131,9 @@ namespace NostrumWPFUI.ViewModel
 
         private void GenBillMethod(object obj)
         {
-            //Close LineItemPop up to avoid user entering the details again.
+            
             AddLineItemView _addlineItemView = obj as AddLineItemView;
-            if(_addlineItemView != null)
-            {
-                _addlineItemView.Close();
-            }
+            
 
             if (!String.IsNullOrWhiteSpace(CurrentLineItem.Batch))
             {
@@ -157,6 +154,11 @@ namespace NostrumWPFUI.ViewModel
             else
             {
                 MessageBox.Show("Add at least one product to generate Bill", "Error");
+            }
+            //Close LineItemPop up to avoid user entering the details again.//If error don't close the popup
+            if (_addlineItemView != null && ValidateFields())
+            {
+                _addlineItemView.Close();
             }
         }
 

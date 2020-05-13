@@ -94,6 +94,27 @@ namespace NostrumWPFUI.Helpers
 
         }
 
+        public static T GetVisualParent01<T>(DependencyObject child) where T : DependencyObject
+        {
+            T parent = null;
+            DependencyObject currParent;
+
+            currParent = VisualTreeHelper.GetParent(child);
+            while (currParent != null)
+            {
+                if (currParent is T)
+                {
+                    parent = (T)currParent;
+                    break;
+                }
+
+                // find the next parent
+                currParent = VisualTreeHelper.GetParent(currParent);
+            }
+
+            return (parent);
+        }
+
         //Get first parent control of specified type
         public static T GetVisualParentByObject<T>(DependencyObject depObj) where T : DependencyObject
         {
