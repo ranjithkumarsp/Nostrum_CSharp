@@ -7,9 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using NostrumWPFUI.Helpers;
+using Nostrum.Helpers;
 
-namespace NostrumWPFUI.ViewModel
+namespace Nostrum.ViewModel
 {
     public class BaseViewModel : INotifyPropertyChanged
     {

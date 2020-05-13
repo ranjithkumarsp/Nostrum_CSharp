@@ -14,9 +14,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using Entity;
-using NostrumWPFUI.ViewModel;
+using Nostrum.ViewModel;
 
-namespace NostrumWPFUI.View
+namespace Nostrum.View
 {
     /// <summary>
     /// Interaction logic for AddLineItemView.xaml

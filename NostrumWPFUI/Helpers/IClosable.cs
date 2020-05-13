@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NostrumWPFUI.Helpers
+namespace Nostrum.Helpers
 {
     //Interface to close PopUp Windows. 
     //Added for maintain MVVM pattern inplace of sending view to vm and close it in code.

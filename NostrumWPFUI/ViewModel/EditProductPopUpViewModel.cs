@@ -1,5 +1,5 @@
 ﻿using NostrumDB;
-using NostrumWPFUI.Helpers;
+using Nostrum.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace NostrumWPFUI.ViewModel
+namespace Nostrum.ViewModel
 {
     public class EditProductPopUpViewModel : BaseViewModel
     {

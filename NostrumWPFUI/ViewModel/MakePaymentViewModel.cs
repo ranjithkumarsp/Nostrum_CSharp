@@ -1,7 +1,7 @@
 ﻿using Entity;
 using NostrumDB;
-using NostrumWPFUI.UIEntity;
-using NostrumWPFUI.View;
+using Nostrum.UIEntity;
+using Nostrum.View;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace NostrumWPFUI.ViewModel
+namespace Nostrum.ViewModel
 {
     public class MakePaymentViewModel : BaseViewModel
     {

@@ -2,7 +2,7 @@
 using Microsoft.Office.Interop.Excel;
 using Microsoft.Win32;
 using Newtonsoft.Json;
-using NostrumWPFUI.Helpers;
+using Nostrum.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -25,7 +25,7 @@ using System.Windows.Shapes;
 using Application = Microsoft.Office.Interop.Excel.Application;
 using Path = System.IO.Path;
 
-namespace NostrumWPFUI.View
+namespace Nostrum.View
 {
     /// <summary>
     /// Interaction logic for ExcelImportView.xaml
@@ -697,7 +697,7 @@ namespace NostrumWPFUI.View
             ExcelProductCollection.Clear();
             DataFromExel3.Clear(); DataFromExel1.Clear();
             // DisplayExcelValues.ItemsSource = BatchSheetDataList.Where(x => x.FileName.Equals("")).Select(x => x.ProductList).ToList();
-            var _selectedFilename = ((NostrumWPFUI.Helpers.BatchSheetData)((System.Windows.Controls.Primitives.Selector)sender).SelectedValue).FileName;
+            var _selectedFilename = ((Nostrum.Helpers.BatchSheetData)((System.Windows.Controls.Primitives.Selector)sender).SelectedValue).FileName;
             DataFromExel1 = BatchSheetDataList.Where(x => x.FileName.Equals(_selectedFilename)).Select(x => x.ProductList).ToList();
 
             DisplayExcelValues.ItemsSource = DataFromExel1.FirstOrDefault().ToList();

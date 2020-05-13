@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NostrumWPFUI.UIEntity
+namespace Nostrum.UIEntity
 {
     public class StockDisplay
     {

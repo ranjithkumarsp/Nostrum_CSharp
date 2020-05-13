@@ -1,4 +1,4 @@
-﻿namespace NostrumWPFUI.Helpers
+﻿namespace Nostrum.Helpers
 {
     public class InvoiceData
     {

@@ -1,7 +1,7 @@
 ﻿using Entity;
 using NostrumDB;
-using NostrumWPFUI.Helpers;
-using NostrumWPFUI.View;
+using Nostrum.Helpers;
+using Nostrum.View;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
-namespace NostrumWPFUI.ViewModel
+namespace Nostrum.ViewModel
 {
     public class EditClientPopupViewModel : BaseViewModel
     {

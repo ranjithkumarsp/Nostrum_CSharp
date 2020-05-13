@@ -1,5 +1,5 @@
 ﻿using NostrumDB;
-using NostrumWPFUI.Helpers;
+using Nostrum.Helpers;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -8,14 +8,14 @@ using Nostrum;
 using System;
 using System.Windows;
 using System.Windows.Controls;
-using NostrumWPFUI.View;
+using Nostrum.View;
 using System.Windows.Documents;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using System.IO;
 using Prism.Commands;
 
-namespace NostrumWPFUI.ViewModel
+namespace Nostrum.ViewModel
 {
     public class BillFormViewModel : BaseViewModel
     {
@@ -380,13 +380,15 @@ namespace NostrumWPFUI.ViewModel
 
         public void ExecutePrintAsPDF(object parameter)
         {
+            FrameworkElement objectToPrint = parameter as FrameworkElement;
+            BillFormView _billFormView = VisualHelpers.GetVisualParent<Window>(objectToPrint) as BillFormView;
 
             PrintDialog printDialog = new PrintDialog();
             if ((bool)printDialog.ShowDialog().GetValueOrDefault())
             {
                 if (parameter is FrameworkElement)
                 {
-                    FrameworkElement objectToPrint = parameter as FrameworkElement;
+                    //FrameworkElement objectToPrint = parameter as FrameworkElement;
                     //PrintDialog printDialog = new PrintDialog();
                     //if ((bool)printDialog.ShowDialog().GetValueOrDefault())
                     //{
@@ -475,10 +477,13 @@ namespace NostrumWPFUI.ViewModel
             }
             else
             {
-                FrameworkElement objectToPrint = parameter as FrameworkElement;
-                BillFormView _billFormView = VisualHelpers.GetVisualParent<Window>(objectToPrint) as BillFormView;
-                _billFormView.SetRowDefinitions(true);
+                //FrameworkElement objectToPrint = parameter as FrameworkElement;
+                //BillFormView _billFormView = VisualHelpers.GetVisualParent<Window>(objectToPrint) as BillFormView;
+                //_billFormView.SetRowDefinitions(true);
             }
+            //Show Discount Column for success / Failure scenarios.
+            _billFormView.SetRowDefinitions(true);
+
         }
 
         private PageContent generatePageContent(System.Drawing.Bitmap bmp, int top,

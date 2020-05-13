@@ -8,7 +8,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace NostrumWPFUI.Converters
+namespace Nostrum.Converters
 {
     public class DataToRowBackgroundColorConverter : IMultiValueConverter
     {

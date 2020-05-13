@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 
-namespace NostrumWPFUI.Behaviours
+namespace Nostrum.Behaviours
 {
     public class SelectAllFocusBehavior
     {

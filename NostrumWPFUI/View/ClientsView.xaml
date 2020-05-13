@@ -1,12 +1,12 @@
-﻿<UserControl x:Class="NostrumWPFUI.View.ClientsView"
+﻿<UserControl x:Class="Nostrum.View.ClientsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
               xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-             xmlns:local="clr-namespace:NostrumWPFUI.View"
-             xmlns:conv="clr-namespace:NostrumWPFUI.Helpers"
+             xmlns:local="clr-namespace:Nostrum.View"
+             xmlns:conv="clr-namespace:Nostrum.Helpers"
              mc:Ignorable="d">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">

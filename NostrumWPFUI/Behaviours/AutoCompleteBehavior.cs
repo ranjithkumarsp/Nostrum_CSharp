@@ -8,7 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace NostrumWPFUI.Behaviours
+namespace Nostrum.Behaviours
 {
     public static class AutoCompleteBehavior
     {

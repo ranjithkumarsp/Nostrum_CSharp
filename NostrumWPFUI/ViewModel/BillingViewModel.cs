@@ -1,5 +1,5 @@
-﻿using NostrumWPFUI.Helpers;
-using NostrumWPFUI.View;
+﻿using Nostrum.Helpers;
+using Nostrum.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,7 @@ using NostrumDB;
 using Entity;
 
 
-namespace NostrumWPFUI.ViewModel
+namespace Nostrum.ViewModel
 {
     public class BillingViewModel : BaseViewModel
     {
