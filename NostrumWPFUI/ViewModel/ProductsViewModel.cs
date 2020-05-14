@@ -1,4 +1,4 @@
-﻿using NostrumWPFUI.Helpers;
+﻿using Nostrum.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +9,12 @@ using System.Windows.Input;
 using NostrumDB;
 using Entity;
 using System.Windows;
-using NostrumWPFUI.View;
+using Nostrum.View;
 using System.Collections.ObjectModel;
 using Prism.Commands;
 using System.ComponentModel;
 
-namespace NostrumWPFUI.ViewModel
+namespace Nostrum.ViewModel
 {
     public class ProductsViewModel:BaseViewModel
     {

@@ -1,7 +1,7 @@
 ﻿using Entity;
 using NostrumDB;
-using NostrumWPFUI.Helpers;
-using NostrumWPFUI.UIEntity;
+using Nostrum.Helpers;
+using Nostrum.UIEntity;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace NostrumWPFUI.ViewModel
+namespace Nostrum.ViewModel
 {
     public class OutStandingPaymentPopupViewModel : BaseViewModel
     {

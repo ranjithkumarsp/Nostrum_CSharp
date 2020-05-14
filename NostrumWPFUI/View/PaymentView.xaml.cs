@@ -13,10 +13,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using NostrumWPFUI.UIEntity;
-using NostrumWPFUI.ViewModel;
+using Nostrum.UIEntity;
+using Nostrum.ViewModel;
 
-namespace NostrumWPFUI.View
+namespace Nostrum.View
 {
     /// <summary>
     /// Interaction logic for Payment.xaml

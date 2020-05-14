@@ -1,4 +1,4 @@
-﻿using NostrumWPFUI.Helpers;
+﻿using Nostrum.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Windows.Input;
 using NostrumExcelReader;
 using Prism.Commands;
 
-namespace NostrumWPFUI.ViewModel
+namespace Nostrum.ViewModel
 {
     public class MainWindowViewModel : BaseViewModel
     {

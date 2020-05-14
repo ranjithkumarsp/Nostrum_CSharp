@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
-namespace NostrumWPFUI.Behaviours
+namespace Nostrum.Behaviours
 {
     
     public class WndExitAftConfirmBehaviour

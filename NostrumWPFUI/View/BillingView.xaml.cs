@@ -12,10 +12,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using NostrumWPFUI.ViewModel;
-using NostrumWPFUI.Helpers;
+using Nostrum.ViewModel;
+using Nostrum.Helpers;
 
-namespace NostrumWPFUI.View
+namespace Nostrum.View
 {
     /// <summary>
     /// Interaction logic for BillingView.xaml

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace NostrumWPFUI.Helpers
+namespace Nostrum.Helpers
 {
     public class DebugConverter : IValueConverter
     {

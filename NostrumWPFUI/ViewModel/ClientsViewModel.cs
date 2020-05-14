@@ -1,7 +1,7 @@
 ﻿using Entity;
 using NostrumDB;
-using NostrumWPFUI.Helpers;
-using NostrumWPFUI.View;
+using Nostrum.Helpers;
+using Nostrum.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
-namespace NostrumWPFUI.ViewModel
+namespace Nostrum.ViewModel
 {
     public class ClientsViewModel : BaseViewModel
     {

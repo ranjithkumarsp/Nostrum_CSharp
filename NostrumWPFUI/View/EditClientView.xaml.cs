@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace NostrumWPFUI.View
+namespace Nostrum.View
 {
     /// <summary>
     /// Interaction logic for EditClientView.xaml

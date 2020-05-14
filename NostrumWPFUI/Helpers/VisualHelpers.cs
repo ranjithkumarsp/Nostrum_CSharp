@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 
-namespace NostrumWPFUI.Helpers
+namespace Nostrum.Helpers
 {
     public static class VisualHelpers
     {

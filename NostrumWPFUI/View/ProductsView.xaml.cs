@@ -1,8 +1,8 @@
-﻿using NostrumWPFUI.ViewModel;
+﻿using Nostrum.ViewModel;
 using System;
 using System.Windows.Controls;
 
-namespace NostrumWPFUI.View
+namespace Nostrum.View
 {
     /// <summary>
     /// Interaction logic for ProductsView.xaml

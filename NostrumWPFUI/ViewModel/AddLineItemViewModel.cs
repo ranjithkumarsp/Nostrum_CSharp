@@ -7,10 +7,10 @@ using System.Windows;
 using System.Windows.Input;
 using Entity;
 using NostrumDB;
-using NostrumWPFUI.Helpers;
-using NostrumWPFUI.View;
+using Nostrum.Helpers;
+using Nostrum.View;
 
-namespace NostrumWPFUI.ViewModel
+namespace Nostrum.ViewModel
 {
     public class AddLineItemViewModel : BaseViewModel
     {

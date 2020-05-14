@@ -1,11 +1,11 @@
-﻿using NostrumWPFUI.ViewModel;
+﻿using Nostrum.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NostrumWPFUI.UIEntity
+namespace Nostrum.UIEntity
 {
     public class ClientPayment :BaseViewModel
     {

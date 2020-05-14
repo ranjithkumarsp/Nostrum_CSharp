@@ -1,6 +1,6 @@
 ﻿using Entity;
 using NostrumDB;
-using NostrumWPFUI.UIEntity;
+using Nostrum.UIEntity;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace NostrumWPFUI.ViewModel
+namespace Nostrum.ViewModel
 {
     public class StockDisplayPopupViewModel :BaseViewModel
     {
@@ -35,7 +35,7 @@ namespace NostrumWPFUI.ViewModel
             TxtProduct = prod;
             TxtFromTo = from.ToString("dd-MMM-yyyy") + " to " + to.ToString("dd-MMM-yyyy");
             LoadStock(prod, from , to);
-            SaveAsPDFCommand = new NostrumWPFUI.Helpers.PrintCommand();
+            SaveAsPDFCommand = new Nostrum.Helpers.PrintCommand();
         }
 
         private void LoadStock(string product, DateTime from, DateTime to)
