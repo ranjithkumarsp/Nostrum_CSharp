@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.IO;
 using Prism.Commands;
 
+
 namespace Nostrum.ViewModel
 {
     public class BillFormViewModel : BaseViewModel
@@ -192,7 +193,6 @@ namespace Nostrum.ViewModel
         public ICommand DiscountModified { get; set; }
         public ICommand SaveBillForm { get; set; }
         public ICommand DeleteBillForm { get; set; }
-        public ICommand PrintBillForm { get; set; }
 
         public ICommand SaveAsPDF { get; set; }
         public ICommand SaveAsExcel { get; set; }
@@ -342,18 +342,6 @@ namespace Nostrum.ViewModel
             }    
         }
 
-        private void DeleteForm(object window)
-        {
-            BillFormView billFormView = window as BillFormView;
-            MessageBoxResult result = MessageBox.Show("Deleting the order will permanently remove the entries from DB. Want to Continue?", "Delete",
-               MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
-            if(result == MessageBoxResult.Yes)
-            {
-                DeleteFromDatabase();
-                billFormView.Close();
-            }    
-        }
-
         private bool UpdateToDatabase()
         {
             try
@@ -419,28 +407,6 @@ namespace Nostrum.ViewModel
             
             return true;
         }
-
-        #region PrintVisualRegion
-        //private void _printBillForm(object obj)
-        //{
-        //    //BillFormView _billFormView = obj as BillFormView; // TODO : Convert full screen to pdf with out menu and scroll bars.
-        //    Grid _gridtoprint = obj as Grid; 
-
-        //    PrintDialog prnt = new PrintDialog();
-        //    if (prnt != null)
-        //    {
-        //        Size pageSize = new Size(prnt.PrintableAreaWidth, prnt.PrintableAreaHeight);
-        //        _gridtoprint.Measure(pageSize);
-        //        _gridtoprint.Arrange(new Rect(25, 25, pageSize.Width, pageSize.Height));
-
-        //        if (prnt.ShowDialog() == true)
-        //        {
-        //            prnt.PrintVisual(_gridtoprint, "Nostrum Billing");
-        //        }
-        //    }
-
-        //}
-        #endregion
 
         #region PrintAsPDF
 
@@ -537,7 +503,7 @@ namespace Nostrum.ViewModel
                                               capabilities.PageImageableArea.OriginHeight), size));
                         Mouse.OverrideCursor = null;
                     }
-                    printDialog.PrintDocument(document.DocumentPaginator, "Print Document Name"); 
+                    printDialog.PrintDocument(document.DocumentPaginator, "Print Document Name");
                     // }
                 }
             }
@@ -552,20 +518,92 @@ namespace Nostrum.ViewModel
 
         }
 
-        private bool DeleteFromDatabase()
+        private PageContent generatePageContent(System.Drawing.Bitmap bmp, int top,
+   int bottom, double pageWidth, double PageHeight,
+   System.Printing.PrintCapabilities capabilities)
         {
-            try
-            {
-                OrderDAO orderDAO = new OrderDAO(_dbInterface);
-                orderDAO.DeleteOrder(CurrentOrder.Order_Id, CurrentOrder.FY);
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-                return false;
-            }
-            
-            return true;
+            FixedPage printDocumentPage = new FixedPage();
+            printDocumentPage.Width = pageWidth;
+            printDocumentPage.Height = PageHeight;
+
+            int newImageHeight = bottom - top;
+            System.Drawing.Bitmap bmpPage = bmp.Clone(new System.Drawing.Rectangle(0, top,
+                   bmp.Width, newImageHeight), System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+            // Create a new bitmap for the contents of this page
+            Image pageImage = new Image();
+            BitmapSource bmpSource =
+                System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
+                    bmpPage.GetHbitmap(),
+                    IntPtr.Zero,
+                    System.Windows.Int32Rect.Empty,
+                    BitmapSizeOptions.FromWidthAndHeight(bmp.Width, newImageHeight));
+
+            pageImage.Source = bmpSource;
+            pageImage.VerticalAlignment = VerticalAlignment.Top;
+
+            // Place the bitmap on the page
+            printDocumentPage.Children.Add(pageImage);
+
+            PageContent pageContent = new PageContent();
+            ((System.Windows.Markup.IAddChild)pageContent).AddChild(printDocumentPage);
+
+            FixedPage.SetLeft(pageImage, capabilities.PageImageableArea.OriginWidth);
+            FixedPage.SetTop(pageImage, capabilities.PageImageableArea.OriginHeight);
+
+            pageImage.Width = capabilities.PageImageableArea.ExtentWidth;
+            pageImage.Height = capabilities.PageImageableArea.ExtentHeight;
+            return pageContent;
         }
+
+        private bool IsRowGoodBreakingPoint(System.Drawing.Bitmap bmp, int row)
+        {
+            double maxDeviationForEmptyLine = 1627500;
+            bool goodBreakingPoint = false;
+
+            if (rowPixelDeviation(bmp, row) < maxDeviationForEmptyLine)
+                goodBreakingPoint = true;
+
+            return goodBreakingPoint;
+        }
+
+        private double rowPixelDeviation(System.Drawing.Bitmap bmp, int row)
+        {
+            int count = 0;
+            double total = 0;
+            double totalVariance = 0;
+            double standardDeviation = 0;
+            System.Drawing.Imaging.BitmapData bmpData = bmp.LockBits(new System.Drawing.Rectangle(0, 0,
+                   bmp.Width, bmp.Height), System.Drawing.Imaging.ImageLockMode.ReadOnly, bmp.PixelFormat);
+            int stride = bmpData.Stride;
+            IntPtr firstPixelInImage = bmpData.Scan0;
+
+            unsafe
+            {
+                byte* p = (byte*)(void*)firstPixelInImage;
+                p += stride * row;  // find starting pixel of the specified row
+                for (int column = 0; column < bmp.Width; column++)
+                {
+                    count++;  //count the pixels        
+                    byte blue = p[0];
+                    byte green = p[1];
+                    byte red = p[3];
+
+                    int pixelValue = System.Drawing.Color.FromArgb(0, red, green, blue).ToArgb();
+                    total += pixelValue;
+                    double average = total / count;
+                    totalVariance += Math.Pow(pixelValue - average, 2);
+                    standardDeviation = Math.Sqrt(totalVariance / count);
+
+                    // go to next pixel
+                    p += 3;
+                }
+            }
+            bmp.UnlockBits(bmpData);
+
+            return standardDeviation;
+        }
+
+        #endregion
     }
 }

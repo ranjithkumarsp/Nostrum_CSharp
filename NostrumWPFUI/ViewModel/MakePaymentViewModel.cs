@@ -16,16 +16,14 @@ namespace Nostrum.ViewModel
     public class MakePaymentViewModel : BaseViewModel
     {
         MakePaymentView _makePaymentview;
-        public MakePaymentViewModel(ClientPayment selectedClient, List<string> pendingInvoiceList)
+        public MakePaymentViewModel(ClientPayment selectedClient)
         {
             SelectedClient = selectedClient;
-            InvoiceList = pendingInvoiceList;
             Initialize();
         }
 
         private void Initialize()
         {
-            InvoiceNumber = InvoiceList[0];
             PayDate = DateTime.Today;
         }
 
@@ -41,23 +39,9 @@ namespace Nostrum.ViewModel
             set { _selectedClient = value;this.RaisePropertyChange(); }
         }
 
-        private List<string> _invoiceList;
-
-        public List<string> InvoiceList
-        {
-            get { return _invoiceList; }
-            set { _invoiceList = value; this.RaisePropertyChange(); }
-        }
-
         public string InvoiceNumber
         {
             get { return SelectedClient.InvoiceNo; }
-            set {
-                string invoicNo = value;
-                SelectedClient.OrderId = Convert.ToInt32(invoicNo.Substring(invoicNo.LastIndexOf('-') + 1));
-                SelectedClient.FY = invoicNo.Substring(invoicNo.IndexOf('-')+1,4);
-                this.RaisePropertyChange(); 
-            }
         }
 
         private DateTime _payDate;

@@ -213,7 +213,7 @@ CREATE TABLE `payments` (
   KEY `Order-Payment-Key_idx` (`Order_ID`),
   KEY `Order-Payment-Key_idx1` (`Order_ID`,`FY`),
   CONSTRAINT `Order-Payment-Key` FOREIGN KEY (`Order_ID`, `FY`) REFERENCES `orders` (`Order_Id`, `FY`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -295,24 +295,24 @@ DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `Update_Stock` AFTER UPDATE ON `products` FOR EACH ROW BEGIN
 	declare `oldqty` int;
 	declare `newqty` int;
-	declare `qty` int;
+	declare `qtydiff` int;
 
-	if old.Drug_Type like 'Tablet' or old.Drug_Type like 'Capsule'
+	if ((strcmp(old.Drug_Type, 'Tablet') = 0) or (strcmp(old.Drug_Type,'Capsule') = 0))
 	then
 		SET `oldqty` = old.quantity * old.pack1 * old.pack2;
 	else
 		SET `oldqty` = old.quantity;
 	end if;
 
-	if new.Drug_Type like 'Tablet' or new.Drug_Type like 'Capsule'
+	if ((strcmp(New.Drug_Type, 'Tablet') = 0) or (strcmp(New.Drug_Type,'Capsule') = 0))
 	then
 		SET `newqty` = new.quantity * new.pack1 * new.pack2;
 	else
 		SET `newqty` = new.quantity;
 	end if;
 
-	set `qty` = `newqty` - `oldqty`;
-	update stock set qty = qty + `qty` where Product=NEW.name and batch=NEW.batch;
+	set `qtydiff` = `newqty` - `oldqty`;
+	update stock set qty = qty + `qtydiff` where Product=NEW.name and batch=NEW.batch;
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -370,4 +370,4 @@ CREATE TABLE `stock` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-05-14  0:42:25
+-- Dump completed on 2020-05-14 20:59:25

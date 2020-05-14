@@ -32,9 +32,6 @@ namespace Nostrum.ViewModel
             set { _clientPaymentList = value; this.RaisePropertyChange(); }
         }
 
-        private List<string> _pendingInvoiceList;
-        public List<string> PendingInvoiceList { get => _pendingInvoiceList; set => _pendingInvoiceList = value; }
-
         private List<string> _clientsList;
 
         public List<string> ClientsList
@@ -87,7 +84,6 @@ namespace Nostrum.ViewModel
             RefreshCommand = new CustomDelegateCommand(Refresh);
             OutStandingDetailsCommand = new CustomDelegateCommand(OutStandingDetailsMethod);
             ClientPaymentCollection = new ObservableCollection<ClientPayment>();
-            PendingInvoiceList = new List<string>();
 
             GetClientsFromDB();
         }
@@ -111,7 +107,6 @@ namespace Nostrum.ViewModel
         { 
             IsGridVisible = true;
             ClientPaymentCollection.Clear();
-            PendingInvoiceList.Clear();
 
             List<Order> paymentList = GetOrderDetailsFromDB(SelectedClient, FromDate, ToDate);
 
@@ -127,10 +122,6 @@ namespace Nostrum.ViewModel
                     clientPayment.Amount = item.Amount;
                     clientPayment.Balance = item.Balance;
                     ClientPaymentCollection.Add(clientPayment);
-                    if(clientPayment.Balance != 0)
-                    {
-                        PendingInvoiceList.Add(clientPayment.InvoiceNo);
-                    }
                 }
             }
             else
@@ -196,12 +187,12 @@ namespace Nostrum.ViewModel
 
         private void ExecuteSelectedCommand(ClientPayment selectedClient)
         {
-            if (selectedClient != null && selectedClient.Balance == 0)
+            if (selectedClient != null && selectedClient.Balance <= 0)
             {
                 MessageBox.Show("No Outstanding for this bill.", "Info");
                 return;
             }
-            MakePaymentView makePaymentView = new MakePaymentView(selectedClient, PendingInvoiceList);
+            MakePaymentView makePaymentView = new MakePaymentView(selectedClient);
             makePaymentView.Owner = MainWindow;
             makePaymentView.ShowDialog();
             LoadInvoiceDetailsMethod(null);

@@ -17,7 +17,7 @@ namespace Nostrum.Converters
             int amount = (int) values[0];
             int balance = (int)values[1];
             
-            if (balance == 0)
+            if (balance <= 0)
                 return new SolidColorBrush(Colors.LightGreen) { Opacity = 1 };
             else if (amount == balance)                
                 return new SolidColorBrush(Colors.LightPink) { Opacity = 1 };                

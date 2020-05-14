@@ -89,7 +89,7 @@ namespace Nostrum.ViewModel
             if(expired)
             {
                 StockDisplay disp = new StockDisplay();
-                disp.Date = prod.Purchase_Date.ToString("dd-MMM-yyyy");
+                disp.Date = prod.Exp_Date.ToString("MMM-yyyy");
                 disp.InvoiceNo = "Expired";
                 disp.Manufacturer = prod.Manufacturer;
                 disp.BatchNo = prod.Batch;

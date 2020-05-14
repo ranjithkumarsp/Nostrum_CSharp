@@ -11,14 +11,6 @@
         ShowInTaskbar="False" WindowStartupLocation="CenterScreen"
         WindowState="Normal" WindowStyle="SingleBorderWindow" ResizeMode="NoResize"
         >
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding OnLoadedCmd}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
-        </i:EventTrigger>
-        <i:EventTrigger EventName="Closing">
-            <i:InvokeCommandAction Command="{Binding WindowCloseCommand}" />
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
@@ -84,7 +76,6 @@
                     <DataGrid.Resources>
                         <Style x:Key="{x:Type DataGridCell}" TargetType="{x:Type DataGridCell}" >
                             <Setter Property="TextBlock.TextWrapping" Value="WrapWithOverflow"/>
-                            <Setter Property="Foreground" Value="Red"/>
                         </Style>
                        
                     </DataGrid.Resources>
