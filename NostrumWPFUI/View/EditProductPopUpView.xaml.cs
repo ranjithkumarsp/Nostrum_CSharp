@@ -20,19 +20,32 @@ namespace Nostrum.View
     /// </summary>
     public partial class EditProductPopUpView : Window
     {
+        EditPopUpView.ActionTaken actionTaken;
         public EditProductPopUpView()
         {
             InitializeComponent();
+            actionTaken = EditPopUpView.ActionTaken.None;
             this.DataContext = new EditProductPopUpViewModel();
         }
-        public void OkButtonClicked(object o, EventArgs e)
+        public void ButtonClicked(object sender, EventArgs e)
         {
+            if ((sender as Button).Content.Equals("Edit"))
+                actionTaken = EditPopUpView.ActionTaken.Edit;
+            else
+                actionTaken = EditPopUpView.ActionTaken.Delete;
+
             if (ProductNameCombo.SelectedItem != null && BatchNumberCombo.SelectedItem != null)
                 this.DialogResult = true;
         }
         public void OnBatchSelect(object o, EventArgs e)
         {
-            OkButton.IsEnabled = true;
+            EditButton.IsEnabled = true;
+            DeleteButton.IsEnabled = true;
+        }
+
+        public EditPopUpView.ActionTaken GetActionTaken()
+        {
+            return actionTaken;
         }
 
         public void GetSelectedValues(out string product, out string batch)

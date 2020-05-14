@@ -263,3 +263,17 @@ __pycache__/
 /NostrumWPFUI/View/AddLineItemView.xaml.cs.bak
 /NostrumWPFUI/View/AddLineItemView.xaml.bak
 /Empty Schema.sql.bak
+/NostrumDB/DBOperations/DAO/ProductDAO.cs.bak
+/NostrumDB/DBOperations/DAO/OrderDAO.cs.bak
+/NostrumDB/DBOperations/DAO/ClientDAO.cs.bak
+/NostrumWPFUI/View/StocksView.xaml.bak
+/NostrumWPFUI/View/PaymentView.xaml.bak
+/NostrumWPFUI/View/EditProductPopUpView.xaml.cs.bak
+/NostrumWPFUI/View/EditProductPopUpView.xaml.bak
+/NostrumWPFUI/View/EditClientPopupView.xaml.cs.bak
+/NostrumWPFUI/View/EditClientPopupView.xaml.bak
+/NostrumWPFUI/View/BillingView.xaml.cs.bak
+/NostrumWPFUI/View/BillingView.xaml.bak
+/NostrumWPFUI/View/BillFormView.xaml.bak
+/NostrumWPFUI/View/ViewOldPopupView.xaml.bak
+*.bak

@@ -55,6 +55,14 @@ namespace NostrumDB
                 order.Balance = (int)reader["Balance"];
                 order.Discount = (double)reader["Discount"];
                 order.Payment_Terms = reader["Payment_Terms"].ToString();
+                if (reader["Order_Type"].ToString().Equals("Donate"))
+                {
+                    order.Order_Type = Order.OrderType.DonateOrder;
+                }
+                else
+                {
+                    order.Order_Type = Order.OrderType.SaleOrder;
+                }
             }
             else
             {

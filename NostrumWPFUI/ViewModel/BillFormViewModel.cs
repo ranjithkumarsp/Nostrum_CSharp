@@ -33,6 +33,11 @@ namespace Nostrum.ViewModel
             }
         }
 
+        public bool IsOldOrder
+        {
+            get { return !CurrentOrder.IsNewOrder; }
+        }
+
         private string _addr;
 
         public string Address
@@ -185,7 +190,9 @@ namespace Nostrum.ViewModel
         private IDBInterface _dbInterface;
 
         public ICommand DiscountModified { get; set; }
-        public ICommand SaveBillForm { get; set; }      
+        public ICommand SaveBillForm { get; set; }
+        public ICommand DeleteBillForm { get; set; }
+        public ICommand PrintBillForm { get; set; }
 
         public ICommand SaveAsPDF { get; set; }
         public ICommand SaveAsExcel { get; set; }
@@ -200,6 +207,7 @@ namespace Nostrum.ViewModel
             _dbInterface = new MySQLDBInterface();
             DiscountModified = new CustomDelegateCommand(DiscountModifiedMethod);
             SaveBillForm = new CustomDelegateCommand(SaveForm);
+            DeleteBillForm = new CustomDelegateCommand(DeleteForm);
             SaveAsPDF = new CustomDelegateCommand(SaveAsPDFMethod);
             CloseBillFormWindowCommand = new RelayCommand<IClosable>(this.CloseBillForm);
             
@@ -215,18 +223,18 @@ namespace Nostrum.ViewModel
         public DelegateCommand<object> PrintBillForm =>
            _fieldName ?? (_fieldName = new DelegateCommand<object>(ExecutePrintAsPDF));           
 
-        private void CloseBillForm(IClosable _billFormWindow)
+        private void CloseBillForm(IClosable billFormWindow)
         {
             MessageBoxResult result = MessageBox.Show("Save changes?", "Exit",
                 MessageBoxButton.YesNoCancel, MessageBoxImage.Question, MessageBoxResult.Yes);
             if(result == MessageBoxResult.Yes)
             {
                 SaveForm(null);
-                _billFormWindow.ClosePopupWindow();
+                billFormWindow.ClosePopupWindow();
             }
             else if(result == MessageBoxResult.No)
             {
-                _billFormWindow.ClosePopupWindow();
+                billFormWindow.ClosePopupWindow();
             }
         }
 
@@ -321,36 +329,81 @@ namespace Nostrum.ViewModel
             
         }
 
+        private void DeleteForm(object window)
+        {
+            BillFormView billFormView = window as BillFormView;
+            MessageBoxResult result = MessageBox.Show("Deleting the order will permanently remove the entries from DB. Want to Continue?", "Delete",
+               MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
+            if(result == MessageBoxResult.Yes)
+            {
+                DeleteFromDatabase();
+                billFormView.Close();
+            }    
+        }
+
         private bool UpdateToDatabase()
         {
-            OrderDAO orderDAO = new OrderDAO(_dbInterface);
-            orderDAO.UpdateOrder(CurrentOrder);
-
-            LineItemDAO lineItemDAO = new LineItemDAO(_dbInterface);
-
-            foreach (var item in _orderLineItems)
+            try
             {
-                item.Order_Id = CurrentOrder.Order_Id;
-                item.FY = CurrentOrder.FY;
-                lineItemDAO.UpdateLineItem(item);
+                OrderDAO orderDAO = new OrderDAO(_dbInterface);
+                orderDAO.UpdateOrder(CurrentOrder);
+
+                LineItemDAO lineItemDAO = new LineItemDAO(_dbInterface);
+
+                foreach (var item in _orderLineItems)
+                {
+                    item.Order_Id = CurrentOrder.Order_Id;
+                    item.FY = CurrentOrder.FY;
+                    lineItemDAO.UpdateLineItem(item);
+                }
             }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                return false;
+            }
+            
             return true;
         }
 
         private bool SaveToDataBase()
         {
-            OrderDAO orderDAO = new OrderDAO(_dbInterface);
-            orderDAO.AddOrder(CurrentOrder);
+        	try
+        	{
+        		OrderDAO orderDAO = new OrderDAO(_dbInterface);
+            	orderDAO.AddOrder(CurrentOrder);
 
-            LineItemDAO lineItemDAO = new LineItemDAO(_dbInterface);
+            	LineItemDAO lineItemDAO = new LineItemDAO(_dbInterface);
 
-            foreach (var item in _orderLineItems)
+	            foreach (var item in _orderLineItems)
+	            {
+	                item.Order_Id = CurrentOrder.Order_Id;
+	                item.FY = CurrentOrder.FY;
+	                lineItemDAO.AddLineItem(item);
+	            }
+			}
+			catch (Exception e)
             {
-                item.Order_Id = CurrentOrder.Order_Id;
-                item.FY = CurrentOrder.FY;
-                lineItemDAO.AddLineItem(item);
+                MessageBox.Show(e.Message);
+                return false;
             }
 
+	        return true;
+        }
+        
+        private bool DeleteFromDatabase()
+        {
+            try
+            {
+                OrderDAO orderDAO = new OrderDAO(_dbInterface);
+                orderDAO.DeleteOrder(CurrentOrder.Order_Id, CurrentOrder.FY);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                return false;
+            }
+            
             return true;
         }
 

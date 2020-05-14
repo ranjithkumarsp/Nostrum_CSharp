@@ -76,7 +76,7 @@ namespace NostrumDB
             return product;
         }
 
-        public List<Product> GetProducts(string name, DateTime from, DateTime to)
+        public List<Product> GetPurchasedProducts(string name, DateTime from, DateTime to)
         {
             string query = "Select * from products where name = '" + name + "' and Purchase_date between '" + from.ToString("yyyy-MM-dd") + "' and '" + to.ToString("yyyy-MM-dd") + "';";
             List<Product> products = new List<Product>();

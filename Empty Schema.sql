@@ -175,9 +175,26 @@ CREATE TABLE `orders` (
   `Dispatch_Mode` varchar(10) NOT NULL,
   PRIMARY KEY (`Order_Id`,`FY`),
   KEY `Order_Client_idx` (`Client_Name`),
-  CONSTRAINT `Order_Client` FOREIGN KEY (`Client_Name`) REFERENCES `clients` (`Display_Name`)
+  CONSTRAINT `Order_Client` FOREIGN KEY (`Client_Name`) REFERENCES `clients` (`Display_Name`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `orders_BEFORE_DELETE` BEFORE DELETE ON `orders` FOR EACH ROW BEGIN
+	Delete from order_line_items where order_line_items.Order_Id = Old.Order_id and order_line_items.FY = Old.FY;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `payments`
@@ -353,4 +370,4 @@ CREATE TABLE `stock` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-05-12  9:48:39
+-- Dump completed on 2020-05-14  0:42:25

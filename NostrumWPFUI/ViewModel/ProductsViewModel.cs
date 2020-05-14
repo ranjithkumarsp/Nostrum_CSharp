@@ -282,10 +282,24 @@ namespace Nostrum.ViewModel
             editproductPopup.Owner = MainWindow;
             if(editproductPopup.ShowDialog() == true)
             {
-                IsNewProduct = false;
-                string product, batch;
-                editproductPopup.GetSelectedValues(out product, out batch);
-                FillProduct(product, batch);
+                if(editproductPopup.GetActionTaken() == View.EditPopUpView.ActionTaken.Edit)
+                {
+                    IsNewProduct = false;
+                    string product, batch;
+                    editproductPopup.GetSelectedValues(out product, out batch);
+                    FillProduct(product, batch);
+                }
+                else if(editproductPopup.GetActionTaken() == View.EditPopUpView.ActionTaken.Delete)
+                {
+                    MessageBoxResult result = MessageBox.Show("Deleting the product will remove the entries from existing orders. Want to Continue?", "Delete",
+               MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
+                    if(result == MessageBoxResult.Yes)
+                    {
+                        string product, batch;
+                        editproductPopup.GetSelectedValues(out product, out batch);
+                        DeleteProduct(product, batch);
+                    }                    
+                }
             }
         }
 
@@ -354,7 +368,7 @@ namespace Nostrum.ViewModel
                 }
                 else
                 {
-                    MessageBox.Show("Unable to add client!");
+                    MessageBox.Show("Unable to add Product!");
                 }
             }
             catch (Exception e)
@@ -375,7 +389,28 @@ namespace Nostrum.ViewModel
                 }
                 else
                 {
-                    MessageBox.Show("Unable to add client!");
+                    MessageBox.Show("Unable to add Product!");
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+        }
+
+        private void DeleteProduct(string product, string batch)
+        {
+            try
+            {
+                ProductDAO productDAO = new ProductDAO(_dbInterface);
+                if (productDAO.DeleteProduct(product, batch))
+                {
+                    MessageBox.Show("Product successfully Deleted!");
+                    ClearMethod(null);
+                }
+                else
+                {
+                    MessageBox.Show("Unable to Delete Product!");
                 }
             }
             catch (Exception e)

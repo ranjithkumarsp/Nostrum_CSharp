@@ -28,6 +28,7 @@
                 <ColumnDefinition Width="Auto" MinWidth="192.8"/>
                 <ColumnDefinition x:Name="StocksRightMargin" Width="62.4"/>
             </Grid.ColumnDefinitions>
+            <Button Content="Refresh" Style="{StaticResource BoldLinkButton}" Grid.Row="0" Grid.Column="5" Command="{Binding RefreshCommand}" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
             <TextBlock Grid.Row="1" Grid.Column="2"  HorizontalAlignment="Right" VerticalAlignment="Center"  TextWrapping="Wrap" Text="Product" Height="24" Width="72" FontSize="16" FontFamily="Century Gothic" FontWeight="Bold" Margin="0,16,0.6,16" />
             <TextBlock Grid.Row="2" Grid.Column="2"  HorizontalAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap" Text="From"  Height="24" Width="72" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" Margin="0,16,0.6,16" />
             <TextBlock Grid.Row="3" Grid.Column="2"  HorizontalAlignment="Right" VerticalAlignment="Center" TextWrapping="Wrap" Text="To"  Height="24" Width="72" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" ClipToBounds="True" SnapsToDevicePixels="True" Margin="0,16,0.6,16"  />

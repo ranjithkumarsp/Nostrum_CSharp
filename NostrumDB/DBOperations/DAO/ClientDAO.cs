@@ -90,6 +90,7 @@ namespace NostrumDB
                 client.DL_No = dr["DL_No"].ToString();
                 client.Phone = dr["Phone"].ToString();
                 client.TIN_No = dr["TIN_No"].ToString();
+                client.Type = dr["Type"].ToString();
                 //clientNames.Add(dr["Display_Name"].ToString());
                 ClientInfoList.Add(client);
             }
