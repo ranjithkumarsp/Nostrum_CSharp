@@ -45,6 +45,8 @@ namespace Nostrum.View
 
         public void Print_MenuItem_Click(object sender, RoutedEventArgs e)
         {
+            NameofBuyerTxtBox.BorderThickness = new Thickness(0);
+            NameofBuyerTxtBox.BorderBrush = System.Windows.Media.Brushes.Transparent;
             SetRowDefinitions(false);
         }
 
@@ -66,6 +68,7 @@ namespace Nostrum.View
             SGST_row.Height = new GridLength(_RowHeight, GridUnitType.Pixel);
             Total_row.Height = new GridLength(_RowHeight, GridUnitType.Pixel);
             InvoiceAmount_row.Height = new GridLength(_RowHeight, GridUnitType.Pixel);
+            
         }
 
 

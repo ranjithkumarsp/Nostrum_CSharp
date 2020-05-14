@@ -7,7 +7,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Title="StockDisplayPopupView"
-        Height="500" Width="790"
+        Height="500" Width="850"
         ShowInTaskbar="False" WindowStartupLocation="CenterScreen"
         WindowState="Normal" WindowStyle="SingleBorderWindow" ResizeMode="NoResize"
         >
@@ -23,7 +23,7 @@
             <ColumnDefinition Width="15"/>
             <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="370"/>
-            <ColumnDefinition Width="280"/>
+            <ColumnDefinition Width="330"/>
             <ColumnDefinition Width="15"/>
         </Grid.ColumnDefinitions>
         <Button x:Name="SaveasPdfButton" Content="Print" Style="{StaticResource BoldLinkButton}" Grid.Row="0" Grid.Column="3" Command="{Binding SaveAsPDFCommand}" HorizontalAlignment="Right" VerticalAlignment="Top"
@@ -77,17 +77,32 @@
                         <Style x:Key="{x:Type DataGridCell}" TargetType="{x:Type DataGridCell}" >
                             <Setter Property="TextBlock.TextWrapping" Value="WrapWithOverflow"/>
                         </Style>
-                       
+                        <Style x:Key="WrappedColumnHeaderStyle" TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="ContentTemplate">
+                                <Setter.Value>
+                                    <DataTemplate>
+                                        <TextBlock TextWrapping="Wrap" Text="{Binding}"></TextBlock>
+                                    </DataTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+
                     </DataGrid.Resources>
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="90"/>
-                            <DataGridTextColumn Header="InvoiceNo" Binding="{Binding InvoiceNo}" Width="85" />
-                            <DataGridTextColumn Header="Manufacturer" Binding="{Binding Manufacturer}" Width="90"/>
-                            <DataGridTextColumn Header="BatchNo" Binding="{Binding BatchNo}" Width="80"/>
-                            <DataGridTextColumn Header="Mfd Date" Binding="{Binding ManufactureDate}" Width="90"/>
-                            <DataGridTextColumn Header="Exp Date" Binding="{Binding ExpiryDate}" Width="90"/>
-                            <DataGridTextColumn Header="Purchase Qty" Binding="{Binding PurchaseQty}" Width="60"/>
-                            <DataGridTextColumn Header="Sale Qty" Binding="{Binding SaleQty}" Width="50"/>
+                            <DataGridTextColumn Header="InvoiceNo" Binding="{Binding InvoiceNo}" Width="80" />
+                        <DataGridTextColumn Header="Manufacturer" Binding="{Binding Manufacturer}" Width="110">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="TextBlock.TextWrapping" Value="Wrap"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>                        
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="BatchNo" Binding="{Binding BatchNo}" Width="80"/>
+                            <DataGridTextColumn Header="Mfd Date" Binding="{Binding ManufactureDate}" Width="80"/>
+                            <DataGridTextColumn Header="Exp Date" Binding="{Binding ExpiryDate}" Width="80"/>
+                            <DataGridTextColumn Header="Purchase Qty" HeaderStyle="{StaticResource WrappedColumnHeaderStyle}" Binding="{Binding PurchaseQty}" Width="80"/>
+                            <DataGridTextColumn Header="Sale Qty" Binding="{Binding SaleQty}" Width="60"/>
 
                             <DataGridTextColumn Header="Stock" Binding="{Binding Stock}" Width="Auto"/>
                         <DataGridTextColumn Header="Remarks" Binding="{Binding Remarks}"  Width="*"/>

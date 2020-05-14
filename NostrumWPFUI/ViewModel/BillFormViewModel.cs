@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using System.IO;
 using Prism.Commands;
-
+using Nostrum.Behaviours;
 
 namespace Nostrum.ViewModel
 {
@@ -332,8 +332,10 @@ namespace Nostrum.ViewModel
 
         private void DeleteForm(object window)
         {
+
             BillFormView billFormView = window as BillFormView;
-            MessageBoxResult result = MessageBox.Show("Deleting the order will permanently remove the entries from DB. Want to Continue?", "Delete",
+            
+              MessageBoxResult result = MessageBox.Show("Deleting the order will permanently remove the entries from DB. Want to Continue?", "Delete",
                MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
             if(result == MessageBoxResult.Yes)
             {

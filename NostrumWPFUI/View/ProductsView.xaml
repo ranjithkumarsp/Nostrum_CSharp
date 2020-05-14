@@ -76,7 +76,7 @@
             <TextBox Text ="{Binding Quantity}" Grid.Row="7" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" VerticalAlignment="Center" Width="80" TextAlignment="Right" Margin="0,4.6,0,5.4" />
             <TextBox Text ="{Binding CGST}" Grid.Row="8" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" VerticalAlignment="Center" Width="80" TextAlignment="Right" Margin="0,4.6,0,5.4" />
             <TextBox Text ="{Binding SGST}" Grid.Row="9" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" VerticalAlignment="Center" Width="80" TextAlignment="Right" Margin="0,4.6,0,5.4" />
-            <TextBox Text ="{Binding MRP}" Grid.Row="10" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" VerticalAlignment="Center" Width="80" TextAlignment="Right" Margin="0,4.6,0,5.4" />
+            <TextBox Text ="{Binding MRP,StringFormat={}{0:F2}}" Grid.Row="10" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" VerticalAlignment="Center" Width="80" TextAlignment="Right" Margin="0,4.6,0,5.4" Cursor="None" />
             <TextBox Text ="{Binding Manufacturer,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Grid.Row="11" Grid.Column="4" HorizontalAlignment="Left" Height="30"  TextWrapping="Wrap" VerticalAlignment="Center" Width="169" Grid.ColumnSpan="2" 
                     behaviors:AutoCompleteBehavior.AutoCompleteItemsSource="{Binding ManfAutoCompleteCollection}" 
                     behaviors:AutoCompleteBehavior.AutoCompleteStringComparison="InvariantCultureIgnoreCase"

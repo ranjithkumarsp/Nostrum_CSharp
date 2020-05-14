@@ -352,6 +352,20 @@
     <Resource Include="Images\savetocloud.png" />
     <Resource Include="Images\savetodb.png" />
     <Resource Include="Images\savetodb1.png" />
+    <Resource Include="Icons\Delete.png" />
+    <Resource Include="Icons\Delete01.png" />
+    <Resource Include="Icons\Delete02.png" />
+    <Resource Include="Icons\Delete03.png" />
+    <Resource Include="Icons\Print.png" />
+    <Resource Include="Icons\Print02.png" />
+    <Resource Include="Icons\Print03.png" />
+    <Resource Include="Icons\Print04.png" />
+    <Resource Include="Icons\Refresh.png" />
+    <Resource Include="Icons\Refresh01.png" />
+    <Resource Include="Icons\Refresh03.png" />
+    <Resource Include="Icons\Save.png" />
+    <Resource Include="Icons\Save01.png" />
+    <Resource Include="Icons\Save03.png" />
     <Content Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

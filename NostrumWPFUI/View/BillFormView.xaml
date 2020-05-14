@@ -9,7 +9,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:const="clr-namespace:Nostrum.Constants"
         mc:Ignorable="d" x:Name="BillFormWindow"
-        Title="BillFormView" Height="720" Width="810" 
+        Title="BillFormView" Height="720" Width="810"  
         ShowInTaskbar="False" WindowStartupLocation="CenterScreen"
         WindowState="Normal" WindowStyle="SingleBorderWindow" ResizeMode="NoResize" 
         behaviors:WndExitAftConfirmBehaviour.Enabled="True"
@@ -26,7 +26,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
             <RowDefinition Height="35"/>
-            <RowDefinition/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Menu Name="FileMenu" Grid.Row="0" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" MinWidth="750" Width="{Binding ElementName=BillFormWindow,Path=Width}">
             <MenuItem Name="File" Header="File">
@@ -48,29 +48,33 @@
         <DockPanel  Grid.Row="1">
             <ToolBar DockPanel.Dock="Top" Height="35" >
                 <Button Command="{Binding SaveBillForm}" ToolTip="Save to Database">
-                    <Image Source="../Images/save-64.png"/>
+                    <Image Source="../Icons/save.png"/>
                 </Button>
                 <Button Command="{Binding PrintBillForm}" CommandParameter="{Binding ElementName=_gridtoprint}" Click="Print_MenuItem_Click" ToolTip="Print">
-                    <Image Source="../Images/printer.png"/>
-                </Button> 
+                    <!--<Image Source="../Images/printer.png"/>-->
+                    <Image Source="../Icons/print02.png"/>
+                </Button>
+                <Button Command="{Binding DeleteBillForm}" ToolTip="Delete">
+                    <Image Source="../Icons/delete01.png"/>
+                </Button>
                 <!--<Button>
                     <Image Source="../Images/savetodb1.png"/>
                 </Button>-->
             </ToolBar>
             <TextBox TextWrapping="Wrap"/>
         </DockPanel>
-        <ScrollViewer Grid.Row="2" x:Name="scrollbar" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+        <ScrollViewer Grid.Row="2" x:Name="scrollbar" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
             <Grid Height="Auto" x:Name="_gridtoprint">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="10" />
+                    <RowDefinition Height="30" />
                     <RowDefinition Height="auto" x:Name="HeaderRow"/>
                     <RowDefinition Height="3" />
                     <RowDefinition Height="auto" x:Name="DataGridRow"/>
                     <RowDefinition Height="3" />
                     <RowDefinition Height="auto" x:Name="InvoiceDataRow"/>
                     <RowDefinition Height="3" />
-                    <RowDefinition Height="auto" x:Name="FooterRow"/>
-                    <RowDefinition Height="35" />
+                    <RowDefinition Height="15" x:Name="FooterRow"/>
+                    <RowDefinition Height="05" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="20" Name="basecol0"/>
@@ -82,10 +86,10 @@
                 <Border x:Name="HeaderGridBorder" Grid.Row="1" Grid.Column="1"  Grid.ColumnSpan="2" BorderBrush="Gray" BorderThickness="3">
                     <Grid Name="HeaderGrid" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="5">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="34"/>
-                            <RowDefinition Height="25"/>
-                            <RowDefinition Height="25"/>
-                            <RowDefinition Height="25"/>
+                            <RowDefinition Height="35"/>
+                            <RowDefinition Height="35"/>
+                            <RowDefinition Height="35"/>
+                            <RowDefinition Height="35"/>
                             <RowDefinition Height="2"/>
                             <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
@@ -120,7 +124,7 @@
                             <Border Grid.Row="0" Grid.RowSpan="8" Grid.Column="2" BorderBrush="Gray" Background="Gray" Margin="0,0,0.4,-0.4"/>
                             <TextBlock Text="Name and Address of Buyer:" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Height="16" Margin="3,4,0,4.8" Width="150" Grid.ColumnSpan="2"/>
                             <!--<RichTextBox BorderBrush="Gray" BorderThickness="1" Grid.Row="3" Grid.RowSpan="4" Grid.Column="1"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,3,0" SpellCheck.IsEnabled="True"  />-->
-                            <TextBox Text="{Binding ClientName}" FontWeight="Bold" Grid.Row="3"  HorizontalAlignment="Left" VerticalAlignment="Top" TextAlignment="Left" BorderThickness="0" BorderBrush="Transparent" Height="16" Width="Auto" Grid.ColumnSpan="2"/>
+                            <TextBox Text="{Binding ClientName}" x:Name="NameofBuyerTxtBox" FontWeight="Bold" Grid.Row="3"  HorizontalAlignment="Left" VerticalAlignment="Top" TextAlignment="Left" BorderThickness="0" BorderBrush="Transparent" Height="16" Width="Auto" Grid.ColumnSpan="2"/>
                             <TextBox Text="{Binding Address}" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextAlignment="Left" BorderThickness="0" BorderBrush="Transparent" Grid.ColumnSpan="2" />
                             <TextBox Text="{Binding Phone}" Grid.Row="5"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextAlignment="Left" BorderThickness="0" BorderBrush="Transparent" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
                             <TextBlock Text="Date" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2" Height="16" Margin="3,6,0,6" Width="25"/>
@@ -148,12 +152,15 @@
                     </Grid>
                 </Border>
                 <Border x:Name="DataGridBorder" Grid.Row="3" Grid.Column="1"  Grid.ColumnSpan="2" BorderBrush="Gray" BorderThickness="3">
-                    <Grid Name="DataGridHolder" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="5" MinHeight="155">
+                    <Grid Name="DataGridHolder" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="5" MinHeight="400">
                         <DataGrid x:Name="BillingDataGrid" Grid.Row="3"  Grid.Column="1" Grid.ColumnSpan="5" HorizontalScrollBarVisibility="Hidden"
                               ColumnWidth="SizeToCells" AutoGenerateColumns="False" SelectionMode="Single" SelectionUnit="Cell"
                               ItemsSource="{Binding LineItemSourceCollection}" PreviewMouseWheel="UIElement_OnPreviewMouseWheel"
                               CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" IsReadOnly="True"  CanUserResizeColumns="True"
-                              Background="White" HeadersVisibility="Column">
+                               HeadersVisibility="Column">
+                            <DataGrid.Background>
+                                <ImageBrush x:Name="GridBackgroundImage" ImageSource="../Images/nostrum.png" Opacity="0.03" Stretch="Fill" TileMode="FlipXY"/>
+                            </DataGrid.Background>
                             <DataGrid.Resources>
                                 <Style x:Key="{x:Type DataGridCell}" TargetType="{x:Type DataGridCell}" >
                                     <Setter Property="TextBlock.TextAlignment" Value="Center"/>
@@ -170,15 +177,15 @@
 
                             <DataGrid.Columns>                                
                                 <DataGridTextColumn Header="S.No" Binding="{Binding S_No, UpdateSourceTrigger=PropertyChanged}" Width="40" />
-                                <DataGridTextColumn Header="ProductName" Binding="{Binding Product_Name,UpdateSourceTrigger=PropertyChanged}" Width="120"/>                                
-                                <DataGridTextColumn Header="Batch No" Binding="{Binding Batch,UpdateSourceTrigger=LostFocus}" Width="105" />
+                                <DataGridTextColumn Header="ProductName" Binding="{Binding Product_Name,UpdateSourceTrigger=PropertyChanged}" Width="115"/>                                
+                                <DataGridTextColumn Header="Batch No" Binding="{Binding Batch,UpdateSourceTrigger=LostFocus}" Width="100" />
                                 <DataGridTextColumn Header="Packing" Binding="{Binding Packing}"  Width="75"/>
                                 <DataGridTextColumn Header="Offer" Binding="{Binding Offer}"   Width="75"/>
-                                <DataGridTextColumn Header="Exp Date" Binding="{Binding ExpDate}"  Width="75"/>
+                                <DataGridTextColumn Header="Exp Date" Binding="{Binding ExpDate}"  Width="70"/>
                                 <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}"  Width="75"/>
                                 <DataGridTextColumn Header="Rate" Binding="{Binding Rate}"  Width="60"/>
                                 <DataGridTextColumn Header="MRP" Binding="{Binding MRP}"  Width="60"/>
-                                <DataGridTextColumn Header="Amount" Binding="{Binding Amount}"  Width="60"/>
+                                <DataGridTextColumn Header="Amount" Binding="{Binding Amount}"  Width="65"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>
