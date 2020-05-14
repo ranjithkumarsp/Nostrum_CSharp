@@ -86,7 +86,7 @@ namespace Nostrum.ViewModel
             ProductDAO productDAO = new ProductDAO(_dbInterface);
             bool expired = productDAO.IsProductExpired(prod.Name, prod.Batch);
 
-            if(expired)
+            if(expired && RemainingStock != 0)
             {
                 StockDisplay disp = new StockDisplay();
                 disp.Date = prod.Exp_Date.ToString("MMM-yyyy");
