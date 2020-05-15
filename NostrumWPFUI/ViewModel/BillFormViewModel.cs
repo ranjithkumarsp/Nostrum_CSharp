@@ -198,8 +198,7 @@ namespace Nostrum.ViewModel
         public ICommand SaveAsExcel { get; set; }
         public ICommand SaveAsImage { get; set; }
         public RelayCommand<IClosable> CloseBillFormWindowCommand { get; private set; }
-        public string lblDLNo { get; private set; }
-
+        public string lblDLNo { get; private set; } 
         public BillFormViewModel(Order order, List<LineItem> LineItems)
         {
             CurrentOrder = order;
@@ -334,8 +333,8 @@ namespace Nostrum.ViewModel
         {
 
             BillFormView billFormView = window as BillFormView;
-            
-              MessageBoxResult result = MessageBox.Show("Deleting the order will permanently remove the entries from DB. Want to Continue?", "Delete",
+            billFormView.SetValue(WndExitAftConfirmBehaviour.EnabledProperty, false); // Disabling Confirmation messagePopup when window is closed.           
+            MessageBoxResult result = MessageBox.Show("Deleting the order will permanently remove the entries from DB. Want to Continue?", "Delete",
                MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
             if(result == MessageBoxResult.Yes)
             {

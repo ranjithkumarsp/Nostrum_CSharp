@@ -54,7 +54,7 @@
                     <!--<Image Source="../Images/printer.png"/>-->
                     <Image Source="../Icons/print02.png"/>
                 </Button>
-                <Button Command="{Binding DeleteBillForm}" ToolTip="Delete">
+                <Button Command="{Binding DeleteBillForm}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}" ToolTip="Delete">
                     <Image Source="../Icons/delete01.png"/>
                 </Button>
                 <!--<Button>
