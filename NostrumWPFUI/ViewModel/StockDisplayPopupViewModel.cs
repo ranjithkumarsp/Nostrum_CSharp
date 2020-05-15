@@ -57,15 +57,17 @@ namespace Nostrum.ViewModel
 
         private void FillPurchaseData(Product prod)
         {
-            int quantity = 0;
-            StockDisplay disp = new StockDisplay();
-            disp.Date = prod.Purchase_Date.ToString("dd-MMM-yyyy");
-            disp.InvoiceNo = prod.Purchase_Invoice;
-            disp.Manufacturer = prod.Manufacturer;
-            disp.BatchNo = prod.Batch;
-            disp.ManufactureDate = prod.Mfg_Date.ToString("MMM-yyyy");
-            disp.ExpiryDate = prod.Exp_Date.ToString("MMM-yyyy");
-            if(prod.Drug_Type == Product.DrugType.Suspension || prod.Drug_Type == Product.DrugType.Syrup)
+            StockDisplay disp = new StockDisplay
+            {
+                Date = prod.Purchase_Date.ToString("dd-MMM-yyyy"),
+                InvoiceNo = prod.Purchase_Invoice,
+                Manufacturer = prod.Manufacturer,
+                BatchNo = prod.Batch,
+                ManufactureDate = prod.Mfg_Date.ToString("MMM-yyyy"),
+                ExpiryDate = prod.Exp_Date.ToString("MMM-yyyy")
+            };
+            int quantity;
+            if (prod.Drug_Type == Product.DrugType.Suspension || prod.Drug_Type == Product.DrugType.Syrup)
             {
                 quantity = prod.Quantity;
             }
@@ -73,7 +75,7 @@ namespace Nostrum.ViewModel
             {
                 quantity = prod.Quantity * prod.Pack1 * prod.Pack2;
             }
-            
+
             disp.PurchaseQty = quantity.ToString();
             disp.SaleQty = "-";
             disp.Stock = quantity;
@@ -88,16 +90,18 @@ namespace Nostrum.ViewModel
 
             if(expired && RemainingStock != 0)
             {
-                StockDisplay disp = new StockDisplay();
-                disp.Date = prod.Exp_Date.ToString("MMM-yyyy");
-                disp.InvoiceNo = "Expired";
-                disp.Manufacturer = prod.Manufacturer;
-                disp.BatchNo = prod.Batch;
-                disp.ManufactureDate = prod.Mfg_Date.ToString("MMM-yyyy");
-                disp.ExpiryDate = prod.Exp_Date.ToString("MMM-yyyy");
-                disp.PurchaseQty = "-";
-                disp.SaleQty = RemainingStock.ToString();
-                disp.Stock = 0;
+                StockDisplay disp = new StockDisplay
+                {
+                    Date = prod.Exp_Date.ToString("dd-MMM-yyyy"),
+                    InvoiceNo = "Expired",
+                    Manufacturer = prod.Manufacturer,
+                    BatchNo = prod.Batch,
+                    ManufactureDate = prod.Mfg_Date.ToString("MMM-yyyy"),
+                    ExpiryDate = prod.Exp_Date.ToString("MMM-yyyy"),
+                    PurchaseQty = "-",
+                    SaleQty = RemainingStock.ToString(),
+                    Stock = 0
+                };
                 StockDisplayCollection.Add(disp);
             }
             
@@ -110,16 +114,18 @@ namespace Nostrum.ViewModel
 
             foreach(var product in products)
             {
-                StockDisplay disp = new StockDisplay();
-                disp.Date = product.Purchase_Date.ToString("dd-MMM-yyyy");
-                disp.InvoiceNo = product.Purchase_Invoice;
-                disp.Manufacturer = product.Manufacturer;
-                disp.BatchNo = product.Batch;
-                disp.ManufactureDate = prod.Mfg_Date.ToString("MMM-yyyy");
-                disp.ExpiryDate = prod.Exp_Date.ToString("MMM-yyyy");
-                disp.PurchaseQty = "-";
-                disp.SaleQty = product.Quantity.ToString();
-                disp.Stock = RemainingStock - product.Quantity;
+                StockDisplay disp = new StockDisplay
+                {
+                    Date = product.Purchase_Date.ToString("dd-MMM-yyyy"),
+                    InvoiceNo = product.Purchase_Invoice,
+                    Manufacturer = product.Manufacturer,
+                    BatchNo = product.Batch,
+                    ManufactureDate = prod.Mfg_Date.ToString("MMM-yyyy"),
+                    ExpiryDate = prod.Exp_Date.ToString("MMM-yyyy"),
+                    PurchaseQty = "-",
+                    SaleQty = product.Quantity.ToString(),
+                    Stock = RemainingStock - product.Quantity
+                };
                 RemainingStock = disp.Stock;
                 StockDisplayCollection.Add(disp);
             }

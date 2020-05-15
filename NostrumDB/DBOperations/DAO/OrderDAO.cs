@@ -151,9 +151,9 @@ namespace NostrumDB
                 int off2 = (int)dr["off2"];
                 int pack1 = (int)dr["pack1"];
                 int pack2 = (int)dr["pack2"];
-                int qty = (int)dr["qty"];
+                double qty = (double)dr["qty"];
 
-                int saleQty = qty;
+                double saleQty = qty;
 
                 if (off1 != 0 && off2 != 0)
                     saleQty = (qty / off1) * (off1 + off2);
@@ -163,7 +163,7 @@ namespace NostrumDB
                     saleQty = saleQty * pack1 * pack2;
                 }
                 
-                prod.Quantity = saleQty;
+                prod.Quantity = (int)saleQty;
                 string invNo = "";
                 if (dr["type"].ToString().Equals("Donate"))
                 {
@@ -171,9 +171,7 @@ namespace NostrumDB
                 }
                 else
                 {
-                    invNo = "INV-";
-                    invNo += dr["fy"].ToString();
-                    invNo += "-" + dr["id"].ToString();
+                    invNo = dr["fy"].ToString() + "-" + dr["id"].ToString();
                 }                
                 prod.Purchase_Invoice = invNo;
                 productList.Add(prod);
@@ -200,17 +198,7 @@ namespace NostrumDB
             List<string> orderIds = new List<string>();
             foreach (DataRow dr in dataTable.Rows)
             {
-                string orderId = "";
-                if(dr["Order_Type"].ToString().Equals("Donate"))
-                {
-                    orderId = "DNT-";
-                }
-                else
-                {
-                    orderId = "INV-";
-                }
-                orderId += dr["FY"].ToString();
-                orderId += "-" + dr["Order_Id"].ToString();
+                string orderId = dr["FY"].ToString() + "-" + dr["Order_Id"].ToString();
                 orderIds.Add(orderId);
             }
 

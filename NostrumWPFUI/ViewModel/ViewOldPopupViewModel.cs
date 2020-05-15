@@ -135,24 +135,23 @@ namespace Nostrum.ViewModel
             LineItemDAO lineItemDAO = new LineItemDAO(_dbInterface);
             List<LineItem> lineItems = lineItemDAO.GetLineItems(orderId, fy);
 
-            BillFormView _billFormView = new BillFormView(order, lineItems);
-            _billFormView.Owner = MainWindow;
+            BillFormView _billFormView = new BillFormView(order, lineItems)
+            {
+                Owner = MainWindow
+            };
             _billFormView.ShowDialog();
         }
 
         private string ExtractFY()
         {
-            string fy = "";
-            int index = SelectedInvoice.IndexOf('-');
-            fy = SelectedInvoice.Substring(index + 1, 4);
+            string fy = SelectedInvoice.Substring(0, 4);
             return fy;
         }
 
         private int ExtractOrderId()
         {
-            int orderId = 0;
             int index = SelectedInvoice.LastIndexOf('-');
-            orderId = Convert.ToInt32(SelectedInvoice.Substring(index + 1));
+            int orderId = Convert.ToInt32(SelectedInvoice.Substring(index + 1));
             return orderId;
         }
 

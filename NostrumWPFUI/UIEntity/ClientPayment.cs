@@ -28,7 +28,7 @@ namespace Nostrum.UIEntity
 
         public string InvoiceNo
         {
-            get { return "INV-"+FY+"-"+OrderId; }
+            get { return FY+"-"+OrderId; }
         }
 
         private string _client;

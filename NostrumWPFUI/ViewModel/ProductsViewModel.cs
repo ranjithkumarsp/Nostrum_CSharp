@@ -211,6 +211,13 @@ namespace Nostrum.ViewModel
             set { _manfAutoCompleteCollection = value;this.RaisePropertyChange(); }
         }
 
+        private ObservableCollection<string> _productNameCollection = new ObservableCollection<string>();
+        public ObservableCollection<string> ProductNameCollection
+        {
+            get { return _productNameCollection; }
+            set { _productNameCollection = value; this.RaisePropertyChange(); }
+        }
+        
         private bool _isNewProduct;
 
         public bool IsNewProduct
@@ -255,14 +262,6 @@ namespace Nostrum.ViewModel
         public ICommand ClearCommand { get; set; }
         public ICommand EditProductCommand { get; set; }
 
-        private DelegateCommand<object> _OnLoadcmd;
-        public DelegateCommand<object> OnLoadCommand =>
-            _OnLoadcmd ?? (_OnLoadcmd = new DelegateCommand<object>(ExecuteOnLoadCommand));
-
-        private void ExecuteOnLoadCommand(object obj)
-        {
-            FillManufacturerSuggestion();
-        }
 
         public void Initialize()
         {
@@ -273,7 +272,13 @@ namespace Nostrum.ViewModel
             _dbInterface = new MySQLDBInterface();
             DrugTypeList = new ObservableCollection<string>(Product.ValidProductTypes);
             ClearMethod(null);
+            FillAutoCompleteSuggestions();
+        }
+
+        private void FillAutoCompleteSuggestions()
+        {
             FillManufacturerSuggestion();
+            FillProductNameCollection();
         }
 
         private void EditProductMethod(object obj)
@@ -385,7 +390,7 @@ namespace Nostrum.ViewModel
                 {
                     MessageBox.Show("Product successfully Added!");
                     ClearMethod(null);
-                    FillManufacturerSuggestion();
+                    FillAutoCompleteSuggestions();
                 }
                 else
                 {
@@ -443,6 +448,12 @@ namespace Nostrum.ViewModel
             ProductDAO productDao = new ProductDAO(_dbInterface);
             List<string> manfactures = productDao.GetManufacturers();
             manfactures.ForEach(item => { ManfAutoCompleteCollection.Add(item); });
+        }
+        private void FillProductNameCollection()
+        {
+            ProductDAO productDao = new ProductDAO(_dbInterface);
+            List<string> manfactures = productDao.GetProductNames();
+            manfactures.ForEach(item => { ProductNameCollection.Add(item); });
         }
     }
 }

@@ -13,7 +13,7 @@
     <Grid>
         <TextBlock HorizontalAlignment="Left" Margin="99,31,0,0" TextWrapping="Wrap" Text="Product" VerticalAlignment="Top" Height="23"/>
         <ComboBox ItemsSource="{Binding Products}"  HorizontalAlignment="Left" Margin="228,25,0,0" VerticalAlignment="Top" Width="120" IsEditable="True" IsSynchronizedWithCurrentItem="True" IsTabStop="True" StaysOpenOnEdit="True" AllowDrop="True"
-                  SelectedItem="{Binding SelectedProduct, UpdateSourceTrigger=LostFocus}">
+                  SelectedValue="{Binding SelectedProduct, UpdateSourceTrigger=LostFocus}">
             <ComboBox.Style>
                 <Style TargetType="ComboBox">
                     <Style.Triggers>
@@ -36,6 +36,11 @@
                     </Style.Triggers>
                 </Style>
             </ComboBox.Style>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="GotKeyboardFocus">
+                    <i:InvokeCommandAction Command="{Binding BatchEnterCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
         </ComboBox>
         <TextBlock HorizontalAlignment="Left" Margin="99,91,0,0" TextWrapping="Wrap" Text="Packing" VerticalAlignment="Top" Height="23"/>
         <TextBlock HorizontalAlignment="Left" Margin="99,121,0,0" TextWrapping="Wrap" Text="Offer" VerticalAlignment="Top" Height="23"/>
@@ -49,7 +54,7 @@
         <TextBox Text="{Binding CurrentLineItem.Offer1, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Left" Height="16" Margin="228,121,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="45"/>
         <TextBlock HorizontalAlignment="Left" Margin="283,121,0,0" TextWrapping="Wrap" Text="+" VerticalAlignment="Top" Width="18"/>
         <TextBox Text="{Binding CurrentLineItem.Offer2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Left" Height="16" Margin="311,121,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="35"/>
-        <TextBox x:Name="txtQuantity" GotKeyboardFocus="OnQuantityEnter" ToolTip="{Binding AvailableQtyToolTipString, UpdateSourceTrigger=PropertyChanged}"  Text="{Binding CurrentLineItem.Quantity, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Left" Height="23" Margin="228,151,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120">
+        <TextBox x:Name="txtQuantity" GotKeyboardFocus="OnQuantityEnter" ToolTip="{Binding AvailableQtyToolTipString, UpdateSourceTrigger=PropertyChanged}"  Text="{Binding CurrentLineItem.Quantity, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" HorizontalAlignment="Left" Height="23" Margin="228,151,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="GotKeyboardFocus">
                     <i:InvokeCommandAction Command="{Binding QtyEnterCommand}"/>

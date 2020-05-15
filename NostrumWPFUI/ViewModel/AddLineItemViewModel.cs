@@ -29,7 +29,6 @@ namespace Nostrum.ViewModel
             set
             {
                 CurrentLineItem.Product_Name = value;
-                OnProductSelect();
                 this.RaisePropertyChange();
             }
         }
@@ -91,6 +90,7 @@ namespace Nostrum.ViewModel
         public ICommand AddNextCommand { get; set; }
         public ICommand GenBillCommand { get; set; }
         public ICommand QtyEnterCommand { get; set; }
+        public ICommand BatchEnterCommand { get; set; }
 
         public AddLineItemViewModel(Order order)
         {
@@ -103,8 +103,33 @@ namespace Nostrum.ViewModel
             AddNextCommand = new CustomDelegateCommand(AddNextMethod);
             GenBillCommand = new CustomDelegateCommand(GenBillMethod);
             QtyEnterCommand = new CustomDelegateCommand(OnEnteringQuantity);
-            
+            BatchEnterCommand = new CustomDelegateCommand(OnEnteringBatch);
+
             Initialize();
+        }
+
+        private void OnEnteringBatch(object obj)
+        {
+            if (String.IsNullOrWhiteSpace(SelectedProduct))
+            {
+                Batches = null;
+            }
+            else
+            {
+                FillBatchList();
+                ProductDAO productDAO = new ProductDAO(_dBInterface);
+                Product.DrugType type = productDAO.GetProductType(SelectedProduct);
+                if (type == Product.DrugType.Syrup || type == Product.DrugType.Suspension)
+                {
+                    IsProductSolid = false;
+                    PackingUnitText = "ML";
+                }
+                else
+                {
+                    IsProductSolid = true;
+                    PackingUnitText = "X";
+                }
+            }
         }
 
         private void OnEnteringQuantity(object obj)
@@ -112,18 +137,17 @@ namespace Nostrum.ViewModel
             if (!String.IsNullOrWhiteSpace(SelectedProduct) && !(String.IsNullOrWhiteSpace(CurrentLineItem.Batch)))
             {
                 StockDAO stockDAO = new StockDAO(_dBInterface);
-                int tmpQty = 0;
                 _availableQty = stockDAO.GetStockQuantity(SelectedProduct, CurrentLineItem.Batch);
-                tmpQty = _availableQty;
+                int tmpQty = _availableQty;
                 if (IsProductSolid)
                 {
                     if(CurrentLineItem.Pack1 !=0 && CurrentLineItem.Pack2 != 0)
-                        tmpQty = tmpQty / (CurrentLineItem.Pack1 * CurrentLineItem.Pack2);
+                        tmpQty /= (CurrentLineItem.Pack1 * CurrentLineItem.Pack2);
                 }
                 if ((CurrentLineItem.Offer1!=0) && ((CurrentLineItem.Offer1 + CurrentLineItem.Offer2) != 0))
                 {
-                    tmpQty = tmpQty / CurrentLineItem.Offer1;
-                    tmpQty = tmpQty / (CurrentLineItem.Offer1 + CurrentLineItem.Offer2);
+                    tmpQty /= CurrentLineItem.Offer1;
+                    tmpQty /= (CurrentLineItem.Offer1 + CurrentLineItem.Offer2);
                 }
                 AvailableQtyToolTipString = "Available Quantity: " + tmpQty;
             }
@@ -173,11 +197,11 @@ namespace Nostrum.ViewModel
                 return false;
             }
 
-            int reqQty = CurrentLineItem.Quantity;
+            double reqQty = CurrentLineItem.Quantity;
             if(CurrentLineItem.Offer1 != 0)
             {
-                reqQty = reqQty / CurrentLineItem.Offer1;
-                reqQty = reqQty * (CurrentLineItem.Offer1 + CurrentLineItem.Offer2);
+                reqQty /= CurrentLineItem.Offer1;
+                reqQty *= (CurrentLineItem.Offer1 + CurrentLineItem.Offer2);
             }
             if(CurrentLineItem.Pack2 != 0)
             {
@@ -189,7 +213,7 @@ namespace Nostrum.ViewModel
                 MessageBox.Show("Invalid Quantity", "Error");
                 return false;
             }
-            else if (reqQty > _availableQty)
+            else if ((int)reqQty > _availableQty)
             {
                 MessageBox.Show("Required quantity(" + reqQty + ") is more than available quantity(" + _availableQty + ")", "Error");
                 return false;
@@ -201,6 +225,7 @@ namespace Nostrum.ViewModel
         {
             CurrentLineItem = new LineItem();
             CurrentLineItem.ClearAll();
+            SelectedProduct = Products.First<string>();
             Batches = null;
             _availableQty = 0;
         }
@@ -215,30 +240,6 @@ namespace Nostrum.ViewModel
         private void Initialize()
         {
             GetProductsFromDB();
-        }
-
-        private void OnProductSelect()
-        {
-            if (String.IsNullOrWhiteSpace(SelectedProduct))
-            {
-                Batches = null;
-            }
-            else
-            { 
-                FillBatchList();
-                ProductDAO productDAO = new ProductDAO(_dBInterface);
-                Product.DrugType type = productDAO.GetProductType(SelectedProduct);
-                if (type == Product.DrugType.Syrup || type == Product.DrugType.Suspension)
-                {
-                    IsProductSolid = false;
-                    PackingUnitText = "ML";
-                }
-                else
-                {
-                    IsProductSolid = true;
-                    PackingUnitText = "X";
-                }
-            }
         }
 
         private void FillBatchList()

@@ -25,9 +25,9 @@ DROP TABLE IF EXISTS `clients`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `clients` (
-  `Name` varchar(30) NOT NULL,
+  `Name` varchar(50) NOT NULL,
   `Phone` varchar(15) DEFAULT NULL,
-  `Display_Name` varchar(10) NOT NULL,
+  `Display_Name` varchar(30) NOT NULL,
   `Address` varchar(300) DEFAULT NULL,
   `TIN_No` varchar(20) DEFAULT NULL,
   `DL_No` varchar(20) DEFAULT NULL,
@@ -53,7 +53,7 @@ CREATE TABLE `order_line_items` (
   `Offer2` int DEFAULT NULL,
   `Pack1` int DEFAULT NULL,
   `Pack2` int DEFAULT NULL,
-  `Quantity` int DEFAULT NULL,
+  `Quantity` double DEFAULT NULL,
   `Rate` double DEFAULT NULL,
   PRIMARY KEY (`Order_Id`,`FY`,`S_No`),
   KEY `Order-Key_idx` (`Order_Id`,`FY`),
@@ -72,7 +72,7 @@ CREATE TABLE `order_line_items` (
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `Reduce_Stock` AFTER INSERT ON `order_line_items` FOR EACH ROW BEGIN
-declare `saleqty` int;
+declare `saleqty` double;
 set `saleqty` = NEW.quantity;
 if (NEW.offer1 <> 0) then
 	set `saleqty` = `saleqty` / NEW.offer1;
@@ -99,9 +99,9 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `UpdateStock` AFTER UPDATE ON `order_line_items` FOR EACH ROW BEGIN
-declare `newsaleqty` int;
-declare `oldsaleqty` int;
-declare `saleqty` int;
+declare `newsaleqty` double;
+declare `oldsaleqty` double;
+declare `saleqty` double;
 
 set `newsaleqty` = NEW.quantity;
 if (NEW.offer1 <> 0) then
@@ -138,7 +138,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `Refill_Stock` AFTER DELETE ON `order_line_items` FOR EACH ROW BEGIN
-declare `saleqty` int;
+declare `saleqty` double;
 set `saleqty` = OLD.quantity;
 if (OLD.offer1 <> 0) then
 	set `saleqty` = `saleqty` / OLD.offer1;
@@ -370,4 +370,4 @@ CREATE TABLE `stock` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-05-14 20:59:25
+-- Dump completed on 2020-05-16  2:42:08

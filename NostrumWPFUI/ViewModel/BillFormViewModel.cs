@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.IO;
 using Prism.Commands;
 using Nostrum.Behaviours;
+using System.Linq;
 
 namespace Nostrum.ViewModel
 {
@@ -125,6 +126,21 @@ namespace Nostrum.ViewModel
             set { _cgst = value; this.RaisePropertyChange(); }
         }
 
+        private string _strCgst;
+
+        public string strCGST
+        {
+            get { return _strCgst; }
+            set { _strCgst = value; this.RaisePropertyChange(); }
+        }
+
+        private string _strSgst;
+
+        public string strSGST
+        {
+            get { return _strSgst; }
+            set { _strSgst = value; this.RaisePropertyChange(); }
+        }
         private double _sgst;
 
         public double SGST
@@ -194,9 +210,6 @@ namespace Nostrum.ViewModel
         public ICommand SaveBillForm { get; set; }
         public ICommand DeleteBillForm { get; set; }
 
-        public ICommand SaveAsPDF { get; set; }
-        public ICommand SaveAsExcel { get; set; }
-        public ICommand SaveAsImage { get; set; }
         public RelayCommand<IClosable> CloseBillFormWindowCommand { get; private set; }
         public string lblDLNo { get; private set; } 
         public BillFormViewModel(Order order, List<LineItem> LineItems)
@@ -207,18 +220,10 @@ namespace Nostrum.ViewModel
             DiscountModified = new CustomDelegateCommand(DiscountModifiedMethod);
             SaveBillForm = new CustomDelegateCommand(SaveForm);
             DeleteBillForm = new CustomDelegateCommand(DeleteForm);
-            SaveAsPDF = new CustomDelegateCommand(SaveAsPDFMethod);
             CloseBillFormWindowCommand = new RelayCommand<IClosable>(this.CloseBillForm);
             
             Initialize();
         }
-
-        private void SaveAsPDFMethod(object obj)
-        {
-
-            throw new NotImplementedException();
-        }
-
         private DelegateCommand<object> _fieldName;
         public DelegateCommand<object> PrintBillForm =>
            _fieldName ?? (_fieldName = new DelegateCommand<object>(ExecutePrintAsPDF));           
@@ -246,6 +251,8 @@ namespace Nostrum.ViewModel
         private void CalculateInvoice()
         {
             NetValue = BillValue - Discount;
+            CGST *= (NetValue / 100);
+            SGST *= (NetValue / 100);
             Total = Math.Round(NetValue + CGST + SGST, 2);
             InvoiceAmount = (int)Math.Round(Total);
             InvoiceAmountinWords = Nostrum.Utils.numInWords(InvoiceAmount, 0) + " Rupees only";
@@ -264,31 +271,32 @@ namespace Nostrum.ViewModel
         private void FillBillValues()
         {
             double total = 0;
-            double cgst = 0;
-            double sgst = 0;
+            //double cgst = 0;
+            //double sgst = 0;
 
-            foreach(var item in _orderLineItems)
+            foreach (var item in _orderLineItems)
             {
                 total += item.Amount;
-                cgst += ((item.CGST * item.Amount) / 100);
-                sgst += ((item.SGST * item.Amount) / 100);
+                //    cgst += ((item.CGST * item.Amount) / 100);
+                //    sgst += ((item.SGST * item.Amount) / 100);
             }
 
             BillValue = total;
-            CGST = cgst;
-            SGST = sgst;
+            //CGST = cgst;
+            //SGST = sgst;
+
+            CGST = _orderLineItems.First<LineItem>().CGST;
+            SGST = _orderLineItems.First<LineItem>().SGST;
+            strCGST = "CGST @ " + CGST + "%";
+            strSGST = "SGST @ " + SGST + "%";
 
             CalculateInvoice();
         }
 
         private void GenerateInvoiceNo()
         {
-            // Invoice number is of the format INV-FY20-1
-            if (CurrentOrder.Order_Type == Order.OrderType.SaleOrder)
-                InvoiceNo = "INV-";
-            else if (CurrentOrder.Order_Type == Order.OrderType.DonateOrder)
-                InvoiceNo = "DNT-";
-            InvoiceNo += CurrentOrder.FY + "-"+ CurrentOrder.Order_Id;
+            // Invoice number is of the format FY20-1
+            InvoiceNo = CurrentOrder.FY + "-"+ CurrentOrder.Order_Id;
         }
 
         private void FillClientDetails()

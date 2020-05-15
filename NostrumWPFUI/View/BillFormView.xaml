@@ -33,11 +33,6 @@
                 <MenuItem Header="Save" Command="{Binding SaveBillForm}"/>
                 <MenuItem Header="Delete" IsEnabled="{Binding IsOldOrder, Mode=OneWay}" 
                           Command="{Binding DeleteBillForm}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}" />
-                <!--<MenuItem Header="Save As">
-                    <MenuItem Header="PDF" Command="{Binding SaveAsPDF}" CommandParameter="{Binding ElementName=_gridtoprint}"/>
-                    <MenuItem Header="Excel" Command="{Binding SaveAsExcel}" CommandParameter="{Binding ElementName=_gridtoprint}"/>
-                    <MenuItem Header="Image" Command="{Binding SaveAsImage}" CommandParameter="{Binding ElementName=_gridtoprint}"/>
-                </MenuItem>-->
                 <MenuItem Header="Print"
                           Command="{Binding PrintBillForm}" Click="Print_MenuItem_Click" CommandParameter="{Binding ElementName=_gridtoprint}"/>
                 <MenuItem Name="Exit" Header="Exit" 
@@ -54,7 +49,8 @@
                     <!--<Image Source="../Images/printer.png"/>-->
                     <Image Source="../Icons/print02.png"/>
                 </Button>
-                <Button Command="{Binding DeleteBillForm}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}" ToolTip="Delete">
+                <Button Command="{Binding DeleteBillForm}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}" ToolTip="Delete"
+                        IsEnabled="{Binding IsOldOrder, Mode=OneWay}" >
                     <Image Source="../Icons/delete01.png"/>
                 </Button>
                 <!--<Button>
@@ -183,9 +179,9 @@
                                 <DataGridTextColumn Header="Offer" Binding="{Binding Offer}"   Width="75"/>
                                 <DataGridTextColumn Header="Exp Date" Binding="{Binding ExpDate}"  Width="70"/>
                                 <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}"  Width="75"/>
-                                <DataGridTextColumn Header="Rate" Binding="{Binding Rate}"  Width="60"/>
-                                <DataGridTextColumn Header="MRP" Binding="{Binding MRP}"  Width="60"/>
-                                <DataGridTextColumn Header="Amount" Binding="{Binding Amount}"  Width="65"/>
+                                <DataGridTextColumn Header="Rate" Binding="{Binding Rate,StringFormat={}{0:F2}}"  Width="60"/>
+                                <DataGridTextColumn Header="MRP" Binding="{Binding MRP,StringFormat={}{0:F2}}"  Width="60"/>
+                                <DataGridTextColumn Header="Amount" Binding="{Binding Amount, StringFormat={}{0:F2}}"  Width="65"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>
@@ -268,24 +264,24 @@
                             <Label Content="Value" Grid.Row="1" Grid.Column="1" BorderBrush="Gray" BorderThickness="2,2,1,1" TextBlock.TextAlignment="Left"/>
                             <Label Content="Discount" Grid.Row="2" Grid.Column="1" BorderBrush="Gray" BorderThickness="2,1,1,1" TextBlock.TextAlignment="Left"/>
                             <Label Content="Net Value" Grid.Row="3" Grid.Column="1" BorderBrush="Gray" BorderThickness="2,1,1,1" TextBlock.TextAlignment="Left"/>
-                            <Label Content="CGST" Grid.Row="4" Grid.Column="1" BorderBrush="Gray" BorderThickness="2,1,1,1" TextBlock.TextAlignment="Left"/>
-                            <Label Content="SGST" Grid.Row="5" Grid.Column="1" BorderBrush="Gray" BorderThickness="2,1,1,1" TextBlock.TextAlignment="Left"/>
+                            <Label Content="{Binding strCGST}" Grid.Row="4" Grid.Column="1" BorderBrush="Gray" BorderThickness="2,1,1,1" TextBlock.TextAlignment="Left"/>
+                            <Label Content="{Binding strSGST}" Grid.Row="5" Grid.Column="1" BorderBrush="Gray" BorderThickness="2,1,1,1" TextBlock.TextAlignment="Left"/>
                             <Label Content="Total" Grid.Row="6" Grid.Column="1" BorderBrush="Gray" BorderThickness="2,1,1,1" TextBlock.TextAlignment="Left"/>
                             <Label Content="Invoice Amount" TextBlock.FontWeight="Bold"  Grid.Row="7" Grid.Column="1" BorderBrush="Gray" BorderThickness="2,1,1,2" TextBlock.TextAlignment="Left"/>
 
-                            <Label Content="{Binding BillValue}" Grid.Row="1" Grid.Column="3" BorderBrush="Gray" BorderThickness="1,2,2,1" TextBlock.TextAlignment="Left"/>
-                            <TextBox x:Name="DiscountTxtBox" Text="{Binding Discount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Row="2" Grid.Column="3" BorderBrush="Gray" BorderThickness="1,1,2,1" TextBlock.TextAlignment="Left">
+                            <Label Content="{Binding BillValue}" ContentStringFormat="{}{0:F2}" Grid.Row="1" Grid.Column="3" BorderBrush="Gray" BorderThickness="1,2,2,1" TextBlock.TextAlignment="Left"/>
+                            <TextBox x:Name="DiscountTxtBox" Text="{Binding Discount,StringFormat={}{0:F2}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Row="2" Grid.Column="3" BorderBrush="Gray" BorderThickness="1,1,2,1" TextBlock.TextAlignment="Left">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="TextChanged">
                                         <i:InvokeCommandAction Command="{Binding DiscountModified}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </TextBox>
-                            <Label Content="{Binding NetValue}" Grid.Row="3" Grid.Column="3" BorderBrush="Gray" BorderThickness="1,1,2,1" TextBlock.TextAlignment="Left"/>
-                            <Label Content="{Binding CGST}" Grid.Row="4" Grid.Column="1" BorderBrush="Gray" BorderThickness="1,1,2,1" TextBlock.TextAlignment="Left" Grid.ColumnSpan="3" Margin="139.8,0,0.4,0"/>
-                            <Label Content="{Binding SGST}" Grid.Row="5" Grid.Column="3" BorderBrush="Gray" BorderThickness="1,1,2,1" TextBlock.TextAlignment="Left"/>
-                            <Label Content="{Binding Total}" Grid.Row="6" Grid.Column="3" BorderBrush="Gray" BorderThickness="1,1,2,1" TextBlock.TextAlignment="Left"/>
-                            <Label Content="{Binding InvoiceAmount}" Grid.Row="7" Grid.Column="3" BorderBrush="Gray" BorderThickness="1,1,2,2" TextBlock.TextAlignment="Left"/>
+                            <Label Content="{Binding NetValue}" ContentStringFormat="{}{0:F2}" Grid.Row="3" Grid.Column="3" BorderBrush="Gray" BorderThickness="1,1,2,1" TextBlock.TextAlignment="Left"/>
+                            <Label Content="{Binding CGST}" ContentStringFormat="{}{0:F2}" Grid.Row="4" Grid.Column="1" BorderBrush="Gray" BorderThickness="1,1,2,1" TextBlock.TextAlignment="Left" Grid.ColumnSpan="3" Margin="139.8,0,0.4,0"/>
+                            <Label Content="{Binding SGST}" ContentStringFormat="{}{0:F2}" Grid.Row="5" Grid.Column="3" BorderBrush="Gray" BorderThickness="1,1,2,1" TextBlock.TextAlignment="Left"/>
+                            <Label Content="{Binding Total}" ContentStringFormat="{}{0:F2}" Grid.Row="6" Grid.Column="3" BorderBrush="Gray" BorderThickness="1,1,2,1" TextBlock.TextAlignment="Left"/>
+                            <Label Content="{Binding InvoiceAmount}" ContentStringFormat="{}{0:F2}" Grid.Row="7" Grid.Column="3" BorderBrush="Gray" BorderThickness="1,1,2,2" TextBlock.TextAlignment="Left"/>
                         </Grid>
                         <Border Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" BorderBrush="Gray" BorderThickness="2" Margin="0,0.4,5.8,4.4" Grid.RowSpan="2">
                             <Grid>

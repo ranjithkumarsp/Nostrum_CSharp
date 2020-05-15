@@ -114,13 +114,15 @@ namespace Nostrum.ViewModel
             {
                 foreach (var item in paymentList)
                 {
-                    ClientPayment clientPayment = new ClientPayment();
-                    clientPayment.OrderId = item.Order_Id;
-                    clientPayment.FY = item.FY;
-                    clientPayment.Client = item.Client_Name;
-                    clientPayment.Date = item.Order_Date.ToString("dd-MMM-yyyy");
-                    clientPayment.Amount = item.Amount;
-                    clientPayment.Balance = item.Balance;
+                    ClientPayment clientPayment = new ClientPayment
+                    {
+                        OrderId = item.Order_Id,
+                        FY = item.FY,
+                        Client = item.Client_Name,
+                        Date = item.Order_Date.ToString("dd-MMM-yyyy"),
+                        Amount = item.Amount,
+                        Balance = item.Balance
+                    };
                     ClientPaymentCollection.Add(clientPayment);
                 }
             }
@@ -168,8 +170,10 @@ namespace Nostrum.ViewModel
             List<Order> paymentList = GetPendingOrdersFromDB(SelectedClient, FromDate, ToDate);
             if(paymentList.Count > 0)
             {
-                OutStandingPaymentPopupView outstandingPaymentPopup = new OutStandingPaymentPopupView(paymentList);
-                outstandingPaymentPopup.Owner = MainWindow;
+                OutStandingPaymentPopupView outstandingPaymentPopup = new OutStandingPaymentPopupView(paymentList)
+                {
+                    Owner = MainWindow
+                };
                 outstandingPaymentPopup.ShowDialog();
             }
             else
@@ -192,8 +196,10 @@ namespace Nostrum.ViewModel
                 MessageBox.Show("No Outstanding for this bill.", "Info");
                 return;
             }
-            MakePaymentView makePaymentView = new MakePaymentView(selectedClient);
-            makePaymentView.Owner = MainWindow;
+            MakePaymentView makePaymentView = new MakePaymentView(selectedClient)
+            {
+                Owner = MainWindow
+            };
             makePaymentView.ShowDialog();
             LoadInvoiceDetailsMethod(null);
         }

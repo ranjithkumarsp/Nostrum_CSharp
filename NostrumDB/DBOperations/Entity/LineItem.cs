@@ -9,117 +9,15 @@ namespace Entity
 {
     public class LineItem
     {
-        private int _orderId;
-        private string _fy;
-        private int _sNo;
-        private string _productName;
-        private string _batch;
-        private int _offer1;
-        private int _offer2;
-        private int _pack1;
-        private int _pack2;
-        private int _quantity;
-        private double _rate;
-
-        public int Order_Id
-        {
-            get
-            {
-                return _orderId;
-            }
-            set
-            {
-                _orderId = value;
-            }
-        }
-        public string FY
-        {
-            get
-            {
-                return _fy;
-            }
-            set
-            {
-                _fy = value;
-            }
-        }
-        public int S_No
-        {
-            get
-            {
-                return _sNo;
-            }
-            set
-            {
-                _sNo = value;
-            }
-        }
-        public string Product_Name
-        {
-            get
-            {
-                return _productName;
-            }
-            set
-            {
-                _productName = value;
-            }
-        }
-        public string Batch
-        {
-            get
-            {
-                return _batch;
-            }
-            set
-            {
-                _batch = value;
-            }
-        }
-        public int Offer1
-        {
-            get
-            {
-                return _offer1;
-            }
-            set
-            {
-                _offer1 = value;
-            }
-        }
-        public int Offer2
-        {
-            get
-            {
-                return _offer2;
-            }
-            set
-            {
-                _offer2 = value;
-            }
-        }
-        public int Pack1
-        {
-            get
-            {
-                return _pack1;
-            }
-            set
-            {
-                _pack1 = value;
-            }
-        }
-        public int Pack2
-        {
-            get
-            {
-                return _pack2;
-            }
-            set
-            {
-                _pack2 = value;
-            }
-        }
+        public int Order_Id { get; set; }
+        public string FY { get; set; }
+        public int S_No { get; set; }
+        public string Product_Name { get; set; }
+        public string Batch { get; set; }
+        public int Offer1 { get; set; }
+        public int Offer2 { get; set; }
+        public int Pack1 { get; set; }
+        public int Pack2 { get; set; }
 
         private Product.DrugType _drugType;
         public string Packing
@@ -148,64 +46,21 @@ namespace Entity
             }
         }
 
-        public int Quantity
-        {
-            get
-            {
-                return _quantity;
-            }
-            set
-            {
-                _quantity = value;
-            }
-        }
-        public double Rate
-        {
-            get
-            {
-                return _rate;
-            }
-            set
-            {
-                _rate = value;
-            }
-        }
-        private string _expDate;
+        public double Quantity { get; set; }
+        public double Rate { get; set; }
 
-        public string ExpDate
-        {
-            get { return _expDate; }
-            set { _expDate = value; }
-        }
+        public string ExpDate { get; set; }
 
-        private double _mrp;
-
-        public double MRP
-        {
-            get { return _mrp; }
-            set { _mrp = value; }
-        }
+        public double MRP { get; set; }
 
         public double Amount
         {
             get { return Rate * Quantity; }
         }
 
-        private double _cgst;
+        public double CGST { get; set; }
 
-        public double CGST
-        {
-            get { return _cgst; }
-            set { _cgst = value; }
-        }
-
-        private double _sgst;
-
-        public double SGST
-        {
-            get { return _sgst; }
-            set { _sgst = value; }
-        }
+        public double SGST { get; set; }
 
         public void ClearAll()
         {

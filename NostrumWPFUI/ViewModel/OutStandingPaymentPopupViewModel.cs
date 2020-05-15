@@ -29,11 +29,13 @@ namespace Nostrum.ViewModel
             {
                 if(item.Balance > 0)
                 {
-                    OutstandingPayment payment = new OutstandingPayment();
-                    payment.SerialNo = ++s_no + ".";
-                    payment.InvoiceNo = "INV-" + item.FY + "-" + item.Order_Id;
-                    payment.InvoiceDate = item.Order_Date.ToString("dd-MMM-yyyy");
-                    payment.InvoiceAmount = item.Balance;
+                    OutstandingPayment payment = new OutstandingPayment
+                    {
+                        SerialNo = ++s_no + ".",
+                        InvoiceNo = item.FY + "-" + item.Order_Id,
+                        InvoiceDate = item.Order_Date.ToString("dd-MMM-yyyy"),
+                        InvoiceAmount = item.Balance
+                    };
                     OutstandingPaymentGridCollection.Add(payment);
                 }
             }

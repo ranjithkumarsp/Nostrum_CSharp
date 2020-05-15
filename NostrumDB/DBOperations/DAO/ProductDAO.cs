@@ -15,24 +15,22 @@ namespace NostrumDB
         }
         public bool AddProduct(Product product)
         {
-            int nRowsAffected = 0;
-            string query = "Insert into products values('" + product.Name + "','" + product.Batch+ "','" + product.Drug_Type+ "','" + product.Mfg_Date.ToString("yyyy-MM-dd") + "','" + product.Exp_Date.ToString("yyyy-MM-dd") + "','" + product.Pack1 + "','" + product.Pack2 + "','" + product.Quantity + "','" + product.CGST+ "','" + product.SGST+ "','" + product.MRP + "','" + product.Manufacturer + "','" + product.Purchase_Date.ToString("yyyy-MM-dd") + "','" + product.Purchase_Invoice + "');";
-            nRowsAffected = _dbInterface.ExecuteNonQuery(query);
+            string query = "Insert into products values('" + product.Name + "','" + product.Batch+ "','" + product.Drug_Type+ "','" + product.Mfg_Date.ToString("yyyy-MM-dd") + "', Last_day('" + product.Exp_Date.ToString("yyyy-MM-dd") + "') ,'" + product.Pack1 + "','" + product.Pack2 + "','" + product.Quantity + "','" + product.CGST+ "','" + product.SGST+ "','" + product.MRP + "','" + product.Manufacturer + "','" + product.Purchase_Date.ToString("yyyy-MM-dd") + "','" + product.Purchase_Invoice + "');";
+            int nRowsAffected = _dbInterface.ExecuteNonQuery(query);
             return (nRowsAffected > 0);
         }
 
         public bool DeleteProduct(string name, string batch)
         {
-            int nRowsAffected = 0;
             string query = "Delete from products where Name = '" + name + "' and batch = '" + batch + "';";
-            nRowsAffected = _dbInterface.ExecuteNonQuery(query);
+            int nRowsAffected = _dbInterface.ExecuteNonQuery(query);
             return (nRowsAffected > 0);
         }
 
         public List<string> GetManufacturers()
         {
             List<string> mfrs = new List<string>();
-            string query = "Select Manufacturer from products;";
+            string query = "Select Distinct Manufacturer from products;";
 
             DataTable dataTable = _dbInterface.ExecuteQuery(query);
 
@@ -106,7 +104,7 @@ namespace NostrumDB
         public bool IsProductExpired(string name, string batch)
         {
             int count = 0;
-            string query = "Select count(name) from products where name = '" + name + "' and batch = '" + batch + "' and Last_day(Exp_Date) < curdate();";
+            string query = "Select count(name) from products where name = '" + name + "' and batch = '" + batch + "' and Exp_Date < curdate();";
             object obj = _dbInterface.ExecuteScalar(query);
             if (obj != null && obj != DBNull.Value)
                 count = Convert.ToInt32(obj);
@@ -142,9 +140,8 @@ namespace NostrumDB
 
         public bool UpdateProduct(Product product)
         {
-            int nRowsAffected = 0;
-            string query = "Update products set Drug_Type = '" + product.Drug_Type + "', Mfg_Date = '" + product.Mfg_Date.ToString("yyyy-MM-dd") + "', Exp_Date = '" + product.Exp_Date.ToString("yyyy-MM-dd") + "', Pack1 = '" + product.Pack1 + "', Pack2 = '" + product.Pack2 + "', Quantity = '" + product.Quantity + "', CGST = '" + product.CGST + "', SGST = '" + product.SGST + "', MRP = '" + product.MRP + "', Manufacturer = '" + product.Manufacturer + "', Purchase_Date = '" + product.Purchase_Date.ToString("yyyy-MM-dd") + "', Purchase_Invoice = '" + product.Purchase_Invoice + "' where Name = '" + product.Name + "' and Batch = '" + product.Batch + "';";
-            nRowsAffected = _dbInterface.ExecuteNonQuery(query);
+            string query = "Update products set Drug_Type = '" + product.Drug_Type + "', Mfg_Date = '" + product.Mfg_Date.ToString("yyyy-MM-dd") + "', Exp_Date = Last_day('" + product.Exp_Date.ToString("yyyy-MM-dd") + "') , Pack1 = '" + product.Pack1 + "', Pack2 = '" + product.Pack2 + "', Quantity = '" + product.Quantity + "', CGST = '" + product.CGST + "', SGST = '" + product.SGST + "', MRP = '" + product.MRP + "', Manufacturer = '" + product.Manufacturer + "', Purchase_Date = '" + product.Purchase_Date.ToString("yyyy-MM-dd") + "', Purchase_Invoice = '" + product.Purchase_Invoice + "' where Name = '" + product.Name + "' and Batch = '" + product.Batch + "';";
+            int nRowsAffected = _dbInterface.ExecuteNonQuery(query);
             return (nRowsAffected > 0);
         }
     }

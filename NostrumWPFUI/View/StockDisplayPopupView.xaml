@@ -91,7 +91,7 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="90"/>
                             <DataGridTextColumn Header="InvoiceNo" Binding="{Binding InvoiceNo}" Width="80" />
-                        <DataGridTextColumn Header="Manufacturer" Binding="{Binding Manufacturer}" Width="110">
+                        <DataGridTextColumn Header="Buyer/Seller" Binding="{Binding Manufacturer}" Width="110">
                             <DataGridTextColumn.ElementStyle>
                                 <Style TargetType="TextBlock">
                                     <Setter Property="TextBlock.TextWrapping" Value="Wrap"/>
