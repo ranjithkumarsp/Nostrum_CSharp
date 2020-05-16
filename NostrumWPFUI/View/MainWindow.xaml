@@ -13,6 +13,10 @@
         WindowStartupLocation="CenterScreen"  ResizeMode="CanMinimize"
         >
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="25" />
+        </Grid.RowDefinitions>
         <!--<Menu Name="FileMenu" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" MinWidth="750" Width="{Binding ElementName=NostrumMainWindow,Path=Width}">
             <MenuItem Name="File" Header="File">
                 <MenuItem Header="Open"/>
@@ -28,14 +32,14 @@
                 <MenuItem Header="About"/>
             </MenuItem>
         </Menu>-->
-        <TabControl  TabStripPlacement="Top" HorizontalAlignment="Left" Height="{Binding ElementName=NostrumMainWindow,Path=Height}" VerticalAlignment="Top" Width="{Binding ElementName=NostrumMainWindow,Path=Width}" 
+        <TabControl Grid.Row="0"  TabStripPlacement="Top" HorizontalAlignment="Left" Height="{Binding ElementName=NostrumMainWindow,Path=Height}" VerticalAlignment="Top" Width="{Binding ElementName=NostrumMainWindow,Path=Width}" 
                      Margin="0,0,0,0" SelectedIndex="0" SelectionChanged="TabControl_SelectionChanged">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
                     <i:InvokeCommandAction Command="{Binding TabSelectionChangedCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TabControl}}}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
-            <TabItem Header="Billing" Name="BillingTab">                
+            <TabItem Header="Billing" Name="BillingTab">
                 <Views:BillingView/>
             </TabItem>
             <TabItem Header="Payment" Name="PaymentTab">
@@ -54,7 +58,10 @@
                 <Views:ExcelImportView/>
             </TabItem>-->
         </TabControl>
-
+        <StackPanel Grid.Row="1" Background="WhiteSmoke" Orientation="Horizontal">
+            <TextBlock x:Name="VersionTxtBlk" Text="DateTimeTxtBlk"  Margin="780,4,0,4.8"/>
+            <!--<TextBlock x:Name="DateTimeTxtBlk" Text="DateTimeTxtBlk" HorizontalAlignment="Right"/>-->
+        </StackPanel>
 
     </Grid>
 </Window>
