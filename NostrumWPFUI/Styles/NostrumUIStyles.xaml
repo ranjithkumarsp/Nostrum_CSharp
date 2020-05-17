@@ -3,6 +3,7 @@
                      xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"                   
                     xmlns:behaviours="clr-namespace:Nostrum.Behaviours"
                     xmlns:const="clr-namespace:Nostrum.Constants"
+                    xmlns:EnhancedCombo="clr-namespace:DotNetKit.Windows.Controls;assembly=DotNetKit.Wpf.AutoCompleteComboBox"
                     >
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary>
@@ -222,7 +223,22 @@
     <!--<Style TargetType="{x:Type TextBox}">
         <Setter Property="TextBlock.TextAlignment" Value="Right"/>
     </Style>-->
-    
+
+    <Style TargetType="{x:Type ComboBox}">
+        <Style.Triggers>
+            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                <Setter Property="IsDropDownOpen" Value="true" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style TargetType="{x:Type EnhancedCombo:AutoCompleteComboBox}">
+        <Style.Triggers>
+            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                <Setter Property="IsDropDownOpen" Value="true" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+   
 
 
 </ResourceDictionary>

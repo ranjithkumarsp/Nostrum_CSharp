@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Nostrum.View"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:EnhancedCombo="clr-namespace:DotNetKit.Windows.Controls;assembly=DotNetKit.Wpf.AutoCompleteComboBox"
         mc:Ignorable="d"
         Title="AddLineItems" Height="314.72" Width="401.733"        
         ShowInTaskbar="False" WindowStartupLocation="CenterScreen"
@@ -12,36 +13,17 @@
         >
     <Grid>
         <TextBlock HorizontalAlignment="Left" Margin="99,31,0,0" TextWrapping="Wrap" Text="Product" VerticalAlignment="Top" Height="23"/>
-        <ComboBox ItemsSource="{Binding Products}"  HorizontalAlignment="Left" Margin="228,25,0,0" VerticalAlignment="Top" Width="120" IsEditable="True" IsSynchronizedWithCurrentItem="True" IsTabStop="True" StaysOpenOnEdit="True" AllowDrop="True"
-                  SelectedValue="{Binding SelectedProduct, UpdateSourceTrigger=LostFocus}">
-            <ComboBox.Style>
-                <Style TargetType="ComboBox">
-                    <Style.Triggers>
-                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
-                            <Setter Property="IsDropDownOpen" Value="true" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </ComboBox.Style>
-        </ComboBox>
+        <EnhancedCombo:AutoCompleteComboBox ItemsSource="{Binding Products}"  HorizontalAlignment="Left" Margin="228,25,0,0" VerticalAlignment="Top" Width="120" IsEditable="True" IsSynchronizedWithCurrentItem="True" IsTabStop="True" StaysOpenOnEdit="True" AllowDrop="True"
+                  SelectedValue="{Binding SelectedProduct, UpdateSourceTrigger=LostFocus}"/>
         <TextBlock HorizontalAlignment="Left" Margin="99,61,0,0" TextWrapping="Wrap" Text="Batch" VerticalAlignment="Top" Height="23"/>
-        <ComboBox ItemsSource="{Binding Batches}" HorizontalAlignment="Left" Margin="228,55,0,0" VerticalAlignment="Top" Width="120" IsEditable="True" IsSynchronizedWithCurrentItem="True" IsTabStop="True" StaysOpenOnEdit="True" AllowDrop="True"
-                  SelectedItem="{Binding CurrentLineItem.Batch}">
-            <ComboBox.Style>
-                <Style TargetType="ComboBox">
-                    <Style.Triggers>
-                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
-                            <Setter Property="IsDropDownOpen" Value="true" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </ComboBox.Style>
+        <EnhancedCombo:AutoCompleteComboBox ItemsSource="{Binding Batches}" HorizontalAlignment="Left" Margin="228,55,0,0" VerticalAlignment="Top" Width="120" IsEditable="True" IsSynchronizedWithCurrentItem="True" IsTabStop="True" StaysOpenOnEdit="True" AllowDrop="True"
+                  SelectedItem="{Binding CurrentLineItem.Batch}">            
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="GotKeyboardFocus">
                     <i:InvokeCommandAction Command="{Binding BatchEnterCommand}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
-        </ComboBox>
+        </EnhancedCombo:AutoCompleteComboBox>
         <TextBlock HorizontalAlignment="Left" Margin="99,91,0,0" TextWrapping="Wrap" Text="Packing" VerticalAlignment="Top" Height="23"/>
         <TextBlock HorizontalAlignment="Left" Margin="99,121,0,0" TextWrapping="Wrap" Text="Offer" VerticalAlignment="Top" Height="23"/>
         <TextBlock HorizontalAlignment="Left" Margin="99,150,0,0" TextWrapping="Wrap" Text="Quantity" VerticalAlignment="Top" Height="23"/>

@@ -8,6 +8,7 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:prism="http://prismlibrary.com/"
              xmlns:converters="clr-namespace:Nostrum.Converters"
+             xmlns:EnhancedCombo="clr-namespace:DotNetKit.Windows.Controls;assembly=DotNetKit.Wpf.AutoCompleteComboBox"
              mc:Ignorable="d" 
              d:DesignHeight="550" d:DesignWidth="800">
     <UserControl.Resources>
@@ -39,7 +40,7 @@
             <TextBlock Grid.Row="1"  Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center"  TextWrapping="Wrap" Text="Client Name"  Height="23" FontSize="16" FontFamily="Century Gothic" FontWeight="Bold" />
             <TextBlock Grid.Row="2" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center"   TextWrapping="Wrap" Text="From"  Height="23"  FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" />
             <TextBlock Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center"   TextWrapping="Wrap" Text="To"  Height="23"  FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" ClipToBounds="True" SnapsToDevicePixels="True" />
-            <ComboBox Grid.Row="1" ItemsSource="{Binding ClientsList}" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="169"  Height="30" IsEditable="True" IsSynchronizedWithCurrentItem="True" IsTabStop="True" StaysOpenOnEdit="True" AllowDrop="True" 
+            <EnhancedCombo:AutoCompleteComboBox Grid.Row="1" ItemsSource="{Binding ClientsList}" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="169"  Height="30" IsEditable="True" IsSynchronizedWithCurrentItem="True" IsTabStop="True" StaysOpenOnEdit="True" AllowDrop="True" 
                       SelectedItem="{Binding SelectedClient}"/>
 
             <DatePicker SelectedDate="{Binding FromDate, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" SelectedDateFormat="Short" Grid.Row="2" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="143" Height="30" />

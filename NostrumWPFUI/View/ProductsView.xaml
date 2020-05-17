@@ -7,6 +7,7 @@
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:behaviors="clr-namespace:Nostrum.Behaviours"
+             xmlns:EnhancedCombo="clr-namespace:DotNetKit.Windows.Controls;assembly=DotNetKit.Wpf.AutoCompleteComboBox"
              mc:Ignorable="d" >
     <UserControl.Resources>
         <ResourceDictionary Source="../Styles/NostrumUIStyles.xaml"/>
@@ -64,7 +65,7 @@
             <TextBlock Grid.Row="12" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right" TextWrapping="Wrap" Text="Date of Purchase" VerticalAlignment="Center" Height="23" Width="135" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" />
             <TextBlock Grid.Row="13" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" TextAlignment="Right" TextWrapping="Wrap" Text="Invoice Number" VerticalAlignment="Center" Height="23" Width="135" FontFamily="Century Gothic" FontSize="16" FontWeight="Bold"/>
 
-            <ComboBox Text ="{Binding ProductName}" IsEditable="True" IsEnabled="{Binding IsNewProduct, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"  Grid.Row="1" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="169"   Grid.ColumnSpan="2" Height="30" 
+            <EnhancedCombo:AutoCompleteComboBox Text ="{Binding ProductName}" IsEditable="True" IsEnabled="{Binding IsNewProduct, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"  Grid.Row="1" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="169"   Grid.ColumnSpan="2" Height="30" 
                       ItemsSource="{Binding ProductNameCollection}" IsDropDownOpen="True"/>
             <ComboBox Name="cmbDrugType" Grid.Row="2" ItemsSource="{Binding DrugTypeList}" Grid.Column="4" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="169"  Height="30" IsSynchronizedWithCurrentItem="True" IsTabStop="True" AllowDrop="True" 
                       SelectedItem="{Binding Type, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"
