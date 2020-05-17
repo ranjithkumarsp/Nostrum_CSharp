@@ -9,22 +9,9 @@ namespace Nostrum.UIEntity
 {
     public class ClientPayment :BaseViewModel
     {
+        public double OrderId { get; set; }
 
-        private int _orderId;
-
-        public int OrderId
-        {
-            get { return _orderId; }
-            set { _orderId = value; }
-        }
-
-        private string _fy;
-
-        public string FY
-        {
-            get { return _fy; }
-            set { _fy = value; }
-        }
+        public string FY { get; set; }
 
         public string InvoiceNo
         {

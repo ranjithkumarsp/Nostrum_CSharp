@@ -11,7 +11,7 @@ namespace NostrumDB
     interface IPaymentDAO
     {
         bool AddPayment(Payment payment);
-        List<Payment> GetPayments(int orderId, int fy);
-        double GetTotalAmountPaid(int orderId, int fy);
+        List<Payment> GetPayments(double orderId, int fy);
+        double GetTotalAmountPaid(double orderId, int fy);
     }
 }

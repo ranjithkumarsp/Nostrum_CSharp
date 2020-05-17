@@ -9,7 +9,7 @@ namespace Entity
 {
     public class LineItem
     {
-        public int Order_Id { get; set; }
+        public double Order_Id { get; set; }
         public string FY { get; set; }
         public int S_No { get; set; }
         public string Product_Name { get; set; }

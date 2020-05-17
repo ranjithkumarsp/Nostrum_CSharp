@@ -97,7 +97,7 @@
             <TextBox x:Name="FinancialYear" Text="{Binding FinancialYear,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}" Grid.Row="6" Grid.Column="4" TextAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="169" Width="Auto" Height="36" 
                      TextBlock.TextAlignment="Left"
                      />
-            <TextBox x:Name="InvoiceNumber" Text="{Binding InvoiceNumber,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}" Grid.Row="7" Grid.Column="4" TextAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="169" Width="Auto" Height="36" >
+            <TextBox x:Name="InvoiceNumber" Text="{Binding InvoiceNumber,UpdateSourceTrigger=LostFocus,Mode=TwoWay,ValidatesOnDataErrors=True}" Grid.Row="7" Grid.Column="4" TextAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="169" Width="Auto" Height="36" >
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="GotKeyboardFocus">
                         <i:InvokeCommandAction Command="{Binding InvoiceEnterCommand}"/>

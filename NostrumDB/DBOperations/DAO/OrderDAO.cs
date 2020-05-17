@@ -18,18 +18,17 @@ namespace NostrumDB
         }
         public bool AddOrder(Order order)
         {
-            int nRowsAffected = 0;
-            string type = "";
+            string type;
             if (order.Order_Type == Order.OrderType.DonateOrder)
                 type = "Donate";
             else
                 type = "Sale";
             string query = "Insert into orders values('" + order.Order_Id + "','" + order.FY + "','" + order.Order_Date.ToString("yyyy-MM-dd") + "','" + type + "','" + order.Client_Name + "','" + order.Amount + "','" + order.Balance + "','" + order.Discount+ "','" + order.Payment_Terms + "','" + order.Dispatch_Mode + "');";
-            nRowsAffected = _dbInterface.ExecuteNonQuery(query);
+            int nRowsAffected = _dbInterface.ExecuteNonQuery(query);
             return (nRowsAffected > 0);
         }
 
-        public bool DeleteOrder(int orderId, string fy)
+        public bool DeleteOrder(double orderId, string fy)
         {
             int nRowsAffected = 0;
             string query = "Delete from orders where Order_Id = '" + orderId + "' and fy = '" + fy + "';";
@@ -37,7 +36,7 @@ namespace NostrumDB
             return (nRowsAffected > 0);
         }
 
-        public Order GetOrder(int orderId, string fy)
+        public Order GetOrder(double orderId, string fy)
         {
             Order order = new Order();
             string query = "Select * from orders where Order_Id ='" + orderId + "' and fy = '" + fy + "';";
@@ -46,7 +45,7 @@ namespace NostrumDB
             if (dataTable.Rows.Count > 0)
             {
                 DataRow reader = dataTable.Rows[0];
-                order.Order_Id = (int)reader["Order_Id"];
+                order.Order_Id = (double)reader["Order_Id"];
                 order.FY = reader["FY"].ToString();
                 order.Order_Date = (DateTime) reader["Order_Date"];
                 order.Dispatch_Mode = reader["Dispatch_Mode"].ToString();
@@ -78,6 +77,12 @@ namespace NostrumDB
             return GetPaymentDetailsInternal(query);
         }
 
+        public List<Order> GetPaymentDetails(DateTime from, DateTime to)
+        {
+            string query = "SELECT Order_Id, FY, Client_Name, Order_Date, Amount, Balance from Orders where Order_type = 'Sale' and Order_date between '" + from.ToString("yyyy-MM-dd") + "' and '" + to.ToString("yyyy-MM-dd") + "' order by Order_Date, Order_Id;";
+            return GetPaymentDetailsInternal(query);
+        }
+
         public List<Order> GetPendingPayments(string name, DateTime from, DateTime to)
         {
             string query = "SELECT Order_Id, FY, Client_Name, Order_Date, Amount, Balance from Orders where Order_type = 'Sale' and Client_Name = '" + name + "' and Order_date between '" + from.ToString("yyyy-MM-dd") + "' and '" + to.ToString("yyyy-MM-dd") + "' and Balance > 0 order by Order_Date, Order_Id;";
@@ -91,13 +96,15 @@ namespace NostrumDB
             DataTable dataTable = _dbInterface.ExecuteQuery(query);
             foreach (DataRow dr in dataTable.Rows)
             {
-                Order order = new Order();
-                order.Order_Id = (int)dr["Order_Id"];
-                order.FY = dr["FY"].ToString();
-                order.Client_Name = dr["Client_Name"].ToString();
-                order.Order_Date = (DateTime)dr["Order_Date"];
-                order.Amount = (int)dr["Amount"];
-                order.Balance = (int)dr["Balance"];
+                Order order = new Order
+                {
+                    Order_Id = (double)dr["Order_Id"],
+                    FY = dr["FY"].ToString(),
+                    Client_Name = dr["Client_Name"].ToString(),
+                    Order_Date = (DateTime)dr["Order_Date"],
+                    Amount = (int)dr["Amount"],
+                    Balance = (int)dr["Balance"]
+                };
                 orderList.Add(order);
             }
             return orderList;
@@ -139,14 +146,15 @@ namespace NostrumDB
             string query = "SELECT Orders.Order_Date as date, Orders.Order_Type as type, Orders.Order_Id as id, Orders.fy as fy, Orders.Client_Name as client, order_line_items.batch as batch, order_line_items.quantity as qty, order_line_items.offer1 as off1, order_line_items.offer2 as off2, order_line_items.pack1 as pack1, order_line_items.pack2 as pack2 FROM Orders inner join order_line_items where Orders.Order_Id=order_line_items.order_id and Orders.fy=order_line_items.fy and order_line_items.product_name='" + name + "' and order_line_items.batch='"+batch+"' and Orders.Order_date between '" + from.ToString("yyyy-MM-dd") + "' and '" + to.ToString("yyyy-MM-dd") + "' order by Orders.Order_Date;";
 
             DataTable dataTable = _dbInterface.ExecuteQuery(query);
-            List<string> orderIds = new List<string>();
             foreach (DataRow dr in dataTable.Rows)
             {
-                Product prod = new Product();
-                prod.Name = name;
-                prod.Batch = dr["batch"].ToString();
-                prod.Manufacturer = dr["client"].ToString();
-                prod.Purchase_Date = (DateTime)dr["date"];
+                Product prod = new Product
+                {
+                    Name = name,
+                    Batch = dr["batch"].ToString(),
+                    Manufacturer = dr["client"].ToString(),
+                    Purchase_Date = (DateTime)dr["date"]
+                };
                 int off1 = (int)dr["off1"];
                 int off2 = (int)dr["off2"];
                 int pack1 = (int)dr["pack1"];
@@ -164,7 +172,7 @@ namespace NostrumDB
                 }
                 
                 prod.Quantity = (int)saleQty;
-                string invNo = "";
+                string invNo;
                 if (dr["type"].ToString().Equals("Donate"))
                 {
                     invNo = "Donated";
@@ -207,14 +215,13 @@ namespace NostrumDB
 
         public bool UpdateOrder(Order order)
         {
-            int nRowsAffected = 0;
-            string type = "";
+            string type;
             if (order.Order_Type == Order.OrderType.DonateOrder)
                 type = "Donate";
             else
                 type = "Sale";
             string query = "Update orders set Order_Date = '" + order.Order_Date.ToString("yyyy-MM-dd") + "', Order_Type = '" + type + "', Client_Name = '" + order.Client_Name + "', Amount = '" + order.Amount + "', Balance = '" + order.Balance + "', Discount = '" + order.Discount + "', Payment_Terms = '" + order.Payment_Terms + "', Dispatch_Mode = '" + order.Dispatch_Mode + "' where Order_Id = '" + order.Order_Id + "' and FY = '" + order.FY + "';";
-            nRowsAffected = _dbInterface.ExecuteNonQuery(query);
+            int nRowsAffected = _dbInterface.ExecuteNonQuery(query);
             return (nRowsAffected > 0);
         }
     }

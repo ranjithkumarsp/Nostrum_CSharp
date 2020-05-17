@@ -59,7 +59,7 @@ namespace Nostrum.ViewModel
         {
             StockDisplay disp = new StockDisplay
             {
-                Date = prod.Purchase_Date.ToString("dd-MMM-yyyy"),
+                Date = prod.Purchase_Date,
                 InvoiceNo = prod.Purchase_Invoice,
                 Manufacturer = prod.Manufacturer,
                 BatchNo = prod.Batch,
@@ -92,7 +92,7 @@ namespace Nostrum.ViewModel
             {
                 StockDisplay disp = new StockDisplay
                 {
-                    Date = prod.Exp_Date.ToString("dd-MMM-yyyy"),
+                    Date = prod.Exp_Date,
                     InvoiceNo = "Expired",
                     Manufacturer = prod.Manufacturer,
                     BatchNo = prod.Batch,
@@ -116,7 +116,7 @@ namespace Nostrum.ViewModel
             {
                 StockDisplay disp = new StockDisplay
                 {
-                    Date = product.Purchase_Date.ToString("dd-MMM-yyyy"),
+                    Date = product.Purchase_Date,
                     InvoiceNo = product.Purchase_Invoice,
                     Manufacturer = product.Manufacturer,
                     BatchNo = product.Batch,

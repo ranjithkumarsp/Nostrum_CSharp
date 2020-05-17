@@ -8,84 +8,24 @@ namespace Nostrum.UIEntity
 {
     public class StockDisplay
     {
-        private string _date;
+        public DateTime Date { get; set; }
 
-        public string Date
-        {
-            get { return _date; }
-            set { _date = value; }
-        }
+        public string InvoiceNo { get; set; }
 
-        private string _invoiceNo;
+        public string Manufacturer { get; set; }
 
-        public string InvoiceNo
-        {
-            get { return _invoiceNo; }
-            set { _invoiceNo = value; }
-        }
+        public string BatchNo { get; set; }
 
-        private string _manufacturer;
+        public string ManufactureDate { get; set; }
 
-        public string Manufacturer
-        {
-            get { return _manufacturer; }
-            set { _manufacturer = value; }
-        }
+        public string ExpiryDate { get; set; }
 
-        private string _batchno;
+        public string PurchaseQty { get; set; }
 
-        public string BatchNo
-        {
-            get { return _batchno; }
-            set { _batchno = value; }
-        }
+        public string SaleQty { get; set; }
 
-        private string _manufacturedate;
+        public int Stock { get; set; }
 
-        public string ManufactureDate
-        {
-            get { return _manufacturedate; }
-            set { _manufacturedate = value; }
-        }
-
-        private string _expiryDate;
-
-        public string ExpiryDate
-        {
-            get { return _expiryDate; }
-            set { _expiryDate = value; }
-        }
-
-        private string _purchaseQty;
-
-        public string PurchaseQty
-        {
-            get { return _purchaseQty; }
-            set { _purchaseQty = value; }
-        }
-
-        private string _saleQty;
-
-        public string SaleQty
-        {
-            get { return _saleQty; }
-            set { _saleQty = value; }
-        }
-
-        private int _stock;
-
-        public int Stock
-        {
-            get { return _stock; }
-            set { _stock = value; }
-        }
-
-        private string _remarks;
-
-        public string Remarks
-        {
-            get { return _remarks; }
-            set { _remarks = value; }
-        }
+        public string Remarks { get; set; }
     }
 }

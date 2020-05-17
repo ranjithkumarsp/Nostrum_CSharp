@@ -126,6 +126,10 @@ namespace Nostrum.ViewModel
             set { _cgst = value; this.RaisePropertyChange(); }
         }
 
+        public double FirstCGST { get; set; }
+
+        public double FirstSGST { get; set; }
+
         private string _strCgst;
 
         public string strCGST
@@ -211,7 +215,7 @@ namespace Nostrum.ViewModel
         public ICommand DeleteBillForm { get; set; }
 
         public RelayCommand<IClosable> CloseBillFormWindowCommand { get; private set; }
-        public string lblDLNo { get; private set; } 
+        public string LblDLNo { get; private set; } 
         public BillFormViewModel(Order order, List<LineItem> LineItems)
         {
             CurrentOrder = order;
@@ -251,8 +255,8 @@ namespace Nostrum.ViewModel
         private void CalculateInvoice()
         {
             NetValue = BillValue - Discount;
-            CGST *= (NetValue / 100);
-            SGST *= (NetValue / 100);
+            CGST = FirstCGST * (NetValue / 100);
+            SGST = FirstSGST * (NetValue / 100);
             Total = Math.Round(NetValue + CGST + SGST, 2);
             InvoiceAmount = (int)Math.Round(Total);
             InvoiceAmountinWords = Nostrum.Utils.numInWords(InvoiceAmount, 0) + " Rupees only";
@@ -285,10 +289,10 @@ namespace Nostrum.ViewModel
             //CGST = cgst;
             //SGST = sgst;
 
-            CGST = _orderLineItems.First<LineItem>().CGST;
-            SGST = _orderLineItems.First<LineItem>().SGST;
-            strCGST = "CGST @ " + CGST + "%";
-            strSGST = "SGST @ " + SGST + "%";
+            FirstCGST = _orderLineItems.First<LineItem>().CGST;
+            FirstSGST = _orderLineItems.First<LineItem>().SGST;
+            strCGST = "CGST @ " + FirstCGST + "%";
+            strSGST = "SGST @ " + FirstSGST + "%";
 
             CalculateInvoice();
         }
@@ -310,11 +314,11 @@ namespace Nostrum.ViewModel
             BuyersDLNo = client.DL_No;
             if(client.Type.Equals("Doctor"))
             {
-                lblDLNo = "Regn No.";
+                LblDLNo = "Regn No.";
             }
             else
             {
-                lblDLNo = "Drug License No.";
+                LblDLNo = "Drug License No.";
             }
         }
 

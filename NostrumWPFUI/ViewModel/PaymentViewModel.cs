@@ -91,16 +91,13 @@ namespace Nostrum.ViewModel
         private void Refresh(object obj)
         {
             GetClientsFromDB();
+            IsGridVisible = false;
         }
 
         private void GetClientsFromDB()
         {
             ClientDAO dao = new ClientDAO(_dbInterface);
             ClientsList = dao.GetClients();
-            if(ClientsList.Count > 0)
-            {
-                SelectedClient = ClientsList[0];
-            }
         }
 
         public void LoadInvoiceDetailsMethod(object param)
@@ -108,7 +105,7 @@ namespace Nostrum.ViewModel
             IsGridVisible = true;
             ClientPaymentCollection.Clear();
 
-            List<Order> paymentList = GetOrderDetailsFromDB(SelectedClient, FromDate, ToDate);
+            List<Order> paymentList = GetOrderDetailsFromDB();
 
             if(paymentList.Count > 0)
             {
@@ -133,26 +130,26 @@ namespace Nostrum.ViewModel
             }
         }
 
-        private List<Order> GetOrderDetailsFromDB(string selectedClient, DateTime fromDate, DateTime toDate)
+        private List<Order> GetOrderDetailsFromDB()
         {
             List<Order> orders = new List<Order>();
-            if (String.IsNullOrWhiteSpace(SelectedClient))
+            OrderDAO orderDAO = new OrderDAO(_dbInterface);
+            if (string.IsNullOrWhiteSpace(SelectedClient))
             {
-                MessageBox.Show("Select Client", "Error");
-                return orders;
+                orders = orderDAO.GetPaymentDetails(FromDate, ToDate);
             }
             else
             {
-                OrderDAO orderDAO = new OrderDAO(_dbInterface);
+                
                 orders = orderDAO.GetPaymentDetails(SelectedClient, FromDate, ToDate);
             }
             return orders;
         }
 
-        private List<Order> GetPendingOrdersFromDB(string selectedClient, DateTime fromDate, DateTime toDate)
+        private List<Order> GetPendingOrdersFromDB()
         {
             List<Order> orders = new List<Order>();
-            if (String.IsNullOrWhiteSpace(SelectedClient))
+            if (string.IsNullOrWhiteSpace(SelectedClient))
             {
                 MessageBox.Show("Select Client", "Error");
                 return orders;
@@ -167,7 +164,7 @@ namespace Nostrum.ViewModel
 
         public void OutStandingDetailsMethod(object param)
         {
-            List<Order> paymentList = GetPendingOrdersFromDB(SelectedClient, FromDate, ToDate);
+            List<Order> paymentList = GetPendingOrdersFromDB();
             if(paymentList.Count > 0)
             {
                 OutStandingPaymentPopupView outstandingPaymentPopup = new OutStandingPaymentPopupView(paymentList)
@@ -176,7 +173,7 @@ namespace Nostrum.ViewModel
                 };
                 outstandingPaymentPopup.ShowDialog();
             }
-            else
+            else if(!string.IsNullOrWhiteSpace(SelectedClient))
             {
                 MessageBox.Show("No outstanding for the selected client", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;

@@ -7,9 +7,9 @@ namespace NostrumDB
     interface ILineItemDAO
     {
         bool AddLineItem(LineItem lineItem);
-        bool DeleteLineItem(int orderId, string fy, int sNo);
-        bool DeleteAllLineItems(int orderId, string fy);
-        List<LineItem> GetLineItems(int orderId, string fy);
+        bool DeleteLineItem(double orderId, string fy, int sNo);
+        bool DeleteAllLineItems(double orderId, string fy);
+        List<LineItem> GetLineItems(double orderId, string fy);
         bool UpdateLineItem(LineItem LineItem);
     }
 }

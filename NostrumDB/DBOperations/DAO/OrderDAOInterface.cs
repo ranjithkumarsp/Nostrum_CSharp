@@ -11,8 +11,8 @@ namespace NostrumDB
     interface IOrderDAO
     {
         bool AddOrder(Order order);
-        bool DeleteOrder(int orderId, string fy);
-        Order GetOrder(int orderId, string fy);
+        bool DeleteOrder(double orderId, string fy);
+        Order GetOrder(double orderId, string fy);
         List<string> GetOrderIds();
         List<string> GetOrderIds(string clientName, DateTime FromDate, DateTime ToDate);
         int GetNextInvNo(string FY);

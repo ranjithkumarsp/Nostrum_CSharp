@@ -53,7 +53,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Nostrum.ico</ApplicationIcon>
+    <ApplicationIcon>Images\Nostrum.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommonServiceLocator, Version=2.0.5.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
@@ -287,6 +287,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="NostrumBorderless.ico" />
     <Resource Include="Nostrum.ico" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -318,6 +319,7 @@
     <Resource Include="Icons\Save.png" />
     <Resource Include="Icons\Save01.png" />
     <Resource Include="Icons\Save03.png" />
+    <Resource Include="Images\NostrumBorderless.jpg" />
     <Content Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -348,11 +350,5 @@
       <Name>NostrumDB</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="Dll%27s\log4net.dll" />
-    <Content Include="Dll%27s\Microsoft.Office.Interop.Excel.dll" />
-    <Content Include="Dll%27s\Newtonsoft.Json.dll" />
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

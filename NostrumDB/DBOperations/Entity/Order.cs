@@ -14,7 +14,7 @@ namespace Entity
             DonateOrder
         }
 
-        public int Order_Id { get; set; }
+        public double Order_Id { get; set; }
         public string FY { get; set; }
         public DateTime Order_Date { get; set; }
         public string Dispatch_Mode { get; set; }

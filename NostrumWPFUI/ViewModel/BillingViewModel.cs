@@ -71,7 +71,7 @@ namespace Nostrum.ViewModel
             }
         }
 
-        public int InvoiceNumber
+        public double InvoiceNumber
         {
             get { return CurrentOrder.Order_Id; }
             set

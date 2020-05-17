@@ -230,7 +230,7 @@
                                 <TextBlock Text="Buyers GST No" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                                 <TextBlock Text=":" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Top"/>
                                 <TextBlock Text="{Binding BuyersTINNo}" Grid.Row="3" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                                <TextBlock Text="{Binding lblDLNo, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                <TextBlock Text="{Binding LblDLNo, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                                 <TextBlock Text=":"  Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
                                 <TextBlock Text="{Binding BuyersDLNo}" Grid.Row="3" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                                 <Border Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="5"  BorderBrush="Gray" BorderThickness="2"/>
