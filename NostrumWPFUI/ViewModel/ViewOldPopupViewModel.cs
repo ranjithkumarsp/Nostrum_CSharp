@@ -126,7 +126,7 @@ namespace Nostrum.ViewModel
             view.Close(); // Close the current view before opening the next view.
 
             string fy = ExtractFY();
-            int orderId = ExtractOrderId();
+            double orderId = ExtractOrderId();
 
             OrderDAO orderDAO = new OrderDAO(_dbInterface);
             Order order = orderDAO.GetOrder(orderId, fy);
@@ -148,10 +148,10 @@ namespace Nostrum.ViewModel
             return fy;
         }
 
-        private int ExtractOrderId()
+        private double ExtractOrderId()
         {
             int index = SelectedInvoice.LastIndexOf('-');
-            int orderId = Convert.ToInt32(SelectedInvoice.Substring(index + 1));
+            double orderId = Convert.ToDouble(SelectedInvoice.Substring(index + 1));
             return orderId;
         }
 

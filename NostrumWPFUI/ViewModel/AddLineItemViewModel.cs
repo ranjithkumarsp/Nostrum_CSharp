@@ -225,7 +225,7 @@ namespace Nostrum.ViewModel
         {
             CurrentLineItem = new LineItem();
             CurrentLineItem.ClearAll();
-            SelectedProduct = Products.First<string>();
+            SelectedProduct = Products.FirstOrDefault<string>();
             Batches = null;
             _availableQty = 0;
         }
