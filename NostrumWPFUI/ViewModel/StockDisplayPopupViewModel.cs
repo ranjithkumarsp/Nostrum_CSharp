@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Nostrum.Helpers;
+using Prism.Commands;
 
 namespace Nostrum.ViewModel
 {
@@ -26,16 +28,24 @@ namespace Nostrum.ViewModel
 
             set => txtProduct = value;
         }
-        public string TxtFromTo { get => txtFromTo; set => txtFromTo = value; }
-        public ICommand SaveAsPDFCommand { get; set; }
+        public string TxtFromTo { get => txtFromTo; set => txtFromTo = value; }        
+
+        private DelegateCommand<object> _fieldName; object dd;
+        public DelegateCommand<object> SaveAsPDFCommand =>
+           _fieldName ?? (_fieldName = new DelegateCommand<object>(ExecutePrintAsPDF));
+
+        private void ExecutePrintAsPDF(object obj)
+        {
+            NostrumHelper.ExecutePrintAsPDF(obj);
+        }
+
         public StockDisplayPopupViewModel(string prod, DateTime from, DateTime to)
         {
             _dbInterface = new MySQLDBInterface();
             StockDisplayCollection = new ObservableCollection<StockDisplay>();
             TxtProduct = prod;
             TxtFromTo = from.ToString("dd-MMM-yyyy") + " to " + to.ToString("dd-MMM-yyyy");
-            LoadStock(prod, from , to);
-            SaveAsPDFCommand = new Nostrum.Helpers.PrintCommand();
+            LoadStock(prod, from , to);          
         }
 
         private void LoadStock(string product, DateTime from, DateTime to)

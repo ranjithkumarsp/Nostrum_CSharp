@@ -16,11 +16,7 @@
         xmlns:converters="clr-namespace:Nostrum.Converters"
         >
     <Window.Resources>
-        <converters:DiscountRowHeightConverter x:Key="DiscountRowHeightConverter"/>
-        <Style TargetType="DataGridColumnHeader">
-            <Setter Property="HorizontalContentAlignment"
-                 Value="Center" />
-        </Style>
+        <converters:DiscountRowHeightConverter x:Key="DiscountRowHeightConverter"/>        
     </Window.Resources>
     <Grid x:Name="BillFormMainGrid">
         <Grid.RowDefinitions>
@@ -167,6 +163,10 @@
                                             <Setter Property="BorderBrush" Value="CornflowerBlue"/>
                                         </Trigger>
                                     </Style.Triggers>-->
+                                </Style>
+
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
                                 </Style>
 
                             </DataGrid.Resources>

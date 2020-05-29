@@ -24,7 +24,7 @@
                 <RowDefinition Height="55"/>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="10"/>
-                <RowDefinition Height="150"/>
+                <RowDefinition Height="250*"/>
                 <RowDefinition x:Name="Paymentfooter" Height="55"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -33,7 +33,7 @@
                 <ColumnDefinition Width="150"/>
                 <ColumnDefinition Width="10"/>
                 <ColumnDefinition Width="200"/>
-                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="70"/>
                 <ColumnDefinition x:Name="PaymentRightMargin" Width="80"/>
             </Grid.ColumnDefinitions>
             <Button Content="Refresh" ToolTip="Refresh" Style="{StaticResource RefreshButton}" Grid.Row="0" Grid.Column="5" Command="{Binding RefreshCommand}" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
@@ -54,73 +54,99 @@
                 <Button Content="Invoice Details" Grid.Column="0"  Height="30"  VerticalAlignment="Center" Command="{Binding InvoiceDetailsCommand}" Grid.ColumnSpan="3" Margin="56,5,120.6,0"/>
                 <Button Content="Outstanding" Grid.Column="2" Height="30" Command="{Binding OutStandingDetailsCommand}"  VerticalAlignment="Center" Margin="56.2,5,-56.4,0" />
             </Grid>
-            <ScrollViewer Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="4" Visibility="{Binding IsClientInvoiceGridVisible,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource BooleanToVisibilityConverter}}"  Grid.RowSpan="2">
-                <DataGrid Name="ClientInvoice"  MinHeight="100" Height="166" Width="403"  
+            <!--<ScrollViewer Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="4" Visibility="{Binding IsClientInvoiceGridVisible,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource BooleanToVisibilityConverter}}"  Grid.RowSpan="2">-->
+            <DataGrid Name="ClientInvoice"  MinHeight="200" Width="565" Height="Auto" Margin="-30,0,0,0"
+                          Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="6" 
                           ItemsSource="{Binding ClientPaymentCollection}" AutoGenerateColumns="False"
                           ColumnWidth="auto" HorizontalAlignment="Left" VerticalAlignment="Top"
                           EnableRowVirtualization="false" EnableColumnVirtualization="false" 
                           FlowDirection="LeftToRight" FontSize="15" CanUserResizeColumns="False" IsReadOnly="True"
                           CanUserAddRows="False" CanUserReorderColumns="False" SelectionMode="Single" SelectionUnit="FullRow" 
-                          Visibility="{Binding IsGridVisible,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource BooleanToVisibilityConverter}}"                         
+                          HorizontalScrollBarVisibility="Auto"
+                          Visibility="{Binding IsGridVisible,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource BooleanToVisibilityConverter}}"                          
                           >
-                    <DataGrid.Resources>
-                        <!--Style to disable blue background on Selection-->
-                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
-                        <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent"/>
-                        <!--Style to disable White Foreground background on Selection-->
-                        <Style x:Key="{x:Type DataGridCell}" TargetType="{x:Type DataGridCell}" >
-                            <Style.Triggers>
-                                <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="Foreground" Value="Black"/>
-                                    <!--<Setter Property="BorderThickness" Value="0"/>-->
-                                    <Setter Property="BorderBrush" Value="CornflowerBlue"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </DataGrid.Resources>
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="MouseDoubleClick">
-                            <!--<prism:InvokeCommandAction Command="{Binding SelectedCommand}" TriggerParameterPath="AddedItems" />-->
-                            <i:InvokeCommandAction Command="{Binding SelectedCommand}" CommandParameter="{Binding ElementName=ClientInvoice,Path=SelectedItem}"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                    <DataGrid.RowStyle>
-                        <Style TargetType="{x:Type DataGridRow}">
-                            <Setter Property="Background" >
-                                <Setter.Value>
-                                    <MultiBinding Converter="{StaticResource RowBackGroundConverter}" >
-                                        <Binding Path="Amount" />
-                                        <Binding Path="Balance" />
-                                        <Binding RelativeSource="{RelativeSource Self}" />
-                                    </MultiBinding>
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="Foreground" Value="Black"/>
-                            <Style.Triggers>
-                                <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="Background" >
-                                        <Setter.Value>
-                                            <MultiBinding Converter="{StaticResource RowBackGroundConverter}" >
-                                                <Binding Path="Amount" />
-                                                <Binding Path="Balance" />
-                                                <Binding RelativeSource="{RelativeSource Self}" />
-                                            </MultiBinding>
-                                        </Setter.Value>
-                                    </Setter>
-                                    <Setter Property="Foreground" Value="Black"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </DataGrid.RowStyle>
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Invoice Number" Binding="{Binding InvoiceNo}" Width="*" CanUserResize="False"/>
-                        <DataGridTextColumn Header="Client" Binding="{Binding Client}" Width="Auto" CanUserResize="False"/>
-                        <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="Auto" CanUserResize="False"/>
-                        <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" Width="Auto" CanUserResize="False"/>
-                        <DataGridTextColumn Header="Balance" Binding="{Binding Balance}" Width="Auto" CanUserResize="False"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </ScrollViewer>
+                <DataGrid.Resources>
+                    <!--Style to disable blue background on Selection-->
+                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
+                    <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent"/>
+                    <!--Style to disable White Foreground background on Selection-->
+                    <Style x:Key="{x:Type DataGridCell}" TargetType="{x:Type DataGridCell}" >
+                        <Setter Property="TextBlock.TextWrapping" Value="WrapWithOverflow"/>
+                        <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Foreground" Value="Black"/>
+                                <!--<Setter Property="BorderThickness" Value="0"/>-->
+                                <Setter Property="BorderBrush" Value="CornflowerBlue"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+
+                    <Style x:Key="WrappedColumnHeaderStyle" TargetType="{x:Type DataGridColumnHeader}">
+                        <Setter Property="ContentTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <TextBlock TextWrapping="Wrap" Text="{Binding}"></TextBlock>
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+
+                    <Style x:Key="TxtColumnElementStyle" TargetType="TextBlock">
+                        <Setter Property="TextBlock.TextWrapping" Value="Wrap"/>
+                    </Style>
+
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                    </Style>
+
+                </DataGrid.Resources>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDoubleClick">
+                        <!--<prism:InvokeCommandAction Command="{Binding SelectedCommand}" TriggerParameterPath="AddedItems" />-->
+                        <i:InvokeCommandAction Command="{Binding SelectedCommand}" CommandParameter="{Binding ElementName=ClientInvoice,Path=SelectedItem}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <DataGrid.RowStyle>
+                    <Style TargetType="{x:Type DataGridRow}">
+                        <Setter Property="Background" >
+                            <Setter.Value>
+                                <MultiBinding Converter="{StaticResource RowBackGroundConverter}" >
+                                    <Binding Path="Amount" />
+                                    <Binding Path="Balance" />
+                                    <Binding RelativeSource="{RelativeSource Self}" />
+                                </MultiBinding>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" >
+                                    <Setter.Value>
+                                        <MultiBinding Converter="{StaticResource RowBackGroundConverter}" >
+                                            <Binding Path="Amount" />
+                                            <Binding Path="Balance" />
+                                            <Binding RelativeSource="{RelativeSource Self}" />
+                                        </MultiBinding>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="Foreground" Value="Black"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Invoice Number" Binding="{Binding InvoiceNo}" Width="125" CanUserResize="False" HeaderStyle="{StaticResource WrappedColumnHeaderStyle}"/>
+                    <DataGridTextColumn Header="Client" Binding="{Binding Client}" ElementStyle="{StaticResource TxtColumnElementStyle}" Width="140" CanUserResize="False"/>
+                    <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="100" CanUserResize="False"/>
+                    <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" Width="95" CanUserResize="False"/>
+                    <DataGridTextColumn Header="Balance" Binding="{Binding Balance}" Width="95" CanUserResize="False"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Button x:Name="Print" Style="{StaticResource PrintButton}" IsEnabled="{Binding IsGridVisible}" Grid.Row="5" Grid.Column="6" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,9.2,-45.6,0" Grid.RowSpan="2"/>
+
+
+            <!--</ScrollViewer>-->
 
         </Grid>
     </Grid>
