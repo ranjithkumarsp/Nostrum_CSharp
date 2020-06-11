@@ -12,6 +12,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Reflection;
+using log4net;
 
 namespace Nostrum.ViewModel
 {
@@ -21,6 +23,7 @@ namespace Nostrum.ViewModel
         {
             Initialize();
         }
+        public static readonly ILog logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         public ICommand InvoiceDetailsCommand { get; set; }
         public ICommand OutStandingDetailsCommand { get; set; }
         public ICommand RefreshCommand { get; set; }
@@ -73,6 +76,23 @@ namespace Nostrum.ViewModel
             set { _toDate = value; }
         }
 
+        public int TotalRecords
+        {
+            get
+            {
+                return ClientPaymentCollection.Count;
+            }
+        }
+
+        private bool _outstandingButtonEnabled;
+
+        public bool OutstandingButtonEnabled
+        {
+            get { return _outstandingButtonEnabled; }
+            set { _outstandingButtonEnabled = value;this.RaisePropertyChange(); }
+        }
+
+
         public void Initialize()
         {
             IsGridVisible = false;
@@ -120,8 +140,9 @@ namespace Nostrum.ViewModel
                         Amount = item.Amount,
                         Balance = item.Balance
                     };
-                    ClientPaymentCollection.Add(clientPayment);
+                    ClientPaymentCollection.Add(clientPayment); 
                 }
+                
             }
             else
             {
@@ -151,6 +172,7 @@ namespace Nostrum.ViewModel
             List<Order> orders = new List<Order>();
             if (string.IsNullOrWhiteSpace(SelectedClient))
             {
+                logger.Error("Select Client");                
                 MessageBox.Show("Select Client", "Error");
                 return orders;
             }
@@ -164,6 +186,7 @@ namespace Nostrum.ViewModel
 
         public void OutStandingDetailsMethod(object param)
         {
+            logger.Info(MethodBase.GetCurrentMethod().DeclaringType + ": STARTS");
             List<Order> paymentList = GetPendingOrdersFromDB();
             if(paymentList.Count > 0)
             {
@@ -175,30 +198,67 @@ namespace Nostrum.ViewModel
             }
             else if(!string.IsNullOrWhiteSpace(SelectedClient))
             {
-                MessageBox.Show("No outstanding for the selected client", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                logger.Info("No outstanding for the selected client");
+                MessageBox.Show("No outstanding for the selected client", "Info", MessageBoxButton.OK, MessageBoxImage.Information);                
                 return;
             }
+            logger.Info(MethodBase.GetCurrentMethod().DeclaringType + ": ENDS");
         }
 
-        private DelegateCommand<ClientPayment> _fieldName;
         private IDBInterface _dbInterface;
 
+        private DelegateCommand<ClientPayment> _fieldName; 
         public DelegateCommand<ClientPayment> SelectedCommand =>
             _fieldName ?? (_fieldName = new DelegateCommand<ClientPayment>(ExecuteSelectedCommand));
 
+        private DelegateCommand<ClientPayment> _clientSelectionChanged;
+        public DelegateCommand<ClientPayment> SelectedClientChangedCommand =>
+            _clientSelectionChanged ?? (_clientSelectionChanged = new DelegateCommand<ClientPayment>(ExecuteSelectedClientChangedCommand));
+
+        private void ExecuteSelectedClientChangedCommand(ClientPayment obj)
+        {
+            if(SelectedClient != null)
+            {
+                List<Order> paymentList = GetPendingOrdersFromDB();
+                if(paymentList.Count > 0)
+                OutstandingButtonEnabled = true;
+                else
+                    OutstandingButtonEnabled = false;
+            }
+           
+        }
+
         private void ExecuteSelectedCommand(ClientPayment selectedClient)
         {
-            if (selectedClient != null && selectedClient.Balance <= 0)
+            if (selectedClient != null)
             {
-                MessageBox.Show("No Outstanding for this bill.", "Info");
-                return;
+                if (selectedClient != null && selectedClient.Balance <= 0)
+                {
+                    MessageBox.Show("No Outstanding for this bill.", "Info");
+                    return;
+                }
+                MakePaymentView makePaymentView = new MakePaymentView(selectedClient)
+                {
+                    Owner = MainWindow
+                };
+                makePaymentView.ShowDialog();
             }
-            MakePaymentView makePaymentView = new MakePaymentView(selectedClient)
-            {
-                Owner = MainWindow
-            };
-            makePaymentView.ShowDialog();
             LoadInvoiceDetailsMethod(null);
         }
+
+        private DelegateCommand<object> _fieldName1; 
+        public DelegateCommand<object> ShowPaymentGridPopupView =>
+           _fieldName1 ?? (_fieldName1 = new DelegateCommand<object>(ShowPaymentGrid));
+
+        private void ShowPaymentGrid(object obj)
+        {
+            OutStandingPaymentGridPopupView outview = new OutStandingPaymentGridPopupView();
+            
+            outview.DataContext = this;
+            outview.Owner = MainWindow;
+            outview.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            outview.Show();
+        }
+
     }
 }

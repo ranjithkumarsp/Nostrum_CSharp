@@ -100,6 +100,50 @@
         </Setter>
     </Style>
 
+    <Style x:Key="OpenInPopupButton"  TargetType="Button">
+        <Setter Property="Opacity" Value="0.1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="MyBackgroundElement" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                        <Image x:Name="Imagename" Source="../Icons/pop-up-icon-4.png" Height="36" Width="36"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                                <Condition Property="IsEnabled" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="Imagename" Property="Height" Value="40"/>
+                                <Setter TargetName="Imagename" Property="Width" Value="40"/>
+                                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                <Setter Property="Cursor" Value="Hand" />
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                        <!--<Trigger Property="IsMouseOver" Value="True">
+                            -->
+                        <!--<Setter TargetName="MyBackgroundElement" Property="Background" Value="WhiteSmoke"/>-->
+                        <!--
+                            <Setter TargetName="Imagename" Property="Height" Value="42"/>
+                            <Setter TargetName="Imagename" Property="Width" Value="42"/>
+                            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                            <Setter Property="Cursor" Value="Hand" />
+                        </Trigger>-->
+                        <Trigger Property="IsEnabled" Value="True">
+                            <Setter Property="Opacity" Value="0.7"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.0"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+
     <Style x:Key="BoldLinkButton" 
        TargetType="Button"
        BasedOn="{StaticResource ResourceKey={x:Type Button}}"

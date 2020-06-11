@@ -7,7 +7,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Title="StockDisplayPopupView"
-        Height="500" Width="850"
+        Height="750" Width="850"
         ShowInTaskbar="False" WindowStartupLocation="CenterScreen"
         WindowState="Normal" WindowStyle="SingleBorderWindow" ResizeMode="NoResize"
         >
@@ -110,7 +110,7 @@
                     </DataGrid>
                 <!--</ScrollViewer>-->                
                 <!--<TextBlock Text="TOTAL" Grid.Row="3" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="18" FontWeight="Heavy"/>
-                <TextBlock Text="{Binding TotalOutStanding,UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="18" FontWeight="Heavy"/>-->
+                <TextBlock Text="{Binding TotalOutStanding,UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="18" FontWeight="Heavy"/>-->                
             </Grid>
         </Border>
 

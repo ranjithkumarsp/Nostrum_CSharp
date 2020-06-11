@@ -14,6 +14,7 @@
     <UserControl.Resources>
         <converters:DataToRowBackgroundColorConverter x:Key="RowBackGroundConverter"/>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <converters:IsNullConverter x:Key="IsNullConverter"/>
     </UserControl.Resources>
     <Grid>
         <Grid Background="WhiteSmoke">
@@ -40,8 +41,15 @@
             <TextBlock Grid.Row="1"  Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center"  TextWrapping="Wrap" Text="Client Name"  Height="23" FontSize="16" FontFamily="Century Gothic" FontWeight="Bold" />
             <TextBlock Grid.Row="2" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center"   TextWrapping="Wrap" Text="From"  Height="23"  FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" />
             <TextBlock Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center"   TextWrapping="Wrap" Text="To"  Height="23"  FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" ClipToBounds="True" SnapsToDevicePixels="True" />
-            <EnhancedCombo:AutoCompleteComboBox Grid.Row="1" ItemsSource="{Binding ClientsList}" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="169"  Height="30" IsEditable="True" IsSynchronizedWithCurrentItem="True" IsTabStop="True" StaysOpenOnEdit="True" AllowDrop="True" 
-                      SelectedItem="{Binding SelectedClient}"/>
+            <EnhancedCombo:AutoCompleteComboBox x:Name="ClientsList" Grid.Row="1" ItemsSource="{Binding ClientsList}" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="169"  Height="30" IsEditable="True" IsSynchronizedWithCurrentItem="True" IsTabStop="True" StaysOpenOnEdit="True" AllowDrop="True" 
+                      SelectedItem="{Binding SelectedClient}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <!--<prism:InvokeCommandAction Command="{Binding SelectedCommand}" TriggerParameterPath="AddedItems" />-->
+                        <i:InvokeCommandAction Command="{Binding SelectedClientChangedCommand}" CommandParameter="{Binding SelectedItem}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </EnhancedCombo:AutoCompleteComboBox>
 
             <DatePicker SelectedDate="{Binding FromDate, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" SelectedDateFormat="Short" Grid.Row="2" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="143" Height="30" />
             <DatePicker SelectedDate="{Binding ToDate, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" SelectedDateFormat="Short" Grid.Row="3" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="143" Height="30" />
@@ -52,17 +60,51 @@
                     <ColumnDefinition Width="140"/>
                 </Grid.ColumnDefinitions>
                 <Button Content="Invoice Details" Grid.Column="0"  Height="30"  VerticalAlignment="Center" Command="{Binding InvoiceDetailsCommand}" Grid.ColumnSpan="3" Margin="56,5,120.6,0"/>
-                <Button Content="Outstanding" Grid.Column="2" Height="30" Command="{Binding OutStandingDetailsCommand}"  VerticalAlignment="Center" Margin="56.2,5,-56.4,0" />
+                <Button Content="Outstanding" Grid.Column="2" Height="30" Command="{Binding OutStandingDetailsCommand}" ToolTipService.ShowOnDisabled="True" IsEnabled="{Binding OutstandingButtonEnabled}"  VerticalAlignment="Center" Margin="56.2,5,-56.4,0" >
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <!--<Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True"/>-->
+                                        <Condition Binding="{Binding SelectedClient,Converter={StaticResource IsNullConverter}}" Value="True" />
+                                        <Condition Binding="{Binding OutstandingButtonEnabled}" Value="False" />
+                                    </MultiDataTrigger.Conditions>
+                                    <MultiDataTrigger.Setters>
+                                        <Setter Property="ToolTip" Value="No outstanding for the selected client" />
+                                        <!--<Setter Property="ToolTip" Value="Please Select Any Client" />-->
+                                    </MultiDataTrigger.Setters>
+                                </MultiDataTrigger>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>                                        
+                                        <Condition Binding="{Binding SelectedClient,Converter={StaticResource IsNullConverter}}" Value="False" />
+                                        <Condition Binding="{Binding OutstandingButtonEnabled}" Value="False" />
+                                    </MultiDataTrigger.Conditions>
+                                    <MultiDataTrigger.Setters>
+                                        <Setter Property="ToolTip" Value="No outstanding for the selected client" />
+                                        <!--<Setter Property="ToolTip" Value="Please Select Any Client" />-->
+                                    </MultiDataTrigger.Setters>
+                                </MultiDataTrigger>
+                                <!--<Trigger Property="IsEnabled" Value="False">                                   
+                                    <Setter Property="ToolTip" Value="No outstanding for the selected client" />
+                                </Trigger>
+                                <DataTrigger Binding="{Binding SelectedClient}" Value="{x:Null}">
+                                    <Setter Property="ToolTip" Value="Please Select Any Client" />
+                                </DataTrigger>-->
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
             </Grid>
             <!--<ScrollViewer Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="4" Visibility="{Binding IsClientInvoiceGridVisible,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource BooleanToVisibilityConverter}}"  Grid.RowSpan="2">-->
-            <DataGrid Name="ClientInvoice"  MinHeight="200" Width="565" Height="Auto" Margin="-30,0,0,0"
+            <DataGrid Name="ClientInvoice"  MinHeight="200" Width="585" Height="Auto" Margin="-60,0,5,5"
                           Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="6" 
                           ItemsSource="{Binding ClientPaymentCollection}" AutoGenerateColumns="False"
                           ColumnWidth="auto" HorizontalAlignment="Left" VerticalAlignment="Top"
                           EnableRowVirtualization="false" EnableColumnVirtualization="false" 
                           FlowDirection="LeftToRight" FontSize="15" CanUserResizeColumns="False" IsReadOnly="True"
                           CanUserAddRows="False" CanUserReorderColumns="False" SelectionMode="Single" SelectionUnit="FullRow" 
-                          HorizontalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto"
                           Visibility="{Binding IsGridVisible,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource BooleanToVisibilityConverter}}"                          
                           >
                 <DataGrid.Resources>
@@ -137,16 +179,14 @@
                 </DataGrid.RowStyle>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Invoice Number" Binding="{Binding InvoiceNo}" Width="125" CanUserResize="False" HeaderStyle="{StaticResource WrappedColumnHeaderStyle}"/>
-                    <DataGridTextColumn Header="Client" Binding="{Binding Client}" ElementStyle="{StaticResource TxtColumnElementStyle}" Width="140" CanUserResize="False"/>
+                    <DataGridTextColumn Header="Client" Binding="{Binding Client}" ElementStyle="{StaticResource TxtColumnElementStyle}" Width="155" CanUserResize="False"/>
                     <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="100" CanUserResize="False"/>
                     <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" Width="95" CanUserResize="False"/>
                     <DataGridTextColumn Header="Balance" Binding="{Binding Balance}" Width="95" CanUserResize="False"/>
                 </DataGrid.Columns>
             </DataGrid>
-            <Button x:Name="Print" Style="{StaticResource PrintButton}" IsEnabled="{Binding IsGridVisible}" Grid.Row="5" Grid.Column="6" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,9.2,-45.6,0" Grid.RowSpan="2"/>
-
-
-            <!--</ScrollViewer>-->
+            <Button x:Name="Popup" Style="{StaticResource OpenInPopupButton}" ToolTip="Open in Popup" Command="{Binding ShowPaymentGridPopupView}" Visibility="Visible" IsEnabled="{Binding IsGridVisible}" Grid.Row="5" Grid.Column="6" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,9.2,-45.6,0" Grid.RowSpan="2"/>
+            <!--<Button x:Name="Print1" Style="{StaticResource PrintButton}" Visibility="Visible" IsEnabled="{Binding IsGridVisible}" Grid.Row="5" Grid.Column="6" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,9.2,-45.6,0" Grid.RowSpan="2"/>-->          
 
         </Grid>
     </Grid>

@@ -2,7 +2,6 @@
 using NostrumDB;
 using Nostrum.UIEntity;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
@@ -10,17 +9,23 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Nostrum.Helpers;
 using Prism.Commands;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Collections;
 
 namespace Nostrum.ViewModel
 {
-    public class StockDisplayPopupViewModel :BaseViewModel
+    public class StockDisplayPopupViewModel : BaseViewModel
     {
         private int _stock;
         private string txtProduct;
         private string txtFromTo;
 
         public int RemainingStock { get => _stock; set => _stock = value; }
-        public string TxtProduct {
+        public string TxtProduct
+        {
             get
             {
                 return "Stock Register - " + txtProduct;
@@ -28,7 +33,7 @@ namespace Nostrum.ViewModel
 
             set => txtProduct = value;
         }
-        public string TxtFromTo { get => txtFromTo; set => txtFromTo = value; }        
+        public string TxtFromTo { get => txtFromTo; set => txtFromTo = value; }
 
         private DelegateCommand<object> _fieldName; object dd;
         public DelegateCommand<object> SaveAsPDFCommand =>
@@ -45,13 +50,13 @@ namespace Nostrum.ViewModel
             StockDisplayCollection = new ObservableCollection<StockDisplay>();
             TxtProduct = prod;
             TxtFromTo = from.ToString("dd-MMM-yyyy") + " to " + to.ToString("dd-MMM-yyyy");
-            LoadStock(prod, from , to);          
+            LoadStock(prod, from, to);
         }
 
         private void LoadStock(string product, DateTime from, DateTime to)
         {
             List<Product> purchasedStock = GetPurchaseList(product, from, to);
-            foreach(var prod in purchasedStock)
+            foreach (var prod in purchasedStock)
             {
                 FillPurchaseData(prod);
                 FillSaleData(prod, from, to);
@@ -98,7 +103,7 @@ namespace Nostrum.ViewModel
             ProductDAO productDAO = new ProductDAO(_dbInterface);
             bool expired = productDAO.IsProductExpired(prod.Name, prod.Batch);
 
-            if(expired && RemainingStock != 0)
+            if (expired && RemainingStock != 0)
             {
                 StockDisplay disp = new StockDisplay
                 {
@@ -114,7 +119,7 @@ namespace Nostrum.ViewModel
                 };
                 StockDisplayCollection.Add(disp);
             }
-            
+
         }
 
         private void FillSaleData(Product prod, DateTime from, DateTime to)
@@ -122,7 +127,7 @@ namespace Nostrum.ViewModel
             OrderDAO orderDAO = new OrderDAO(_dbInterface);
             List<Product> products = orderDAO.GetSaleData(prod.Name, prod.Batch, from, to);
 
-            foreach(var product in products)
+            foreach (var product in products)
             {
                 StockDisplay disp = new StockDisplay
                 {

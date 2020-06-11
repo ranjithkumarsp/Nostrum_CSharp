@@ -30,6 +30,7 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -124,6 +125,8 @@
     <Compile Include="Constants\NostrumConstants.cs" />
     <Compile Include="Converters\DataToRowBackgroundColorConverter.cs" />
     <Compile Include="Converters\DiscountRowHeightConverter.cs" />
+    <Compile Include="Converters\IsNullConverter.cs" />
+    <Compile Include="Converters\RowToIndexConverter.cs" />
     <Compile Include="Helpers\CustomDelegateCommand.cs" />
     <Compile Include="Helpers\DebugConverter.cs" />
     <Compile Include="Helpers\ExcelProduct.cs" />
@@ -168,6 +171,9 @@
     </Compile>
     <Compile Include="View\MakePaymentView.xaml.cs">
       <DependentUpon>MakePaymentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\OutStandingPaymentGridPopupView.xaml.cs">
+      <DependentUpon>OutStandingPaymentGridPopupView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ViewOldPopupView.xaml.cs">
       <DependentUpon>ViewOldPopupView.xaml</DependentUpon>
@@ -232,6 +238,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MakePaymentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\OutStandingPaymentGridPopupView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -323,6 +333,7 @@
     <Resource Include="Icons\Save01.png" />
     <Resource Include="Icons\Save03.png" />
     <Resource Include="Images\NostrumBorderless.jpg" />
+    <Resource Include="Icons\pop-up-icon-4.png" />
     <Content Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

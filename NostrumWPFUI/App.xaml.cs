@@ -19,7 +19,7 @@ namespace Nostrum
         {
 
             log4net.Config.XmlConfigurator.Configure();
-            log.Info("        =============  Started Logging  =============        ");
+           // log.Info("        =============  Started Logging  =============        ");
             base.OnStartup(e);
             //log.Info("        =============  Ended Logging  =============        ");
         }

@@ -1,4 +1,5 @@
-﻿using Nostrum.Helpers;
+﻿using log4net;
+using Nostrum.Helpers;
 using Nostrum.View;
 using Nostrum.ViewModel;
 using System;
@@ -24,24 +25,27 @@ namespace Nostrum
     /// </summary>
     public partial class MainWindow : Window
     {
+        private static readonly ILog logger = LogManager.GetLogger("Nostrum Biotech");
         public MainWindow()
         {
+            logger.Info("        =============  Started Logging  =============        ");
             InitializeComponent();
             this.DataContext = new MainWindowViewModel();
             System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
             FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
             string version = fvi.FileVersion;
-            VersionTxtBlk.Text = "1.2.001";
+            VersionTxtBlk.Text = "1.2.003";
         }
 
         private void NostrumMainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {           
             var activetview = VisualHelpers.GetChildOfType<UserControl>(this.NostrumMainWindow);
             var _userControlsInMainWindow = VisualHelpers.GetLogicalChildrenCollection<UserControl>(NostrumMainWindow);
+            logger.Info("        =============  Ended Logging  =============        ");
             //ExcelImportView _excelImportView = _userControlsInMainWindow.Where(x => x.Name.Equals("ExcelImportMainView")).FirstOrDefault() as ExcelImportView;
-           // if (_excelImportView != null && _excelImportView.xlApp != null)
-           //     _excelImportView.CLEAN(true);
-           // System.Windows.Forms.Application.ExitThread(); //Closes all underlying threads
+            // if (_excelImportView != null && _excelImportView.xlApp != null)
+            //     _excelImportView.CLEAN(true);
+            // System.Windows.Forms.Application.ExitThread(); //Closes all underlying threads
 
         }
 

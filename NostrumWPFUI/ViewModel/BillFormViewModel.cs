@@ -16,6 +16,7 @@ using System.IO;
 using Prism.Commands;
 using Nostrum.Behaviours;
 using System.Linq;
+using System.Windows.Controls.Primitives;
 
 namespace Nostrum.ViewModel
 {
