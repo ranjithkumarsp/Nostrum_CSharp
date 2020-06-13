@@ -35,13 +35,17 @@ namespace Nostrum.ViewModel
         }
         public string TxtFromTo { get => txtFromTo; set => txtFromTo = value; }
 
-        private DelegateCommand<object> _fieldName; object dd;
+        private DelegateCommand<object> _saveasPdf; 
         public DelegateCommand<object> SaveAsPDFCommand =>
-           _fieldName ?? (_fieldName = new DelegateCommand<object>(ExecutePrintAsPDF));
+           _saveasPdf ?? (_saveasPdf = new DelegateCommand<object>(ExecutePrintAsPDF));
 
         private void ExecutePrintAsPDF(object obj)
         {
-            NostrumHelper.ExecutePrintAsPDF(obj);
+            if (obj != null)
+            {
+                NostrumHelper.ExecutePrintAsPDF(obj);
+            }
+
         }
 
         public StockDisplayPopupViewModel(string prod, DateTime from, DateTime to)

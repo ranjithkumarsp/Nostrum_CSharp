@@ -77,7 +77,7 @@
                 <TextBlock Text="OUTSTANDING UP TO:" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Right" FontFamily="Arial" FontSize="20" FontStyle="Normal" FontWeight="UltraBold"/>
                 <TextBlock Text="14-FEB 2020" Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2"  VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0" FontFamily="Arial" FontSize="20" FontStyle="Normal" FontWeight="UltraBold"/>
                 <DataGrid Name="OutstandingPaymentGrid" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5"
-                          MinWidth="450" Margin="1,1,1,1"
+                          MinWidth="450" Margin="1,1,1,1" Background="Transparent"
                           ItemsSource="{Binding OutstandingPaymentGridCollection}" AutoGenerateColumns="False"
                           ColumnWidth="*" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                           EnableRowVirtualization="false" EnableColumnVirtualization="false" 

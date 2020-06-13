@@ -9,17 +9,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Prism.Commands;
 
 namespace Nostrum.ViewModel
 {
     public class OutStandingPaymentPopupViewModel : BaseViewModel
     {
-        public ICommand SaveAsPDFCommand { get; set; }
+        
         public OutStandingPaymentPopupViewModel(List<Order> orders)
         {
             OutstandingPaymentGridCollection = new ObservableCollection<OutstandingPayment>();
-            FillOutstandingForm(orders);
-            SaveAsPDFCommand = new PrintCommand();
+            FillOutstandingForm(orders);           
+        }
+
+        private DelegateCommand<object> _saveasPdf;
+        public DelegateCommand<object> SaveAsPDFCommand =>
+           _saveasPdf ?? (_saveasPdf = new DelegateCommand<object>(ExecutePrintAsPDF));
+
+        private void ExecutePrintAsPDF(object obj)
+        {
+            if (obj != null)
+            {
+                NostrumHelper.ExecutePrintAsPDF(obj);
+            }
+
         }
 
         private void FillOutstandingForm(List<Order> paymentList)

@@ -16,11 +16,15 @@ using System.IO;
 using Prism.Commands;
 using Nostrum.Behaviours;
 using System.Linq;
+using log4net;
+using System.Reflection;
 
 namespace Nostrum.Helpers
 {
     public static class NostrumHelper
-    {
+    {        
+
+        public static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         public static string UppercaseFirst(string s)
         {
             // Check for empty string.
@@ -38,107 +42,114 @@ namespace Nostrum.Helpers
         {
             FrameworkElement objectToPrint = parameter as FrameworkElement;
             //BillFormView _billFormView = VisualHelpers.GetVisualParent<Window>(objectToPrint) as BillFormView;
-
-            PrintDialog printDialog = new PrintDialog();
-            if ((bool)printDialog.ShowDialog().GetValueOrDefault())
+            if (objectToPrint != null)
             {
-                if (parameter is FrameworkElement)
+                PrintDialog printDialog = new PrintDialog();
+                if ((bool)printDialog.ShowDialog().GetValueOrDefault())
+                {
+                    if (parameter is FrameworkElement)
+                    {
+                        //FrameworkElement objectToPrint = parameter as FrameworkElement;
+                        //PrintDialog printDialog = new PrintDialog();
+                        //if ((bool)printDialog.ShowDialog().GetValueOrDefault())
+                        //{
+                        Mouse.OverrideCursor = Cursors.Wait;
+                        System.Printing.PrintCapabilities capabilities =
+                         printDialog.PrintQueue.GetPrintCapabilities(printDialog.PrintTicket);
+                        double dpiScale = 300.0 / 96.0;
+                        FixedDocument document = new FixedDocument();
+                        try
+                        {
+                            // Change the layout of the UI Control to match the width of the printer page
+                            objectToPrint.Width = capabilities.PageImageableArea.ExtentWidth;
+                            objectToPrint.UpdateLayout();
+                            objectToPrint.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+                            Size size = new Size(capabilities.PageImageableArea.ExtentWidth,
+                                                 objectToPrint.DesiredSize.Height);
+                            objectToPrint.Measure(size);
+                            size = new Size(capabilities.PageImageableArea.ExtentWidth,
+                                            objectToPrint.DesiredSize.Height);
+                            objectToPrint.Measure(size);
+                            objectToPrint.Arrange(new Rect(size));
+
+                            // Convert the UI control into a bitmap at 300 dpi
+                            double dpiX = 300;
+                            double dpiY = 300;
+                            RenderTargetBitmap bmp = new RenderTargetBitmap(Convert.ToInt32(
+                              capabilities.PageImageableArea.ExtentWidth * dpiScale),
+                              Convert.ToInt32(objectToPrint.ActualHeight * dpiScale),
+                              dpiX, dpiY, PixelFormats.Pbgra32);
+                            bmp.Render(objectToPrint);
+
+                            // Convert the RenderTargetBitmap into a bitmap we can more readily use
+                            PngBitmapEncoder png = new PngBitmapEncoder();
+                            png.Frames.Add(BitmapFrame.Create(bmp));
+                            System.Drawing.Bitmap bmp2;
+                            using (MemoryStream memoryStream = new MemoryStream())
+                            {
+                                png.Save(memoryStream);
+                                bmp2 = new System.Drawing.Bitmap(memoryStream);
+                            }
+                            document.DocumentPaginator.PageSize =
+                              new Size(printDialog.PrintableAreaWidth, printDialog.PrintableAreaHeight);
+
+                            // break the bitmap down into pages
+                            int pageBreak = 0;
+                            int previousPageBreak = 0;
+                            int pageHeight =
+                                Convert.ToInt32(capabilities.PageImageableArea.ExtentHeight * dpiScale);
+                            while (pageBreak < bmp2.Height - pageHeight)
+                            {
+                                pageBreak += pageHeight;  // Where we thing the end of the page should be
+
+                                // Keep moving up a row until we find a good place to break the page
+                                while (!IsRowGoodBreakingPoint(bmp2, pageBreak))
+                                    pageBreak--;
+
+                                PageContent pageContent = generatePageContent(bmp2, previousPageBreak,
+                                  pageBreak, document.DocumentPaginator.PageSize.Width,
+                                  document.DocumentPaginator.PageSize.Height, capabilities);
+                                document.Pages.Add(pageContent);
+                                previousPageBreak = pageBreak;
+                            }
+
+                            // Last Page
+                            PageContent lastPageContent = generatePageContent(bmp2, previousPageBreak,
+                              bmp2.Height, document.DocumentPaginator.PageSize.Width,
+                              document.DocumentPaginator.PageSize.Height, capabilities);
+                            document.Pages.Add(lastPageContent);
+                        }
+                        finally
+                        {
+                            // Scale UI control back to the original so we don't effect what is on the screen 
+                            objectToPrint.Width = double.NaN;
+                            objectToPrint.UpdateLayout();
+                            objectToPrint.LayoutTransform = new ScaleTransform(1, 1);
+                            Size size = new Size(capabilities.PageImageableArea.ExtentWidth,
+                                                 capabilities.PageImageableArea.ExtentHeight);
+                            objectToPrint.Measure(size);
+                            objectToPrint.Arrange(new Rect(new Point(capabilities.PageImageableArea.OriginWidth,
+                                                  capabilities.PageImageableArea.OriginHeight), size));
+                            Mouse.OverrideCursor = null;
+                        }
+                        printDialog.PrintDocument(document.DocumentPaginator, "Print Document Name");
+                        // }
+                    }
+                }
+                else
                 {
                     //FrameworkElement objectToPrint = parameter as FrameworkElement;
-                    //PrintDialog printDialog = new PrintDialog();
-                    //if ((bool)printDialog.ShowDialog().GetValueOrDefault())
-                    //{
-                    Mouse.OverrideCursor = Cursors.Wait;
-                    System.Printing.PrintCapabilities capabilities =
-                     printDialog.PrintQueue.GetPrintCapabilities(printDialog.PrintTicket);
-                    double dpiScale = 300.0 / 96.0;
-                    FixedDocument document = new FixedDocument();
-                    try
-                    {
-                        // Change the layout of the UI Control to match the width of the printer page
-                        objectToPrint.Width = capabilities.PageImageableArea.ExtentWidth;
-                        objectToPrint.UpdateLayout();
-                        objectToPrint.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
-                        Size size = new Size(capabilities.PageImageableArea.ExtentWidth,
-                                             objectToPrint.DesiredSize.Height);
-                        objectToPrint.Measure(size);
-                        size = new Size(capabilities.PageImageableArea.ExtentWidth,
-                                        objectToPrint.DesiredSize.Height);
-                        objectToPrint.Measure(size);
-                        objectToPrint.Arrange(new Rect(size));
-
-                        // Convert the UI control into a bitmap at 300 dpi
-                        double dpiX = 300;
-                        double dpiY = 300;
-                        RenderTargetBitmap bmp = new RenderTargetBitmap(Convert.ToInt32(
-                          capabilities.PageImageableArea.ExtentWidth * dpiScale),
-                          Convert.ToInt32(objectToPrint.ActualHeight * dpiScale),
-                          dpiX, dpiY, PixelFormats.Pbgra32);
-                        bmp.Render(objectToPrint);
-
-                        // Convert the RenderTargetBitmap into a bitmap we can more readily use
-                        PngBitmapEncoder png = new PngBitmapEncoder();
-                        png.Frames.Add(BitmapFrame.Create(bmp));
-                        System.Drawing.Bitmap bmp2;
-                        using (MemoryStream memoryStream = new MemoryStream())
-                        {
-                            png.Save(memoryStream);
-                            bmp2 = new System.Drawing.Bitmap(memoryStream);
-                        }
-                        document.DocumentPaginator.PageSize =
-                          new Size(printDialog.PrintableAreaWidth, printDialog.PrintableAreaHeight);
-
-                        // break the bitmap down into pages
-                        int pageBreak = 0;
-                        int previousPageBreak = 0;
-                        int pageHeight =
-                            Convert.ToInt32(capabilities.PageImageableArea.ExtentHeight * dpiScale);
-                        while (pageBreak < bmp2.Height - pageHeight)
-                        {
-                            pageBreak += pageHeight;  // Where we thing the end of the page should be
-
-                            // Keep moving up a row until we find a good place to break the page
-                            while (!IsRowGoodBreakingPoint(bmp2, pageBreak))
-                                pageBreak--;
-
-                            PageContent pageContent = generatePageContent(bmp2, previousPageBreak,
-                              pageBreak, document.DocumentPaginator.PageSize.Width,
-                              document.DocumentPaginator.PageSize.Height, capabilities);
-                            document.Pages.Add(pageContent);
-                            previousPageBreak = pageBreak;
-                        }
-
-                        // Last Page
-                        PageContent lastPageContent = generatePageContent(bmp2, previousPageBreak,
-                          bmp2.Height, document.DocumentPaginator.PageSize.Width,
-                          document.DocumentPaginator.PageSize.Height, capabilities);
-                        document.Pages.Add(lastPageContent);
-                    }
-                    finally
-                    {
-                        // Scale UI control back to the original so we don't effect what is on the screen 
-                        objectToPrint.Width = double.NaN;
-                        objectToPrint.UpdateLayout();
-                        objectToPrint.LayoutTransform = new ScaleTransform(1, 1);
-                        Size size = new Size(capabilities.PageImageableArea.ExtentWidth,
-                                             capabilities.PageImageableArea.ExtentHeight);
-                        objectToPrint.Measure(size);
-                        objectToPrint.Arrange(new Rect(new Point(capabilities.PageImageableArea.OriginWidth,
-                                              capabilities.PageImageableArea.OriginHeight), size));
-                        Mouse.OverrideCursor = null;
-                    }
-                    printDialog.PrintDocument(document.DocumentPaginator, "Print Document Name");
-                    // }
+                    //BillFormView _billFormView = VisualHelpers.GetVisualParent<Window>(objectToPrint) as BillFormView;
+                    //_billFormView.SetRowDefinitions(true);
                 }
+                //Show Discount Column for success / Failure scenarios.
+                //_billFormView.SetRowDefinitions(true);
             }
             else
             {
-                //FrameworkElement objectToPrint = parameter as FrameworkElement;
-                //BillFormView _billFormView = VisualHelpers.GetVisualParent<Window>(objectToPrint) as BillFormView;
-                //_billFormView.SetRowDefinitions(true);
+                Logger.Error("Print Error");
+                MessageBox.Show("Error In Printing", "Print Error");
             }
-            //Show Discount Column for success / Failure scenarios.
-            //_billFormView.SetRowDefinitions(true);
 
         }
 

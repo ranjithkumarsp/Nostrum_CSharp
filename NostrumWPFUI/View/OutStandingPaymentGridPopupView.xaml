@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Nostrum.View"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Title="StockDisplayPopupView"
+        Title="OutStandingPaymentGridPopup"
         Height="750" Width="800"
         xmlns:converters="clr-namespace:Nostrum.Converters"
         ShowInTaskbar="False" WindowStartupLocation="CenterScreen"

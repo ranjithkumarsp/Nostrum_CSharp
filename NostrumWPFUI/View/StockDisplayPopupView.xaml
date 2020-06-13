@@ -7,27 +7,41 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Title="StockDisplayPopupView"
-        Height="750" Width="850"
+        Height="750" Width="815"
         ShowInTaskbar="False" WindowStartupLocation="CenterScreen"
         WindowState="Normal" WindowStyle="SingleBorderWindow" ResizeMode="NoResize"
         >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="15"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="360"/>
+            <ColumnDefinition Width="330"/>
+            <ColumnDefinition Width="45"/>
+        </Grid.ColumnDefinitions>
+        <Button x:Name="SaveasPdfButton" Content="Print" Style="{StaticResource BoldLinkButton}" Grid.Row="0" Grid.Column="3" Command="{Binding SaveAsPDFCommand}" HorizontalAlignment="Right" VerticalAlignment="Top"
+                CommandParameter="{Binding ElementName=StockPrintableGrid}" Margin="0,0,15,0" />
+    <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" x:Name="StockPrintableGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0"/>
             <RowDefinition Height="120"/>
             <RowDefinition Height="5"/>
             <RowDefinition Height="300*"/>                   
             <RowDefinition Height="35"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="15"/>
+            <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="100"/>
-            <ColumnDefinition Width="370"/>
+            <ColumnDefinition Width="360"/>
             <ColumnDefinition Width="330"/>
-            <ColumnDefinition Width="15"/>
+            <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="SaveasPdfButton" Content="Print" Style="{StaticResource BoldLinkButton}" Grid.Row="0" Grid.Column="3" Command="{Binding SaveAsPDFCommand}" HorizontalAlignment="Right" VerticalAlignment="Top"
-                CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}}" />
+        <!--<Button x:Name="SaveasPdfButton" Content="Print" Style="{StaticResource BoldLinkButton}" Grid.Row="0" Grid.Column="3" Command="{Binding SaveAsPDFCommand}" HorizontalAlignment="Right" VerticalAlignment="Top"
+                CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}}" />-->
         <Border x:Name="HeaderGridBorder" Grid.Row="1" Grid.Column="1"  Grid.ColumnSpan="3" BorderBrush="Gray" BorderThickness="3">
             <Grid Name="HeaderGrid" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="5">
                 <Grid.RowDefinitions>
@@ -62,12 +76,12 @@
 
                 
                 <!--<ScrollViewer Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">-->                    
-                <DataGrid Name="OutstandingPaymentGrid" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" 
+                <DataGrid Name="OutstandingPaymentGrid" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" Background="Transparent" 
                           ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                          ScrollViewer.VerticalScrollBarVisibility="Auto"
+                          ScrollViewer.VerticalScrollBarVisibility="Hidden"
                           MinHeight="100" Height="Auto" Width="Auto" 
                           ItemsSource="{Binding StockDisplayCollection}" 
-						  AutoGenerateColumns="False" 
+						  AutoGenerateColumns="False" Margin="2,0,5,0"
                           CanUserAddRows="False" 
 						  SelectionMode="Single" 
 						  SelectionUnit="FullRow"						  
@@ -115,4 +129,5 @@
         </Border>
 
     </Grid>
+        </Grid>
 </Window>
