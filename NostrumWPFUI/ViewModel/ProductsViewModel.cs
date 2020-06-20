@@ -18,7 +18,7 @@ namespace Nostrum.ViewModel
 {
     public class ProductsViewModel:BaseViewModel
     {
-        #region Properties
+        #region Properties       
 
         public string ProductName
         {
@@ -186,7 +186,7 @@ namespace Nostrum.ViewModel
                     MessageBox.Show("Manufacturer too big", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
-                CurrentProduct.Manufacturer = NostrumHelper.UppercaseFirst(value); 
+                CurrentProduct.Manufacturer = value; 
                 this.RaisePropertyChange();
             }
         }
