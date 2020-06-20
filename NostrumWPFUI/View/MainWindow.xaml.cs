@@ -34,7 +34,7 @@ namespace Nostrum
             System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
             FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
             string version = fvi.FileVersion;
-            VersionTxtBlk.Text = "1.2.004";            
+            VersionTxtBlk.Text = "1.2.005";            
             logger.InfoFormat("Version Info : {0}", VersionTxtBlk.Text);
         }
 
