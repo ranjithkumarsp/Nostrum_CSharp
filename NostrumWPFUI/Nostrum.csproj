@@ -364,9 +364,6 @@
     <Resource Include="Icons\Save03.png" />
     <Resource Include="Images\NostrumBorderless.jpg" />
     <Resource Include="Icons\pop-up-icon-4.png" />
-    <Content Include="log4net.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -393,6 +390,11 @@
       <Project>{13fd08af-a4ca-4b5d-9bee-8e5497053721}</Project>
       <Name>NostrumDB</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
