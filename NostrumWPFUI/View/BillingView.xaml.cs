@@ -22,10 +22,12 @@ namespace Nostrum.View
     /// </summary>
     public partial class BillingView : UserControl
     {
+        List<string> DispatchModes = new List<string> {"Courier","In-Person" };
         public BillingView()
         {
             InitializeComponent();
             this.DataContext = new BillingViewModel();
+            DispatchModeTxtBox.ItemsSource = DispatchModes;
         }
 
         //TO Hide the row when Donation Radio button is selected.

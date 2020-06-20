@@ -23,7 +23,7 @@ namespace Nostrum.ViewModel
         {
             Initialize();
         }
-        public static readonly ILog logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        public static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         public ICommand InvoiceDetailsCommand { get; set; }
         public ICommand OutStandingDetailsCommand { get; set; }
         public ICommand RefreshCommand { get; set; }
@@ -172,7 +172,7 @@ namespace Nostrum.ViewModel
             List<Order> orders = new List<Order>();
             if (string.IsNullOrWhiteSpace(SelectedClient))
             {
-                logger.Error("Select Client");                
+                Logger.Error("Select Client");                
                 MessageBox.Show("Select Client", "Error");
                 return orders;
             }
@@ -186,7 +186,7 @@ namespace Nostrum.ViewModel
 
         public void OutStandingDetailsMethod(object param)
         {
-            logger.Info(MethodBase.GetCurrentMethod().DeclaringType + ": STARTS");
+            Logger.Info("STARTS");
             List<Order> paymentList = GetPendingOrdersFromDB();
             if(paymentList.Count > 0)
             {
@@ -198,11 +198,11 @@ namespace Nostrum.ViewModel
             }
             else if(!string.IsNullOrWhiteSpace(SelectedClient))
             {
-                logger.Info("No outstanding for the selected client");
+                Logger.Info("No outstanding for the selected client");
                 MessageBox.Show("No outstanding for the selected client", "Info", MessageBoxButton.OK, MessageBoxImage.Information);                
                 return;
             }
-            logger.Info(MethodBase.GetCurrentMethod().DeclaringType + ": ENDS");
+            Logger.Info("ENDS");
         }
 
         private IDBInterface _dbInterface;

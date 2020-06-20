@@ -7,6 +7,7 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
              xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
              xmlns:EnhancedCombo="clr-namespace:DotNetKit.Windows.Controls;assembly=DotNetKit.Wpf.AutoCompleteComboBox"
+             xmlns:EnhancedAutoCompleteTextBox="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
              xmlns:local="clr-namespace:Nostrum.View"
              xmlns:behaviours="clr-namespace:Nostrum.Behaviours"
              mc:Ignorable="d" x:Name="BillingViewMainView" 
@@ -79,7 +80,7 @@
                        />
             <TextBlock Text="Dispatch Mode" Grid.Row="9" Grid.Column="2"  HorizontalAlignment="Right"  TextWrapping="Wrap" VerticalAlignment="Center" Height="23"  FontFamily="Century Gothic" FontSize="16" FontWeight="Bold" ClipToBounds="True" SnapsToDevicePixels="True" />
 
-            <TextBox x:Name="DispatchModeTxtBox" Text="{Binding DispatchMode,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}" Grid.Row="9" Grid.Column="4" TextAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="169" Width="Auto" Height="36"/>
+            <EnhancedAutoCompleteTextBox:AutoCompleteBox FilterMode="Contains"  x:Name="DispatchModeTxtBox" Text="{Binding DispatchMode,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnDataErrors=True}" Grid.Row="9" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="169" Width="Auto" Height="36"/>
 
             <EnhancedCombo:AutoCompleteComboBox Grid.Row="4" ItemsSource="{Binding ClientsList}" Grid.Column="4"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="169"  Height="30" IsEditable="True" IsSynchronizedWithCurrentItem="True" IsTabStop="True" StaysOpenOnEdit="True" AllowDrop="True" 
                       SelectedItem="{Binding ClientName}"/>

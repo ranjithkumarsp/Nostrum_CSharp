@@ -28,13 +28,14 @@ namespace Nostrum
         private static readonly ILog logger = LogManager.GetLogger("Nostrum Biotech");
         public MainWindow()
         {
-            logger.Info("        =============  Started Logging  =============        ");
+            logger.Info("                            =============  Started Logging  ===========        ");            
             InitializeComponent();
             this.DataContext = new MainWindowViewModel();
             System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
             FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
             string version = fvi.FileVersion;
-            VersionTxtBlk.Text = "1.2.004";
+            VersionTxtBlk.Text = "1.2.004";            
+            logger.InfoFormat("Version Info : {0}", VersionTxtBlk.Text);
         }
 
         private void NostrumMainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
